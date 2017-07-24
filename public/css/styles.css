@@ -1,0 +1,33 @@
+/* custom styles. Mobile first strategy */
+
+/* header styles */
+header nav ul {
+	list-style-type: none;
+}
+
+header nav ul li {
+
+}
+
+nav ul li a {
+	
+}
+
+nav ul li button {
+
+}
+
+
+header banner {
+	display: none;
+}
+
+/* decorative block */
+header .strip {
+	height: 10px;
+	width: 100%;
+	background-color: red;
+}
+
+/* content styles */
+
