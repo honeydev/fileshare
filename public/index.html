@@ -19,13 +19,13 @@
     <![endif]-->
 </head>
 <body>
-    <header class="container">
+    <header class="container-fluid">
 		<nav class"row">
 			<ul class="col-xs-12">
-				<li><button class="col-xs-6"><a href="#">Account</a></button></li>
-				<li><button class="col-xs-6"><a href="#">Login</a></button></li>
-				<li><button class="col-xs-6"><a href="#">Sign In</a></button></li>
-				<li><button class="col-xs-6"><a href="#">All Files</a></button></li>
+				<li class="col-xs-offset-1 col-xs-5 btn btn-default btn-lg"><a href="#">Account</a></li>
+				<li class="col-xs-5 btn btn-default btn-lg"><a href="#">All Files</a></li>
+				<li class="col-xs-offset-1 col-xs-5 btn btn-default btn-lg"><a href="#">Login</a></li>
+				<li class="col-xs-5 btn btn-default btn-lg"><a href="#">Sign In</a></li>
 			</ul>
 		</nav>
 		<div class="row banner"><h1>Free fileshare</h1></div>
@@ -33,17 +33,41 @@
 	</header>
 	<main class="container">
 		<article class="row">
-			<h2>Upload your files, images, documents now!</h2>
+			<h2 class="col-xs-offset-1 col-xs-10">Upload your files, images, documents now!</h2>
 		</article>
-		<article>
-			<input type="upload">
-		</article>
+		<form class="row uploadForm	">
+			<h3 class="">Select file for upload</h3>
+			<input class="col-xs-offset-3" name="uploader" type="file">
+			<ul class="col-xs-offset-3">
+				<li>Max file size 200mb</li>
+				<li>Correct formats:</li>
+			</ul>
+		</form>
 	</main>
-	<footer>
+	<footer class="container navbar-fixed-bottom row-fluid">
+		<div class="row contacts">
+		<article class="col-xs-6">
+			<h3>Contacts1:</h3>
+			<ul>
+				<li>contact</li>
+				<li>contact</li>
+				<li>contact</li>
+			</ul>
+		</article>
+		<article class="col-xs-6">
+			<h3>Contacts2:</h3>
+			<ul>
+				<li>contact</li>
+				<li>contact</li>
+				<li>contact</li>
+			</ul>
+		</article>
+		</div>
+		<article class="copyright"><h4>Copyright</h4></article>
 	</footer>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>

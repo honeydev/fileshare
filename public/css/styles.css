@@ -1,25 +1,39 @@
 /* custom styles. Mobile first strategy */
 
 /* header styles */
+
+.container-fluid {
+
+}
+
+header {
+	background-color: blue;
+}
+
 header nav ul {
 	list-style-type: none;
 }
 
 header nav ul li {
+	margin-top: 1%;
+	margin-right: 1%;
 
 }
 
-nav ul li a {
-	
+nav ul li a:link, nav ul li a:hover, nav ul li a:visited, nav ul li a:active {
+	text-decoration: none;
 }
 
 nav ul li button {
-
+	width: 100%;
 }
 
 
-header banner {
+header .banner {
 	display: none;
+	text-align: center;
+	margin-top: 120px;
+	margin-bottom: 100px;
 }
 
 /* decorative block */
@@ -30,4 +44,27 @@ header .strip {
 }
 
 /* content styles */
+main h2, main h3 {
+	text-align: center;
+}
 
+main form {
+	margin-top: 75px;
+}
+
+main form input[upload] {
+	margin-top: 20px;
+}
+/* footer styles */
+
+footer {
+
+}
+
+footer .contacts {
+	display: none;
+}
+
+footer .copyright {
+	text-align: center;
+}
