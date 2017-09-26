@@ -1,16 +1,22 @@
 <?php
 
+namespace Fileshare;
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+ini_set('session.use_strict_mode', 1);
+ini_set('session.use_only_cookies = 1', 1);
 
 require '../vendor/autoload.php';
+require '../app/bootstrap/app.php';
+require '../app/bootstrap/errorhandlers.php';
+require '../app/bootstrap/components.php';
+require '../app/bootstrap/controllers.php';
+require '../app/bootstrap/models.php';
+require '../app/bootstrap/services.php';
+require '../app/Routes.php';
 
-$app = new \Slim\App(['settings' => (require('../config/cfg.php'))]);
-$app->get('/hello/{name}', function (Request $request, Response $response) {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+$routes = new Routes($app, $container);
 
-    return $response;
-});
 $app->run();

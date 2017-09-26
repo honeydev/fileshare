@@ -8,4 +8,9 @@ return array(
         'user' => 'honey',
         'pass' => 'd5d7',
         'dbname' => 'fileshare'
-    ));
+    ),
+    'appInfo' => array(
+       'title' => 'Fileshare',
+       'hostname' => 'localhost'
+    )
+);
