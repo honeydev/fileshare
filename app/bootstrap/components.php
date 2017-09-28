@@ -4,13 +4,11 @@ namespace Fileshare;
 
 /**
  * Add components in project:
- * - pimple
  * - monolog
  * - pdo
  * - slim views
  * - twig
  */
-
 
 $container = $app->getContainer();
 $appFolder = dirname(dirname(__FILE__));

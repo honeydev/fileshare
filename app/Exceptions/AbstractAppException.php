@@ -5,27 +5,25 @@
  * Date: 9/14/17
  * Time: 9:09 PM
  */
+declare(strict_types=1);
+
 namespace Fileshare\Exceptions;
 
 abstract class AbstractAppException extends \Exception
 {
-    protected $logger;
-    protected $sessionModel;
-
-    public function __construct(string $message, $container) {
+    public function __construct(string $message) {
         parent::__construct($message);
-        $this->logger = $container->get('logger');
-        $this->sessionModel = $container->get('SessionModel');
-        $this->prepareMessage();
-        $this->logging();
     }
     /**
-     * @method preapareMessage - create error message.
+     * @return [array]
      */
+    abstract public function getErrorMessage();
+    /**
+     * @return [array] 
+     */
+    abstract public function getErrorStack();
+
     abstract protected function prepareMessage();
 
-    /**
-     * @method logging write string in file
-     */
-    abstract protected function logging();
+    abstract protected function prepareStack();
 }
