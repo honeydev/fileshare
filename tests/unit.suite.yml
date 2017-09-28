@@ -1,0 +1,11 @@
+# Codeception Test Suite Configuration
+#
+# Suite for unit or integration tests.
+
+actor: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Unit
+        - PhpBrowser:
+            url: fileshare.me/
+        - \Helper\Acceptance
