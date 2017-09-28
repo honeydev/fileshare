@@ -24,33 +24,25 @@ class SessionModel
      * @property {string} current user ip address
      */
     private $ip;
-    /**
-     * @property  SessionModel instance
-     */
+
     private static $sessionModel;
+
+    private $sessionValidator;
 
     public function __construct($container)
     {
-
+       $this->sessionValidator = $container->get('SessionModelValidator');
     }
-    /**
-     * @param {string} propertyName - name set the property
-     * @param {mixed} propertyValue - value set the propery
-     * @return {mixed} if property set,  prop value, else false
-     */
+
     public function __set(string $propertyName, $propertyValue)
     {
-        if ($propertyName === 'authorizeStatus') {
-            return is_bool($propertyValue) ? $this->authorizeStatus = $propertyValue : false;
-        } elseif ($propertyName ===  'accessLvl') {
-            return is_integer($propertyValue) && $propertyValue > -1 && $propertyValue < 4
-                ? $this->accessLvl = $propertyValue : false;
-        }
+        $this->sessionValidator->validate([
+            'propertyName' => $propertyName,
+            'propertyValue' =>$propertyValue
+            ]);
+        $this->propertyName = $propertyValue;
     }
 
-    /**
-     * @method delete all class property values
-     */
     public function destroySessionData() {
         foreach ($this as $property => $value) {
             unset($this->$property);
@@ -59,8 +51,6 @@ class SessionModel
 
     /**
      * @method realize singleton pattern
-     * @param $container
-     * @return SessionModel
      */
     public static function createSessionModel($container)
     {

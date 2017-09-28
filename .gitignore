@@ -3,4 +3,5 @@
 !/logs/README.md
 /.idea/
 /cache/
-/public/bootstrap/*
+/public/bootstrap/
+/public/node_modules/

@@ -5,14 +5,21 @@
  * Date: 9/11/17
  * Time: 11:31 PM
  */
-
 namespace Fileshare\Validators;
-
 
 abstract class AbstractValidator
 {
+    protected $regExpPattern = [];
     /**
-     * @method {mixed} validate - validate some data
+     * @method validate - validate some data
+     * @param {array} $dataFromValidation
      */
-    public abstract function validate($dataForValidation);
+    public abstract function validate($patternType);
+
+    protected function dataIsMatchRegExp($pattern, $validationData) {
+        if (preg_match($pattern, $validationData)) {
+            return true;
+        }
+        return false;
+    }
 }
