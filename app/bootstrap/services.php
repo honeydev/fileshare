@@ -18,11 +18,3 @@ $container['CookieService'] = function () {
     return new Fileshare\Services\CookieService();
 };
 
-$container['errorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container) {
-        return $container['response']->withStatus(500)
-            ->withHeader('Content-Type', 'text/html')
-            ->write('Something went wrong!');
-    };
-};
-

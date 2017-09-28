@@ -16,5 +16,6 @@ class Routes
     private function startRouts($app, $container)
     {
         $app->get('/', 'MainPageController:indexPage');
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Fileshare\Controllers;
 
-use Fileshare\Exceptions\ErrorException;
+use Fileshare\Exceptions\FileshareException;
 
 class MainPageController extends AbstractController
 {
@@ -13,8 +13,11 @@ class MainPageController extends AbstractController
             'page' => 'main_page'
         ];
 
-        $this->container['errorHandler']($request, $response, new ErrorException('privet kak dela', $this->container));
-        $response = $this->container->view->render($response, "index.twig", $this->container->dataFromView);
+        $response = $this->container->view->render(
+            $response, 
+            "index.twig", 
+            $this->container->dataFromView
+            );
 
         return $response;
     }

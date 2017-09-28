@@ -1,0 +1,24 @@
+<!-- 500 Server Error template -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+        <h2 class="text-center">500 - Internal Server Error</h2>
+
+        {% if debug %}
+            <h3>Error Description</h3>
+            <ul class="list-unstyled">
+                <li>Error message: {{ errorInfo.error }}</li>
+                <li>Code: {{ errorInfo.code }}</li>
+                <li>In file: {{ errorInfo.file }}</li>
+                <li>On line: {{ errorInfo.line }}</li>
+            </ul>
+            <h3>Error stack</h3>
+            <ul class="list-unstyled">
+                {% for stackNode in errorStack %}
+                    <li>{{ stackNode }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+    </div> 
+</div>

@@ -4,8 +4,10 @@ namespace Fileshare\Controllers;
 
 abstract class AbstractController
 {
-    protected $container;
-    protected $sessionService;
+    /** @property [array] */
+    protected $errorMessage;
+    /** @property [array] */
+    protected $errorStack;
 
     public function __construct($container)
     {

@@ -9,19 +9,19 @@ class SessionService
 {
     private $sessionModel;
     private $cookieService;
-    private $container;
     private $sessionDestroyer;
+    private $container;
 
     public function __construct($container)
     {
         session_start();
         $this->container = $container;
-        $this->sessionModel = $container->get('SessionModel', $this->container);
-        $this->cookieService = $container->get('CookieService');
-        $this->sessionDestroyer = $container->get('SessionDestroyer');
+        $this->sessionModel = $container->get('SessionModel', $container);
+        // $this->cookieService = $container->get('CookieService');
     }
 
-    public function destroySession() {
-        $this->sessionDestroyer->deleteSessionData();
+    public function destroySession() 
+    {
+        $this->sessionModel->deleteSessionData();
     }
 }
