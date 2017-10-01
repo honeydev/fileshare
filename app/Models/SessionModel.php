@@ -34,21 +34,28 @@ class SessionModel
        $this->sessionValidator = $container->get('SessionModelValidator');
     }
 
-    public function __set(string $propertyName, $propertyValue)
-    {
-        $this->sessionValidator->validate([
-            'propertyName' => $propertyName,
-            'propertyValue' =>$propertyValue
-            ]);
-        $this->propertyName = $propertyValue;
-    }
-
     public function destroySessionData() {
         foreach ($this as $property => $value) {
             unset($this->$property);
         }
     }
 
+    public function __set(string $propertyName, $propertyValue)
+    {
+        $this->sessionValidator->validate([
+            'propertyName' => $propertyName,
+            'propertyValue' =>$propertyValue
+        ]);
+        $this->$propertyName = $propertyValue;
+    }
+
+    public function __get(string $propertyName)
+    {
+        if (property_exists($this, $propertyName)) {
+            return $this->$propertyName;
+        }
+        throw new \InvalidArgumentException("Incorrect session variable [{$propertyName}]");
+    }
     /**
      * @method realize singleton pattern
      */
