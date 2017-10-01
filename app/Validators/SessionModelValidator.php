@@ -6,9 +6,9 @@ namespace Fileshare\Validators;
 class SessionModelValidator extends AbstractValidator
 {
     protected $regExpPattern = [
-        'authorizeStatus' => '/^0|1$/',
+        'authorizeStatus' => '/^|1$/',
         'accessLvl' => '/^[0-3]{1}$/',
-        'ip' => '/^([0-255]\.){3}([0-255]{1})$/'
+        'ip' => '/^(([0-1]?[0-9]?[0-9]|2[0-5][0-5])\.){3}([0-1]?[0-9]?[0-9]|2[0-5][0-5])$/'
     ];
 
     public function validate($dataFromValidate)
@@ -26,7 +26,7 @@ class SessionModelValidator extends AbstractValidator
     {
         if (!$this->keyValid($key)) {
             throw new \UnexpectedValueException("
-                Invalid session property key {$dataFromValidate['propertyName']}
+                Invalid session property key [{$key}]
                 ");
         }       
     }

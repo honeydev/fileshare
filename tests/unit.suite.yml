@@ -2,9 +2,10 @@
 #
 # Suite for unit or integration tests.
 
-actor: AcceptanceTester
+actor: UnitTester
 modules:
     enabled:
+        - Asserts
         - \Helper\Unit
         - PhpBrowser:
             url: fileshare.me/
