@@ -5,10 +5,10 @@ return array(
     'logging' => true,
     'addContentLengthHeader' => false,
     'db' => array(
-        'host' => 'localhost',
-        'user' => 'honey',
-        'pass' => 'd5d7',
-        'dbname' => 'fileshare'
+        'host' => '',
+        'user' => '',
+        'pass' => '',
+        'dbname' => ''
     ),
     'appInfo' => array(
        'title' => 'Fileshare',
