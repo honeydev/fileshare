@@ -8,14 +8,17 @@ use Fileshare\Controllers\MainPageController as MainPageController;
 
 class Routes
 {
+    private $loginMiddleware;
+
     public function __construct($app, $container)
     {
-        $this->startRouts($app, $container);
+        $this->startRoutes($app, $container);
+        $this->loginMiddleware = $container->get('LoginMiddleware');
     }
 
-    private function startRouts($app, $container)
+    private function startRoutes($app, $container)
     {
         $app->get('/', 'MainPageController:indexPage');
-
+        $app->get('/login.form')->($this->loginMiddleware);
     }
 }
