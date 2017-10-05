@@ -10,5 +10,5 @@ $container['LoginValidator'] = function () {
 };
 
 $container['PasswordValidator'] = function () {
-    return Fileshare\Validators\PasswordValidator();
+    return new Fileshare\Validators\PasswordValidator();
 };
