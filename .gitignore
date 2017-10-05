@@ -5,3 +5,4 @@
 /cache/
 /public/bootstrap/
 /public/node_modules/
+/config/cfg.php
