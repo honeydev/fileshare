@@ -8,7 +8,7 @@
 
 namespace Fileshare\Validators;
 
-use Fileshare\Exceptions\FileshareException as FileshareException;
+use \Fileshare\Exceptions\FileshareException as FileshareException;
 
 class LoginValidator extends AbstractValidator
 {

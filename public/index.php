@@ -15,6 +15,8 @@ require '../app/bootstrap/errorhandlers.php';
 require '../app/bootstrap/controllers.php';
 require '../app/bootstrap/models.php';
 require '../app/bootstrap/services.php';
+require '../app/bootstrap/middlewares.php';
+require '../app/bootstrap/auths.php';
 require '../app/bootstrap/validators.php';
 require '../app/Routes.php';
 

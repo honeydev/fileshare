@@ -19,7 +19,8 @@ class Routes
     private function startRoutes($app, $container)
     {
         $app->get('/', 'MainPageController:indexPage');
-        $app->get('/login.form')->($this->loginMiddleware);
-
+        $app->get('/login.form', function() {
+            echo 'login.form';
+        })->add($this->loginMiddleware);
     }
 }

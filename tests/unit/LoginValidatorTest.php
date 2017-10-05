@@ -1,7 +1,5 @@
 <?php
 
-use Fileshare\Exceptions\FileshareException as FileshareException;
-
 class LoginValidatorTest extends \Codeception\Test\Unit
 {
     /**
@@ -17,12 +15,11 @@ class LoginValidatorTest extends \Codeception\Test\Unit
     protected function _after()
     {
     }
-
     // tests
     public function testSomeFeature()
     {
         $this->loginValidator = new \Fileshare\Validators\LoginValidator();
-       // $this->testValidLogins();
+       $this->testValidLogins();
         $this->testInvalidLogins();
     }
 
@@ -46,8 +43,8 @@ class LoginValidatorTest extends \Codeception\Test\Unit
         ]);
         for ($i = 0; $i < count(INVALID_LOGINS); $i++) {
             $invalidLogin = INVALID_LOGINS[$i];
-            $this->tester->expectException('FileshareException', function () use ($invalidLogin) {
-                $this->loginValidator->validate('');
+            $this->tester->expectException('Fileshare\Exceptions\FileshareException', function () use ($invalidLogin) {
+                $this->loginValidator->validate($invalidLogin);
             });
         }
     }
