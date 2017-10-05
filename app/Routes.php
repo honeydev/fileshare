@@ -20,5 +20,6 @@ class Routes
     {
         $app->get('/', 'MainPageController:indexPage');
         $app->get('/login.form')->($this->loginMiddleware);
+
     }
 }

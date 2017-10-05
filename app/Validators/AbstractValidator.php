@@ -9,7 +9,7 @@ namespace Fileshare\Validators;
 
 abstract class AbstractValidator
 {
-    protected $regExpPattern;
+    protected $regExpPattern = [];
     /**
      * @method validate - validate some data
      * @param {array} $dataFromValidation
