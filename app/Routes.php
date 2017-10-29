@@ -5,6 +5,7 @@ namespace Fileshare;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Controllers\MainPageController as MainPageController;
+use Fileshare\Middlewares\LoginMiddleware as LoginMiddleware;
 
 class Routes
 {
@@ -12,15 +13,18 @@ class Routes
 
     public function __construct($app, $container)
     {
+        $this->container = $container;
         $this->startRoutes($app, $container);
-        $this->loginMiddleware = $container->get('LoginMiddleware');
     }
 
     private function startRoutes($app, $container)
     {
         $app->get('/', 'MainPageController:indexPage');
-        $app->get('/login.form', function() {
+        $app->post('/login.form', function () {
             echo 'login.form';
-        })->add($this->loginMiddleware);
+        })->add(new LoginMiddleware($this->container));
+        $app->post('/register.form', function () {
+            echo 'register.form';
+        });
     }
 }

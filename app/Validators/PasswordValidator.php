@@ -16,11 +16,9 @@ class PasswordValidator extends AbstractValidator
 
     public function validate($password)
     {
-        echo $password;
         if (!$this->dataIsMatchRegExp($this->regExpPattern, $password)) {
             throw new FileshareException("Invalid password Value {$password}");
         }
-
         return true;
     }
 }

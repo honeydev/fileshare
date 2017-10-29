@@ -8,7 +8,6 @@
 
 namespace Fileshare\Db;
 
-
 class Pdo
 {
     private $pdo;

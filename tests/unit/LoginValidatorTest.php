@@ -19,7 +19,7 @@ class LoginValidatorTest extends \Codeception\Test\Unit
     public function testSomeFeature()
     {
         $this->loginValidator = new \Fileshare\Validators\LoginValidator();
-       $this->testValidLogins();
+        $this->testValidLogins();
         $this->testInvalidLogins();
     }
 

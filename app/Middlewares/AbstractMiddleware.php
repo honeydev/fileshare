@@ -8,13 +8,35 @@
 
 namespace Fileshare\Middlewares;
 
+use Fileshare\Exceptions\FileshareException as FileshareException;
 
 abstract class AbstractMiddleware
 {
     protected $container;
+    private $sessionModel;
 
     public function __construct($container)
     {
         $this->container = $container;
+        $this->sessionModel = $container->get('SessionModel');
+    }
+
+    protected function userAlreadyAuthorized()
+    {
+        if ($this->sessionModel->authorizeStatus) {
+            throw new FileshareException('User already authorized');
+        }
+    }
+
+    protected function prepareErrorToJsonSend($e, $errorType)
+    {
+        $error = [
+            'errorType' => $errorType,
+            'errorMessage' => $e->getMessage()
+        ];
+        if ($this->container->get('settings')['displayErrorDetails']) {
+            $error['fullError'] = $e->getErrorMessage();
+        }
+        return $error;
     }
 }
