@@ -8,7 +8,8 @@ export {LoginForm};
 
 function LoginForm(dic) {
     this._ajax = dic.get('Ajax')(dic);
-    this._validator = null;
+    this._emailValidator = dic.get('EmailValidator')();
+    this._passwordValidator = dic.get('PasswordValidator')();
     this._email = null;
     this._password = null;
 }
@@ -26,7 +27,12 @@ LoginForm.prototype.sendLoginForm = function() {
 };
 
 LoginForm.prototype._validate = function() {
-    return true;
+    try {
+        this._emailValidator.validate(this._email);
+        this._passwordValidator.validate(this._password);
+    } catch (Error) {
+        console.log(Error);
+    }
 };
 
 LoginForm.prototype._setLoginFormValues = function() {
