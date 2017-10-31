@@ -9,6 +9,7 @@ import {LoginForm} from './loginForm.js';
 import {RegisterForm} from './registerForm.js';
 import {EmailValidator} from  './validators/emailValidator.js';
 import {PasswordValidator} from './validators/passwordValidator';
+import {LoginFormSetter} from './loginFormSetter';
 
 function commonBootstrap() {
     dic.add('Ajax', function(...args) {
@@ -25,5 +26,8 @@ function commonBootstrap() {
     });
     dic.add('PasswordValidator', function(...args) {
         return new PasswordValidator(...args);
+    });
+    dic.add('LoginFormSetter', function(...args) {
+        return new LoginFormSetter(...args);
     });
 }

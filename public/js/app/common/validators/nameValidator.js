@@ -12,7 +12,7 @@ function NameValidator() {
     this._regExp = /^([a-zа-я]|[0-9]| ){0,20}$/iu;
 }
 
-NameValidator.prototype = BaseValidator.prototype;
+NameValidator.prototype = Object.create(BaseValidator.prototype);
 
 NameValidator.prototype.validate = function(name) {
     if (this._dataIsMatchRegExp(name)) {

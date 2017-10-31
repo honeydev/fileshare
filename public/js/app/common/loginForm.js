@@ -10,6 +10,7 @@ function LoginForm(dic) {
     this._ajax = dic.get('Ajax')(dic);
     this._emailValidator = dic.get('EmailValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
+    this._loginErrorSetter = dic.get('LoginFormSetter')();
     this._email = null;
     this._password = null;
 }
@@ -32,6 +33,7 @@ LoginForm.prototype._validate = function() {
         this._passwordValidator.validate(this._password);
     } catch (Error) {
         console.log(Error);
+        this._loginErrorSetter.setError();
     }
 };
 
