@@ -4,13 +4,12 @@
 
 'use strict';
 
-
-
 export {CommonHandlers};
 
 function CommonHandlers(dic) {
     this._dic = dic;
     this._loginForm = dic.get('LoginForm')(dic);
+    this._loginFormSetter = dic.get('LoginFormSetter')(dic);
     this._registerForm = dic.get('RegisterForm')(dic);
     console.log('dic', this._dic);
 }
@@ -18,6 +17,9 @@ function CommonHandlers(dic) {
 CommonHandlers.prototype.setHandlers = function() {
     $('#loginButton').click(() => {
         this._loginForm.sendLoginForm();
+    });
+    $('#cancelLoginButton #loginClose').click(() => {
+        this._loginFormSetter.cleanForm();
     });
     $('#registerButton').click(() => {
         console.log('register button');
