@@ -8,6 +8,7 @@ export {RegisterForm};
 
 function RegisterForm(dic) {
     this._ajax = dic.get('Ajax')();
+    this._
     this._email = null;
     this._name = null;
     this._password = null;
@@ -28,7 +29,11 @@ RegisterForm.prototype.sendRegisterForm = function() {
     );
 };
 RegisterForm.prototype._validate = function() {
-    return null;
+    try {
+
+    } catch (Error) {
+
+    }
 };
 
 RegisterForm.prototype._setRegisterFormValues = function() {

@@ -19,7 +19,7 @@ CommonHandlers.prototype.setHandlers = function() {
         this._loginForm.sendLoginForm();
     });
     $('#cancelLoginButton #loginClose').click(() => {
-        this._loginFormSetter.cleanForm();
+        this._loginFormSetter.deleteErrorsClass();
     });
     $('#registerButton').click(() => {
         console.log('register button');

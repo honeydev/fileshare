@@ -10,14 +10,8 @@ function LoginFormSetter() {
 
 }
 
-LoginFormSetter.prototype.setError = function(error, errorType) {
-    if (errorType == 'email') {
-        $('#loginEmailGroup').addClass('has-error has-feedback');
-    } else if (errorType == 'password') {
-        $('#loginPasswordGroup').addClass('has-error has-feedback');
-    } else {
-        throw new Error('Invalid error type');
-    }
+LoginFormSetter.prototype.setError = function(errorMessage) {
+
 };
 
 LoginFormSetter.prototype.setEmailError = function() {
@@ -28,7 +22,11 @@ LoginFormSetter.prototype.setPasswordError = function() {
     $('#loginPasswordGroup').addClass('has-error has-feedback');
 };
 
-LoginFormSetter.prototype.cleanForm = function() {
+LoginFormSetter.prototype.deleteErrorsClass = function() {
     $('#loginModal .has-error.has-feedback').
         removeClass('has-error has-feedback');
+};
+
+LoginFormSetter.prototype.cleanForm = function() {
+
 };

@@ -19,7 +19,7 @@ function LoginForm(dic) {
 }
 
 LoginForm.prototype.sendLoginForm = function() {
-    this._loginFormSetter.cleanForm();
+    this._loginFormSetter.deleteErrorsClass();
     this._setLoginFormValues();
     this._validate();
     this._ajax.sendJSON(
