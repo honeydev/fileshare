@@ -8,12 +8,30 @@
             </div>
             <div class="modal-body">
                 <form role="form" class="form-horizontal">
-                    <div class="form-group has-feedback">
+                    <div id="registerEmailGroup" class="form-group has-feedback">
                         <label for="email" class="control-label col-xs-3">Email</label>
                         <div class="col-xs-8">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                                 <input id="registerEmail" type="email" class="form-control" required="required" name="email" pattern="[A-Za-z]{6,}">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="registerPasswordGroup" class="form-group has-feedback">
+                        <label for="password" class="control-label col-xs-3">Password</label>
+                        <div class="col-xs-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></i></span>
+                                <input id="registerPassword" type="password" class="form-control" required="required" name="password" pattern="[A-Za-z]{6,}">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="regPasswordRepeat" class="form-group has-feedback">
+                        <label for="passwordRepeat" class="control-label col-xs-3">Repeat Password</label>
+                        <div class="col-xs-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                                <input id="passwordRepeat" type="password" class="form-control" required="required" name="passwordRepeat" pattern="[A-Za-z]{6,}">
                             </div>
                         </div>
                     </div>
@@ -26,28 +44,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group has-feedback">
-                        <label for="password" class="control-label col-xs-3">Password</label>
-                        <div class="col-xs-8">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></i></span>
-                                <input id="registerPassword" type="password" class="form-control" required="required" name="password" pattern="[A-Za-z]{6,}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="passwordRepeat" class="control-label col-xs-3">Repeat Password</label>
-                        <div class="col-xs-8">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                <input id="passwordRepeat" type="password" class="form-control" required="required" name="passwordRepeat" pattern="[A-Za-z]{6,}">
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="registerCancelButton" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button id="registerButton" type="button" class="btn btn-primary">Register</button>
             </div>
         </div>

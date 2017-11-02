@@ -36,12 +36,16 @@ LoginForm.prototype._validate = function() {
         this._emailValidator.validate(this._email);
         this._passwordValidator.validate(this._password);
     } catch (Error) {
-        console.log(Error);
-        if (Error instanceof EmailValidError) {
-            this._loginFormSetter.setEmailError();
-        } else if (Error instanceof PasswordValidError) {
-            this._loginFormSetter.setPasswordError();
-        }
+        this._errorStrategy(Error);
+        throw 'Login form validation failed';
+    }
+};
+
+LoginForm.prototype._errorStrategy = function(Error) {
+    if (Error instanceof EmailValidError) {
+        this._loginFormSetter.setEmailError();
+    } else if (Error instanceof PasswordValidError) {
+        this._loginFormSetter.setPasswordError();
     }
 };
 

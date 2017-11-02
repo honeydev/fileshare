@@ -6,9 +6,17 @@
 
 export {RegisterForm};
 
+import {EmailValidError} from './errors/emailValidError.js';
+import {PasswordValidError} from './errors/passwordValidError.js';
+import {NameValidError} from './errors/nameValidError.js';
+
+
 function RegisterForm(dic) {
     this._ajax = dic.get('Ajax')();
-    this._
+    this._emailValidator = dic.get('EmailValidator')();
+    this._passwordValidator = dic.get('PasswordValidator')();
+    this._nameValidator = dic.get('NameValidator')();
+    this._registerFormSetter = dic.get('RegisterFormSetter')();
     this._email = null;
     this._name = null;
     this._password = null;
@@ -28,11 +36,28 @@ RegisterForm.prototype.sendRegisterForm = function() {
         }
     );
 };
+
 RegisterForm.prototype._validate = function() {
     try {
-
+        this._emailValidator.validate(this._email);
+        this._passwordValidator.validate(this._password);
+        this._passwordValidator.validate(this._passwordRepeat);
+        this._passwordValidator.checkEqual(this._password, this._passwordRepeat);
+        this._nameValidator.validate(this._name);
     } catch (Error) {
+        this._errorStrategy(Error);
+        throw 'Register form validation failed';
+    }
+};
 
+RegisterForm.prototype._errorStrategy = function(Error) {
+    if (Error instanceof EmailValidError) {
+        console.log('emailValidError');
+        this._registerFormSetter.setEmailError();
+    } else if (Error instanceof PasswordValidError) {
+        console.log('passwordValidError', Error.message);
+    } else if (Error instanceof NameValidError) {
+        console.log('nameValidError');
     }
 };
 

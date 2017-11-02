@@ -10,22 +10,28 @@ function RegisterFormSetter() {
 
 }
 
-RegisterFormSetter.prototype.setError = function () {
+RegisterFormSetter.prototype.setError = function(errorMessage) {
 
 };
 
-RegisterFormSetter.prototype.setEmailError = function () {
-
+RegisterFormSetter.prototype.setEmailError = function() {
+    $('#registerEmailGroup').addClass('has-error has-feedback');
 };
 
-RegisterFormSetter.prototype.setPasswordError = function () {
-
+RegisterFormSetter.prototype.setPasswordError = function() {
+    $('#registerPasswordGroup').addClass('has-error has-feedback');
+    $('#regPasswordRepeat').addClass('has-error has-feedback');
 };
 
 RegisterFormSetter.prototype.setNameError = function () {
-
+    $('#registerName').addClass('has-error has-feedback');
 };
 
-RegisterFormSetter.prototype.cleanForm = function () {
+RegisterFormSetter.prototype.deleteErrorsClass = function() {
+    $('#registerModal .has-error.has-feedback').
+        removeClass('has-error has-feedback');
+};
+
+RegisterFormSetter.prototype.cleanForm = function() {
 
 };

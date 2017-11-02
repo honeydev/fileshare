@@ -21,3 +21,10 @@ PasswordValidator.prototype.validate = function(password) {
     }
     throw new PasswordValidError(`Invalid password ${password}`);
 };
+
+PasswordValidator.prototype.checkEqual = function(password, passwordRepeat) {
+    if (password === passwordRepeat) {
+        return true;
+    }
+    throw new PasswordValidError(`Input ${password} and ${passwordRepeat} is not equal`);
+};

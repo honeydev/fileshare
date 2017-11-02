@@ -8,8 +8,10 @@ import {Ajax} from './ajax.js';
 import {LoginForm} from './loginForm.js';
 import {RegisterForm} from './registerForm.js';
 import {EmailValidator} from  './validators/emailValidator.js';
-import {PasswordValidator} from './validators/passwordValidator';
+import {PasswordValidator} from './validators/passwordValidator.js';
+import {NameValidator} from './validators/nameValidator.js';
 import {LoginFormSetter} from './loginFormSetter';
+import {RegisterFormSetter} from './registerFormSetter';
 
 function commonBootstrap() {
     dic.add('Ajax', function(...args) {
@@ -27,7 +29,13 @@ function commonBootstrap() {
     dic.add('PasswordValidator', function(...args) {
         return new PasswordValidator(...args);
     });
+    dic.add('NameValidator', function(...args) {
+        return new NameValidator(...args);
+    });
     dic.add('LoginFormSetter', function(...args) {
         return new LoginFormSetter(...args);
+    });
+    dic.add('RegisterFormSetter', function(...args) {
+        return new RegisterFormSetter(...args);
     });
 }
