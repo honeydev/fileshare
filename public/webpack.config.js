@@ -32,9 +32,6 @@ module.exports = {
         new webpack.ProvidePlugin({
             dic: 'dic/dic.js'
         }),
-        new webpack.ProvidePlugin({
-            parsley: 'parsleyjs/dist/parsley.js'
-        })
     ],
     resolve: {
         modules: ['node_modules'],
@@ -58,7 +55,8 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                    //set manual path to fonts
+                    'file-loader?name=[name].[ext]&outputPath=../js/public/&publicPath=/js/public/&mimetype=application/font-woff2'
                 ]
             }
         ]
