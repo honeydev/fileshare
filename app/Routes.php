@@ -6,6 +6,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Controllers\MainPageController as MainPageController;
 use Fileshare\Middlewares\LoginMiddleware as LoginMiddleware;
+use Fileshare\Middlewares\RegValidateMiddleware as RegValidateMiddleware;
+use Fileshare\Middlewares\RegDbMiddleware as RegDbMiddleware;
 
 class Routes
 {
@@ -25,6 +27,9 @@ class Routes
         })->add(new LoginMiddleware($this->container));
         $app->post('/register.form', function () {
             echo 'register.form';
-        });
+        })
+            ->add(new RegValidateMiddleware($this->container))
+           // ->add(new RegDbMiddleware($this->container))
+            ;
     }
 }
