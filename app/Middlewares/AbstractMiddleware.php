@@ -32,7 +32,6 @@ abstract class AbstractMiddleware
     {
         $error = [
             'errorType' => $errorType,
-            'errorMessage' => $e->getMessage()
         ];
         if ($this->container->get('settings')['displayErrorDetails']) {
             $error['fullError'] = $e->getErrorMessage();

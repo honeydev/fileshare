@@ -56,7 +56,7 @@ module.exports = {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
                     //set manual path to fonts
-                    'file-loader?name=[name].[ext]&outputPath=../js/public/&publicPath=/js/public/&mimetype=application/font-woff2'
+                    'file-loader?name=[name].[ext]&outputPath=../js/public/&publicPath=/&mimetype=application/font-woff2'
                 ]
             }
         ]

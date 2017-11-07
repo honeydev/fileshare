@@ -29,7 +29,7 @@ class Routes
             echo 'register.form';
         })
             ->add(new RegValidateMiddleware($this->container))
-           // ->add(new RegDbMiddleware($this->container))
+            ->add(new RegDbMiddleware($this->container))
             ;
     }
 }

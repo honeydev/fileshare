@@ -11,19 +11,34 @@ namespace Fileshare\Exceptions;
 
 abstract class AbstractAppException extends \Exception
 {
+    protected $errorMessage;
+
     public function __construct(string $message) {
         parent::__construct($message);
     }
-    /**
-     * @return [array]
-     */
-    abstract public function getErrorMessage();
-    /**
-     * @return [array] 
-     */
-    abstract public function getErrorStack();
 
-    abstract protected function prepareMessage();
+    protected function prepareMessage()
+    {
+        $errorMessage = [];
+        $errorMessage['error'] = $this->getMessage();
+        $errorMessage['code'] = $this->getCode();
+        $errorMessage['file'] = $this->getFile();
+        $errorMessage['line'] = $this->getLine();
+        $this->errorMessage = $errorMessage;
+    }
 
-    abstract protected function prepareStack();
+    protected function prepareStack()
+    {
+        $this->errorStack = explode('#', $this->getTraceAsString());
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+    public function getErrorStack()
+    {
+        return $this->errorStack;
+    }
 }

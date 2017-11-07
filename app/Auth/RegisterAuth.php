@@ -27,12 +27,14 @@ class RegisterAuth extends AbstractAuth
             $this->emailIsFree($regFormData['email']);
         } catch (DatabaseException $e) {
             throw new FileshareException($e->getMessage());
+        } catch (\PDOException $e) {
+            throw new FileshareException($e->getMessage());
         }
     }
 
     private function emailIsFree($email)
     {
-        if ($this->findEqualUserEmail($email)) {
+        if ($this->findEqualUserEmail($email) === false) {
             return true;
         }
         throw new DatabaseException(
