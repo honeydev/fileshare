@@ -23,8 +23,8 @@ RegisterFormSetter.prototype.setPasswordError = function() {
     $('#regPasswordRepeat').addClass('has-error has-feedback');
 };
 
-RegisterFormSetter.prototype.setNameError = function () {
-    $('#registerName').addClass('has-error has-feedback');
+RegisterFormSetter.prototype.setNameError = function() {
+    $('#registerNameGroup').addClass('has-error has-feedback');
 };
 
 RegisterFormSetter.prototype.deleteErrorsClass = function() {

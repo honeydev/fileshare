@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 ini_set('session.use_strict_mode', 1);
 ini_set('session.use_only_cookies = 1', 1);
-ini_set('display_errors',1); 
+ini_set('display_errors',1);
 error_reporting(E_ALL);
 
 require '../vendor/autoload.php';
@@ -21,7 +21,6 @@ require '../app/bootstrap/middlewares.php';
 require '../app/bootstrap/auths.php';
 require '../app/bootstrap/validators.php';
 require '../app/Routes.php';
-
 
 $routes = new Routes($app, $container);
 

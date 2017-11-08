@@ -13,4 +13,3 @@ $container['errorHandler'] = function () use ($container) {
 $container['phpErrorHandler'] = function () use ($container) {
     return new Fileshare\Handlers\PhpErrorHandler($container);
 };
-

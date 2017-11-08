@@ -26,7 +26,7 @@ function RegisterForm(dic) {
 RegisterForm.prototype.sendRegisterForm = function() {
     this._registerFormSetter.deleteErrorsClass();
     this._setRegisterFormValues();
-    this._validate();
+    //this._validate();
     this._ajax.sendJSON(
         'register.form',
         {
@@ -57,8 +57,10 @@ RegisterForm.prototype._errorStrategy = function(Error) {
         this._registerFormSetter.setEmailError();
     } else if (Error instanceof PasswordValidError) {
         console.log('passwordValidError', Error.message);
+        this._registerFormSetter.setPasswordError();
     } else if (Error instanceof NameValidError) {
         console.log('nameValidError');
+        this._registerFormSetter.setNameError();
     }
 };
 
