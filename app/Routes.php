@@ -25,11 +25,9 @@ class Routes
         $app->post('/login.form', function () {
             echo 'login.form';
         })->add(new LoginMiddleware($this->container));
-        $app->post('/register.form', function () {
-            echo 'register.form';
-        })
-            ->add(new RegValidateMiddleware($this->container))
+        $app->post('/register.form', 'MainPageController:regUser')
             ->add(new RegDbMiddleware($this->container))
+            ->add(new RegValidateMiddleware($this->container))
             ;
     }
 }

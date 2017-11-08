@@ -9,7 +9,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class ErrorHandler extends AbstractErrorHandler
 {
-
     public function __construct($container)
     {
         parent::__construct($container);
@@ -19,8 +18,14 @@ class ErrorHandler extends AbstractErrorHandler
     {
         $this->prepareErrorMessage($exception);
         $this->prepareStack($exception);
-        $response = $this->showError($response);
-        $response = $this->setResponseMeta($response);
+        if ($request->isXhr) {
+            echo 'ajax';
+            $this->showWithJson($response);
+        } else {
+            echo 'no ajax';
+            $response = $this->showError($response);
+            $response = $this->setResponseMeta($response);            
+        }
         return $response;
     }
 }

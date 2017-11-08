@@ -13,4 +13,12 @@ trait UsersCRUDs
         $equalsId = $this->db->query($getIdIfEmailsEqual);
         return $equalsId->fetch();
     }
+
+    protected function addUserInUsers($userData)
+    {
+    	$addUserInBase = "INSERT INTO users (email, hash, id) VALUES (
+    		'$email', '$hash', NULL)";
+		$addUserInBase = $this->db->query($addUserInBase);
+		return $addUserInBase;
+    }
 }

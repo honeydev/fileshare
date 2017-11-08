@@ -8,7 +8,6 @@
 
 namespace Fileshare\Auth;
 
-
 abstract class AbstractAuth
 {
     protected $container;

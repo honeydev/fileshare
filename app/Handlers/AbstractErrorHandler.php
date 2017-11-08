@@ -41,6 +41,11 @@ class AbstractErrorHandler
         return $response;
     }
 
+    protected function showWithJson($response)
+    {
+        $response->withJson(['low level err' => 'low level']);
+    }
+
     protected function setResponseMeta($response)
     {
         $response->withStatus(500);

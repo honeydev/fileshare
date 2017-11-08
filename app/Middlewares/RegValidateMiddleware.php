@@ -36,6 +36,7 @@ class RegValidateMiddleware extends AbstractMiddleware
             $this->passwordValidator->validate($registrationData['password']);
             $this->passwordValidator->validate($registrationData['passwordRepeat']);
             $this->nameValidator->validate($registrationData['name']);
+            $request = $request->withAttribute('regData', $registrationData);
             $response = $next($request, $response);
         } catch (FileshareException $e) {
             $error = $this->prepareErrorToJsonSend($e, 'Invalid registration data');
