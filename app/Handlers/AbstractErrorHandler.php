@@ -13,8 +13,9 @@ class AbstractErrorHandler
     protected $debug;
     /** @boolean */
     protected $logging;
-
+    /** @array */
     protected $errorMessage;
+    /** @array */
     protected $errorStack;
 
     protected $container;
@@ -25,6 +26,7 @@ class AbstractErrorHandler
 
         $this->debug = $this->container['settings']['displayErrorDetails'];
         $this->logging = $this->container['settings']['logging'];
+        $this->logger = $this->container->get('logger');
     }
 
     protected function showError($response) {
@@ -53,11 +55,11 @@ class AbstractErrorHandler
         return $response;       
     }
 
-    protected function errorLog() 
+    protected function errorLog()
     {
-        if ($this->errorLog) {
-            $this->contaner['logger']->error(
-                implode(', ', $errorMessage)
+        if ($this->logging) {
+            $this->container['logger']->error(
+                implode(', ', $this->errorMessage)
                 );
         }
     }

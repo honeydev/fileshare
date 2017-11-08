@@ -18,6 +18,7 @@ class PhpErrorHandler extends AbstractErrorHandler
     {
         $this->prepareErrorMessage($exception);
         $this->prepareStack($exception);
+        $this->errorLog();
         $response = $this->showError($response);
         $response = $this->setResponseMeta($response);
         return $response;

@@ -13,8 +13,14 @@ Ajax.prototype.sendJSON = function(url, requestData, method = 'POST') {
         method: method,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: json
-    });
+        data: json,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function ( qXHR, textStatus, errorThrown ) {
+            console.log(textStatus, ' ', errorThrown, qXHR.responseText);
+        }
+});
 };
 
 Ajax.prototype.sendFile = function(file, url) {
