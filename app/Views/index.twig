@@ -11,8 +11,7 @@
     {% include 'navigation_panel.html' %}
 </header>
 <main>
-    {% include 'login_form_modal.html' %}
-    {% include 'register_form_modal.html' %}
+
     {% if page == 'main_page' %}
         {% include 'upload_section.twig' %}
     {% elseif page == 'file_browse' %}
@@ -20,28 +19,7 @@
     {% elseif page == '500' %}
         {% include '500.twig' %}
     {% endif %}
-    <!--files review -->
 
-    <!-- Comment modal window -->
-    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title" id="loginModal">Comment</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" class="form-vertical">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id="registerButton" type="button" class="btn btn-primary">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
     <script src="js/public/main.js"></script>
 </body>
