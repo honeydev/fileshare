@@ -10,11 +10,12 @@ declare(strict_types=1);
 
 namespace Fileshare\Services;
 
+use Fileshare\Exceptions\DatabaseException;
 use Fileshare\Exceptions\FileshareException;
 
 class AddUserService
 {
-    use Fileshare\CRUDs\UsersCRUDs;
+    use \Fileshare\CRUDs\UsersCRUDs;
 
     private $cryptoService;
 
@@ -28,9 +29,17 @@ class AddUserService
     {
         try {
             extract($userData); //expect vars $email, $password, $name
-            $hash = $this->cryptoService->getPasswordHash($password);
+            $userData['hash'] = $this->cryptoService->getPasswordHash($password);
+            var_dump($this->addUserInUsers($userData));
         } catch (FileshareException $e) {
 
+        } catch (DatabaseException $e ) {
+
         }
+    }
+
+    private function addUserInBase($userData)
+    {
+
     }
 }

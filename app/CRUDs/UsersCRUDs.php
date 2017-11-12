@@ -16,6 +16,7 @@ trait UsersCRUDs
 
     protected function addUserInUsers($userData)
     {
+        extract($userData);
     	$addUserInBase = "INSERT INTO users (email, hash, id) VALUES (
     		'$email', '$hash', NULL)";
 		$addUserInBase = $this->db->query($addUserInBase);

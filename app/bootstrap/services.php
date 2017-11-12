@@ -6,11 +6,11 @@
  * Time: 9:21 PM
  */
 
-$container['SessionService'] = function ($container) {
+$container['SessionService'] = function () use ($container) {
     return new Fileshare\Services\SessionService($container);
 };
 
-$container['SessionDestroyer'] = function ($container) {
+$container['SessionDestroyer'] = function() use ($container) {
     return new \Fileshare\Services\SessionDestroyService($container);
 };
 
@@ -22,10 +22,10 @@ $container['UserService'] = function () {
     return new Fileshare\Services\UserService();
 };
 
-$container['AddUserService'] = function () {
-    return new Fileshare\Services\AddUserService();
+$container['AddUserService'] = function () use ($container) {
+    return new Fileshare\Services\AddUserService($container);
 };
 
-$container['AddUserService'] = function () {
-    return new Fileshare\Services\CryptoService();
+$container['CryptoService'] = function () use ($container) {
+    return new Fileshare\Services\CryptoService($container);
 };

@@ -18,14 +18,8 @@ class ErrorHandler extends AbstractErrorHandler
     {
         $this->prepareErrorMessage($exception);
         $this->prepareStack($exception);
-        if ($request->isXhr) {
-            echo 'ajax';
-            $this->showWithJson($response);
-        } else {
-            echo 'no ajax';
-            $response = $this->showError($response);
-            $response = $this->setResponseMeta($response);            
-        }
+        $response = $this->showError($response);
+        $response = $this->setResponseMeta($response);
         return $response;
     }
 }

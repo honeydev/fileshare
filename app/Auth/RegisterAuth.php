@@ -24,7 +24,7 @@ class RegisterAuth extends AbstractAuth
     public function auth($regFormData)
     {
         try {
-            //$this->emailIsFree($regFormData['email']);
+            $this->emailIsFree($regFormData['email']);
         } catch (\PDOException $e) {
            echo 'pdo except';
            throw new DatabaseException($e->getMessage());

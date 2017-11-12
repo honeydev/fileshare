@@ -18,7 +18,7 @@ Ajax.prototype.sendJSON = function(url, requestData, method = 'POST') {
             console.log(response);
         },
         error: function ( qXHR, textStatus, errorThrown ) {
-            console.log(textStatus, ' ', errorThrown, qXHR.responseText);
+            // console.log(textStatus, ' ', errorThrown, qXHR.responseText);
         }
 });
 };
