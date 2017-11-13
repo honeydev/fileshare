@@ -21,9 +21,9 @@ trait UsersCRUDs
     {
         //expected var $email, $hash
         extract($userData);
-    	$addUser = "INSERT INTO users (email, hash, id) VALUES (
-    		'$email', '$hash', NULL)";
-		$addUser = $this->db->query($addUser);
+    	$addUser = "INSERT INTO users (email, hash, id) VALUES (:email, :hash, NULL)";
+		$this->db->prepare($addUser);
+		$addUser->execure(['email' => $email, 'hash' => $hash]);
     }
 
     protected function deleteUser(array $userIdentificator)
