@@ -27,26 +27,25 @@ class RegisterAuthTest extends \Codeception\Test\Unit
 
     private function addFaketUsers()
     {
-        define('USERS', [
+        define('FAKE_USERS', [
             ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser'],
             ['email' => 'fakeuser2@mail.ru', 'hash' => 'fakeUser'],
-            ['email' => 'fakeuser3@mail.ru', 'hash' => 'fakeUser']
+            ['email' => 'fakeuser3@mail.ru', 'hash' => 'fakeUser'],
         ]);
-
-        foreach (USERS as $fakeUser) {
-            $this->addUserInBase($fakeUser);
-        }
-    }
-
-    private function addUserInBase($userData)
-    {
-        extract($userData);
-        $query = "INSERT INTO users (email, hash, id) VALUES (:email, :hash, NULL)";
-        $this->db->prepare($query);
-        $query->excute(['email' => $email, 'hash' => $hash]);
+        $this->tester->haveInDatabase('users', ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser']);
     }
     // tests
     public function testSomeFeature()
+    {
+        $this->tester->seeInDatabase('users', ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser']);
+    }
+
+    private function addNotExistedUser()
+    {
+
+    }
+
+    private function addUserWithEmailEqualExistedUser()
     {
 
     }

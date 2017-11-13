@@ -10,3 +10,10 @@ modules:
         - PhpBrowser:
             url: fileshare.me/
         - \Helper\Acceptance
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=fileshare'
+            user: 'honey'
+            password: 'd5d7'
+            populate: true
+            cleanup: true
+            reconnect: true
