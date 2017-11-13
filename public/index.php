@@ -10,9 +10,9 @@ ini_set('session.use_only_cookies = 1', 1);
 ini_set('display_errors',1);
 register_shutdown_function(function() {
     $e = error_get_last();
-   if (!empty($e)) {
-       var_dump($e);
-   }
+    if (!empty($e)) {
+        var_dump($e);
+    }
 });
 
 require '../vendor/autoload.php';
