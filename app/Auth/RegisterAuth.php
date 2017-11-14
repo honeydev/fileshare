@@ -25,6 +25,7 @@ class RegisterAuth extends AbstractAuth
     {
         try {
             $this->emailIsFree($regFormData['email']);
+            return true;
         } catch (\PDOException $e) {
             throw new DatabaseException($e->getMessage());
         }

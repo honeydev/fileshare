@@ -8,16 +8,22 @@ class RegisterAuthTest extends \Codeception\Test\Unit
      */
     protected $tester;
     protected $db;
+    private $registerAuth;
+    const FAKE_USERS = [
+        ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser'],
+        ['email' => 'fakeuser2@mail.ru', 'hash' => 'fakeUser'],
+        ['email' => 'fakeuser3@mail.ru', 'hash' => 'fakeUser'],
+    ];
 
     public function __construct()
     {
         parent::__construct();
-
+        require dirname(dirname(__DIR__)) . '/public/index.php';
+        $this->registerAuth = $container->get('RegisterAuth');
     }
 
     protected function _before()
     {
-        var_dump($GLOBALS);
         $this->addFaketUsers();
     }
 
@@ -27,26 +33,28 @@ class RegisterAuthTest extends \Codeception\Test\Unit
 
     private function addFaketUsers()
     {
-        define('FAKE_USERS', [
-            ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser'],
-            ['email' => 'fakeuser2@mail.ru', 'hash' => 'fakeUser'],
-            ['email' => 'fakeuser3@mail.ru', 'hash' => 'fakeUser'],
-        ]);
-        $this->tester->haveInDatabase('users', ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser']);
+        foreach (self::FAKE_USERS as $fakeUser) {
+            $this->tester->haveInDatabase('users', $fakeUser);
+        }
     }
     // tests
     public function testSomeFeature()
     {
-        $this->tester->seeInDatabase('users', ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser']);
+        $this->addNotExistedUser();
+        $this->addUserWithEmailEqualExistedUser();
     }
 
     private function addNotExistedUser()
     {
-
+        $this->tester->assertTrue($this->registerAuth->auth(['email' => 'free@email.com', 'hash' => 'justFakeHash']));
     }
 
     private function addUserWithEmailEqualExistedUser()
     {
-
+        foreach (self::FAKE_USERS as $fakeUser) {
+            $this->tester->expectException('Fileshare\Exceptions\DatabaseException', function () use ($fakeUser) {
+                $this->registerAuth->auth(['email' => $fakeUser['email'], 'hash' => $fakeUser['hash']]);
+            });
+        }
     }
 }

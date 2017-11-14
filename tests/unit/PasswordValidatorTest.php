@@ -44,6 +44,7 @@ class PasswordValidatorTest extends \Codeception\Test\Unit
             "'AS1as", '\\asdaas1', '<>asd12', 'aaaaaaaaaaa221aaaaaaaaaaaaa',
             '`dasdfaads`'
         ]);
+
         for ($i = 0; $i < count(INCORRECT_PASSWORDS); $i++) {
             $invalidPassword = INCORRECT_PASSWORDS[$i];
             $this->tester->expectException('Fileshare\Exceptions\FileshareException', function () use ($invalidPassword) {
