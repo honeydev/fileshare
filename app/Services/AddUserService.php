@@ -28,9 +28,8 @@ class AddUserService
     public function addUser($userData)
     {
         try {
-            extract($userData); //expect vars $email, $password, $name
-            $userData['hash'] = $this->cryptoService->getPasswordHash($password);
-            var_dump($this->addUserInUsers($userData));
+            $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
+            $this->addUserInUsers($userData);
         } catch (FileshareException $e) {
 
         } catch (DatabaseException $e ) {
