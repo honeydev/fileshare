@@ -30,6 +30,4 @@ require ROOT . '/app/Routes.php';
 
 $routes = new Routes($app, $container);
 
-
-
 $app->run();

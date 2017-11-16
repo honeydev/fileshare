@@ -12,7 +12,6 @@ class MainPageController extends AbstractController
             'title' => 'Fileshare',
             'page' => 'main_page'
         ];
-        throw new \Exception('MY EXCEPTION');
 
         $response = $this->container->view->render(
             $response, 

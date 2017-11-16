@@ -21,7 +21,7 @@ class CommonErrorHandler extends AbstractErrorHandler
 
     protected function handleError($exception, Response $response)
     {
-        parent::handleError($exception);
+        parent::handleError($exception, $response);
         $response = $this->showError($response);
         $response = $this->setResponseMeta($response);
         return $response;
