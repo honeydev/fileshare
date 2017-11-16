@@ -7,7 +7,7 @@ namespace Fileshare\Handlers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class PhpErrorHandler extends AbstractErrorHandler
+class CommonErrorHandler extends AbstractErrorHandler
 {
     public function __construct($container)
     {
@@ -21,7 +21,7 @@ class PhpErrorHandler extends AbstractErrorHandler
 
     protected function handleError($exception, Response $response)
     {
-        parent::handleError($exception, $response);
+        parent::handleError($exception);
         $response = $this->showError($response);
         $response = $this->setResponseMeta($response);
         return $response;

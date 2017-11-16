@@ -20,4 +20,12 @@ class CryptoService
         }
         throw new FileshareException('Password hash generate failed');
     }
+
+    public function passwordVerify($inputPassword, $targetHash)
+    {
+        if (password_verify($inputPassword, $targetHash)) {
+            return true;
+        }
+        throw new FileshareException('Invalid password');
+    }
 }

@@ -9,7 +9,7 @@ define('ROOT', dirname(__DIR__));
 ini_set('session.use_strict_mode', 1);
 ini_set('session.use_only_cookies = 1', 1);
 ini_set('display_errors',1);
-register_shutdown_function(function() {
+register_shutdown_function(function () {
     $e = error_get_last();
     if (!empty($e)) {
         var_dump($e);
@@ -29,5 +29,7 @@ require ROOT . '/app/bootstrap/validators.php';
 require ROOT . '/app/Routes.php';
 
 $routes = new Routes($app, $container);
+
+
 
 $app->run();

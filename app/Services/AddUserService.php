@@ -36,9 +36,4 @@ class AddUserService
 
         }
     }
-
-    private function addUserInBase($userData)
-    {
-
-    }
 }

@@ -7,9 +7,17 @@
  */
 
 $container['errorHandler'] = function () use ($container) {
-    return new Fileshare\Handlers\ErrorHandler($container);
+    if ($container->get('request')->isXhr()) {
+        return new Fileshare\Handlers\JsonErrorHandler($container);
+    } else {
+        return new Fileshare\Handlers\CommonErrorHandler($container);
+    }
 };
 
 $container['phpErrorHandler'] = function () use ($container) {
-    return new Fileshare\Handlers\PhpErrorHandler($container);
+    if ($container->get('request')->isXhr()) {
+        return new Fileshare\Handlers\PhpErrorHandler($container);
+    } else {
+        return new Fileshare\Handlers\JsonPhpErrorHandler($container);
+    }
 };

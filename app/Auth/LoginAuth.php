@@ -24,13 +24,8 @@ class LoginAuth extends AbstractAuth
 
     public function auth($loginFormData)
     {
-        try {
-            $this->userCanBeAuthorized($loginFormData);
-            echo 'user exist psw correct';
-        } catch (FileshareException $e) {
-            $this->logger->error($e->getErrorMessage());
-            return false;
-        }
+        $this->userCanBeAuthorized($loginFormData);
+        echo 'user exist psw correct';
         return true;
     }
 
@@ -43,7 +38,7 @@ class LoginAuth extends AbstractAuth
             ]
         );
         $this->existUserWithThisEmail($targetUserData);
-        $this->hashsEqual(
+        $this->cryptoService->passwordVerify(
             $loginFormData['password'], 
             $targetUserData['hash']
             );
@@ -54,16 +49,6 @@ class LoginAuth extends AbstractAuth
         if (!empty($targetUserData)) {
             return true;
         }
-        throw new FileshareException(
-            'User with this email not registred'
-        );
-    }
-
-    private function hashsEqual($inputPassword, $targetHash)
-    {
-        if (password_verify($inputPassword, $targetHash)) {
-            return true;
-        }
-        throw new FileshareException('Invalid password');
+        throw new FileshareException('User with this email not registred');
     }
 }

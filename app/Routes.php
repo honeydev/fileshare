@@ -22,9 +22,7 @@ class Routes
     private function startRoutes($app, $container)
     {
         $app->get('/', 'MainPageController:indexPage');
-        $app->post('/login.form', function () {
-            echo 'login.form';
-        })->add(new LoginMiddleware($this->container));
+        $app->post('/login.form', 'MainPageController:loginUser')->add(new LoginMiddleware($this->container));
         $app->post('/register.form', 'MainPageController:regUser')
             ->add(new RegDbMiddleware($this->container))
             ->add(new RegValidateMiddleware($this->container))

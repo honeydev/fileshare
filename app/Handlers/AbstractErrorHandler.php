@@ -29,7 +29,15 @@ class AbstractErrorHandler
         $this->logger = $this->container->get('logger');
     }
 
-    protected function showError($response) {
+    protected function handleError($exception, Response $response)
+    {
+        $this->prepareErrorMessage($exception);
+        $this->prepareStack($exception);
+        $this->errorLog();
+        return $response;
+    }
+
+    protected function showError(Response $response) {
         $this->container['view']->render(
             $response, 
             "index.twig", 
@@ -43,12 +51,17 @@ class AbstractErrorHandler
         return $response;
     }
 
-    protected function showWithJson($response)
+    protected function showWithJson(Response $response)
     {
-        $response->withJson(['low level err' => 'low level']);
+        return $response->withJson([
+            'page' => '500',
+            'debug' => $this->debug,
+            'errorInfo' => $this->errorMessage,
+            'errorStack' => $this->errorStack
+        ], 500);
     }
 
-    protected function setResponseMeta($response)
+    protected function setResponseMeta(Response $response)
     {
         $response->withStatus(500);
         $response->withHeader('Content-Type', 'text/html');
@@ -58,9 +71,7 @@ class AbstractErrorHandler
     protected function errorLog()
     {
         if ($this->logging) {
-            $this->container['logger']->error(
-                implode(', ', $this->errorMessage)
-                );
+            $this->container['logger']->error(implode(', ', $this->errorMessage));
         }
     }
     

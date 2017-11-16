@@ -7,7 +7,7 @@ namespace Fileshare\Handlers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class ErrorHandler extends AbstractErrorHandler
+class JsonErrorHandler extends AbstractErrorHandler
 {
     public function __construct($container)
     {
@@ -16,8 +16,12 @@ class ErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
-        $this->prepareErrorMessage($exception);
-        $this->prepareStack($exception);
+        return $this->handleError($exception, $response);
+    }
+
+    protected function handleError($exception, Response $response)
+    {
+        parent::handleError($exception, $response);
         $response = $this->showError($response);
         $response = $this->setResponseMeta($response);
         return $response;
