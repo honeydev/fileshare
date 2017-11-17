@@ -5,7 +5,6 @@
  * Date: 10/4/17
  * Time: 8:33 PM
  */
-
 namespace Fileshare\Auth;
 
 abstract class AbstractAuth

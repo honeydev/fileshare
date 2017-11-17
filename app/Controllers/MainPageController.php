@@ -29,7 +29,6 @@ class MainPageController extends AbstractController
 
     public function regUser($request, $response)
     {
-        echo 'reg user';
         $addUserService = $this->container->get('AddUserService');
         $addUserService->addUser($request->getAttribute('regData'));
     }

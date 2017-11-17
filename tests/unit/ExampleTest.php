@@ -1,5 +1,6 @@
 <?php
 
+namespace FileshareTests;
 
 class ExampleTest extends \Codeception\Test\Unit
 {

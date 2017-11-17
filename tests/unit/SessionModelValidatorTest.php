@@ -1,5 +1,7 @@
 <?php
 
+namespace FileshareTests;
+
 class SessionModelValidatorTest extends \Codeception\Test\Unit
 {
     protected $tester;
@@ -7,7 +9,7 @@ class SessionModelValidatorTest extends \Codeception\Test\Unit
     // tests
     public function testSomeFeature()
     {
-        $this->sessionValidator = new Fileshare\Validators\SessionModelValidator;
+        $this->sessionValidator = new \Fileshare\Validators\SessionModelValidator;
         $this->testIncorrectKeys();
         $this->testAccessLvl();
         $this->testIp();

@@ -27,13 +27,7 @@ class AddUserService
 
     public function addUser($userData)
     {
-        try {
-            $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
-            $this->addUserInUsers($userData);
-        } catch (FileshareException $e) {
-
-        } catch (DatabaseException $e ) {
-
-        }
+        $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
+        $this->addUserInUsers($userData);
     }
 }

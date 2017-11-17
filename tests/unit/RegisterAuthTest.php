@@ -1,5 +1,8 @@
 <?php
 
+namespace FileshareTests;
+
+use Codeception\Util\Fixtures;
 
 class RegisterAuthTest extends \Codeception\Test\Unit
 {
@@ -18,20 +21,20 @@ class RegisterAuthTest extends \Codeception\Test\Unit
     public function __construct()
     {
         parent::__construct();
-        require dirname(dirname(__DIR__)) . '/public/index.php';
-        $this->registerAuth = $container->get('RegisterAuth');
+        $this->container = Fixtures::get('container');
+        $this->registerAuth = $this->container->get('RegisterAuth');
     }
 
     protected function _before()
     {
-        $this->addFaketUsers();
+        $this->addFakeUsers();
     }
 
     protected function _after()
     {
     }
 
-    private function addFaketUsers()
+    private function addFakeUsers()
     {
         foreach (self::FAKE_USERS as $fakeUser) {
             $this->tester->haveInDatabase('users', $fakeUser);
@@ -52,7 +55,7 @@ class RegisterAuthTest extends \Codeception\Test\Unit
     private function addUserWithEmailEqualExistedUser()
     {
         foreach (self::FAKE_USERS as $fakeUser) {
-            $this->tester->expectException('Fileshare\Exceptions\DatabaseException', function () use ($fakeUser) {
+            $this->tester->expectException('Fileshare\Exceptions\AuthorizeException', function () use ($fakeUser) {
                 $this->registerAuth->auth(['email' => $fakeUser['email'], 'hash' => $fakeUser['hash']]);
             });
         }

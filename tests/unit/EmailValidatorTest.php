@@ -1,5 +1,7 @@
 <?php
 
+namespace FileshareTests;
+
 class EmailValidatorTest extends \Codeception\Test\Unit
 {
     /**
@@ -19,7 +21,7 @@ class EmailValidatorTest extends \Codeception\Test\Unit
     // tests
     public function testSomeFeature()
     {
-        $this->emailValidator = new Fileshare\Validators\EmailValidator();
+        $this->emailValidator = new \Fileshare\Validators\EmailValidator();
         $this->testCorrectEmails();
         $this->testIncorrectEmails();
     }

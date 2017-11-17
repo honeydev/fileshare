@@ -1,5 +1,7 @@
 <?php
 
+namespace FileshareTests;
+
 use Codeception\Util\Fixtures;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -25,7 +27,7 @@ require ROOT . '/app/bootstrap/services.php';
 require ROOT . '/app/bootstrap/middlewares.php';
 require ROOT . '/app/bootstrap/auths.php';
 require ROOT . '/app/bootstrap/validators.php';
-require ROOT . '/app/Routes.php';
+
 
 Fixtures::add('app', $app);
 Fixtures::add('container', $container);

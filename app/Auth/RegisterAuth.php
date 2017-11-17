@@ -8,8 +8,7 @@
 
 namespace Fileshare\Auth;
 
-use Fileshare\Exceptions\DatabaseException as DatabaseException;
-use Fileshare\Exceptions\FileshareException as FileshareException;
+use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class RegisterAuth extends AbstractAuth
 {
@@ -23,12 +22,8 @@ class RegisterAuth extends AbstractAuth
 
     public function auth($regFormData)
     {
-        try {
-            $this->emailIsFree($regFormData['email']);
-            return true;
-        } catch (\PDOException $e) {
-            throw new DatabaseException($e->getMessage());
-        }
+        $this->emailIsFree($regFormData['email']);
+        return true;
     }
 
     private function emailIsFree($email)
@@ -36,8 +31,6 @@ class RegisterAuth extends AbstractAuth
         if ($this->findEqualUserEmail($email) === false) {
             return true;
         }
-        throw new DatabaseException(
-            "Another user registred with email ${email}"
-            );
+        throw new AuthorizeException("Another user registred with email ${email}");
     }
 }

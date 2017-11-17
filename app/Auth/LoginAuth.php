@@ -7,7 +7,7 @@
  */
 namespace Fileshare\Auth;
 
-use Fileshare\Exceptions\FileshareException as FileshareException;
+use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class LoginAuth extends AbstractAuth
 {
@@ -49,6 +49,6 @@ class LoginAuth extends AbstractAuth
         if (!empty($targetUserData)) {
             return true;
         }
-        throw new FileshareException('User with this email not registred');
+        throw new AuthorizeException('User with this email not registred');
     }
 }

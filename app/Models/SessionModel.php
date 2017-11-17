@@ -11,7 +11,7 @@ class SessionModel
     /**
      * @property bool, if true - user authorized now
      */
-    private $authorizeStatus = false;
+    protected $authorizeStatus = false;
     /**
      * @property int user access lvl
      * 0 - guest
@@ -19,11 +19,11 @@ class SessionModel
      * 2 - moderator
      * 3 - administrator
      */
-    private $accessLvl;
+    protected $accessLvl;
     /**
      * @property {string} current user ip address
      */
-    private $ip;
+    protected $ip;
 
     private static $sessionModel;
 
@@ -49,13 +49,6 @@ class SessionModel
         $this->$propertyName = $propertyValue;
     }
 
-    public function __get(string $propertyName)
-    {
-        if (property_exists($this, $propertyName)) {
-            return $this->$propertyName;
-        }
-        throw new \InvalidArgumentException("Incorrect session variable [{$propertyName}]");
-    }
     /**
      * @method realize singleton pattern
      */

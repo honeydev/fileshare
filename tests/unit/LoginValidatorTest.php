@@ -1,5 +1,7 @@
 <?php
 
+namespace FileshareTests;
+
 class LoginValidatorTest extends \Codeception\Test\Unit
 {
     /**

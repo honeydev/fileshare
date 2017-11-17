@@ -11,8 +11,5 @@ namespace Fileshare\Services;
 
 class CookieService
 {
-    public static function getCookieService()
-    {
-        return new CookieService();
-    }
+
 }

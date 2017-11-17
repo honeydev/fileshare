@@ -1,5 +1,7 @@
 <?php
 
+namespace FileshareTests;
+
 
 class PasswordValidatorTest extends \Codeception\Test\Unit
 {
@@ -20,7 +22,7 @@ class PasswordValidatorTest extends \Codeception\Test\Unit
     // tests
     public function testSomeFeature()
     {
-        $this->passwordValidator = new Fileshare\Validators\PasswordValidator();
+        $this->passwordValidator = new \Fileshare\Validators\PasswordValidator();
         $this->testCorrectPasswords();
         $this->testIncorrectPasswords();
     }
