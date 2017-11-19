@@ -24,9 +24,8 @@ class LoginAuth extends AbstractAuth
 
     public function auth($loginFormData)
     {
-        $this->userCanBeAuthorized($loginFormData);
-        echo 'user exist psw correct';
-        return true;
+        $userData = $this->userCanBeAuthorized($loginFormData);
+        return $userData;
     }
 
     private function userCanBeAuthorized($loginFormData)
@@ -42,6 +41,7 @@ class LoginAuth extends AbstractAuth
             $loginFormData['password'], 
             $targetUserData['hash']
             );
+        return $targetUserData;
     }
 
     private function existUserWithThisEmail($targetUserData)

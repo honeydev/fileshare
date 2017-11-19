@@ -24,6 +24,7 @@ trait UsersCRUDs
     	$addUser = "INSERT INTO users (email, hash, id) VALUES (:email, :hash, NULL)";
 		$request = $this->db->prepare($addUser);
 		$request->execute(['email' => $email, 'hash' => $hash]);
+		$request->lastInsertId();
     }
 
     protected function deleteUser(array $userIdentificator)
@@ -37,8 +38,7 @@ trait UsersCRUDs
     protected function selectUserData(array $userIdentificator)
     {
         extract($userIdentificator);
-        echo $identificatorType;
-        $userData = "SELECT email, hash FROM users WHERE $identificatorType = '$identificatorValue'";
+        $userData = "SELECT email, hash, id FROM users WHERE $identificatorType = '$identificatorValue'";
         $userData = $this->db->query($userData);
         $userData = $userData->fetch();
         return $userData;

@@ -8,8 +8,10 @@
 
 namespace Fileshare\Handlers;
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
-class JsonPhpErrorHandler extends AbstractHandler
+class JsonPhpErrorHandler extends AbstractErrorHandler
 {
     public function __construct($container)
     {
@@ -23,9 +25,8 @@ class JsonPhpErrorHandler extends AbstractHandler
 
     protected function handleError($exception, Response $response)
     {
+        echo 'runtime';
         parent::handleError($exception, $response);
-        $response = $this->showError($response);
-        $response = $this->setResponseMeta($response);
-        return $response;
+        return $this->showWithJson($response);
     }
 }

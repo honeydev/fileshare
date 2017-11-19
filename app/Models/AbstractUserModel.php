@@ -16,5 +16,13 @@ abstract class AbstractUserModel extends AbstractModel
     /** @property string */
     protected $name;
     /** @property array */
-    protected $priveleges;
+    protected $privileges;
+
+    public function __set($propertyName, $propertyValue)
+    {
+        if (property_exists($this, $propertyName)) {
+            $this->$propertyName = $propertyValue;
+        }
+        throw new \InvalidArgumentException("In class " . get_class($this) . " not exist property {$propertyName}");
+    }
 }

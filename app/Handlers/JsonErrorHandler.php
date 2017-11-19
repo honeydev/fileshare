@@ -16,14 +16,13 @@ class JsonErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
+        echo 'json handle';
         return $this->handleError($exception, $response);
     }
 
     protected function handleError($exception, Response $response)
     {
         parent::handleError($exception, $response);
-        $response = $this->showError($response);
-        $response = $this->setResponseMeta($response);
-        return $response;
+        return $this->showWithJson($response);
     }
 }

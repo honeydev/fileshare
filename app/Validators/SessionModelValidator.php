@@ -8,7 +8,8 @@ class SessionModelValidator extends AbstractValidator
     protected $regExpPattern = [
         'authorizeStatus' => '/^|1$/',
         'accessLvl' => '/^[0-3]{1}$/',
-        'ip' => '/^(([0-1]?[0-9]?[0-9]|2[0-5][0-5])\.){3}([0-1]?[0-9]?[0-9]|2[0-5][0-5])$/'
+        'ip' => '/^(([0-1]?[0-9]?[0-9]|2[0-5][0-5])\.){3}([0-1]?[0-9]?[0-9]|2[0-5][0-5])$/',
+        'user' => null // user is object not check for regexp
     ];
 
     public function validate($dataFromValidate)
@@ -41,6 +42,10 @@ class SessionModelValidator extends AbstractValidator
 
     private function checkPropertyValue($pattern, $propertyValue)
     {
+        if (is_object($propertyValue)) {
+            return true;
+        }
+
         if (!$this->dataIsMatchRegExp($pattern, $propertyValue)) {
             throw new \Exception("
                 Incorrect  value [{$propertyValue}]

@@ -8,6 +8,7 @@ use Fileshare\Controllers\MainPageController as MainPageController;
 use Fileshare\Middlewares\LoginMiddleware as LoginMiddleware;
 use Fileshare\Middlewares\RegValidateMiddleware as RegValidateMiddleware;
 use Fileshare\Middlewares\RegDbMiddleware as RegDbMiddleware;
+use Fileshare\Middlewares\RegUserTypeMiddleware as RegUserTypeMiddleware;
 
 class Routes
 {
@@ -25,7 +26,8 @@ class Routes
         $app->post('/login.form', 'MainPageController:loginUser')->add(new LoginMiddleware($this->container));
         $app->post('/register.form', 'MainPageController:regUser')
             ->add(new RegDbMiddleware($this->container))
+            ->add(new RegUserTypeMiddleware($this->container))
             ->add(new RegValidateMiddleware($this->container))
-            ;
+        ;
     }
 }

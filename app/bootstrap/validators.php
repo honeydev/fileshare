@@ -20,3 +20,8 @@ $container['PasswordValidator'] = function () {
 $container['NameValidator'] = function () {
     return new Fileshare\Validators\NameValidator();
 };
+
+$container['UserTypeValidator'] = function () {
+    return new Fileshare\Validators\UserTypeValidator();
+};
+

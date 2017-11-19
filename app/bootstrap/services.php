@@ -18,8 +18,8 @@ $container['CookieService'] = function () {
     return new Fileshare\Services\CookieService();
 };
 
-$container['UserService'] = function () {
-    return new Fileshare\Services\UserService();
+$container['UserService'] = function () use ($container) {
+    return new Fileshare\Services\UserService($container);
 };
 
 $container['AddUserService'] = function () use ($container) {

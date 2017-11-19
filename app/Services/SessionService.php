@@ -9,12 +9,14 @@ class SessionService
 {
     private $container;
     private $sessionModel;
+    private $userService;
 
     public function __construct($container)
     {
         $this->createSession();
         $this->container = $container;
         $this->sessionModel = $container->get('SessionModel', $container);
+        $this->userService = $container->get('UserService', $container);
         $this->setSessionVariables();
     }
 
@@ -23,9 +25,11 @@ class SessionService
         if (!$this->sessionVarsExists()) {
             $_SESSION['authorizeStatus'] = false;
             $_SESSION['accessLvl'] = 0;
+            $_SESSION['user'] = $this->userService->getUser();
         }
         $this->sessionModel->authorizeStatus = $_SESSION['authorizeStatus'];
         $this->sessionModel->accessLvl = $_SESSION['accessLvl'];
+        $this->sessionModel->user = $_SESSION['user'];
         $this->sessionModel->ip = $_SERVER['REMOTE_ADDR'];
     }
 

@@ -13,6 +13,6 @@ abstract class AbstractController
     {
         $this->container = $container;
         $this->sessionService = $container->get('SessionService', $this->container);
+        $this->userService = $container->get('UserService', $this->container);
     }
-
 }

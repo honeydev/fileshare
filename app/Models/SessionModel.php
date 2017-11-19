@@ -6,7 +6,7 @@
 
 namespace Fileshare\Models;
 
-class SessionModel
+class SessionModel extends AbstractModel
 {
     /**
      * @property bool, if true - user authorized now
@@ -16,13 +16,15 @@ class SessionModel
      * @property int user access lvl
      * 0 - guest
      * 1 - user
-     * 2 - moderator
-     * 3 - administrator
+     * 2 - administrator
      */
     protected $accessLvl;
+    /** @property {object} user model object */
+    protected $user;
     /**
      * @property {string} current user ip address
      */
+
     protected $ip;
 
     private static $sessionModel;

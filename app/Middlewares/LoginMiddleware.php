@@ -33,12 +33,16 @@ class LoginMiddleware extends AbstractMiddleware
             $this->emailValidator->validate($loginData['email']);
             $this->passwordValidator->validate($loginData['password']);
             $this->userAlreadyAuthorized();
-            $this->loginAuth->auth($loginData);
+            $response = $response->withAttribute($this->loginAuth->auth($loginData));
             $response = $next($request, $response);
         } catch (FileshareException $e) {
-            $error = $this->prepareErrorToJsonSend($e, 'Invalid login data');
-            $response = $response->withJson($error, 401);
+            $response = $this->sendErrorWithJson([
+                'errorType' => 'Invalid login data',
+                'exception' => $e,
+                'errorCode' => 401
+            ], $response);
+        } finally {
+            return $response;
         }
-        return $response;
     }
 }

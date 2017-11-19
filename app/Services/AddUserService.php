@@ -16,6 +16,7 @@ use Fileshare\Exceptions\FileshareException;
 class AddUserService
 {
     use \Fileshare\CRUDs\UsersCRUDs;
+    use \Fileshare\CRUDs\UsersSettingsCRUDs;
 
     private $cryptoService;
 
@@ -28,6 +29,7 @@ class AddUserService
     public function addUser($userData)
     {
         $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
-        $this->addUserInUsers($userData);
+        $userId = $this->addUserInUsers($userData);
+        $this->addUserSettings($userData);
     }
 }

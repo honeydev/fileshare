@@ -2,7 +2,8 @@
 
 namespace Fileshare\Controllers;
 
-use Fileshare\Exceptions\FileshareException;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 class MainPageController extends AbstractController
 {
@@ -27,15 +28,16 @@ class MainPageController extends AbstractController
 
     }
 
-    public function regUser($request, $response)
+    public function regUser(Request $request, Response $response)
     {
+        $userData = $request->getAttribute('userData');
         $addUserService = $this->container->get('AddUserService');
         $addUserService->addUser($request->getAttribute('regData'));
+        return $response->withJson(['allowMessage' => 'user successfully added'], 200);
     }
 
     public function loginUser($request, $response)
     {
-        echo 'login user';
-
+        $userService = $this->container->get('UserService', $request->getAttribute('userData'));
     }
 }

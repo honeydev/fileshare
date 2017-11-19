@@ -4,7 +4,7 @@ namespace Fileshare\Middlewares;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use Fileshare\Exceptions\FileshareException as FileshareException;
+use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 use Fileshare\Exceptions\DatabaseException as DatabaseException;
 
 class RegDbMiddleware extends AbstractMiddleware
@@ -24,9 +24,17 @@ class RegDbMiddleware extends AbstractMiddleware
             $this->registerAuth->auth($regData);
             $response = $next($request, $response);
         } catch (DatabaseException $e) {
-            echo 'db excep';
-            $error = $this->prepareErrorToJsonSend($e, 'Registration failed');
-            $response = $response->withJson($error, 401);
+            $response = $this->sendErrorWithJson([
+                'errorType' => 'Invalid registration data',
+                'exception' => $e,
+                'errorCode' => 401
+            ], $response);
+        } catch (AuthorizeException $e) {
+            $response = $this->sendErrorWithJson([
+                'errorType' => 'Invalid registration data',
+                'exception' => $e,
+                'errorCode' => 401
+            ], $response);
         } finally {
             return $response;
         }

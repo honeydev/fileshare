@@ -33,7 +33,8 @@ RegisterForm.prototype.sendRegisterForm = function() {
             email: this._email,
             name: this._name,
             password: this._password,
-            passwordRepeat: this._passwordRepeat
+            passwordRepeat: this._passwordRepeat,
+            userType: 1
         }
     );
 };

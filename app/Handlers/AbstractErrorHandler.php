@@ -16,7 +16,8 @@ class AbstractErrorHandler
     /** @array */
     protected $errorMessage;
     /** @array */
-    protected $errorStack;
+
+    protected $prepareErrorHelper;
 
     protected $container;
 
@@ -27,25 +28,25 @@ class AbstractErrorHandler
         $this->debug = $this->container['settings']['displayErrorDetails'];
         $this->logging = $this->container['settings']['logging'];
         $this->logger = $this->container->get('logger');
+        $this->prepareErrorHelper = $this->container->get('PrepareErrorHelper');
     }
 
     protected function handleError($exception, Response $response)
     {
-        $this->prepareErrorMessage($exception);
-        $this->prepareStack($exception);
+        $this->errorMessage = $this->prepareErrorHelper->prepareErrorMessage($exception);
         $this->errorLog();
         return $response;
     }
 
     protected function showError(Response $response) {
         $this->container['view']->render(
-            $response, 
-            "index.twig", 
+            $response,
+            "index.twig",
             [
                 'page' => '500',
                 'debug' => $this->debug,
                 'errorInfo' => $this->errorMessage,
-                'errorStack' => $this->errorStack
+                'errorStack' => $this->errorMessage['stackArray']
             ]
             );
         return $response;
@@ -57,7 +58,7 @@ class AbstractErrorHandler
             'page' => '500',
             'debug' => $this->debug,
             'errorInfo' => $this->errorMessage,
-            'errorStack' => $this->errorStack
+            'errorStack' => $this->errorMessage['stackArray']
         ], 500);
     }
 
@@ -71,18 +72,8 @@ class AbstractErrorHandler
     protected function errorLog()
     {
         if ($this->logging) {
-            $this->container['logger']->error(implode(', ', $this->errorMessage));
+            $this->container['logger']->error($this->errorMessage['stackString']);
         }
-    }
-    
-    protected function prepareErrorMessage($exception) 
-    {
-        $errorMessage = [];
-        $errorMessage['error'] = $exception->getMessage();
-        $errorMessage['code'] = $exception->getCode();
-        $errorMessage['file'] = $exception->getFile();
-        $errorMessage['line'] = $exception->getLine();
-        $this->errorMessage = $errorMessage;
     }
 
     protected function prepareStack($exception)
