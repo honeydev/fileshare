@@ -25,7 +25,7 @@ class MainPageController extends AbstractController
 
     public function uploadFile($request, $response)
     {
-
+        var_dump($request->getUploadedFiles());
     }
 
     public function regUser(Request $request, Response $response)

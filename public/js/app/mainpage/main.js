@@ -1,10 +1,13 @@
 'use strict';
 
 import {common} from '../common/common';
+import {mainPageBootstrap} from './mainPageBootstrap';
 import {MainPageHandlers} from './mainPageHandlers.js';
 
 function mainPage() {
-	let mainPageHandlers = new MainPageHandlers();
+	mainPageBootstrap(dic);
+	let mainPageHandlers = new MainPageHandlers(dic);
+	console.log(mainPageHandlers._dragNDropUploader);
 	mainPageHandlers.setHandlers();
 }
 

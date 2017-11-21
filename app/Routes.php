@@ -29,5 +29,6 @@ class Routes
             ->add(new RegUserTypeMiddleware($this->container))
             ->add(new RegValidateMiddleware($this->container))
         ;
+        $app->post('/upload.file', 'MainPageController:uploadFile');
     }
 }
