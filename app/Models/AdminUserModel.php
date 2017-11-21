@@ -5,9 +5,9 @@
  * Date: 18/11/17
  * Time: 14:35
  */
+declare(strict_types=1);
 
 namespace Fileshare\Models;
-
 
 class AdminUserModel
 {

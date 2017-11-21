@@ -35,7 +35,10 @@ module.exports = {
     ],
     resolve: {
         modules: ['node_modules'],
-        extensions: ['.js']
+        extensions: ['.js'],
+        alias: {
+            "jquery-ui": "jquery-ui/build/release.js"        
+        }
     },
     module: {
         rules: [

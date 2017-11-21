@@ -8,7 +8,7 @@
 
 namespace Fileshare\Models;
 
-class AbstractModel
+abstract class AbstractModel
 {
     /**
      * @method universal getter

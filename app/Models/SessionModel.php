@@ -3,6 +3,7 @@
 /**
  * @class SessionModel contain main information about curren user session
  */
+declare(strict_types=1);
 
 namespace Fileshare\Models;
 

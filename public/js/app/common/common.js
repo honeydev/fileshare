@@ -11,6 +11,7 @@ import style from '../../../css/styles.css';
 import {commonBootstrap} from './commonBootstrap.js';
 import {CommonHandlers} from './commonHandlers.js';
 
+
 let common = function() {
     commonBootstrap();
     let handlers = new CommonHandlers(dic);

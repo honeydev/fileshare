@@ -5,9 +5,9 @@
  * Date: 17/11/17
  * Time: 23:10
  */
+declare(strict_types=1);
 
 namespace Fileshare\Models;
-
 
 abstract class AbstractUserModel extends AbstractModel
 {
