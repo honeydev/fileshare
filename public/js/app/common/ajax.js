@@ -25,10 +25,13 @@ Ajax.prototype.sendJSON = function(url, requestData, method = 'POST') {
 
 Ajax.prototype.sendFile = function(file, url) {
 
+    let formData = new FormData();
+    formData.append('file', file);
+
     $.ajax({
         url: url,
         type: 'POST',
-        data: file,
+        data: formData,
         processData: false,
         contentType: false
     });

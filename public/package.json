@@ -20,7 +20,8 @@
     "jquery": "^3.2.1",
     "less": "^3.0.0-alpha.3",
     "less-loader": "^4.0.5",
-    "parsleyjs": "^2.8.0"
+    "parsleyjs": "^2.8.0",
+    "webpack-jquery-ui": "^1.0.0"
   },
   "devDependencies": {
     "css-loader": "^0.28.7",

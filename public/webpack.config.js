@@ -12,7 +12,7 @@ module.exports = {
         filename: '[name].js',
         path: __dirname + '/js/public'
     },
-    //devtool: 'inline-source-map ',
+    devtool: 'inline-source-map',
     watch: true,
     watchOptions: {
         aggregateTimeout: 100
@@ -36,9 +36,6 @@ module.exports = {
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js'],
-        alias: {
-            "jquery-ui": "jquery-ui/build/release.js"        
-        }
     },
     module: {
         rules: [

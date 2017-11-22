@@ -8,13 +8,13 @@ export {MainPageHandlers};
 
 function MainPageHandlers(dic) {
     this._dic = dic;
-    this._dragNDropUploader = dic.get('DragNDropUploader')(dic);
-    console.log('drag', dic, this._dragNDropUploader);
+    this._fileUploader = dic.get('FileUploader')(dic);
 }
 
 MainPageHandlers.prototype.setHandlers = function () {
 
     this._setDragNDropHandlers();
+    this._setUploadFileHandler();
 };
 
 
@@ -23,17 +23,26 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
     $('#uploadSection').bind('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this._dragNDropUploader.uploadFile(e.originalEvent.dataTransfer.files[0]);
+        this._fileUploader.uploadFile(e.originalEvent.dataTransfer.files[0]);
         console.log('drop');
     });
 
-    $('#uploadSection').bind('dragover', function (e) {
+    $('#uploadSection').bind('dragover', (e) => {
         e.preventDefault();
         console.log('dragover');
     });
 
-    $('#uploadSection').bind('dragleave', function(e) {
+    $('#uploadSection').bind('dragleave', (e) => {
         e.preventDefault();
         console.log('dragleave');
+    });
+
+
+};
+
+MainPageHandlers.prototype._setUploadFileHandler = function() {
+
+    $('#inputFile').bind('change', (e) => {
+        this._fileUploader.uploadFile($('#inputFile').prop('files')[0]);
     });
 };
