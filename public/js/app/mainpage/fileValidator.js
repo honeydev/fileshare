@@ -12,7 +12,7 @@ function FileValidator() {
         image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         videos: ['mp4', 'avi', 'wmv', 'mov', 'mkv', '3gp', 'flw', 'swf'],
         audio: ['mp3', 'wav', 'wave', 'acc', 'ogg'],
-        archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', '.cbr']
+        archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', 'cbr']
     }
 }
 
@@ -20,12 +20,13 @@ FileValidator.prototype = Object.create(BaseValidator.prototype);
 
 FileValidator.prototype.validate = function (file) {
     this._fileExtensionIsAllowed(file.name);
+    return true;
 };
 
 FileValidator.prototype._fileExtensionIsAllowed = function (fileName) {
 
-    for (fileType in this._allowExtensions) {
-        if (this._checkExtension(thisallowExtensions[fileType])) {
+    for (let fileType in this._allowExtensions) {
+        if (this._checkCocnretExtension(fileName, this._allowExtensions[fileType])) {
             return true;
         }
     }

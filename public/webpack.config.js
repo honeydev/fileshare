@@ -32,6 +32,9 @@ module.exports = {
         new webpack.ProvidePlugin({
             dic: 'dic/dic.js'
         }),
+        new webpack.ProvidePlugin({
+            chai: 'chai/chai.js'
+        })
     ],
     resolve: {
         modules: ['node_modules'],
