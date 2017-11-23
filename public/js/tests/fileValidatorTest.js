@@ -22,13 +22,23 @@ FileValidatorTest.prototype.validate = function () {
 FileValidatorTest.prototype._checkFileName = function () {
 
     describe('Add files with correct fileName', () => {
-        it (`Try iterrate array with correct names, 
+        it (`Try iterate array with correct names, 
             everyone should return true`, () => {
 
             const CORRECT_FILENAMES = this._generateCorrectFiles();
 
             CORRECT_FILENAMES.forEach((file) => {
                 assert.isTrue(this._fileValidator.validate(file));
+            });
+        });
+    });
+
+    describe('Add files with incorrect filename', () => {
+        it(`Try iterate array with incorrect names`, () => {
+            const INCORRECT_FILES = this._generateIncorrectFiles();
+            INCORRECT_FILES.forEach((file) => {
+                console.log(file);
+                assert.throws(() => {return this._fileValidator.validate(file)}, Error);
             });
         });
     });
@@ -50,6 +60,33 @@ FileValidatorTest.prototype._generateCorrectFiles = function () {
 
 FileValidatorTest.prototype._generateIncorrectFiles = function () {
     let incorrectFiles = [];
+    const DO_NAME_INCORRECT_METHODS = this._getIncorrectNameCreateMethods();
+
+    for (let extensions in this._allowExtensions) {
+        this._allowExtensions[extensions].forEach((ext) => {
+            let incorrectMethod = DO_NAME_INCORRECT_METHODS[Math.floor(Math.random() * DO_NAME_INCORRECT_METHODS.length)];
+            incorrectFiles.push({
+                name: incorrectMethod(ext)
+            });
+        });
+    }
+    return incorrectFiles;
+};
+
+FileValidatorTest.prototype._getIncorrectNameCreateMethods = function () {
+  return [
+      function (ext) {
+          //TODO add space after all dot in exrension
+          return 'incorrect_name with space after dot. ' + ext;
+      },
+      function (ext) {
+          return 'incorect_name with.' + ext + 'text after extension';
+      },
+      function (ext) {
+          let invalidExpWithSpace = ext.substr(0, 1) + ' ' + ext.substr(1, ext.length - 1);
+          return 'name with space in extension.' + invalidExpWithSpace;
+      }
+  ];
 };
 
 let fileValidatorTest = new FileValidatorTest();

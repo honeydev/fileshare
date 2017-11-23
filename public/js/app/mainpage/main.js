@@ -2,7 +2,7 @@
 
 import {common} from '../common/common';
 import {mainPageBootstrap} from './mainPageBootstrap';
-import {MainPageHandlers} from './mainPageHandlers.js';
+import {MainPageHandlers} from './mainPageHandlers';
 
 function mainPage() {
 	mainPageBootstrap(dic);
