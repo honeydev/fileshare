@@ -30,7 +30,7 @@ FileValidator.prototype._fileExtensionIsAllowed = function (fileName) {
             return true;
         }
     }
-    throw new Error(`Incorrect extension file`);
+    throw new Error(`Incorrect extension file ${fileName}`);
 };
 
 FileValidator.prototype._checkCocnretExtension = function (fileName, extensions) {

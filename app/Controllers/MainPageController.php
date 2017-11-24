@@ -38,6 +38,7 @@ class MainPageController extends AbstractController
 
     public function loginUser($request, $response)
     {
+        echo 'user log';
         $userService = $this->container->get('UserService', $request->getAttribute('userData'));
     }
 }

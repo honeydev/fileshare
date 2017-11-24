@@ -38,7 +38,7 @@ FileValidatorTest.prototype._checkFileName = function () {
             const INCORRECT_FILES = this._generateIncorrectFiles();
             INCORRECT_FILES.forEach((file) => {
                 console.log(file);
-                assert.throws(() => {return this._fileValidator.validate(file)}, Error);
+                assert.throws(() => {return this._fileValidator.validate(file)}, `Incorrect extension file ${file.name}`);
             });
         });
     });
@@ -64,9 +64,11 @@ FileValidatorTest.prototype._generateIncorrectFiles = function () {
 
     for (let extensions in this._allowExtensions) {
         this._allowExtensions[extensions].forEach((ext) => {
-            let incorrectMethod = DO_NAME_INCORRECT_METHODS[Math.floor(Math.random() * DO_NAME_INCORRECT_METHODS.length)];
+            let incorrectMethodName = DO_NAME_INCORRECT_METHODS[
+                Math.floor(Math.random() * DO_NAME_INCORRECT_METHODS.length)
+            ];
             incorrectFiles.push({
-                name: incorrectMethod(ext)
+                name: incorrectMethodName(ext)
             });
         });
     }
@@ -74,19 +76,23 @@ FileValidatorTest.prototype._generateIncorrectFiles = function () {
 };
 
 FileValidatorTest.prototype._getIncorrectNameCreateMethods = function () {
-  return [
-      function (ext) {
-          //TODO add space after all dot in exrension
-          return 'incorrect_name with space after dot. ' + ext;
-      },
-      function (ext) {
-          return 'incorect_name with.' + ext + 'text after extension';
-      },
-      function (ext) {
-          let invalidExpWithSpace = ext.substr(0, 1) + ' ' + ext.substr(1, ext.length - 1);
-          return 'name with space in extension.' + invalidExpWithSpace;
-      }
-  ];
+    return [
+        function (ext) {
+            ext = this._addSpacesInExt(ext);
+            return 'incorrect_name with space after dot. ' + ext;
+        }.bind(this),
+        function (ext) {
+            return 'incorect_name with.' + ext + 'text after extension';
+        },
+        function (ext) {
+            let invalidExpWithSpace = ext.substr(0, 1) + ' ' + ext.substr(1, ext.length - 1);
+            return 'name with space in extension.' + invalidExpWithSpace;
+        }
+    ];
+};
+
+FileValidatorTest.prototype._addSpacesInExt = function (ext) {
+    return ext.replace(/\./gi, '. ');
 };
 
 let fileValidatorTest = new FileValidatorTest();

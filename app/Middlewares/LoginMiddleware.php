@@ -11,6 +11,7 @@ namespace Fileshare\Middlewares;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\FileshareException as FileshareException;
+use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class LoginMiddleware extends AbstractMiddleware
 {
@@ -29,15 +30,25 @@ class LoginMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
+            
+            echo 'login mw';
             $loginData = $request->getParsedBody();
             $this->emailValidator->validate($loginData['email']);
             $this->passwordValidator->validate($loginData['password']);
             $this->userAlreadyAuthorized();
-            $response = $response->withAttribute($this->loginAuth->auth($loginData));
+            $request = $request->withAttribute('loginData', $this->loginAuth->auth($loginData));
             $response = $next($request, $response);
+            echo 'end mw';
         } catch (FileshareException $e) {
+            echo 'error';
             $response = $this->sendErrorWithJson([
                 'errorType' => 'Invalid login data',
+                'exception' => $e,
+                'errorCode' => 401
+            ], $response);
+        } catch (AuthorizeException $e) {
+            $response = $this->sendErrorWithJson([
+                'errorType' => 'User not exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

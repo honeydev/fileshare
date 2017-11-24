@@ -16,6 +16,7 @@ class PhpErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
+        echo 'runtimeErrorHR';
         return $this->handleError($exception, $response);
     }
 

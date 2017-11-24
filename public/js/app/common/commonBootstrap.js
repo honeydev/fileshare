@@ -14,7 +14,6 @@ import {LoginFormSetter} from './loginFormSetter';
 import {RegisterFormSetter} from './registerFormSetter';
 
 function commonBootstrap() {
-    debugger;
     dic.add('Ajax', function(...args) {
         return new Ajax(...args);
     });

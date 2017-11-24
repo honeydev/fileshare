@@ -4,6 +4,7 @@ export {mainPageBootstrap};
 
 import {FileUploader} from './fileUploader';
 import {FileValidator} from './fileValidator';
+import {UploadSectionSetter} from './uploadSectionSetter';
 
 function mainPageBootstrap(dic) {	
     dic.add('FileUploader', function (...args) {
@@ -12,4 +13,7 @@ function mainPageBootstrap(dic) {
     dic.add('FileValidator', function (...args) {
     	return new FileValidator(...args);
     });
+    dic.add('UploadSectionSetter', function (...args) {
+    	return new UploadSectionSetter(...args);
+    })
 }

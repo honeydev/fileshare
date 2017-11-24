@@ -5,16 +5,19 @@ namespace Fileshare;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-define('ROOT', dirname(__DIR__));
+error_reporting(E_ALL); 
+ini_set("display_errors", 1); 
 ini_set('session.use_strict_mode', 1);
 ini_set('session.use_only_cookies = 1', 1);
-ini_set('display_errors',1);
+
 register_shutdown_function(function () {
     $e = error_get_last();
     if (!empty($e)) {
         var_dump($e);
     }
 });
+
+define('ROOT', dirname(__DIR__));
 
 require ROOT . '/vendor/autoload.php';
 require ROOT . '/app/bootstrap/app.php';

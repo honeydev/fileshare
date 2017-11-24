@@ -30,21 +30,6 @@ abstract class AbstractMiddleware
         }
     }
 
-    protected function prepareErrorToJsonSend($e, $errorType)
-    {
-        $error = [
-            'errorType' => $errorType,
-        ];
-        if ($this->container->get('settings')['displayErrorDetails']) {
-            $error['fullError'] = $e->getMessage();
-            $error['line'] = $e->getLine();
-            $error['stack'] = $e->getTrace();
-            $error['code'] = $e->getCode();
-            $error['file'] = $e->getFile();
-        }
-        return $error;
-    }
-
     protected function sendErrorWithJson($errorElements, $response)
     {
             $error = [

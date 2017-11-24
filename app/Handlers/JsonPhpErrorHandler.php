@@ -20,12 +20,13 @@ class JsonPhpErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
+        echo 'jsonRuntimeErrorHR';
         return $this->handleError($exception, $response);
     }
 
     protected function handleError($exception, Response $response)
     {
-        echo 'runtime';
+
         parent::handleError($exception, $response);
         return $this->showWithJson($response);
     }

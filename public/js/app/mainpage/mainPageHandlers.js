@@ -9,10 +9,11 @@ export {MainPageHandlers};
 function MainPageHandlers(dic) {
     this._dic = dic;
     this._fileUploader = dic.get('FileUploader')(dic);
+    this._uploadSectionSetter = dic.get('UploadSectionSetter')(dic);
+    console.log('uploadSetter', this._uploadSectionSetter);
 }
 
 MainPageHandlers.prototype.setHandlers = function () {
-
     this._setDragNDropHandlers();
     this._setUploadFileHandler();
 };
@@ -20,21 +21,27 @@ MainPageHandlers.prototype.setHandlers = function () {
 
 MainPageHandlers.prototype._setDragNDropHandlers = function () {
 
-    $('#uploadSection').bind('drop', (e) => {
+    $("#dndWrap").bind('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
         this._fileUploader.uploadFile(e.originalEvent.dataTransfer.files[0]);
+        this._uploadSectionSetter.unsetDragNDropStyles();
         console.log('drop');
     });
 
-    $('#uploadSection').bind('dragover', (e) => {
+    $("header, main").bind('dragover', (e) => {
         e.preventDefault();
         console.log('dragover');
+        this._uploadSectionSetter.setDragNDropStyles();
+        $("#dndWrap").bind('dragover', (e) => {
+            e.preventDefault();
+        });
     });
 
-    $('#uploadSection').bind('dragleave', (e) => {
+    $('#dndWrap').bind('dragleave', (e) => {
         e.preventDefault();
         console.log('dragleave');
+        this._uploadSectionSetter.unsetDragNDropStyles();
     });
 
 
