@@ -30,8 +30,9 @@ class RegUserTypeMiddleware extends AbstractMiddleware
             $requestedUserType = $regData['userType'];
             $this->userTypeValidator->validate($requestedUserType);
             $this->checkUserType($requestedUserType);
+            $regData['accessLvl'] = $regData['userType'];
+            $request = $request->withAttribute('regData', $regData);
             $response = $next($request, $response);
-            return $response;
         } catch (FileshareException $e) {
             $response = $this->sendErrorWithJson([
                'errorType' => 'Invalid registration data',

@@ -10,7 +10,7 @@ namespace Fileshare\CRUDs;
 
 trait UsersSettingsCRUDs
 {
-    protected function selectUserSettings($id)
+    protected function selectUserSettings(string $id)
     {
         $selectUserSettings = "SELECT accountStatus, accessLvl, id FROM usersSettings WHERE id = '$id'";
         $selectUserSettings = $this->db->prepare($selectUserSettings);
@@ -18,13 +18,11 @@ trait UsersSettingsCRUDs
         return $selectUserSettings->fetch();
     }
 
-    protected function addUserSettings($userSettings)
+    protected function addUserSettings(array $userSettings)
     {
-        $accountStatus = $userSettings['accountStatus'];
         $accessLvl = $userSettings['accessLvl'];
         $id = $userSettings['id'];
-        $addSetting = "INSERT INTO usersSettings (accountStatus, accessLvl, id) VALUES 
-            accountStatus = '$accountStatus', accessLvl = '$accessLvl', id = '$id'";
+        $addSetting = "INSERT INTO usersSettings (accessLvl, userId) VALUES ($accessLvl, $id)";
         return $this->db->query($addSetting);
     }
 }

@@ -16,7 +16,7 @@ class CommonErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
-        echo 'commonError';
+        echo 'commonErrorHR';
         return $this->handleError($exception, $response);
     }
 

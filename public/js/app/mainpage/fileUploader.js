@@ -12,6 +12,6 @@ FileUploader.prototype.uploadFile = function (file) {
         this._fileValidator.validate(file);
         this._ajax.sendFile(file, 'upload.file');
     } catch (Error) {
-
+    	
     }
 };

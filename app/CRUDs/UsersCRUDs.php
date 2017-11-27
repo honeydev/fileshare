@@ -4,7 +4,7 @@
  * class instance
  */
 
-declare(strict_types=1);
+
 
 namespace Fileshare\CRUDs;
 
@@ -24,7 +24,7 @@ trait UsersCRUDs
     	$addUser = "INSERT INTO users (email, hash, id) VALUES (:email, :hash, NULL)";
 		$request = $this->db->prepare($addUser);
 		$request->execute(['email' => $email, 'hash' => $hash]);
-		$request->lastInsertId();
+		return $this->db->lastInsertId();
     }
 
     protected function deleteUser(array $userIdentificator)

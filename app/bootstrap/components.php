@@ -1,7 +1,5 @@
 <?php
 
-namespace Fileshare;
-
 /**
  * Add components in project:
  * - monolog
@@ -10,8 +8,9 @@ namespace Fileshare;
  * - twig
  */
 
+namespace Fileshare;
+
 $container = $app->getContainer();
-$appFolder = dirname(dirname(__FILE__));
 
 $container['logger'] = function () {
     $logger = new \Monolog\Logger('my_logger');
@@ -28,15 +27,13 @@ $container['db'] = function ($container) {
     return $pdo;
 };
 
-$container['view'] = function ($container) use ($appFolder) {
-    $view = new \Slim\Views\Twig($appFolder . "/Views", [
+$container['view'] = function ($container) {
+    $view = new \Slim\Views\Twig(dirname(dirname(__FILE__)) . "/Views", [
         'cache' => false,
         'debug' => true
     ]);
-
-    // Instantiate and add Slim specific extension
+    // add Slim specific extension
     $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
     $view->addExtension(new \Slim\Views\TwigExtension($container['router'], $basePath));
-
     return $view;
 };

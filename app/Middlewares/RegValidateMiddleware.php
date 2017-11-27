@@ -45,7 +45,7 @@ class RegValidateMiddleware extends AbstractMiddleware
                 'errorCode' => 401
             ], $response);
         } finally {
-             return $response;
+            return $response;
         }
     }
 }

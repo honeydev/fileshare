@@ -26,7 +26,6 @@ class JsonPhpErrorHandler extends AbstractErrorHandler
 
     protected function handleError($exception, Response $response)
     {
-
         parent::handleError($exception, $response);
         return $this->showWithJson($response);
     }
