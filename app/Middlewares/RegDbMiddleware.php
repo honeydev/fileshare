@@ -23,19 +23,20 @@ class RegDbMiddleware extends AbstractMiddleware
             $regData = $request->getAttribute('regData');
             $this->registerAuth->auth($regData);
             $response = $next($request, $response);
+            return $response;
         } catch (DatabaseException $e) {
             $response = $this->sendErrorWithJson([
                 'errorType' => 'Invalid registration data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
+            return $response;
         } catch (AuthorizeException $e) {
             $response = $this->sendErrorWithJson([
                 'errorType' => 'Invalid registration data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-        } finally {
             return $response;
         }
     }

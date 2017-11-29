@@ -5,7 +5,6 @@
  * Date: 07/11/17
  * Time: 21:47
  */
-
 declare(strict_types=1);
 
 namespace Fileshare\Services;
@@ -35,13 +34,16 @@ class AddUserService
         $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
         $userData['id'] = $this->addUserInUsers($userData);
         $this->addUserSettings($userData);
-        $this->ifNameExistAddInBase($userData);
+        $this->ifNameExistAddNameInBase($userData);
     }
 
-    protected function ifNameExistAddInBase(array $userData)
+    protected function ifNameExistAddNameInBase(array $userData)
     {
         if (array_key_exists('name', $userData)) {
-            $this->addUserInfo(['name' => $userData['name']]);
+            $this->addUserInfo([
+                'name' => $userData['name'],
+                'userId' => $userData['id']
+                ]);
         }
     }
 }

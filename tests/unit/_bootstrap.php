@@ -24,6 +24,7 @@ require ROOT . '/app/bootstrap/errorhandlers.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';
 require ROOT . '/app/bootstrap/services.php';
+require ROOT . '/app/bootstrap/helpers.php';
 require ROOT . '/app/bootstrap/auths.php';
 require ROOT . '/app/bootstrap/validators.php';
 

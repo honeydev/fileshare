@@ -25,7 +25,6 @@ class LoginAuth extends AbstractAuth
     public function auth($loginFormData)
     {
         $userData = $this->userCanBeAuthorized($loginFormData);
-        echo 'ok auth';
         return $userData;
     }
 

@@ -4,8 +4,6 @@
  * class instance
  */
 
-
-
 namespace Fileshare\CRUDs;
 
 trait UsersCRUDs

@@ -18,9 +18,9 @@ trait UsersInfoCRUDs
     protected function addUserInfo(array $userInfo)
     {
         $queryKeys = $this->crudsHelper->getKeysSection($userInfo);
-        $queryValues = $this->crudsHelpers->getKeysValues($userInfo);
-        $addUserInfo = "INSERT INTO usersInfo $queryKeys VALUES 
-        $queryValues";
+        $queryValues = $this->crudsHelper->getValuesSection($userInfo);
+        $addUserInfo = "INSERT INTO usersInfo $queryKeys VALUES $queryValues";
+        var_dump('query', $addUserInfo);
         return $this->db->query($addUserInfo);
     }
 }

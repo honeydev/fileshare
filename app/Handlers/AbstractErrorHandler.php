@@ -23,7 +23,6 @@ class AbstractErrorHandler
 
     public function __construct($container)
     {
-        echo 'work handler';
         $this->container = $container;
 
         $this->debug = $this->container['settings']['displayErrorDetails'];
