@@ -11,8 +11,8 @@ class LoginController extends AbstractController
 {
     public function login(Request $request, Response $response)
     {
-        echo 'login user!!';
         $userService = $this->container->get('UserService', $request->getAttribute('userData'));
+        $response = $response->withJson(['loginStatus' => 'success']);
         return $response;
     }
 }

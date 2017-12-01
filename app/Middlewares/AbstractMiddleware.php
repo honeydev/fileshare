@@ -33,10 +33,11 @@ abstract class AbstractMiddleware
     protected function sendErrorWithJson($errorElements, $response)
     {
             $error = [
+                'loginStatus' => 'failed',
                 'errorType' => $errorElements['errorType']
             ];
 
-        if ($this->container->get('settings')['displayErrorDetails']) {
+        if (false) {
             $error = array_merge($error, $this->prepareErrorHelper->prepareErrorMessage($errorElements['exception']));
         }
         return $response->withJson($error, $errorElements['errorCode']);

@@ -1,10 +1,11 @@
 /**
  * Created by honey on 26/10/17.
+ * simple user @class
  */
 export {User};
-import 'git';
 
 function User() {
-    this._username = null;
-    this._git = git;
+    this._username = 'guest';
+    this._email = null;
+    this._name = null;
 }

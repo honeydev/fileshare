@@ -22,13 +22,15 @@ LoginForm.prototype.sendLoginForm = function() {
     this._loginFormSetter.deleteErrorsClass();
     this._setLoginFormValues();
     this._validate();
-    this._ajax.sendJSON(
-        'login.form',
-        {
+    this._ajax.sendJSON({
+        "url": "login.form",
+        "requestData": {
             email: this._email,
             password: this._password
-        }
-    );
+        },
+        "requestHandler": this._loginFormResponseHandler.bind(this),
+        "method": "POST"
+    });
 };
 
 LoginForm.prototype._validate = function() {
@@ -52,4 +54,12 @@ LoginForm.prototype._errorStrategy = function(Error) {
 LoginForm.prototype._setLoginFormValues = function() {
     this._email = $('#loginEmail').prop('value');
     this._password = $('#loginPassword').prop('value');
+};
+
+LoginForm.prototype._loginFormResponseHandler = function (request) {
+    if (request.loginStatus === 'success') {
+        this._loginFormSetter.setAuthorizedStatment();
+    } else if (request.loginStatus === 'failed') {
+        this._loginFormSetter.setFailedAuthorizeStatment();
+    }
 };

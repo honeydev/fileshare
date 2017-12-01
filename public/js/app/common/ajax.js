@@ -6,21 +6,26 @@ function Ajax() {
 
 }
 
-Ajax.prototype.sendJSON = function(url, requestData, method = 'POST') {
-    let json = this._stringify(requestData);
+Ajax.prototype.sendJSON = function(requestSettings) {
+    let json = this._stringify(requestSettings.requestData);
     $.ajax({
-        url: url,
-        method: method,
+        url: requestSettings.url,
+        method: requestSettings.method,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: json,
-        success: function (response) {
-            console.log(response);
-        },
-        error: function ( qXHR, textStatus, errorThrown ) {
-            // console.log(textStatus, ' ', errorThrown, qXHR.responseText);
+        success: requestSettings.requestHandler,
+        error: (qXHR, textStatus, errorThrown) => {
+            try {
+                requestSettings.requestHandler(JSON.parse(qXHR.responseText));
+                console.log('valid json');
+            } catch (e) {
+                console.log(e);
+                console.log('invalid json');
+                console.log(qXHR.responseText);
+            }
         }
-});
+    });
 };
 
 Ajax.prototype.sendFile = function(file, url) {
