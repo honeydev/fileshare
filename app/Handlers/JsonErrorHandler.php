@@ -16,7 +16,7 @@ class JsonErrorHandler extends AbstractErrorHandler
 
     public function __invoke(Request $request, Response $response, $exception)
     {
-        echo 'commonErrorHR';
+        echo 'jsonErrorHR';
         return $this->handleError($exception, $response);
     }
 

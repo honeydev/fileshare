@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fileshare\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -7,7 +9,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class MainPageController extends AbstractController
 {
-    public function indexPage($request, $response)
+    public function indexPage(Request $request, Response $response)
     {
         $this->container->dataFromView = [
             'title' => 'Fileshare',
@@ -23,22 +25,8 @@ class MainPageController extends AbstractController
         return $response;
     }
 
-    public function uploadFile($request, $response)
+    public function uploadFile(Request $request, Response $response)
     {
         var_dump($request->getUploadedFiles());
-    }
-
-    public function regUser(Request $request, Response $response)
-    {
-        $userData = $request->getAttribute('userData');
-        $addUserService = $this->container->get('AddUserService');
-        $addUserService->addUser($request->getAttribute('regData'));
-        return $response->withJson(['allowMessage' => 'user successfully added'], 200);
-    }
-
-    public function loginUser($request, $response)
-    {
-        echo 'user log';
-        $userService = $this->container->get('UserService', $request->getAttribute('userData'));
     }
 }

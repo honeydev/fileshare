@@ -30,29 +30,28 @@ class LoginMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            
-            echo 'login mw';
             $loginData = $request->getParsedBody();
             $this->emailValidator->validate($loginData['email']);
             $this->passwordValidator->validate($loginData['password']);
             $this->userAlreadyAuthorized();
             $request = $request->withAttribute('loginData', $this->loginAuth->auth($loginData));
             $response = $next($request, $response);
-            echo 'end mw';
+            return $response;
         } catch (FileshareException $e) {
-            echo 'error';
             $response = $this->sendErrorWithJson([
+                'loginStatus' => 'failed',
                 'errorType' => 'Invalid login data',
                 'exception' => $e,
                 'errorCode' => 401
-            ], $response);
+            ], $response); 
+            return $response; 
         } catch (AuthorizeException $e) {
             $response = $this->sendErrorWithJson([
+                'loginStatus' => 'failed',
                 'errorType' => 'User not exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-        } finally {
             return $response;
         }
     }

@@ -10,7 +10,9 @@ class AddUserServiceTest extends \Codeception\Test\Unit
      * @var \UnitTester
      */
     protected $tester;
+
     private $container;
+
     private $addUserService;
 
     protected function _before()
@@ -45,5 +47,20 @@ class AddUserServiceTest extends \Codeception\Test\Unit
             $hash = $this->tester->grabFromDatabase('users', 'hash', ['email' => $correctUser['email']]);
             $this->tester->assertTrue(password_verify($correctUser['password'], $hash));
         }
+        $this->addUsers();
+    }
+
+    private function addUsers()
+    {
+        define('USERS_DATA', [
+            [
+            "email" => "email@email.com", 
+            "password" => "mypassword",
+            "name" => "my name",
+            "accessLvl" => 1
+            ]
+        ]);
+
+        $this->tester->assertNull($this->addUserService->addUser(USERS_DATA[0]));
     }
 }

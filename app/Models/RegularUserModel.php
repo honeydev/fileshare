@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class RegularUserModel extends AbstractUserModel
+class RegularUserModel extends AbstractUserModel implements UserInerface
 {
     protected $email = null;
     protected $name = 'guest';

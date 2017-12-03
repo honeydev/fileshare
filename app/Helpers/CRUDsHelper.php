@@ -13,6 +13,23 @@ class CRUDsHelper
 
     public function getValuesSection(array $assocArray)
     {
+        $assocArray = $this->addQuotesOnStringTypeValues($assocArray);
         return '(' . implode(', ', array_values($assocArray)) . ')';
+    }
+
+    public function addQuotesOnStringTypeValues(array $values)
+    {
+        return array_map(function ($value) {
+            if (is_string($value)) {
+                return $this->addQuotes($value);
+            } else {
+                return $value;
+            }
+        }, $values);
+    }
+
+    private function addQuotes(string $stringValue)
+    {
+        return '"' . $stringValue . '"';
     }
 }

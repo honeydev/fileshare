@@ -25,7 +25,6 @@ class LoginAuth extends AbstractAuth
     public function auth($loginFormData)
     {
         $userData = $this->userCanBeAuthorized($loginFormData);
-        echo 'ok auth';
         return $userData;
     }
 
@@ -33,8 +32,8 @@ class LoginAuth extends AbstractAuth
     {
         $targetUserData = $this->selectUserData(
             [
-                'identificatorType' => 'email',
-                'identificatorValue' => $loginFormData['email']
+                'column' => 'email',
+                'value' => $loginFormData['email']
             ]
         );
         $this->existUserWithThisEmail($targetUserData);

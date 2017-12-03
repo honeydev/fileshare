@@ -10,7 +10,6 @@ class RegisterAuthTest extends \Codeception\Test\Unit
      * @var \UnitTester
      */
     protected $tester;
-    protected $db;
     private $registerAuth;
     const FAKE_USERS = [
         ['email' => 'fakeuser1@mail.ru', 'hash' => 'fakeUser'],

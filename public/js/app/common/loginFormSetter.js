@@ -27,6 +27,23 @@ LoginFormSetter.prototype.deleteErrorsClass = function() {
         removeClass('has-error has-feedback');
 };
 
+LoginFormSetter.prototype.setAuthorizedStatment = function () {
+	$('#loginModal').modal('hide');
+    $('#logOutA').css("display", "block");
+    $('#loginA').css("display", "none");
+    $('#registerA').css("display", "none");
+};
+
+LoginFormSetter.prototype.setFailedAuthorizeStatment = function (errorType) {
+    if (errorType === "") {
+
+    } else if (errorType === "") {
+
+    } else {
+        throw new Error(`Invalid error type ${errorType}`);
+    }
+};
+
 LoginFormSetter.prototype.cleanForm = function() {
 
 };

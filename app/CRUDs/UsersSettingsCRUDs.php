@@ -10,14 +10,22 @@ namespace Fileshare\CRUDs;
 
 trait UsersSettingsCRUDs
 {
-    protected function selectUserSettings(string $id)
+    /**
+     * @param string $id
+     * @return {array|false}
+     */
+    protected function selectUserSettings(array $columnValue)
     {
-        $selectUserSettings = "SELECT accountStatus, accessLvl, id FROM usersSettings WHERE id = '$id'";
-        $selectUserSettings = $this->db->prepare($selectUserSettings);
-        $selectUserSettings = $selectUserSettings->execute($selectUserSettings);
-        return $selectUserSettings->fetch();
+        extract($columnValue);
+        $selectUserSettings = "SELECT accountStatus, accessLvl, userId FROM usersSettings WHERE $column = '$value'";
+        $selectUserSettings = $this->db->query($selectUserSettings);
+        var_dump($selectUserSettings->fetch());
+        return $selectUserSettings;
     }
-
+    /**
+     * @param array $userSettings
+     * @return {PDOStatement|false}
+     */
     protected function addUserSettings(array $userSettings)
     {
         $accessLvl = $userSettings['accessLvl'];

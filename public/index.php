@@ -31,6 +31,7 @@ require ROOT . '/app/bootstrap/auths.php';
 require ROOT . '/app/bootstrap/validators.php';
 require ROOT . '/app/Routes.php';
 
-$routes = new Routes($app, $container);
+$routes = new Routes();
+$routes->startRoutes($app, $container);
 
 $app->run();

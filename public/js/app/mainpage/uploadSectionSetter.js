@@ -15,6 +15,10 @@ UploadSectionSetter.prototype.unsetDragNDropStyles = function () {
 	$('#dndWrap').css('display', 'none');
 };
 
+UploadSectionSetter.prototype.setInvalidFileFormatModal = function () {
+	$('#invalidFormatModal').modal('toggle');
+};
+
 UploadSectionSetter.prototype.setErrorUploadFlashMessage = function () {
 
 };

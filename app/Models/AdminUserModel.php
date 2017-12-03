@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class AdminUserModel
+class AdminUserModel extends AbstractUserModel implements UserInerface
 {
     protected $email = null;
     protected $name = 'guest';

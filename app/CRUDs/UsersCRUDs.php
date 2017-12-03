@@ -4,20 +4,18 @@
  * class instance
  */
 
-
-
 namespace Fileshare\CRUDs;
 
 trait UsersCRUDs
 {
-    protected function findEqualUserEmail(string $email)
+    protected function findEqualUserEmail(string $email): array
     {
         $getIdIfEmailsEqual = "SELECT id FROM users WHERE email = '$email'";
         $equalsId = $this->db->query($getIdIfEmailsEqual);
         return $equalsId->fetch();
     }
 
-    protected function addUserInUsers(array $userData)
+    protected function addUserInUsers(array $userData): integer
     {
         //expected var $email, $hash
         extract($userData);
@@ -26,19 +24,26 @@ trait UsersCRUDs
 		$request->execute(['email' => $email, 'hash' => $hash]);
 		return $this->db->lastInsertId();
     }
-
-    protected function deleteUser(array $userIdentificator)
+    /**
+     * @param array $userIdentificator asscoc array were key type of select data from base
+     * (id, email)
+     * @return {void}
+     */
+    protected function deleteUser(array $columnValue)
     {
-        //expected var $identificatorType, $identificatorValue
-        extract($userIdentificator); 
-        $deleteUser = "DELETE FROM users WHERE '$identificatorType' = '$identificatorValue'";
+        extract($columnValue);
+        $deleteUser = "DELETE FROM users WHERE '$column' = '$value'";
         $this->db->query($deleteUser);
     }
 
-    protected function selectUserData(array $userIdentificator)
+    /**
+     * @param {array} $userIdentificator asscoc array were key type of select data from base
+     * (id || email) ["identificatorType" => 'id', "identificatorValue" => "some value"]
+     */
+    protected function selectUserData(array $columnValue): array
     {
-        extract($userIdentificator);
-        $userData = "SELECT email, hash, id FROM users WHERE $identificatorType = '$identificatorValue'";
+        extract($columnValue);
+        $userData = "SELECT email, hash, id FROM users WHERE $column = '$value'";
         $userData = $this->db->query($userData);
         $userData = $userData->fetch();
         return $userData;

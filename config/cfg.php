@@ -11,7 +11,7 @@ return array(
         'dbname' => 'fileshare'
     ),
     'appInfo' => array(
-       'title' => 'Fileshare',
+       'title' => 'Filesare',
        'hostname' => 'localhost'
     )
 );

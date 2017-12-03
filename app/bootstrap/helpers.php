@@ -5,5 +5,5 @@ $container['PrepareErrorHelper'] = function () use ($container) {
 };
 
 $container['CRUDsHelper'] = function () use ($container) {
-    return new Fileshare\Helpers\CRUDsHelper($container);
+    return new Fileshare\Helpers\CRUDsHelper();
 };

@@ -3,11 +3,11 @@
 export {FileValidator};
 
 import {BaseValidator} from '../common/validators/baseValidator';
+import {InvalidFileTypeError} from './errors/invalidFileTypeError';
 
 function FileValidator() {
 
     this._regExp = null;
-
     this._allowExtensions = {
         image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         videos: ['mp4', 'avi', 'wmv', 'mov', 'mkv', '3gp', 'flw', 'swf'],
@@ -30,7 +30,7 @@ FileValidator.prototype._fileExtensionIsAllowed = function (fileName) {
             return true;
         }
     }
-    throw new Error(`Incorrect extension file ${fileName}`);
+    throw new InvalidFileTypeError(`Incorrect extension file ${fileName}`);
 };
 
 FileValidator.prototype._checkCocnretExtension = function (fileName, extensions) {

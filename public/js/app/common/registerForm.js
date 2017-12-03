@@ -26,15 +26,19 @@ function RegisterForm(dic) {
 RegisterForm.prototype.sendRegisterForm = function() {
     this._registerFormSetter.deleteErrorsClass();
     this._setRegisterFormValues();
-    //this._validate();
+    this._validate();
     this._ajax.sendJSON(
-        'register.form',
         {
-            email: this._email,
-            name: this._name,
-            password: this._password,
-            passwordRepeat: this._passwordRepeat,
-            userType: 1
+            "url": "register.form",
+            "requestData": {
+                email: this._email,
+                name: this._name,
+                password: this._password,
+                passwordRepeat: this._passwordRepeat,
+                userType: 1
+            },
+            "requestHandler": this._registerFormHandler.bind(this),
+            "method": "POST"
         }
     );
 };
@@ -70,4 +74,8 @@ RegisterForm.prototype._setRegisterFormValues = function() {
     this._name = $('#registerName').prop('value');
     this._password = $('#registerPassword').prop('value');
     this._passwordRepeat = $('#passwordRepeat').prop('value');
+};
+
+RegisterForm.prototype._registerFormHandler = function (request) {
+    console.log(request);
 };

@@ -3,7 +3,6 @@
 !/logs/README.md
 /.idea/
 /cache/
-/public/bootstrap/
 /public/node_modules/
 /public/js/public/
-/config/cfg.php
+/config/*

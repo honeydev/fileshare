@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-abstract class AbstractUserModel extends AbstractModel
+abstract class AbstractUserModel extends AbstractModel implements UserInerface
 {
     /** @property string */
     protected $email;
@@ -24,5 +24,12 @@ abstract class AbstractUserModel extends AbstractModel
             $this->$propertyName = $propertyValue;
         }
         throw new \InvalidArgumentException("In class " . get_class($this) . " not exist property {$propertyName}");
+    }
+
+    public function getUserProperty(string $propertyName): string
+    {  if (property_exists($this, $propertyName)) {
+            return $this->$propertyName;
+        }
+        throw new \InvalidArgumentException(`property {$propertyName} in class ` . get_class($this) . `not extists!`);
     }
 }
