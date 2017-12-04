@@ -40,7 +40,7 @@ class UserService
         if ($userLoggedIn = !empty($loginData)) {
             $userData = $this->agregateUserDataFromDb($loginData['id']);
             var_dump('ready user data', $userData);
-            $this->createConcretUserAccordAccessLvl($userData);
+           // $this->createConcretUserAccordAccessLvl($userData);
         } elseif ($userObjectExistInSession = !empty($this->sessionModel->user)) {
             $this->user = $this->sessionModel->user;
         } elseif ($guestFirstTimeLoadPage = !$this->sessionModel->authorizeStatus) {
@@ -64,7 +64,11 @@ class UserService
     private function agregateUserDataFromDb(string $userId): array
     {
         $userData = $this->selectUserData(['column' => 'id', 'value' => $userId]);
-        $userData = array_merge($userData, $this->selectUserSettings(['column' => 'userId', 'value' => $userId]));
+        var_dump('select user', $userData);
+        var_dump('select user settings', $this->selectUserSettings(['column' => 'userId', 'value' => $userId]));
+        var_dump('select usersinfo', $this->selectUserInfo(['column' => 'userId', 'value' => $userId]));
+//        $userData = array_$merge($userData, $this->selectUserSettings(['column' => 'userId', 'value' => $userId]));
+//        var_dump($userData);
         //$userData = array_merge($userData, $this->selectUserInfo(['identificatorType' => $userId]));
         return $userData;
     }

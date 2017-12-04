@@ -19,7 +19,7 @@ trait UsersSettingsCRUDs
         extract($columnValue);
         $selectUserSettings = "SELECT accountStatus, accessLvl, userId FROM usersSettings WHERE $column = '$value'";
         $selectUserSettings = $this->db->query($selectUserSettings);
-        var_dump($selectUserSettings->fetch());
+        $selectUserSettings = $selectUserSettings->fetch();
         return $selectUserSettings;
     }
     /**

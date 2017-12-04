@@ -8,14 +8,18 @@ namespace Fileshare\CRUDs;
 
 trait UsersCRUDs
 {
-    protected function findEqualUserEmail(string $email): array
+    /**
+     * @param string $email
+     * @return mixed {bool|array}
+     */
+    protected function findEqualUserEmail(string $email)
     {
         $getIdIfEmailsEqual = "SELECT id FROM users WHERE email = '$email'";
         $equalsId = $this->db->query($getIdIfEmailsEqual);
         return $equalsId->fetch();
     }
 
-    protected function addUserInUsers(array $userData): integer
+    protected function addUserInUsers(array $userData): string
     {
         //expected var $email, $hash
         extract($userData);
@@ -38,7 +42,7 @@ trait UsersCRUDs
 
     /**
      * @param {array} $userIdentificator asscoc array were key type of select data from base
-     * (id || email) ["identificatorType" => 'id', "identificatorValue" => "some value"]
+     * (id | email) ["identificatorType" => 'id', "identificatorValue" => "some value"]
      */
     protected function selectUserData(array $columnValue): array
     {

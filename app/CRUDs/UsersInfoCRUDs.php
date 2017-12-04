@@ -16,9 +16,9 @@ trait UsersInfoCRUDs
     }
 
     /**
-     * @return {mixed} PDOStatement|false
+     * @return mixed {PDOStatement|false}
      */
-    protected function addUserInfo(array $userInfo): array
+    protected function addUserInfo(array $userInfo)
     {
         $queryKeys = $this->crudsHelper->getKeysSection($userInfo);
         $queryValues = $this->crudsHelper->getValuesSection($userInfo);
@@ -33,9 +33,9 @@ trait UsersInfoCRUDs
      */
     protected function selectUserInfo(array $userIdentificator): array
     {
-        ectract($userIdentificator);
-        $selectUserInfo = "SELECT name, avatarUri FROM userInfo WHERE $userIdentificator = '$identificatorType'";
-        $userInfo = $this->db->query($userData);
+        extract($userIdentificator);
+        $selectUserInfo = "SELECT name, avatarUri FROM usersInfo WHERE $column = '$value'";
+        $userInfo = $this->db->query($selectUserInfo);
         return $userInfo->fetch();
     }
 }
