@@ -15,6 +15,8 @@ abstract class AbstractUserModel extends AbstractModel implements UserInerface
     protected $email;
     /** @property string */
     protected $name;
+    /** @proerty string */
+    protected $avatarUri;
     /** @property array */
     protected $privileges;
 
