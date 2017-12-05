@@ -4,38 +4,46 @@
 
 export {commonBootstrap};
 
-import {Ajax} from './ajax.js';
-import {LoginForm} from './loginForm.js';
-import {RegisterForm} from './registerForm.js';
-import {EmailValidator} from  './validators/emailValidator.js';
-import {PasswordValidator} from './validators/passwordValidator.js';
-import {NameValidator} from './validators/nameValidator.js';
-import {LoginFormSetter} from './loginFormSetter';
-import {RegisterFormSetter} from './registerFormSetter';
+import {Ajax} from './ajax';
+import {LoginForm} from './loginForm';
+import {RegisterForm} from './registerForm';
+import {EmailValidator} from  './validators/emailValidator';
+import {PasswordValidator} from './validators/passwordValidator';
+import {NameValidator} from './validators/nameValidator';
+import {LoginFormSetter} from './setters/loginFormSetter';
+import {RegisterFormSetter} from './setters/registerFormSetter';
+import {GuestModel} from './models/guestModel';
+import {SessionModel} from './models/sessionModel';
 
 function commonBootstrap() {
-    dic.add('Ajax', function(...args) {
+    dic.add('GuestModel', function (...args) {
+        return new GuestModel(...args);
+    });
+    dic.add('SessionModel', function (...args) {
+        return new SessionModel;
+    });
+    dic.add('Ajax', function (...args) {
         return new Ajax(...args);
     });
-    dic.add('LoginForm', function(...args) {
+    dic.add('LoginForm', function (...args) {
         return new LoginForm(...args);
     });
-    dic.add('RegisterForm', function(...args) {
+    dic.add('RegisterForm', function (...args) {
         return new RegisterForm(...args);
     });
-    dic.add('EmailValidator', function(...args) {
+    dic.add('EmailValidator', function (...args) {
         return new EmailValidator(...args);
     });
-    dic.add('PasswordValidator', function(...args) {
+    dic.add('PasswordValidator', function (...args) {
         return new PasswordValidator(...args);
     });
-    dic.add('NameValidator', function(...args) {
+    dic.add('NameValidator', function (...args) {
         return new NameValidator(...args);
     });
-    dic.add('LoginFormSetter', function(...args) {
+    dic.add('LoginFormSetter', function (...args) {
         return new LoginFormSetter(...args);
     });
-    dic.add('RegisterFormSetter', function(...args) {
+    dic.add('RegisterFormSetter', function (...args) {
         return new RegisterFormSetter(...args);
     });
 }
