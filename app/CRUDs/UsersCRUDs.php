@@ -56,7 +56,6 @@ trait UsersCRUDs
     protected function selectConcreteUserData(string $userId): array
     {
         $userId = (int) $userId;
-        var_dump('user id', $userId);
         $selectConcreteUserData = "SELECT users.email, usersInfo.name, usersInfo.avatarUri, usersSettings.accountStatus, usersSettings.accessLvl FROM users JOIN usersInfo ON $userId = usersInfo.userId JOIN usersSettings ON $userId = usersSettings.userId";
         $selectConcreteUserData = $this->db->query($selectConcreteUserData);
         return $selectConcreteUserData->fetch();

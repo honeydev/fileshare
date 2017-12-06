@@ -11,7 +11,6 @@ namespace Fileshare\Models;
 
 class GuestUserModel extends AbstractUserModel
 {
-    protected $email = null;
     protected $name = 'guest';
     protected $privileges = [
         'see_open_notes' => true,

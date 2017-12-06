@@ -12,6 +12,7 @@ abstract class AbstractModel
 {
     /**
      * @method universal getter
+     * @return mixed
      */
     public function __get(string $propertyName)
     {
@@ -19,7 +20,16 @@ abstract class AbstractModel
             return $this->$propertyName;
         }
         throw new \InvalidArgumentException(
-            "Incorrect session variable [{$propertyName}] in class " . get_parent_class($this)
+            `Incorrect session variable [{$propertyName}] in class ` . get_class($this)
         );
+    }
+
+    public function getAllProperties(): array
+    {
+        $properties = [];
+        foreach ($this as $propertyName => $propertyValue) {
+            $properties[$propertyName] = $propertyValue;
+        }
+        return $properties;
     }
 }

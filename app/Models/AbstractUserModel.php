@@ -9,29 +9,29 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-abstract class AbstractUserModel extends AbstractModel implements UserInerface
+abstract class AbstractUserModel extends AbstractModel implements UserInterface
 {
     /** @property string */
-    protected $email;
-    /** @property string */
-    protected $name;
-    /** @proerty string */
-    protected $avatarUri;
+    protected $accessLvl;
     /** @property array */
     protected $privileges;
 
+    /** @return void */
     public function __set($propertyName, $propertyValue)
     {
         if (property_exists($this, $propertyName)) {
             $this->$propertyName = $propertyValue;
+            return null;
         }
         throw new \InvalidArgumentException("In class " . get_class($this) . " not exist property {$propertyName}");
     }
-
-    public function getUserProperty(string $propertyName): string
-    {  if (property_exists($this, $propertyName)) {
-            return $this->$propertyName;
+    /** @return void */
+    public function setUserVars(array $userData)
+    {
+        foreach ($userData as $propertyName => $value) {
+            if (property_exists($this, $propertyName)) {
+                $this->$propertyName = $userData[$propertyName];
+            }
         }
-        throw new \InvalidArgumentException(`property {$propertyName} in class ` . get_class($this) . `not extists!`);
     }
 }

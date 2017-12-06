@@ -16,7 +16,7 @@ class SessionService
         $this->createSession();
         $this->container = $container;
         $this->sessionModel = $container->get('SessionModel', $container);
-        $this->userService = $container->get('UserService', $container);
+        $this->createUserService = $container->get('CreateUserService', $container);
         $this->setSessionVariables();
     }
 
@@ -25,7 +25,7 @@ class SessionService
         if (!$this->sessionVarsExists()) {
             $_SESSION['authorizeStatus'] = false;
             $_SESSION['accessLvl'] = 0;
-            $_SESSION['user'] = $this->userService->getUser();
+            $_SESSION['user'] = $this->createUserService->createUser();
         }
         $this->sessionModel->authorizeStatus = $_SESSION['authorizeStatus'];
         $this->sessionModel->accessLvl = $_SESSION['accessLvl'];

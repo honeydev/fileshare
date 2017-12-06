@@ -1,14 +1,14 @@
 <?php
 /**
- * @class UserService provide methods to create object implements @interface  UserIntterface
+ * @class CreateUserService provide methods to create object implements @interface  UserIntterface
  */
 
 namespace Fileshare\Services;
 
 use Fileshare\CRUDs\UsersInfoCRUDs;
-use Fileshare\Models\UserInerface;
+use Fileshare\Models\UserInterface;
 
-class UserService
+class CreateUserService
 {
     use \Fileshare\CRUDs\UsersCRUDs;
     use \Fileshare\CRUDs\UsersInfoCRUDs;
@@ -26,20 +26,24 @@ class UserService
         $this->db = $this->container->get('db');
     }
 
-    public function getUser($loginData = null)
+    /**
+     * @param null|array
+     * @return object
+     */
+    public function createUser($loginData = null): UserInterface
     {
-        $this->createUser($loginData);
+        $this->createConcretUser($loginData);
         return $this->user;
     }
     /**
      * @param {null|array}
      */
-    private function createUser($loginData)
+    private function createConcretUser($loginData = null)
     {
-
         if ($userLoggedIn = !empty($loginData)) {
-           $userData = $this->selectConcreteUserData($loginData['id']);
+            $userData = $this->selectConcreteUserData($loginData['id']);
             $this->createConcretUserAccordAccessLvl($userData);
+            $this->user->setUserVars($userData);
         } elseif ($userObjectExistInSession = !empty($this->sessionModel->user)) {
             $this->user = $this->sessionModel->user;
         } elseif ($guestFirstTimeLoadPage = !$this->sessionModel->authorizeStatus) {
@@ -48,22 +52,15 @@ class UserService
             throw new \LogicException('None of the condition is not satisfied in ' . get_class());
         }
     }
-
+    /** @return void */
     private function createConcretUserAccordAccessLvl($userData)
     {
         if ($userData['accessLvl'] == 1) {
-            return $this->container->get('RegularUserModel', $userData);
+            $this->user = $this->container->get('RegularUserModel', $userData);
         } elseif ($userData['accessLvl'] == 2) {
-            return $this->container->get('AdminUserModel', $userData);
+            $this->user = $this->container->get('AdminUserModel', $userData);
         } else {
             throw new \UnexpectedValueException("Incorrect accessLvl {$userData['accessLvl']} in class " . get_class());
-        }
-    }
-    /** @return void */
-    private function setUserProperties(array $userData)
-    {
-        foreach ($userData as $property => $value) {
-            $this->user->$property = $value;
         }
     }
 }

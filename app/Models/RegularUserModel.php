@@ -9,10 +9,15 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class RegularUserModel extends AbstractUserModel implements UserInerface
+class RegularUserModel extends AbstractUserModel implements UserInterface
 {
-    protected $email = null;
-    protected $name = 'guest';
+    protected $email = 'regular user email';
+    /** @property string */
+    protected $name;
+    /** @property string */
+    protected $avatarUri;
+    /** @property string */
+    protected $id;
     protected $privileges = [
         'see_open_notes' => true,
         'add_notes' => true,

@@ -9,7 +9,7 @@
 namespace Fileshare\Models;
 
 
-interface UserInerface
+interface UserInterface
 {
-    public function getUserProperty(string $propertyName);
+    public function setUserVars(array $userData);
 }
