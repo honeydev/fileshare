@@ -11,6 +11,7 @@ import {PasswordValidError} from './errors/passwordValidError.js';
 
 function LoginForm(dic) {
     this._ajax = dic.get('Ajax')(dic);
+    this._user = dic.get('User')(dic);
     this._emailValidator = dic.get('EmailValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
     this._loginFormSetter = dic.get('LoginFormSetter')();
@@ -18,7 +19,7 @@ function LoginForm(dic) {
     this._password = null;
 }
 
-LoginForm.prototype.sendLoginForm = function() {
+LoginForm.prototype.sendLoginForm = function () {
     this._loginFormSetter.deleteErrorsClass();
     this._setLoginFormValues();
     this._validate();
@@ -33,7 +34,7 @@ LoginForm.prototype.sendLoginForm = function() {
     });
 };
 
-LoginForm.prototype._validate = function() {
+LoginForm.prototype._validate = function () {
     try {
         this._emailValidator.validate(this._email);
         this._passwordValidator.validate(this._password);
@@ -43,7 +44,7 @@ LoginForm.prototype._validate = function() {
     }
 };
 
-LoginForm.prototype._errorStrategy = function(Error) {
+LoginForm.prototype._errorStrategy = function (Error) {
     if (Error instanceof EmailValidError) {
         this._loginFormSetter.setEmailError();
     } else if (Error instanceof PasswordValidError) {
@@ -51,15 +52,17 @@ LoginForm.prototype._errorStrategy = function(Error) {
     }
 };
 
-LoginForm.prototype._setLoginFormValues = function() {
+LoginForm.prototype._setLoginFormValues = function () {
     this._email = $('#loginEmail').prop('value');
     this._password = $('#loginPassword').prop('value');
 };
 
-LoginForm.prototype._loginFormResponseHandler = function (request) {
-    if (request.loginStatus === 'success') {
+LoginForm.prototype._loginFormResponseHandler = function (response) {
+    console.log('server response', response);
+    if (response.loginStatus === 'success') {
+        this._user.initNewUser(response.loginData);
         this._loginFormSetter.setAuthorizedStatment();
-    } else if (request.loginStatus === 'failed') {
+    } else if (response.loginStatus === 'failed') {
         this._loginFormSetter.setFailedAuthorizeStatment();
     }
 };

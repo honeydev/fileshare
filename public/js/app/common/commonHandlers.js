@@ -12,6 +12,7 @@ function CommonHandlers(dic) {
     this._loginFormSetter = dic.get('LoginFormSetter')(dic);
     this._registerForm = dic.get('RegisterForm')(dic);
     this._registerFormSetter = dic.get('RegisterFormSetter')();
+    this._user = dic.get('User')(dic);
     console.log('dic', this._dic);
 }
 
@@ -28,5 +29,9 @@ CommonHandlers.prototype.setHandlers = function() {
     });
     $('#registerCancelButton').click(() => {
         console.log('register cancel button');
+    });
+    $('#profileA').click(() => {
+        console.log('username click');
+        this._user.showUser();
     });
 };

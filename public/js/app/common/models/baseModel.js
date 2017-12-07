@@ -7,7 +7,7 @@ function BaseModel() {
 }
 /**
  * @param {string} 
- * @return {mixed} [description]
+ * @return {mixed}
  */
 BaseModel.prototype.get = function (property) {
     if (this.hasOwnProperty(property)) {
@@ -21,8 +21,20 @@ BaseModel.prototype.get = function (property) {
  * @return {void}
  */
 BaseModel.prototype.set = function (propertyName, propertyValue) {
+
     if (this.hasOwnProperty(propertyName)) {
         this[propertyName] = propertyValue;
+        return true;
     }
     throw new Error(`Undefined property ${propertyName} in class ${this.constructor.name}`);
+};
+
+/** @return {array} */
+BaseModel.prototype.getAllProperties = function () {
+	let properties = {};
+
+	for (let property in this) {
+		properties[property] = this[property];
+	}
+	return properties;
 };

@@ -15,11 +15,11 @@ function SessionModel() {
      * 1 - user
      * 2 - administrator
      */
-    this._accessLvl;
+    this._accessLvl = null;
     /** @property {object} user model object */
-    this._user;
+    this._user = null;
 
-    this._ip;
+    this._ip = null;
 }
 
 SessionModel.prototype = Object.create(BaseModel.prototype);

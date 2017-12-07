@@ -7,26 +7,34 @@ function Session(dic) {
     this._dic = dic;
 }
 
+/** @return void */
 Session.prototype.start = function () {
-    if (localStorage.setItem('SessionModel', this._sessionModel) === undefined) {
-        console.log('create guest session');
-        this._sessionModel = dic.get('SessionModel')();
-        this._setGuestSession();
+    
+    let savedSession = localStorage.getItem('SessionModel');
+
+    if (savedSession != undefined && savedSession != "undefined" && savedSession != null) {
+        this._sessionModel = savedSession;
     } else {
-        this._sessionModel = localStorage.setItem('SessionModel', this._sessionModel);
+        this._sessionModel = this._dic.get('SessionModel')();
+        this._setGuestSession();
     }
 };
 
+/** @return void */
 Session.prototype._setGuestSession = function () {
-    this._sessionModel.set('authorizeStatus', false);
-    this._sessionModel.set('accessLvl', 0);
-    this._sessionModel.set('user', this._dic.get('GuestModel'));
+    this._sessionModel.set('_authorizeStatus', false);
+    this._sessionModel.set('_accessLvl', 0);
+    this._sessionModel.set('_user', this._dic.get('GuestModel'));
+    localStorage.setItem('SessionModel', this._sessionModel);
 };
 /**
  * @param {object} user [description]
+ * @return {void}
  */
 Session.prototype.setAuthorizedUserSession = function (user) {
-    this._sessionModel.set('authorizeStatus', false);
-    this._sessionModel.set('authorizeStatus', user.get('accessLvl'));
-    this._sessionModel.set('user', user);
+    this._sessionModel = this._dic.get('SessionModel')();
+    this._sessionModel.set('_authorizeStatus', true);
+    this._sessionModel.set('_accessLvl', user.get('_accessLvl'));
+    this._sessionModel.set('_user', user);
+    localStorage.setItem('SessionModel', JSON.stringify(this._sessionModel));
 };

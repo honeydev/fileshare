@@ -15,32 +15,26 @@ class SessionService
     {
         $this->createSession();
         $this->container = $container;
-        $this->sessionModel = $container->get('SessionModel', $container);
         $this->createUserService = $container->get('CreateUserService', $container);
         $this->setSessionVariables();
     }
 
     private function setSessionVariables()
     {
-        if (!$this->sessionVarsExists()) {
-            $_SESSION['authorizeStatus'] = false;
-            $_SESSION['accessLvl'] = 0;
-            $_SESSION['user'] = $this->createUserService->createUser();
+        if (!empty($_SESSION['sessionModel'])) {
+            $this->sessionModel = $_SESSION['sessionModel'];
+        } else {
+            $this->createGuestSession();
         }
-        $this->sessionModel->authorizeStatus = $_SESSION['authorizeStatus'];
-        $this->sessionModel->accessLvl = $_SESSION['accessLvl'];
-        $this->sessionModel->user = $_SESSION['user'];
-        $this->sessionModel->ip = $_SERVER['REMOTE_ADDR'];
     }
 
-    private function sessionVarsExists()
+    private function createGuestSession()
     {
-        if (array_key_exists('$authorizeStatus', $_SESSION) &&
-        array_key_exists('accessLvl', $_SESSION) &&
-        array_key_exists('ip', $_SESSION)) {
-            return true;
-        }
-        return false;
+        $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
+        $this->sessionModel->authorizeStatus = false;
+        $this->accessLvl = 0;
+        $this->user = $this->createUserService->createUser();
+        $this->ip = $_SERVER['REMOTE_ADDR'];
     }
 
     private function createSession()

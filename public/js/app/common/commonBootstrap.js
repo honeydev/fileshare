@@ -12,12 +12,29 @@ import {PasswordValidator} from './validators/passwordValidator';
 import {NameValidator} from './validators/nameValidator';
 import {LoginFormSetter} from './setters/loginFormSetter';
 import {RegisterFormSetter} from './setters/registerFormSetter';
+import {ProfileSetter} from './setters/profileSetter';
 import {GuestModel} from './models/guestModel';
+import {RegularUserModel} from './models/regularUserModel';
+import {AdminModel} from './models/adminModel';
 import {SessionModel} from './models/sessionModel';
+import {User} from './user';
+import {Session} from './session';
 
 function commonBootstrap() {
+    dic.add('User', function (...args) {
+        return new User(...args);
+    });
+    dic.add('Session', function (...args) {
+        return new Session(...args);
+    });
     dic.add('GuestModel', function (...args) {
         return new GuestModel(...args);
+    });
+    dic.add('RegularUserModel', function (...args) {
+        return new RegularUserModel(...args);
+    });
+    dic.add('AdminModel', function (...args) {
+        return new AdminModel(...args);
     });
     dic.add('SessionModel', function (...args) {
         return new SessionModel;
@@ -45,5 +62,8 @@ function commonBootstrap() {
     });
     dic.add('RegisterFormSetter', function (...args) {
         return new RegisterFormSetter(...args);
+    });
+    dic.add('ProfileSetter', function (...args) {
+        return new ProfileSetter(...args);
     });
 }

@@ -26,6 +26,7 @@ class RegDbMiddleware extends AbstractMiddleware
             return $response;
         } catch (DatabaseException $e) {
             $response = $this->sendErrorWithJson([
+                'regStatus' => 'faield',
                 'errorType' => 'Invalid registration data',
                 'exception' => $e,
                 'errorCode' => 401
@@ -33,6 +34,7 @@ class RegDbMiddleware extends AbstractMiddleware
             return $response;
         } catch (AuthorizeException $e) {
             $response = $this->sendErrorWithJson([
+                'regStatus' => 'faield',
                 'errorType' => 'Invalid registration data',
                 'exception' => $e,
                 'errorCode' => 401
