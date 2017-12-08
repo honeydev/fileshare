@@ -19,8 +19,12 @@ import {AdminModel} from './models/adminModel';
 import {SessionModel} from './models/sessionModel';
 import {User} from './user';
 import {Session} from './session';
+import {LocalStorage} from './localStorage';
 
 function commonBootstrap() {
+    dic.add('LocalStorage', function (...args) {
+        return new LocalStorage(...args);
+    });
     dic.add('User', function (...args) {
         return new User(...args);
     });

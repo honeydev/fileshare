@@ -7,6 +7,7 @@ function Ajax() {
 }
 
 Ajax.prototype.sendJSON = function(requestSettings) {
+    console.log('ajax in ajax', $());
     let json = this._stringify(requestSettings.requestData);
     console.log(json);
     $.ajax({

@@ -3,19 +3,20 @@
 export {User};
 
 function User(dic) {
-    
-    this._session = dic.get('Session')(dic);
     this._userModel;
+    this._session = dic.get('Session')(dic);
+    this._localStorage = dic.get('LocalStorage')(dic);
     this._userSetter = dic.get('ProfileSetter')();
     this._dic = dic;
 }
 /** @return void */
 User.prototype.showUser = function () {
-    let model = JSON.parse(localStorage.getItem('SessionModel'));
-    console.log(model._authorizeStatus);
-    //this._userModel = localStorage.getItem('SessionModel').get('UserModel');
-    // const USER_DATA = this._userModel.getAllProperties();
-    // this._userSetter.setShowProfileStatment(USER_DATA);
+    let sessionModel = this._localStorage.createObjectFromStorage('SessionModel');
+    console.log('session model', sessionModel);
+    let userModel = sessionModel.get('_user');
+    console.log('user model', userModel);
+    //const USER_DATA = userModel.getAllProperties();
+    //this._userSetter.setShowProfileStatment(USER_DATA);
 };
 /** @return void */
 User.prototype.initNewUser = function (userData) {

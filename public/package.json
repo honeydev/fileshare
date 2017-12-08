@@ -18,9 +18,12 @@
     "bootstrap-webpack": "0.0.6",
     "chai": "^4.1.2",
     "dic": "0.0.1",
+    "fs": "0.0.1-security",
     "jquery": "^3.2.1",
+    "jsdom": "^11.5.1",
     "less": "^3.0.0-alpha.3",
     "less-loader": "^4.0.5",
+    "mocha-jsdom": "^1.1.0",
     "parsleyjs": "^2.8.0",
     "webpack-jquery-ui": "^1.0.0"
   },
