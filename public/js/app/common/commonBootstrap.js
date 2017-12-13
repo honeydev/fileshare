@@ -20,8 +20,12 @@ import {SessionModel} from './models/sessionModel';
 import {User} from './user';
 import {Session} from './session';
 import {LocalStorage} from './localStorage';
+import {UserFactory} from './factorys/userFactory';
 
 function commonBootstrap() {
+    dic.add('UserFactory', function (...args) {
+        return new UserFactory(...args);
+    });
     dic.add('LocalStorage', function (...args) {
         return new LocalStorage(...args);
     });
