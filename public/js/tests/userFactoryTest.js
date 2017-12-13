@@ -4,8 +4,6 @@ export {UserFactoryTest};
 
 import {assert} from 'chai';
 import {bootstrap} from './bootstrap';
-import {GuestModel} from '../app/common/models/guestModel';
-import {RegularUserModel} from '../app/common/models/RegularUserModel';
 
 function UserFactoryTest(dic) {
     this._dic;
@@ -38,7 +36,16 @@ UserFactoryTest.prototype._createUsers = function () {
             this._checkEqualProps(USER_DATA, user);
         });
         it(`create AdminUserModel`, () => {
-
+            const USER_DATA = {
+                accessLvl: 2,
+                email: "email@email.com",
+                name: "name",
+                avatarUri: null,
+                id: "14"
+            };
+            let user =this._userFactory.create(USER_DATA);
+            assert.equal(user.constructor.name, "AdminModel");
+            this._checkEqualProps(USER_DATA, user);
         });
     });
 };

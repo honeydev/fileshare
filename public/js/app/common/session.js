@@ -11,7 +11,6 @@ function Session(dic) {
 
 /** @return void */
 Session.prototype.start = function () {
-    
     let savedSession = this._localStorage.getItem('SessionModel');
 
     if (savedSession != undefined && savedSession != "undefined" && savedSession != null) {
@@ -43,11 +42,11 @@ Session.prototype.setAuthorizedUserSession = function (user) {
 };
 
 Session.prototype._createSessionFromStorage = function (sessionData) {
-    
     for (let property in sessionData) {
         if (property === "_user") {
             this._sessionModel['_user'] = this._userFactory.create(userData);
         }
         this._sessionModel[property] = sessionData[property];
     }
-}; 
+    console.log('session created from storage', this._sessionModel);
+};
