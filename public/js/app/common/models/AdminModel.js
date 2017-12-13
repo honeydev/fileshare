@@ -9,3 +9,4 @@ function AdminModel() {
 }
 
 AdminModel.prototype = Object.create(RegularUserModel.prototype);
+AdminModel.prototype.constructor = AdminModel;

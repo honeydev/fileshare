@@ -10,3 +10,4 @@ function GuestModel() {
 }
 
 GuestModel.prototype = Object.create(BaseModel.prototype);
+GuestModel.prototype.constructor = GuestModel;

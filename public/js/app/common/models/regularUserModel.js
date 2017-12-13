@@ -22,3 +22,4 @@ RegularUserModel.prototype.getAllProperties = function () {
 };
 
 RegularUserModel.prototype = Object.create(BaseModel.prototype);
+RegularUserModel.prototype.constructor = RegularUserModel;
