@@ -6,8 +6,8 @@
 
 export {LoginFormSetter};
 
-function LoginFormSetter() {
-
+function LoginFormSetter(dic) {
+    this._authorizedStatmentSetter = dic.get('AuthorizedStatmentSetter')();
 }
 
 LoginFormSetter.prototype.setError = function(errorMessage) {
@@ -28,10 +28,8 @@ LoginFormSetter.prototype.deleteErrorsClass = function() {
 };
 
 LoginFormSetter.prototype.setAuthorizedStatment = function () {
-	$('#loginModal').modal('hide');
-    $('#logOutA').css("display", "block");
-    $('#loginA').css("display", "none");
-    $('#registerA').css("display", "none");
+    $('#loginModal').modal('hide');
+    this._authorizedStatmentSetter.setAuthorized();
 };
 
 LoginFormSetter.prototype.setFailedAuthorizeStatment = function (errorType) {
