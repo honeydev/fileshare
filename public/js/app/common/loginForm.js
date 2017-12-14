@@ -14,7 +14,7 @@ function LoginForm(dic) {
     this._user = dic.get('User')(dic);
     this._emailValidator = dic.get('EmailValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
-    this._loginFormSetter = dic.get('LoginFormSetter')();
+    this._loginFormSetter = dic.get('LoginFormSetter')(dic);
     this._email = null;
     this._password = null;
 }
