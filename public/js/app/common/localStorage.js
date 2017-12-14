@@ -7,14 +7,12 @@ function LocalStorage(dic) {
 }
 
 LocalStorage.prototype.setItem = function (itemName, itemValue) {
-    localStorage.setItem(itemName,  itemValue);
+    localStorage.setItem(itemName,  JSON.stringify(itemValue));
 };
 
 LocalStorage.prototype.getItem = function (itemName) {
-    let requiredItem = localStorage.getItem(itemName);
-    if (requiredItem != null && requiredItem != undefined) {
-        requiredItem = JSON.parse(requiredItem);
-    }
+    let requiredItem = JSON.parse(localStorage.getItem(itemName));
+    console.log('required item', requiredItem);
     return requiredItem;
 };
 

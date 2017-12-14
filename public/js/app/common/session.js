@@ -13,9 +13,9 @@ function Session(dic) {
 Session.prototype.start = function () {
     let savedSession = this._localStorage.getItem('SessionModel');
 
-    if (savedSession != undefined && savedSession != "undefined" && savedSession != null) {
-        console.log('create session from storage');
-        this._localStorage._createSessionFromStorage(savedSession);
+    if (savedSession != undefined && savedSession != "null" && savedSession != null) {
+        console.log('create session from storage', typeof savedSession);
+        this._createSessionFromStorage(savedSession);
     } else {
         console.log('create guest session');
         this._createGuestSession();
@@ -40,13 +40,21 @@ Session.prototype.setAuthorizedUserSession = function (user) {
     this._sessionModel.set('_user', user);
     this._localStorage.setItem('SessionModel', this._sessionModel);
 };
-
+/** 
+ * @param  {object} sessionData 
+ * @return {void}
+ */
 Session.prototype._createSessionFromStorage = function (sessionData) {
+    console.log('sessionData', sessionData);
+    this._sessionModel = this._dic.get('SessionModel')();
     for (let property in sessionData) {
         if (property === "_user") {
-            this._sessionModel['_user'] = this._userFactory.create(userData);
+            const USER_DATA = sessionData[property];
+            const ACCESS_LVL = sessionData[property]['_accessLvl'];
+            this._sessionModel['_user'] = this._userFactory.create(ACCESS_LVL, USER_DATA);
         }
         this._sessionModel[property] = sessionData[property];
     }
     console.log('session created from storage', this._sessionModel);
 };
+    

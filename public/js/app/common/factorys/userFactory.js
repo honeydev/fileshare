@@ -7,15 +7,15 @@ function UserFactory(dic) {
     this._user;
 }
 
-UserFactory.prototype.create = function (userData) {
-    if (userData['accessLvl'] === 0) {
+UserFactory.prototype.create = function (accessLvl, userData) {
+    if (accessLvl == 0) {
         this._user = dic.get('GuestModel')();
-    } else if (userData['accessLvl'] === 1) {
+    } else if (accessLvl == 1) {
         this._user = dic.get('RegularUserModel')();
-    } else if (userData['accessLvl'] === 2) {
+    } else if (accessLvl == 2) {
         this._user = dic.get('AdminUserModel')();
     } else {
-        throw new Error(`Incorrect usser accessLvl ${userData['accessLvl']}`);
+        throw new Error(`Incorrect user accessLvl ${userData['accessLvl']}`);
     }
     this._setProperties(userData);
     return this._user;
