@@ -12,7 +12,7 @@ import {commonBootstrap} from './commonBootstrap';
 import {CommonHandlers} from './commonHandlers';
 
 
-let common = function() {
+let common = function () {
     commonBootstrap();
     let session = dic.get('Session')(dic);
     session.start();

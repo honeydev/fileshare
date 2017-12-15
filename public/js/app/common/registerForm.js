@@ -12,7 +12,7 @@ import {NameValidError} from './errors/nameValidError.js';
 
 
 function RegisterForm(dic) {
-    this._ajax = dic.get('Ajax')();
+    this._ajax = dic.get('Ajax')(dic);
     this._emailValidator = dic.get('EmailValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
     this._nameValidator = dic.get('NameValidator')();

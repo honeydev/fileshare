@@ -35,5 +35,6 @@ SessionModel.getInstance = function () {
     throw new Error(`Invalid sessionModel value ${SessionModel._sessionModel}`);
 };
 
+
 SessionModel.prototype = Object.create(BaseModel.prototype);
 SessionModel.prototype.constructor = SessionModel;

@@ -9,7 +9,6 @@ class Routes
 {
     public function startRoutes($app, $container)
     {
-
         $app->get('/', 'MainPageController:indexPage');
         $app->post('/upload.file', 'MainPageController:uploadFile');
         $app->post('/login.form', 'LoginController:login')
@@ -20,5 +19,6 @@ class Routes
             ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
             ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
         ;
+        $app->get('/logout.action', 'LogoutController:logout');
     }
 }

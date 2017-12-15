@@ -8,9 +8,13 @@ $container['MainPageController'] = function () use ($container) {
 };
 
 $container['LoginController'] = function () use ($container) {
-	return new Fileshare\Controllers\LoginController($container);
+    return new Fileshare\Controllers\LoginController($container);
+};
+
+$container['LogoutController'] = function () use ($container) {
+    return new Fileshare\Controllers\LogoutController($container);
 };
 
 $container['RegisteredController'] = function () use ($container) {
-	return new Fileshare\Controllers\RegisteredController($container);
+    return new Fileshare\Controllers\RegisteredController($container);
 };

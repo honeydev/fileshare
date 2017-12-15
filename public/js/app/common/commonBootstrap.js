@@ -13,6 +13,7 @@ import {NameValidator} from './validators/nameValidator';
 import {LoginFormSetter} from './setters/loginFormSetter';
 import {RegisterFormSetter} from './setters/registerFormSetter';
 import {AuthorizedStatmentSetter} from './setters/authorizedStatmentSetter';
+import {UnauthorizedStatmentSetter} from './setters/unauthorizedStatmentSetter';
 import {ProfileSetter} from './setters/profileSetter';
 import {GuestModel} from './models/guestModel';
 import {RegularUserModel} from './models/regularUserModel';
@@ -22,21 +23,17 @@ import {User} from './user';
 import {Session} from './session';
 import {LocalStorage} from './localStorage';
 import {UserFactory} from './factorys/userFactory';
-import {CONFIG} from '../../config.js';
-import {Logger} from './logger.js';
+import {CONFIG} from '../../config';
+import {Logger} from './logger';
+import {Logout} from './logout';
 
 function commonBootstrap() {
-    dic.add('UserFactory', function (...args) {
-        return new UserFactory(...args);
+    dic.add('CONFIG', function () {
+        return CONFIG;
     });
-    dic.add('LocalStorage', function (...args) {
-        return new LocalStorage(...args);
-    });
+    /** models */
     dic.add('User', function (...args) {
         return new User(...args);
-    });
-    dic.add('Session', function (...args) {
-        return new Session(...args);
     });
     dic.add('GuestModel', function (...args) {
         return new GuestModel(...args);
@@ -47,8 +44,12 @@ function commonBootstrap() {
     dic.add('AdminModel', function (...args) {
         return new AdminModel(...args);
     });
-    dic.add('SessionModel', function (...args) {
+    dic.add('SessionModel', function () {
         return SessionModel.getInstance();
+    });
+    /** services */
+    dic.add('LocalStorage', function (...args) {
+        return new LocalStorage(...args);
     });
     dic.add('Ajax', function (...args) {
         return new Ajax(...args);
@@ -59,6 +60,16 @@ function commonBootstrap() {
     dic.add('RegisterForm', function (...args) {
         return new RegisterForm(...args);
     });
+    dic.add('Logger', function (...args) {
+        return new Logger(...args);
+    });
+    dic.add('Logout', function (...args) {
+        return new Logout(...args);
+    }); 
+    dic.add('Session', function (...args) {
+        return new Session(...args);
+    });
+    /**  validators */
     dic.add('EmailValidator', function (...args) {
         return new EmailValidator(...args);
     });
@@ -71,19 +82,21 @@ function commonBootstrap() {
     dic.add('LoginFormSetter', function (...args) {
         return new LoginFormSetter(...args);
     });
+    /** setters */
     dic.add('RegisterFormSetter', function (...args) {
         return new RegisterFormSetter(...args);
     });
     dic.add('AuthorizedStatmentSetter', function (...args) {
         return new AuthorizedStatmentSetter(...args);
     });
+    dic.add('UnauthorizedStatmentSetter', function (...args) {
+        return new UnauthorizedStatmentSetter(...args);
+    });
     dic.add('ProfileSetter', function (...args) {
         return new ProfileSetter(...args);
     });
-    dic.add('CONFIG', function () {
-        return CONFIG;
-    });
-    dic.add('Logger', function (...args) {
-        return new Logger(...args);
+    /** factorys */
+    dic.add('UserFactory', function (...args) {
+        return new UserFactory(...args);
     });
 }

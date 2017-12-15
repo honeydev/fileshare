@@ -2,14 +2,12 @@
 
 export {Ajax};
 
-function Ajax() {
-
+function Ajax(dic) {
+    this._logger = dic.get('Logger')(dic);
 }
 
-Ajax.prototype.sendJSON = function(requestSettings) {
-    console.log('ajax in ajax', $());
-    let json = this._stringify(requestSettings.requestData);
-    console.log(json);
+Ajax.prototype.sendJSON = function (requestSettings) {
+    let json = JSON.stringify(requestSettings.requestData);
     $.ajax({
         url: requestSettings.url,
         method: requestSettings.method,
@@ -20,17 +18,36 @@ Ajax.prototype.sendJSON = function(requestSettings) {
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.requestHandler(JSON.parse(qXHR.responseText));
-                console.log('valid json');
+                this._logger.log('valid json');
             } catch (e) {
-                console.log(e);
-                console.log('invalid json');
-                console.log(qXHR.responseText);
+                this._logger.log(e);
+                this._logger.log('invalid json');
+                this._logger.log(qXHR.responseText);
             }
         }
     });
 };
 
-Ajax.prototype.sendFile = function(file, url) {
+
+Ajax.prototype.doAction = function (requestSettings) {
+    $.ajax({
+        url: requestSettings.url,
+        type: "GET",
+        success: requestSettings.requestHandler,
+        error: (qXHR, textStatus, errorThrown) => {
+            try {
+                requestSettings.requestHandler(JSON.parse(qXHR.responseText));
+                this._logger.log('valid json');
+            } catch (e) {
+                this._logger.log(e);
+                this._logger.log('invalid json');
+                this._logger.log(qXHR.responseText);
+            }
+        }
+    });
+};
+
+Ajax.prototype.sendFile = function (file, url) {
 
     let formData = new FormData();
     formData.append('file', file);
@@ -42,9 +59,4 @@ Ajax.prototype.sendFile = function(file, url) {
         processData: false,
         contentType: false
     });
-};
-
-
-Ajax.prototype._stringify = function(requestData) {
-    return JSON.stringify(requestData);
 };

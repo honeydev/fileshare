@@ -7,6 +7,7 @@ function Session(dic) {
     this._dic = dic;
     this._localStorage = dic.get('LocalStorage')(dic);
     this._userFactory = dic.get('UserFactory')(dic);
+    this._authorizedStatmentSetter = dic.get('AuthorizedStatmentSetter')();
 }
 
 /** @return void */
@@ -35,6 +36,7 @@ Session.prototype._createGuestSession = function () {
  */
 Session.prototype.setAuthorizedUserSession = function (user) {
     this._sessionModel = this._dic.get('SessionModel')();
+    console.log('session after logout', this._sessionModel);
     this._sessionModel.set('_authorizeStatus', true);
     this._sessionModel.set('_accessLvl', user.get('_accessLvl'));
     this._sessionModel.set('_user', user);
@@ -45,8 +47,9 @@ Session.prototype.setAuthorizedUserSession = function (user) {
  * @return {void}
  */
 Session.prototype._createSessionFromStorage = function (sessionData) {
-    console.log('sessionData', sessionData);
+
     this._sessionModel = this._dic.get('SessionModel')();
+
     for (let property in sessionData) {
         if (property === "_user") {
             const USER_DATA = sessionData[property];
@@ -55,6 +58,13 @@ Session.prototype._createSessionFromStorage = function (sessionData) {
         }
         this._sessionModel[property] = sessionData[property];
     }
-    console.log('session created from storage', this._sessionModel);
+    this._authorizedStatmentSetter.setAuthorized();
 };
-    
+
+Session.prototype.destroySession = function () {
+    //TODO test this block
+    let sessionModel = this._dic.get('SessionModel')();
+    sessionModel.setStatic('_sessionModel', null);
+    this._localStorage.removeItem('SessionModel');
+    console.log('deleted Session model');
+};
