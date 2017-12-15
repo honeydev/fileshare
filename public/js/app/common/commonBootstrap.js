@@ -21,6 +21,8 @@ import {User} from './user';
 import {Session} from './session';
 import {LocalStorage} from './localStorage';
 import {UserFactory} from './factorys/userFactory';
+import {CONFIG} from '../../config.js';
+import {Logger} from './logger.js';
 
 function commonBootstrap() {
     dic.add('UserFactory', function (...args) {
@@ -73,5 +75,11 @@ function commonBootstrap() {
     });
     dic.add('ProfileSetter', function (...args) {
         return new ProfileSetter(...args);
+    });
+    dic.add('CONFIG', function () {
+        return CONFIG;
+    });
+    dic.add('Logger', function (...args) {
+        return new Logger(...args);
     });
 }
