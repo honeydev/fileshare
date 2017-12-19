@@ -8,6 +8,7 @@ function Session(dic) {
     this._localStorage = dic.get('LocalStorage')(dic);
     this._userFactory = dic.get('UserFactory')(dic);
     this._authorizedStatmentSetter = dic.get('AuthorizedStatmentSetter')();
+    this._profile = dic.get('Profile')(dic);
 }
 
 /** @return void */
@@ -17,6 +18,7 @@ Session.prototype.start = function () {
     if (savedSession != undefined && savedSession != "null" && savedSession != null) {
         console.log('create session from storage', typeof savedSession);
         this._createSessionFromStorage(savedSession);
+        this._profile.setUserData();
     } else {
         console.log('create guest session');
         this._createGuestSession();
@@ -55,9 +57,12 @@ Session.prototype._createSessionFromStorage = function (sessionData) {
             const USER_DATA = sessionData[property];
             const ACCESS_LVL = sessionData[property]['_accessLvl'];
             this._sessionModel['_user'] = this._userFactory.create(ACCESS_LVL, USER_DATA);
+            console.log('factory create this user', this._sessionModel['_user']);
+            continue;
         }
         this._sessionModel[property] = sessionData[property];
     }
+    console.log('create from sa session', this._sessionModel);
     this._authorizedStatmentSetter.setAuthorized();
 };
 

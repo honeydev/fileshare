@@ -12,14 +12,6 @@ function RegularUserModel() {
     this._id = null;
 }
 
-RegularUserModel.prototype.getAllProperties = function () {
-	let properties = {};
-
-	for (let property in this) {
-		properties[property] = this[property];
-	}
-	return properties;
-};
 
 RegularUserModel.prototype = Object.create(BaseModel.prototype);
 RegularUserModel.prototype.constructor = RegularUserModel;

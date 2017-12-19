@@ -26,6 +26,8 @@ import {UserFactory} from './factorys/userFactory';
 import {CONFIG} from '../../config';
 import {Logger} from './logger';
 import {Logout} from './logout';
+import {Profile} from './profile';
+import {PropertyHelper} from './helpers/propertyHelper';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -48,6 +50,9 @@ function commonBootstrap() {
         return SessionModel.getInstance();
     });
     /** services */
+    dic.add('Profile', function (...args) {
+        return new Profile(...args);
+    });
     dic.add('LocalStorage', function (...args) {
         return new LocalStorage(...args);
     });
@@ -98,5 +103,9 @@ function commonBootstrap() {
     /** factorys */
     dic.add('UserFactory', function (...args) {
         return new UserFactory(...args);
+    });
+    /* helpers */
+    dic.add('PropertyHelper', function (...args) {
+        return new PropertyHelper(...args);
     });
 }

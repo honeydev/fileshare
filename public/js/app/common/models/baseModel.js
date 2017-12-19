@@ -37,12 +37,12 @@ BaseModel.prototype.setStatic = function (propertyName, propertyValue) {
     throw new Error(`Undefined property ${propertyName} in class ${this.constructor.name}`)
 };
 
-/** @return {array} */
+/** @return {object} */
 BaseModel.prototype.getAllProperties = function () {
-	let properties = {};
-
-	for (let property in this) {
-		properties[property] = this[property];
-	}
-	return properties;
+    let properties = {};
+    let ownKeys = Object.keys(this);
+    for (let key of ownKeys) {
+        properties[key] = this[key];
+    }
+    return properties;
 };

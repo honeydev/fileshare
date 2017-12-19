@@ -5,33 +5,42 @@ export {ProfileSetter};
 function ProfileSetter() {
 
 }
-/** @param array
- *  @return void
- */
-ProfileSetter.prototype.setShowProfileStatment = function (userData) {
-    this._setProfileTitle(userData.email, userData.name);
-    this._setUserData(userData);
-};
 /**
- * @param {string} email
- * @param {string} name
- * @return void
+ * @param {object} userData
+ * @return {void}
  */
-ProfileSetter.prototype._setProfileTitle = function (email, name) {
-    if (name !== null && name !== undefined) {
-        $('#profileTitle').text(`Profile ${name}`);
+ProfileSetter.prototype.setProfileData = function (userData) {
+    this._setProfileTitle(userData);
+    this._setUserData(userData);
+    this._setAvatar(userData);
+};
+
+/**
+ * @param {object} userData
+ * @return {void}
+ */
+ProfileSetter.prototype._setProfileTitle = function (userData) {
+    if (userData['name'] !== null && userData['email'] !== undefined) {
+        $('#profileTitle').text(`Profile ${userData['name']}`);
     } else {
-        $('#profileTitle').text(`Profile ${email}`);
+        $('#profileTitle').text(`Profile ${userData['email']}`);
     }
 };
 /** 
- * @param object
- * 
+ * @param {object} userData
+ * @return {void}
  */
 ProfileSetter.prototype._setUserData = function (userData) {
-    userData.forEach((value, index) => {
-        $('#userDataList').append(`<ul>${index}: ${value}</ul>`);
-    });
+
+   $('#userDataList').append(`<ul>email: ${userData['email']}</ul>`);
+    if (userData.hasOwnProperty('name')) {
+        $('#userDataList').append(`<ul>name: ${userData['name']}</ul>`);
+    }
+};
+
+ProfileSetter.prototype._setAvatar = function (userData) {
+
+
 };
 
 ProfileSetter.prototype.setHiddenProfileStatment = function () {

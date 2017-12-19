@@ -1,6 +1,6 @@
 {% include 'login_form_modal.html' %}
 {% include 'register_form_modal.html' %}
-{% include 'profile_modal.html' %}
+{% include 'SWprofile_modal.html' %}
 <!-- navigation panel -->
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -27,12 +27,13 @@
                             </div>
                         </form>
                     </li>
-                    <li><a href="#" data-toggle="modal" data-target="#loginModal" id="loginA">Log in</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#registerModal" id="registerA">Register</a></li>
-                    <li><a href="#" id="logOutA">Log out</a></li>
                     <li><a href="#">Browse Files</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#profileModal" id="profileA">username</div>
-                    </a></li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#profileModal" id="profileA">Profile</a>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#registerModal" id="registerA">Register</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal" id="loginA">Log in</a></li>
+                    <li><a href="#" id="logOutA">Log out</a></li>
                 </ul>
             </div>
         </div><!-- /.navbar-collapse -->

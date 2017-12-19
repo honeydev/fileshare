@@ -2,6 +2,10 @@
 	display: none;
 }
 
+#profileA {
+	display: none;
+}
+
 .navbar {
 	margin-bottom: 0;
 }
