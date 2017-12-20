@@ -28,6 +28,7 @@ import {Logger} from './logger';
 import {Logout} from './logout';
 import {Profile} from './profile';
 import {PropertyHelper} from './helpers/propertyHelper';
+import {ProfileHandlers} from './profileHandlers';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -108,4 +109,8 @@ function commonBootstrap() {
     dic.add('PropertyHelper', function (...args) {
         return new PropertyHelper(...args);
     });
+
+    dic.add('ProfileHandlers', function (...args) {
+        return new ProfileHandlers(...args);
+    })
 }

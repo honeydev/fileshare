@@ -33,6 +33,25 @@
 	height: 92vh;
 }
 
+#userDataList a {
+	text-decoration: none;
+	color: red;
+}
+
+.avatarSection {
+	padding-left: 25px;
+}
+
+.avatarSection a img {
+	width: 150px;
+	height: 150px;
+}
+
+.userDataEditIcon {
+	display: none;
+	margin-left: 10px;
+}
+
 .dndWrap {
 	display: none;
 	position: absolute;

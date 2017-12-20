@@ -12,6 +12,7 @@ function ProfileSetter() {
 ProfileSetter.prototype.setProfileData = function (userData) {
     this._setProfileTitle(userData);
     this._setUserData(userData);
+    this._setUserDataEditIcon();
     this._setAvatar(userData);
 };
 
@@ -32,17 +33,28 @@ ProfileSetter.prototype._setProfileTitle = function (userData) {
  */
 ProfileSetter.prototype._setUserData = function (userData) {
 
-   $('#userDataList').append(`<ul>email: ${userData['email']}</ul>`);
+   $('#userDataList').append(`<ul><strong>email:</strong> ${userData['email']}</ul>`);
     if (userData.hasOwnProperty('name')) {
-        $('#userDataList').append(`<ul>name: ${userData['name']}</ul>`);
+        $('#userDataList').append(`<ul><strong>name:</strong> ${userData['name']}</ul>`);
     }
 };
 
 ProfileSetter.prototype._setAvatar = function (userData) {
 
-
 };
 
-ProfileSetter.prototype.setHiddenProfileStatment = function () {
+ProfileSetter.prototype.dropUserData = function () {
+    $('#userDataList').empty();
+};
 
+ProfileSetter.prototype._setUserDataEditIcon = function () {
+    $('#userDataList').children().append('<a href="#"><span class="userDataEditIcon glyphicon glyphicon-edit"></span></a>');
+};
+
+ProfileSetter.prototype.showUserDataEditIcon = function () {
+    $('.userDataEditIcon').css('display', 'inline'); 
+};
+
+ProfileSetter.prototype.hideUserDataEditIcon = function () {
+    $('.userDataEditIcon').css('display', 'none'); 
 };

@@ -6,6 +6,8 @@ function Profile(dic) {
     this._dic = dic;
     this._profileSetter = dic.get('ProfileSetter')();
     this._propertyHelper = dic.get('PropertyHelper')();
+    let profileHandlers = dic.get('ProfileHandlers')(dic);
+    profileHandlers.setHandlers();
 }
 
 Profile.prototype.setUserData = function () {
@@ -18,6 +20,7 @@ Profile.prototype.setUserData = function () {
     this._profileSetter.setProfileData(userData);
 };
 
-Profile.prototype.hide = function () {
-    
+Profile.prototype.dropUserData = function () {
+    this._profileSetter.dropUserData();
 };
+
