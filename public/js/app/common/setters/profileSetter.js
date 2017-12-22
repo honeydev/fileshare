@@ -2,8 +2,8 @@
 
 export {ProfileSetter};
 
-function ProfileSetter() {
-
+function ProfileSetter(dic) {
+    this._stringEditorHelper = dic.get('StringEditorHelper')();
 }
 /**
  * @param {object} userData
@@ -33,9 +33,9 @@ ProfileSetter.prototype._setProfileTitle = function (userData) {
  */
 ProfileSetter.prototype._setUserData = function (userData) {
 
-   $('#userDataList').append(`<ul><strong>email:</strong> ${userData['email']}</ul>`);
+   $('#userDataList').append(`<ul><label>email:</label> ${userData['email']}</ul>`);
     if (userData.hasOwnProperty('name')) {
-        $('#userDataList').append(`<ul><strong>name:</strong> ${userData['name']}</ul>`);
+        $('#userDataList').append(`<ul><label>name:</label> ${userData['name']}</ul>`);
     }
 };
 
@@ -51,10 +51,43 @@ ProfileSetter.prototype._setUserDataEditIcon = function () {
     $('#userDataList').children().append('<a href="#"><span class="userDataEditIcon glyphicon glyphicon-edit"></span></a>');
 };
 
-ProfileSetter.prototype.showUserDataEditIcon = function () {
-    $('.userDataEditIcon').css('display', 'inline'); 
+ProfileSetter.prototype.showUserDataEditIcon = function (li) {
+    $(li).find(".userDataEditIcon").css('display', 'inline');
 };
 
-ProfileSetter.prototype.hideUserDataEditIcon = function () {
-    $('.userDataEditIcon').css('display', 'none'); 
+ProfileSetter.prototype.hideUserDataEditIcon = function (li) {
+    $(li).find(".userDataEditIcon").css('display', 'none');
+};
+
+ProfileSetter.prototype.switchToForm = function (userData) {
+    const PROFILE_FORM = this._createProfileForm(userData);
+    $('#userDataList').remove();
+    $('.userProfileSection').append(PROFILE_FORM);
+};
+
+ProfileSetter.prototype._createProfileForm = function (userData) {
+    let form = $('<form>').attr({
+        class: "form-horizontal",
+        role: "form"
+    });
+    console.log('data on render form', userData);
+    for (let key in userData) {
+        let formSection = $('<div>').attr({
+
+        });
+        const ID = this._stringEditorHelper.toUpperCaseFirstWord(key);
+        let label = $('<label>').attr({
+            for: `profile${ID}Input`,
+        }).text(key);
+        let input = $('<input>').attr({
+            type: "email",
+            class: "form-control",
+            id: ID,
+            value: userData[key]
+        });
+        $(form).append(label);
+        $(form).append(input);
+    }
+
+    return form;
 };

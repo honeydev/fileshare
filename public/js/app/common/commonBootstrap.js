@@ -28,7 +28,7 @@ import {Logger} from './logger';
 import {Logout} from './logout';
 import {Profile} from './profile';
 import {PropertyHelper} from './helpers/propertyHelper';
-import {ProfileHandlers} from './profileHandlers';
+import {StringEditorHelper} from './helpers/stringEditorHelper';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -109,8 +109,7 @@ function commonBootstrap() {
     dic.add('PropertyHelper', function (...args) {
         return new PropertyHelper(...args);
     });
-
-    dic.add('ProfileHandlers', function (...args) {
-        return new ProfileHandlers(...args);
-    })
+    dic.add('StringEditorHelper', function (...args) {
+        return new StringEditorHelper(...args);
+    });
 }

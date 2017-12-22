@@ -6,6 +6,10 @@
 	display: none;
 }
 
+#avatarUploadInput {
+	display: none;
+}
+
 .navbar {
 	margin-bottom: 0;
 }
@@ -38,11 +42,11 @@
 	color: red;
 }
 
-.avatarSection {
+.userProfileSection {
 	padding-left: 25px;
 }
 
-.avatarSection a img {
+.userProfileSection a img {
 	width: 150px;
 	height: 150px;
 }

@@ -7,7 +7,6 @@ function User(dic) {
     this._session = dic.get('Session')(dic);
     this._localStorage = dic.get('LocalStorage')(dic);
     this._profile = dic.get('Profile')(dic);
-    this._userSetter = dic.get('ProfileSetter')();
     this._dic = dic;
 }
 
