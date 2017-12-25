@@ -39,7 +39,7 @@ ProfileSetter.prototype._setUserData = function (userData) {
     }
 };
 
-ProfileSetter.prototype.setPreview = function (imageSource) {
+ProfileSetter.prototype.setAvatarPreview = function (imageSource) {
     $('#uploadAvatarA img').attr('src', imageSource);
 };
 

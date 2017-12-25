@@ -19,7 +19,7 @@ ProfileHandlers.prototype.setHandlers = function () {
         $('#avatarUploadInput').trigger('click');
     });
     $('#avatarUploadInput').change({profile: this._profile}, function (e) {
-        e.data.profile.uploadAvatar($(this)[0].files[0]);
+        e.data.profile.setAvatarPreview($(this)[0].files[0]);
     });
     $('.userDataEditIcon').click({profile: this._profile}, function (e) {
         console.log(e);

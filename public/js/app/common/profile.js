@@ -38,10 +38,11 @@ Profile.prototype.dropUserData = function () {
     this._profileSetter.dropUserData();
 };
 
-Profile.prototype.uploadAvatar = function (image) {
+Profile.prototype.setAvatarPreview = function (image) {
+    console.log(image);
     let fileReader = new FileReader();
     fileReader.onloadend = function () {
-        this._profileSetter.setPreview(fileReader.result);
+        this._profileSetter.setAvatarPreview(fileReader.result);
     }.bind(this);
     fileReader.readAsDataURL(image);
 };

@@ -18,6 +18,12 @@ ProfileFormSetter.prototype._createProfileForm = function (userData) {
         class: "form-horizontal",
         role: "form"
     });    
+    form = this._addUserDataFields(form, userData);
+    form = this._addPasswordFields(form);
+    return form;
+};
+
+ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
     for (let key in userData) {
         let id = this._stringEditorHelper.toUpperCaseFirstWord(key);
         let label = $('<label>').attr({
@@ -32,7 +38,6 @@ ProfileFormSetter.prototype._createProfileForm = function (userData) {
         $(form).append(label);
         $(input).insertAfter(label);
     }
-    form = this._addPasswordFields(form);
     return form;
 };
 
@@ -74,10 +79,10 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
     $('#uploadAvatarA').attr("style", "float: none !important");
     $('#uploadAvatarA').css({
         clear: "both",
-        "margin-left": "33%",
+        "margin-left": "34%",
         display: "block"
     });
-    $('label, input').css({
+    $('label, .userProfileSection > form > input').css({
         "margin-left": "22%",
         "width": "50%"
     });
