@@ -6,7 +6,7 @@ function Profile(dic) {
     this._dic = dic;
     this._profileSetter = dic.get('ProfileSetter')(dic);
     this._propertyHelper = dic.get('PropertyHelper')();
-
+    this._profileFormSetter = dic.get('ProfileFormSetter')();
 }
 
 Profile.prototype.setUserData = function () {
@@ -38,11 +38,19 @@ Profile.prototype.dropUserData = function () {
     this._profileSetter.dropUserData();
 };
 
-Profile.prototype.uploadAvatar = function () {
-
+Profile.prototype.uploadAvatar = function (image) {
+    let fileReader = new FileReader();
+    fileReader.onloadend = function () {
+        this._profileSetter.setPreview(fileReader.result);
+    }.bind(this);
+    fileReader.readAsDataURL(image);
 };
 
 Profile.prototype.switchToForm = function () {
     let userData = this._filtrateUserDataForProfile(this._getUserData());
-    this._profileSetter.switchToForm(userData);
+    this._profileFormSetter.switchToForm(userData);
 }
+
+Profile.prototype.switchToProfile = function () {
+
+};

@@ -3,43 +3,87 @@
 export {ProfileFormSetter};
 
 function ProfileFormSetter() {
-
+    this._stringEditorHelper = dic.get('StringEditorHelper')();
 }
 
-ProfileFormSetter.prototype.switchToForm = function () {
+ProfileFormSetter.prototype.switchToForm = function (userData) {
     const PROFILE_FORM = this._createProfileForm(userData);
     $('#userDataList').remove();
     $('.userProfileSection').append(PROFILE_FORM);
+    this._setProfileFormStyles();
 };
 
 ProfileFormSetter.prototype._createProfileForm = function (userData) {
     let form = $('<form>').attr({
         class: "form-horizontal",
         role: "form"
-    });
-    console.log('data on render form', userData);
+    });    
     for (let key in userData) {
-        let formSection = $('<div>').attr({
-        	class: "form-group"
-        });
-        const ID = this._stringEditorHelper.toUpperCaseFirstWord(key);
+        let id = this._stringEditorHelper.toUpperCaseFirstWord(key);
         let label = $('<label>').attr({
-            for: `profile${ID}Input`,
+            for: `profile${id}Input`,
         }).text(key);
         let input = $('<input>').attr({
             type: "email",
             class: "form-control",
-            id: ID,
+            id: id,
             value: userData[key]
         });
-        $(form).append(formSection);
-        $(formSection).append(label);
-        $(label).append(input);
+        $(form).append(label);
+        $(input).insertAfter(label);
     }
-
+    form = this._addPasswordFields(form);
     return form;
 };
 
-ProfileFormSetter.prototype.switchBack = function () {
+ProfileFormSetter.prototype._addPasswordFields = function (form) {
+    let currentPasswordLabel = $('<label>').attr({
+        for: "profileCurrentPasswordInpit",
+    }).text('Current password');
+    let currentPasswordInput = $('<input>').attr({
+        type: "password",
+        class: "form-control",
+        id: "profileCurrentPasswordInpit",
+    });
+    let newPasswordField = $('<label>').attr({
+        for: "profilenewPasswordInpit",
+    }).text('New password');
+    let newPasswordInput = $('<input>').attr({
+        type: "password",
+        class: "form-control",
+        id: "profileNewPasswordInpit",
+    });
+    let newPasswordRepeat = $('<label>').attr({
+        for: "profilenewPasswordRepeatInpit",
+    }).text('Repeat new password');
+    let newPasswordRepeatInput = $('<input>').attr({
+        type: "password",
+        class: "form-control",
+        id: "profilenewPasswordRepeatInpit",
+    });
+    $(form).append(currentPasswordLabel);
+    $(form).append(currentPasswordInput);
+    $(form).append(newPasswordField);
+    $(form).append(newPasswordInput);
+    $(form).append(newPasswordRepeat);
+    $(form).append(newPasswordRepeatInput);
+    return form;
+};
+
+ProfileFormSetter.prototype._setProfileFormStyles = function () {
+    $('#uploadAvatarA').attr("style", "float: none !important");
+    $('#uploadAvatarA').css({
+        clear: "both",
+        "margin-left": "33%",
+        display: "block"
+    });
+    $('label, input').css({
+        "margin-left": "22%",
+        "width": "50%"
+    });
+    $('#cancelPorfileButton, #profileButton').css('display', 'inline');
+};
+
+ProfileFormSetter.prototype.switchToProfile = function () {
 
 };

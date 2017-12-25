@@ -18,11 +18,19 @@ ProfileHandlers.prototype.setHandlers = function () {
     $('#uploadAvatarA').click(function () {
         $('#avatarUploadInput').trigger('click');
     });
-    $('#avatarUploadInput').change({profile: this._profile}, function () {
-        e.data.profile.uploadAvatar();
+    $('#avatarUploadInput').change({profile: this._profile}, function (e) {
+        e.data.profile.uploadAvatar($(this)[0].files[0]);
     });
     $('.userDataEditIcon').click({profile: this._profile}, function (e) {
         console.log(e);
         e.data.profile.switchToForm();
+    });
+    $('#profileClose, #cancelPorfileButton').click(function (e) {
+        console.log('close modal');
+        e.data.profile.switchToProfile();
+    });
+    $('#cancelPorfileButton').click(function (e) {
+        console.log('switch to Profile');
+        e.data.profile.switchToProfile();
     });
 };

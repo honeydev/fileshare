@@ -15,6 +15,7 @@ import {RegisterFormSetter} from './setters/registerFormSetter';
 import {AuthorizedStatmentSetter} from './setters/authorizedStatmentSetter';
 import {UnauthorizedStatmentSetter} from './setters/unauthorizedStatmentSetter';
 import {ProfileSetter} from './setters/profileSetter';
+import {ProfileFormSetter} from './setters/profileFormSetter';
 import {GuestModel} from './models/guestModel';
 import {RegularUserModel} from './models/regularUserModel';
 import {AdminModel} from './models/adminModel';
@@ -100,6 +101,9 @@ function commonBootstrap() {
     });
     dic.add('ProfileSetter', function (...args) {
         return new ProfileSetter(...args);
+    });
+    dic.add('ProfileFormSetter', function (...args) {
+        return new ProfileFormSetter(...args);
     });
     /** factorys */
     dic.add('UserFactory', function (...args) {

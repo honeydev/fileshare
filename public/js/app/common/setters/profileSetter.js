@@ -33,10 +33,14 @@ ProfileSetter.prototype._setProfileTitle = function (userData) {
  */
 ProfileSetter.prototype._setUserData = function (userData) {
 
-   $('#userDataList').append(`<ul><label>email:</label> ${userData['email']}</ul>`);
+    $('#userDataList').append(`<ul><label>email:</label> ${userData['email']}</ul>`);
     if (userData.hasOwnProperty('name')) {
         $('#userDataList').append(`<ul><label>name:</label> ${userData['name']}</ul>`);
     }
+};
+
+ProfileSetter.prototype.setPreview = function (imageSource) {
+    $('#uploadAvatarA img').attr('src', imageSource);
 };
 
 ProfileSetter.prototype._setAvatar = function (userData) {
@@ -57,52 +61,4 @@ ProfileSetter.prototype.showUserDataEditIcon = function (li) {
 
 ProfileSetter.prototype.hideUserDataEditIcon = function (li) {
     $(li).find(".userDataEditIcon").css('display', 'none');
-};
-
-ProfileSetter.prototype.switchToForm = function (userData) {
-    const PROFILE_FORM = this._createProfileForm(userData);
-    $('#userDataList').remove();
-    $('.userProfileSection').append(PROFILE_FORM);
-    this._setProfileFormStyles();
-};
-
-ProfileSetter.prototype._createProfileForm = function (userData) {
-    let form = $('<form>').attr({
-        class: "form-horizontal profileForm",
-        role: "form"
-    });
-    console.log('data on render form', userData);
-    for (let key in userData) {
-        let formSection = $('<div>');
-        let id = this._stringEditorHelper.toUpperCaseFirstWord(key);
-        let label = $('<label>').attr({
-            for: `profile${id}Input`,
-        }).text(key);
-        let input = $('<input>').attr({
-            type: "email",
-            class: "form-control",
-            id: id,
-            value: userData[key]
-        });
-        $(form).append(label);
-        $(form).append(input);
-    }
-
-    return form;
-};
-
-ProfileSetter.prototype._setProfileFormStyles = function () {
-    $('#uploadAvatarA').attr("style", "float: none !important");
-    $('#uploadAvatarA').css({
-        clear: "both",
-        "margin-left": "33%",
-        display: "block"
-    });
-    $('.profileForm label').css({
-        "margin-left": "25%"
-    });
-    $('.profileForm input').css({
-        "margin-left": "25%",
-        "width": "50%"
-    })
 };
