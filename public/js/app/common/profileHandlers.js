@@ -27,7 +27,6 @@ ProfileHandlers.prototype.setHandlers = function () {
     });
     $('#profileClose, #cancelPorfileButton').click(function (e) {
         console.log('close modal');
-        e.data.profile.switchToProfile();
     });
     $('#cancelPorfileButton').click(function (e) {
         console.log('switch to Profile');

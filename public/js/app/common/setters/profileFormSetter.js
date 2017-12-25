@@ -28,10 +28,11 @@ ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
         let id = this._stringEditorHelper.toUpperCaseFirstWord(key);
         let label = $('<label>').attr({
             for: `profile${id}Input`,
+            class: "profileFormLabel"
         }).text(key);
         let input = $('<input>').attr({
             type: "email",
-            class: "form-control",
+            class: "form-control profileFormInput",
             id: id,
             value: userData[key]
         });
@@ -44,33 +45,36 @@ ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
 ProfileFormSetter.prototype._addPasswordFields = function (form) {
     let currentPasswordLabel = $('<label>').attr({
         for: "profileCurrentPasswordInpit",
+        class: "profileFormLabel"
     }).text('Current password');
     let currentPasswordInput = $('<input>').attr({
         type: "password",
-        class: "form-control",
+        class: "form-control profileFormInput",
         id: "profileCurrentPasswordInpit",
     });
-    let newPasswordField = $('<label>').attr({
+    let newPasswordLabel = $('<label>').attr({
         for: "profilenewPasswordInpit",
+        class: "profileFormLabel profileFormLabel"
     }).text('New password');
     let newPasswordInput = $('<input>').attr({
         type: "password",
-        class: "form-control",
+        class: "form-control profileFormInput",
         id: "profileNewPasswordInpit",
     });
-    let newPasswordRepeat = $('<label>').attr({
+    let newPasswordRepeatLabel = $('<label>').attr({
         for: "profilenewPasswordRepeatInpit",
+        class: "profileFormLabel profileFormLabel"
     }).text('Repeat new password');
     let newPasswordRepeatInput = $('<input>').attr({
         type: "password",
-        class: "form-control",
+        class: "form-control profileFormInput",
         id: "profilenewPasswordRepeatInpit",
     });
     $(form).append(currentPasswordLabel);
     $(form).append(currentPasswordInput);
-    $(form).append(newPasswordField);
+    $(form).append(newPasswordLabel);
     $(form).append(newPasswordInput);
-    $(form).append(newPasswordRepeat);
+    $(form).append(newPasswordRepeatLabel);
     $(form).append(newPasswordRepeatInput);
     return form;
 };
@@ -82,7 +86,7 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
         "margin-left": "34%",
         display: "block"
     });
-    $('label, .userProfileSection > form > input').css({
+    $('.profileFormLabel, .profileFormInput').css({
         "margin-left": "22%",
         "width": "50%"
     });

@@ -15,6 +15,7 @@ module.exports = {
     devtool: 'inline-source-map',
     watch: true,
     watchOptions: {
+        poll: true,
         aggregateTimeout: 100
     },
     plugins: [
