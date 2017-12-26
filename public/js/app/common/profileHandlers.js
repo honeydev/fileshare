@@ -16,10 +16,10 @@ ProfileHandlers.prototype.setHandlers = function () {
 };
 
 ProfileHandlers.prototype.setEditDataIcons = function () {
-    $('#userDataList > ul').mouseover({profileSetter: this._profileSetter}, function (e) {
+    $('#userDataList > li').mouseover({profileSetter: this._profileSetter}, function (e) {
         e.data.profileSetter.showUserDataEditIcon(this);
     });
-    $('#userDataList > ul').mouseleave({profileSetter: this._profileSetter}, function (e) {
+    $('#userDataList > li').mouseleave({profileSetter: this._profileSetter}, function (e) {
         e.data.profileSetter.hideUserDataEditIcon(this)
     });
     $('.userDataEditIcon').click({profile: this._profile}, function (e) {
@@ -45,8 +45,8 @@ ProfileHandlers.prototype._closeProfile = function () {
 };
 
 ProfileHandlers.prototype._cancelProfile = function () {
-    $('#cancelPorfileButton').click(function (e) {
+    $('#cancelPorfileButton').click({profile: this._profile}, function (e) {
         console.log('switch to Profile');
-        //e.data.profile.switchToProfile();
+        e.data.profile.switchToProfile();
     });
 };

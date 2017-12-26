@@ -67,5 +67,21 @@ Profile.prototype.switchToForm = function () {
 }
 
 Profile.prototype.switchToProfile = function () {
+    let userData = this._getUserData();
+    this._profileFormSetter.removeForm();
+    this._profileSetter.swithToProfile(userData);
+    let profileHandlers = dic.get('ProfileHandlers')(dic);
+    profileHandlers.setEditDataIcons();
+    console.log(userData);
+};
 
+Profile.prototype.applyChanges = function (profileFormData) {
+    let changedData = this._calculateUserDataDiff(profileFormData);
+};
+/**
+ * @param  {object}
+ * @return {object}
+ */
+Profile.prototype._calculateUserDataDiff = function (profileFormData) {
+    let changedData = {};
 };

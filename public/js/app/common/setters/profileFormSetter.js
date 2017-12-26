@@ -16,7 +16,8 @@ ProfileFormSetter.prototype.switchToForm = function (userData) {
 ProfileFormSetter.prototype._createProfileForm = function (userData) {
     let form = $('<form>').attr({
         class: "form-horizontal",
-        role: "form"
+        role: "form",
+        id: "profileForm"
     });    
     form = this._addUserDataFields(form, userData);
     form = this._addPasswordFields(form);
@@ -93,6 +94,28 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
     $('#cancelPorfileButton, #profileButton').css('display', 'inline');
 };
 
-ProfileFormSetter.prototype.switchToProfile = function () {
+ProfileFormSetter.prototype.removeForm = function () {
+    $('#profileForm').remove();
+    
+};  
 
+
+ProfileFormSetter.prototype.setProgressBar = function () {
+    /* NOT TESTED */
+    let wrap = $('<div>')
+        .attr('class', 'progress progress-striped active')
+        .css({
+            "margin-left": "30%",
+            "width": "40%"
+        });
+    let bar = $('<div>').attr({
+        class: "progress-bar",
+        role: "progressbar",
+        "aria-valuenow": "100"
+    }).css({
+        width: "100%"
+    });
+    let note = $('<span>').text('We complete changes!');
+
+    ('#profileModalBody').append(wrap).append(bar).append(note);
 };

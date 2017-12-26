@@ -10,6 +10,14 @@
 	display: none;
 }
 
+#userDataList {
+	list-style: none;
+}
+
+#cancelPorfileButton {
+	display: none;
+}
+
 .navbar {
 	margin-bottom: 0;
 }

@@ -32,10 +32,11 @@ ProfileSetter.prototype._setProfileTitle = function (userData) {
  * @return {void}
  */
 ProfileSetter.prototype._setUserData = function (userData) {
-
-    $('#userDataList').append(`<ul><label>email:</label> ${userData['email']}</ul>`);
+    let userDataList = $('<ul>').attr('id', 'userDataList');
+    $('.userProfileSection').append(userDataList);
+    $('#userDataList').append(`<li><label>email:</label> ${userData['email']}</li>`);
     if (userData.hasOwnProperty('name')) {
-        $('#userDataList').append(`<ul><label>name:</label> ${userData['name']}</ul>`);
+        $('#userDataList').append(`<li><label>name:</label> ${userData['name']}</li>`);
     }
 };
 
@@ -61,6 +62,22 @@ ProfileSetter.prototype._setAvatar = function (userData) {
 ProfileSetter.prototype.dropUserData = function () {
     $('#userDataList').empty();
 };
+
+ProfileSetter.prototype.swithToProfile = function (userData) {
+    this.setProfileData(userData);
+    this.setProfileStyles();
+};
+
+ProfileSetter.prototype.setProfileStyles = function () {
+    $('#uploadAvatarA').attr("style", "float: left !important");
+    $('#uploadAvatarA').css({
+        clear: "both",
+        "margin-left": "0%",
+        display: "block"
+    });
+    $('#cancelPorfileButton').css('display', 'none');
+};
+
 
 ProfileSetter.prototype._setUserDataEditIcon = function () {
     $('#userDataList').children().append('<a href="#"><span class="userDataEditIcon glyphicon glyphicon-edit"></span></a>');
