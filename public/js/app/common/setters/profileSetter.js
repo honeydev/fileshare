@@ -13,7 +13,7 @@ ProfileSetter.prototype.setProfileData = function (userData) {
     this._setProfileTitle(userData);
     this._setUserData(userData);
     this._setUserDataEditIcon();
-    this._setAvatar(userData);
+    this.setAvatar(userData);
 };
 
 /**
@@ -55,8 +55,15 @@ ProfileSetter.prototype.setErrorMessage = function (message) {
     }, 4000);
 }
 
-ProfileSetter.prototype._setAvatar = function (userData) {
-
+ProfileSetter.prototype.setAvatar = function (userData) {
+    if ($('#profileAvatar').length) {
+        $('#profileAvatar').remove();
+    }
+    let avatarImage = $('<img class="thumbnail media-object" id="profileAvatar" src="/img/user.png" alt="user avatar">')
+    if (userData.avatarUri !== null && userData.avatarUri !== undefined) {
+        $(avatarImage).attr('src', userData.avatarUri);
+    }
+    $('#uploadAvatarA').append(avatarImage);
 };
 
 ProfileSetter.prototype.dropUserData = function () {

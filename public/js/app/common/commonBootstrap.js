@@ -32,7 +32,8 @@ import {PropertyHelper} from './helpers/propertyHelper';
 import {StringEditorHelper} from './helpers/stringEditorHelper';
 import {ProfileHandlers} from './profileHandlers';
 import {ImageValidator} from './validators/imageValidator';
-import {ProfileErrorSetter} from './setters/ProfileErrorSetter';
+import {ProfileErrorSetter} from './setters/profileErrorSetter';
+import {ProfileButtonSetter} from './setters/profileButtonSetter';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -113,6 +114,9 @@ function commonBootstrap() {
     });
     dic.add('ProfileErrorSetter', function (...args) {
         return new ProfileErrorSetter(...args);
+    });
+    dic.add('ProfileButtonSetter', function (...args) {
+        return new ProfileButtonSetter(...args);
     });
     /** factorys */
     dic.add('UserFactory', function (...args) {
