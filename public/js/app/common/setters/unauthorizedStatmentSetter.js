@@ -10,5 +10,5 @@ UnauthorizedStatmentSetter.prototype.setUnatuhorized = function() {
     $('#logOutA').css("display", "none");
     $('#loginA').css("display", "block");
     $('#registerA').css("display", "block");
-    $('#profileA').css("display", "block");
+    $('#profileA').css("display", "none");
 };

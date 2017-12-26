@@ -30,6 +30,9 @@ import {Logout} from './logout';
 import {Profile} from './profile';
 import {PropertyHelper} from './helpers/propertyHelper';
 import {StringEditorHelper} from './helpers/stringEditorHelper';
+import {ProfileHandlers} from './profileHandlers';
+import {ImageValidator} from './validators/imageValidator';
+import {ProfileErrorSetter} from './setters/ProfileErrorSetter';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -86,6 +89,9 @@ function commonBootstrap() {
     dic.add('NameValidator', function (...args) {
         return new NameValidator(...args);
     });
+    dic.add('ImageValidator', function (...args) {
+        return new ImageValidator(...args);
+    });
     dic.add('LoginFormSetter', function (...args) {
         return new LoginFormSetter(...args);
     });
@@ -105,6 +111,9 @@ function commonBootstrap() {
     dic.add('ProfileFormSetter', function (...args) {
         return new ProfileFormSetter(...args);
     });
+    dic.add('ProfileErrorSetter', function (...args) {
+        return new ProfileErrorSetter(...args);
+    });
     /** factorys */
     dic.add('UserFactory', function (...args) {
         return new UserFactory(...args);
@@ -115,5 +124,9 @@ function commonBootstrap() {
     });
     dic.add('StringEditorHelper', function (...args) {
         return new StringEditorHelper(...args);
+    });
+
+    dic.add('ProfileHandlers', function (...args) {
+        return new ProfileHandlers(...args);
     });
 }

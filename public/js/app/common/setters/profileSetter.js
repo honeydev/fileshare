@@ -43,6 +43,17 @@ ProfileSetter.prototype.setAvatarPreview = function (imageSource) {
     $('#uploadAvatarA img').attr('src', imageSource);
 };
 
+ProfileSetter.prototype.setErrorMessage = function (message) {
+    let alert = $('<div>').attr({
+        'class': 'alert alert-danger',
+        'id': 'profileErrorMessage'
+    }).text(message);
+    $("#profileModalBody").prepend(alert);
+    setTimeout(() => {
+        $(alert).remove();
+    }, 4000);
+}
+
 ProfileSetter.prototype._setAvatar = function (userData) {
 
 };

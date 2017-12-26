@@ -17,7 +17,5 @@ let common = function () {
     let session = dic.get('Session')(dic);
     session.start();
     let commonHandlers = new CommonHandlers(dic);
-    let profileHandlers = new ProfileHandlers(dic);
     commonHandlers.setHandlers();
-    profileHandlers.setHandlers();
 };
