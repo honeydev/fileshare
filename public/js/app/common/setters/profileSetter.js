@@ -13,7 +13,7 @@ ProfileSetter.prototype.setProfileData = function (userData) {
     this._setProfileTitle(userData);
     this._setUserData(userData);
     this._setUserDataEditIcon();
-    this.setAvatar(userData);
+    this._setAvatar(userData);
 };
 
 /**
@@ -61,7 +61,7 @@ ProfileSetter.prototype.setErrorMessage = function (message) {
 /**
  * @param {[type]} userData [description]
  */
-ProfileSetter.prototype.setAvatar = function (userData) {
+ProfileSetter.prototype._setAvatar = function (userData) {
     if ($('#profileAvatar').length) {
         $('#profileAvatar').remove();
     }
@@ -100,7 +100,6 @@ ProfileSetter.prototype.setProfileStyles = function () {
     });
     $('#cancelPorfileButton').css('display', 'none');
 };
-
 
 ProfileSetter.prototype._setUserDataEditIcon = function () {
     $('#userDataList').children().append('<a href="#"><span class="userDataEditIcon glyphicon glyphicon-edit"></span></a>');
