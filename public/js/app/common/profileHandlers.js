@@ -13,6 +13,7 @@ ProfileHandlers.prototype.setHandlers = function () {
     this._setAvatarHandlers();
     this._closeProfile();
     this._cancelProfile();
+    this._changeProfile();
 };
 
 ProfileHandlers.prototype.setEditDataIcons = function () {
@@ -48,5 +49,12 @@ ProfileHandlers.prototype._cancelProfile = function () {
     $('#cancelPorfileButton').click({profile: this._profile}, function (e) {
         console.log('switch to Profile');
         e.data.profile.switchToProfile();
+    });
+};
+
+ProfileHandlers.prototype._changeProfile = function () {
+    $('#changeProfileButton').click({profile: this._profile}, function (e) {
+        console.log('apply changes');
+        e.data.profile.applyChanges();
     });
 };

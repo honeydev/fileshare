@@ -25,9 +25,9 @@ ProfileButtonSetter.prototype._hideChange = function () {
 };
 
 ProfileButtonSetter.prototype._showCancel = function () {
-    $('#profileChangeButton ').css('display', 'inline');
+    $('#changeProfileButton').css('display', 'inline');
 };
 
 ProfileButtonSetter.prototype._hideCancel = function () {
-    $('#profileChangeButton ').css('display', 'none');
+    $('#changeProfileButton ').css('display', 'none');
 };

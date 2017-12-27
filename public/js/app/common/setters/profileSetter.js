@@ -39,11 +39,15 @@ ProfileSetter.prototype._setUserData = function (userData) {
         $('#userDataList').append(`<li><label>name:</label> ${userData['name']}</li>`);
     }
 };
-
+/**
+ * @param {string} imageSource
+ */
 ProfileSetter.prototype.setAvatarPreview = function (imageSource) {
     $('#uploadAvatarA img').attr('src', imageSource);
 };
-
+/**
+ * @param {string} message
+ */
 ProfileSetter.prototype.setErrorMessage = function (message) {
     let alert = $('<div>').attr({
         'class': 'alert alert-danger',
@@ -53,8 +57,10 @@ ProfileSetter.prototype.setErrorMessage = function (message) {
     setTimeout(() => {
         $(alert).remove();
     }, 4000);
-}
-
+};
+/**
+ * @param {[type]} userData [description]
+ */
 ProfileSetter.prototype.setAvatar = function (userData) {
     if ($('#profileAvatar').length) {
         $('#profileAvatar').remove();
@@ -66,11 +72,21 @@ ProfileSetter.prototype.setAvatar = function (userData) {
     $('#uploadAvatarA').append(avatarImage);
 };
 
+ProfileSetter.prototype.removeProfile = function () {
+    $('#userDataList').remove();
+};    
+
 ProfileSetter.prototype.dropUserData = function () {
     $('#userDataList').empty();
 };
-
+/**
+ * @param  {object} userData key value object
+ * @return {void}
+ */
 ProfileSetter.prototype.swithToProfile = function (userData) {
+    if ($('#userDataList').length) {
+        $('#userDataList').remove();
+    }
     this.setProfileData(userData);
     this.setProfileStyles();
 };

@@ -1,7 +1,3 @@
-/**
- * Created by honey on 28/10/17.
- */
-
 'use strict';
 
 export {MainPageHandlers};
@@ -17,7 +13,6 @@ MainPageHandlers.prototype.setHandlers = function () {
     this._setDragNDropHandlers();
     this._setUploadFileHandler();
 };
-
 
 MainPageHandlers.prototype._setDragNDropHandlers = function () {
 
@@ -43,8 +38,6 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
         console.log('dragleave');
         this._uploadSectionSetter.unsetDragNDropStyles();
     });
-
-
 };
 
 MainPageHandlers.prototype._setUploadFileHandler = function() {

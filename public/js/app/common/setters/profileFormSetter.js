@@ -5,14 +5,20 @@ export {ProfileFormSetter};
 function ProfileFormSetter() {
     this._stringEditorHelper = dic.get('StringEditorHelper')();
 }
-
+/**
+ * @param  {object} 
+ * @return {[type]}
+ */
 ProfileFormSetter.prototype.switchToForm = function (userData) {
     const PROFILE_FORM = this._createProfileForm(userData);
     $('#userDataList').remove();
     $('.userProfileSection').append(PROFILE_FORM);
     this._setProfileFormStyles();
 };
-
+/**
+ * @param  {object} userData
+ * @return {object} jquery object
+ */
 ProfileFormSetter.prototype._createProfileForm = function (userData) {
     let form = $('<form>').attr({
         class: "form-horizontal",
@@ -23,7 +29,10 @@ ProfileFormSetter.prototype._createProfileForm = function (userData) {
     form = this._addPasswordFields(form);
     return form;
 };
-
+/**
+ * @param {object} jQuery form object
+ * @param {form} jQuery form object
+ */
 ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
     for (let key in userData) {
         let id = this._stringEditorHelper.toUpperCaseFirstWord(key);
@@ -34,7 +43,7 @@ ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
         let input = $('<input>').attr({
             type: "email",
             class: "form-control profileFormInput",
-            id: id,
+            id: `profile${id}Input`,
             value: userData[key]
         });
         $(form).append(label);
@@ -42,7 +51,9 @@ ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
     }
     return form;
 };
-
+/**
+ * @param {object} form
+ */
 ProfileFormSetter.prototype._addPasswordFields = function (form) {
     let currentPasswordLabel = $('<label>').attr({
         for: "profileCurrentPasswordInpit",
@@ -51,7 +62,7 @@ ProfileFormSetter.prototype._addPasswordFields = function (form) {
     let currentPasswordInput = $('<input>').attr({
         type: "password",
         class: "form-control profileFormInput",
-        id: "profileCurrentPasswordInpit",
+        id: "profileCurrentPasswordInput",
     });
     let newPasswordLabel = $('<label>').attr({
         for: "profilenewPasswordInpit",
@@ -60,7 +71,7 @@ ProfileFormSetter.prototype._addPasswordFields = function (form) {
     let newPasswordInput = $('<input>').attr({
         type: "password",
         class: "form-control profileFormInput",
-        id: "profileNewPasswordInpit",
+        id: "profileNewPasswordInput",
     });
     let newPasswordRepeatLabel = $('<label>').attr({
         for: "profilenewPasswordRepeatInpit",
@@ -69,7 +80,7 @@ ProfileFormSetter.prototype._addPasswordFields = function (form) {
     let newPasswordRepeatInput = $('<input>').attr({
         type: "password",
         class: "form-control profileFormInput",
-        id: "profilenewPasswordRepeatInpit",
+        id: "profileNewPasswordRepeatInput",
     });
     $(form).append(currentPasswordLabel);
     $(form).append(currentPasswordInput);
@@ -79,7 +90,9 @@ ProfileFormSetter.prototype._addPasswordFields = function (form) {
     $(form).append(newPasswordRepeatInput);
     return form;
 };
-
+/**
+ * @return {void}
+ */
 ProfileFormSetter.prototype._setProfileFormStyles = function () {
     $('#uploadAvatarA').attr("style", "float: none !important");
     $('#uploadAvatarA').css({
@@ -91,31 +104,8 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
         "margin-left": "22%",
         "width": "50%"
     });
-    $('#cancelPorfileButton, #profileButton').css('display', 'inline');
 };
-
+/** @return {void} */
 ProfileFormSetter.prototype.removeForm = function () {
     $('#profileForm').remove();
-    
 };  
-
-
-ProfileFormSetter.prototype.setProgressBar = function () {
-    /* NOT TESTED */
-    let wrap = $('<div>')
-        .attr('class', 'progress progress-striped active')
-        .css({
-            "margin-left": "30%",
-            "width": "40%"
-        });
-    let bar = $('<div>').attr({
-        class: "progress-bar",
-        role: "progressbar",
-        "aria-valuenow": "100"
-    }).css({
-        width: "100%"
-    });
-    let note = $('<span>').text('We complete changes!');
-
-    ('#profileModalBody').append(wrap).append(bar).append(note);
-};
