@@ -19,6 +19,7 @@ class Routes
             ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
             ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
         ;
+        $app->post('/profile.form', 'ProfileController:changeProfile');
         $app->get('/logout.action', 'LogoutController:logout');
     }
 }
