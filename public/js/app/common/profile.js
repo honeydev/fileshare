@@ -13,6 +13,7 @@ function Profile(dic) {
     this._imageValidator = dic.get('ImageValidator')();
     this._profileErrorSetter = dic.get('ProfileErrorSetter')();
     this._profileButtonSetters = dic.get('ProfileButtonSetter')();
+    this._profileUploader = dic.get('ProfileUploader')(dic);
 }
 /**
  * @return void
@@ -72,16 +73,17 @@ Profile.prototype.applyChanges = function () {
 
     let profileInputs = this._selectInputsFromForm();
     let changedInputs = this._calculateUserDataDiff(profileInputs);
-
+    console.log('selected inputs', profileInputs);
     if (this._userWantChangePass(profileInputs)) {
         console.log('yeah user try change pass');
         changedInputs = this._selectPassword(profileInputs, changedInputs);
     }
-
+    console.log('we have changed inputs', changedInputs);
+    this._profileUploader.upload(changedInputs);
 };
 
 Profile.prototype._selectInputsFromForm = function () {
-    let profileInputs = $('#profileForm > input');
+    let profileInputs = $('#profileForm > .form-group > input');
     let profileInputsWithIdKeys = {};
 
     for (let input of profileInputs) {

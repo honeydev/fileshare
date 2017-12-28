@@ -34,6 +34,7 @@ import {ProfileHandlers} from './profileHandlers';
 import {ImageValidator} from './validators/imageValidator';
 import {ProfileErrorSetter} from './setters/profileErrorSetter';
 import {ProfileButtonSetter} from './setters/profileButtonSetter';
+import {ProfileUploader} from './profileUploader';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -56,6 +57,9 @@ function commonBootstrap() {
         return SessionModel.getInstance();
     });
     /** services */
+    dic.add('ProfileUploader', function (...args) {
+        return new ProfileUploader(...args);
+    });
     dic.add('Profile', function (...args) {
         return new Profile(...args);
     });
