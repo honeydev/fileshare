@@ -34,16 +34,16 @@ ProfileSetter.prototype._setProfileTitle = function (userData) {
 ProfileSetter.prototype._setUserData = function (userData) {
     let userDataList = $('<ul>').attr('id', 'userDataList');
     $('.userProfileSection').append(userDataList);
-    $('#userDataList').append(`<li><label>email:</label> ${userData['email']}</li>`);
+    $('#userDataList').append(`<li><label>Email:</label> ${userData['email']}</li>`);
     if (userData.hasOwnProperty('name')) {
-        $('#userDataList').append(`<li><label>name:</label> ${userData['name']}</li>`);
+        $('#userDataList').append(`<li><label>Name:</label> ${userData['name']}</li>`);
     }
 };
 /**
  * @param {string} imageSource
  */
 ProfileSetter.prototype.setAvatarPreview = function (imageSource) {
-    $('#uploadAvatarA img').attr('src', imageSource);
+    $('#uploadAvatarAInProfile img, #uploadAvatarAInForm img').attr('src', imageSource);
 };
 /**
  * @param {string} message
@@ -65,11 +65,11 @@ ProfileSetter.prototype._setAvatar = function (userData) {
     if ($('#profileAvatar').length) {
         $('#profileAvatar').remove();
     }
-    let avatarImage = $('<img class="thumbnail media-object" id="profileAvatar" src="/img/user.png" alt="user avatar">')
+    let avatarImage = $('<img class="center-block img-thumbnail media-object" id="profileAvatar" src="/img/user.png" alt="user avatar">')
     if (userData.avatarUri !== null && userData.avatarUri !== undefined) {
         $(avatarImage).attr('src', userData.avatarUri);
     }
-    $('#uploadAvatarA').append(avatarImage);
+    $('#uploadAvatarAInProfile, #uploadAvatarAInForm').append(avatarImage);
 };
 
 ProfileSetter.prototype.removeProfile = function () {
@@ -92,13 +92,14 @@ ProfileSetter.prototype.swithToProfile = function (userData) {
 };
 
 ProfileSetter.prototype.setProfileStyles = function () {
-    $('#uploadAvatarA').attr("style", "float: left !important");
-    $('#uploadAvatarA').css({
+    $('#uploadAvatarAInForm').attr({
+        "style": "float: left !important",
+        "id": "uploadAvatarAInProfile"
+    });
+    $('#uploadAvatarInProfile').css({
         clear: "both",
         "margin-left": "0%",
-        display: "block"
     });
-    $('#cancelPorfileButton').css('display', 'none');
 };
 
 ProfileSetter.prototype._setUserDataEditIcon = function () {

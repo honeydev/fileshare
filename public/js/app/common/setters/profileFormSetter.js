@@ -23,15 +23,18 @@ ProfileFormSetter.prototype.switchToForm = function (userData) {
  */
 ProfileFormSetter.prototype._createProfileForm = function (userData) {
     let form = this._createFormElements();
-    form = this._setFormProps(from);
-    $(form).children()[0] = this._setEmailGroupProps(form, userData['email']);
-    $(form).children()[1] = this._setNameGroupProps(form, userData);
+    form = this._setFormProps(form);
+    this._setEmailGroupProps($(form).children()[0], userData['email']);
+    this._setNameGroupProps($(form).children()[1], userData['name']);
+    this._setCurrentPasswordGroupProps($(form).children()[2]);
+    this._setNewPasswordGroupProps($(form).children()[3]);
+    this._setNewPasswordRepeatGropuProps($(form).children()[4]);
+    $('#userProfileSection').append(form);
 };
 
 ProfileFormSetter.prototype._createFormElements = function () {
     const INPUTS_NUMBER = 5;
     let form = $('<form>');
-
     let wrap, label, input;
 
     for (let i = 0; i < INPUTS_NUMBER; i++) {
@@ -58,31 +61,85 @@ ProfileFormSetter.prototype._setFormProps = function (form) {
 
 
 ProfileFormSetter.prototype._setEmailGroupProps = function (emailGroup, email) {
-    let label = $(email).children(this._LABEL_INDEX);
-    let input = $(email).children(this._INPUT_INDEX);
+    let label = $(emailGroup).children()[this._LABEL_INDEX];
+    let input = $(emailGroup).children()[this._INPUT_INDEX];
 
     $(emailGroup).attr("class", "form-group");
     $(label).attr({
+        for: `profileEmailInput`,
+        class: "profileFormLabel"
+    }).text('Email:');
+    $(input).attr({
         class: "form-control profileFormInput",
         id: `profileEmailInput`,
-        value: userData['email']
+        value: email,
+        type: "email"
     });
 };
 
-ProfileFormSetter.prototype._setNameGroupProps = function (form) {
+ProfileFormSetter.prototype._setNameGroupProps = function (nameGroup, name) {
+    let label = $(nameGroup).children()[this._LABEL_INDEX];
+    let input = $(nameGroup).children()[this._INPUT_INDEX];
 
+    $(nameGroup).attr("class", "form-group");
+    $(label).attr({
+        for: `profileNameInput`,
+        class: "profileFormLabel"
+    }).text('Name:');
+    $(input).attr({
+        class: "form-control profileFormInput",
+        id: `profileNameInput`,
+        value: name,
+        type: "text"
+    });
 };
 
-ProfileFormSetter.prototype._setCurrentPasswordGroupProps = function (form) {
+ProfileFormSetter.prototype._setCurrentPasswordGroupProps = function (currentPasswordGroup) {
+    let label = $(currentPasswordGroup).children()[this._LABEL_INDEX];
+    let input = $(currentPasswordGroup).children()[this._INPUT_INDEX];
 
+    $(currentPasswordGroup).attr("class", "form-group");
+    $(label).attr({
+        for: `profileCurrentPasswordInput`,
+        class: "profileFormLabel"
+    }).text('Current password:');
+    $(input).attr({
+        class: "form-control profileFormInput",
+        id: `profileCurrentPasswordInput`,
+        type: "password"
+    });
 };
 
-ProfileFormSetter.prototype._setNewPasswordGroupProps = function (form) {
+ProfileFormSetter.prototype._setNewPasswordGroupProps = function (newPasswordGroup) {
+    let label = $(newPasswordGroup).children()[this._LABEL_INDEX];
+    let input = $(newPasswordGroup).children()[this._INPUT_INDEX];
 
+    $(newPasswordGroup).attr("class", "form-group");
+    $(label).attr({
+        for: `profileNewPasswordInput`,
+        class: "profileFormLabel"
+    }).text('New password:');
+    $(input).attr({
+        class: "form-control profileFormInput",
+        id: `profileNewPasswordInput`,
+        type: "password"
+    });
 };
 
-ProfileFormSetter.prototype._setNewPasswordRepeatGropuProps = function (form) {
+ProfileFormSetter.prototype._setNewPasswordRepeatGropuProps = function (repeatNewPasswordGroup) {
+    let label = $(repeatNewPasswordGroup).children()[this._LABEL_INDEX];
+    let input = $(repeatNewPasswordGroup).children()[this._INPUT_INDEX];
 
+    $(repeatNewPasswordGroup).attr("class", "form-group");
+    $(label).attr({
+        for: `profileNewPasswordRepeatInput`,
+        class: "profileFormLabel"
+    }).text('Repeat new password:');
+    $(input).attr({
+        class: "form-control profileFormInput",
+        id: `profileNewPasswordRepeatInput`,
+        type: "password"
+    });
 };
 /**
  * @param {object} jQuery form object
@@ -110,67 +167,15 @@ ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
     return form;
 };
 
-
-/**
- * @param {object} form
- */
-ProfileFormSetter.prototype._addPasswordFields = function (form) {
-    let passwordWrap = $('<div class="form-group"></div>');
-    let currentPasswordLabel = $('<label>').attr({
-        for: "profileCurrentPasswordInpit",
-        class: "profileFormLabel"
-    }).text('Current password');
-    let currentPasswordInput = $('<input>').attr({
-        type: "password",
-        class: "form-control profileFormInput",
-        id: "profileCurrentPasswordInput",
-    });
-    let newPasswordWrap = $('<div class="form-group"></div>');
-    let newPasswordLabel = $('<label>').attr({
-        for: "profilenewPasswordInput",
-        class: "profileFormLabel profileFormLabel"
-    }).text('New password');
-    let newPasswordInput = $('<input>').attr({
-        type: "password",
-        class: "form-control profileFormInput",
-        id: "profileNewPasswordInput",
-    });
-    let newPasswordRepeatWrap = $('<div class="form-group"></div>');
-    let newPasswordRepeatLabel = $('<label>').attr({
-        for: "profilenewPasswordRepeatInput",
-        class: "profileFormLabel profileFormLabel"
-    }).text('Repeat new password');
-    let newPasswordRepeatInput = $('<input>').attr({
-        type: "password",
-        class: "form-control profileFormInput",
-        id: "profileNewPasswordRepeatInput",
-    });
-    $(form).append(passwordWrap);
-    $(passwordWrap).append(currentPasswordLabel);
-    $(passwordWrap).append(currentPasswordInput);
-    $(form).append(newPasswordWrap);
-    $(newPasswordWrap).append(newPasswordLabel);
-    $(newPasswordWrap).append(newPasswordInput);
-    $(form).append(newPasswordRepeatWrap);
-    $(newPasswordRepeatWrap).append(newPasswordRepeatLabel);
-    $(newPasswordRepeatWrap).append(newPasswordRepeatInput);
-    return form;
-};
 /**
  * @return {void}
  */
 ProfileFormSetter.prototype._setProfileFormStyles = function () {
-    $('#uploadAvatarA').attr("style", "float: none !important");
-    $('#uploadAvatarA').css({
-        clear: "both",
-        "margin-left": "34%",
-        display: "block"
-    });
-    $('.profileFormLabel, .profileFormInput').css({
-        "margin-left": "22%",
-        "width": "50%"
-    });
+    $('#uploadAvatarAInProfile').attr("style", "float: none !important");
+    $('#uploadAvatarAInProfile').attr("id", "uploadAvatarAInForm");
 };
+
+
 /** @return {void} */
 ProfileFormSetter.prototype.removeForm = function () {
     $('#profileForm').remove();

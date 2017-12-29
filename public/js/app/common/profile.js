@@ -39,7 +39,7 @@ Profile.prototype.setAvatarPreview = function (image) {
         }.bind(this);
         
         fileReader.readAsDataURL(image);
-        this._profileButtonSetters.showButtons();
+        this._profileButtonSetters.haveChanges();
     } catch (Error) {
         if (Error instanceof ImageTypeError) {
             this._logger.log(Error.message);
@@ -53,7 +53,7 @@ Profile.prototype.setAvatarPreview = function (image) {
 Profile.prototype.switchToForm = function () {
     let userData = this._filtrateUserDataForProfile(this._getUserData());
     this._profileFormSetter.switchToForm(userData);
-    this._profileButtonSetters.showButtons();
+    this._profileButtonSetters.haveChanges();
 }
 /**
  * @return {void}
@@ -64,7 +64,7 @@ Profile.prototype.switchToProfile = function () {
     this._profileFormSetter.removeForm();
     this._profileSetter.swithToProfile(userData);
     profileHandlers.setEditDataIcons();
-    this._profileButtonSetters.hideButtons();
+    this._profileButtonSetters.dontHaveChanges();
 };
 /**
  * @return {void}
@@ -115,7 +115,6 @@ Profile.prototype._calculateUserDataDiff = function (profileInputs, changedInput
  * @return {object}
  */
 Profile.prototype._selectPassword = function (profileInputs, changedInputs = {}) {
-    
     changedInputs['profileCurrentPasswordInput'] = profileInputs['profileCurrentPasswordInput'];
     changedInputs['profileNewPasswordInput'] = profileInputs['profileNewPasswordInput'];
     changedInputs['profileNewPasswordRepeatInput'] = profileInputs['profileNewPasswordRepeatInput'];
@@ -128,11 +127,10 @@ Profile.prototype._selectPassword = function (profileInputs, changedInputs = {})
  * @return {bool}
  */
 Profile.prototype._userWantChangePass = function (profileInputs) {
-    console.log(profileInputs);
     let currentPasswordVal = $(profileInputs['profileCurrentPasswordInput']).val();
     let newPasswordVal = $(profileInputs['profileNewPasswordInput']).val();
     let repeatNewPasswordVal = $(profileInputs['profileNewPasswordRepeatInput']).val();
-    console.log(currentPasswordVal, newPasswordVal, repeatNewPasswordVal);
+    
     if (currentPasswordVal !== "" && currentPasswordVal !== null && currentPasswordVal !== undefined) {
         return true;
     }

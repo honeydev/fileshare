@@ -1,7 +1,3 @@
-/**
- * Created by honey on 31/10/17.
- */
-
 'use strict';
 
 export {LoginFormSetter};

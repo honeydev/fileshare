@@ -1,0 +1,50 @@
+#uploadAvatarAInProfile {
+    margin-left: 0%;
+    float: left !important;
+}
+
+#uploadAvatarAInForm {
+/*    clear: both;
+    margin-left: 34%;
+    display: block;*/
+}
+
+#profileForm .form-group {
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+#avatarUploadInput {
+	display: none;
+}
+
+#userDataList {
+	list-style: none;
+}
+
+#cancelPorfileButton, #applyProfileButton {
+	display: none;
+}
+
+#userDataList a {
+    text-decoration: none;
+    color: red;
+}
+
+
+
+.userProfileSection a img {
+    width: 150px;
+    height: 150px;
+}
+
+.userDataEditIcon {
+    display: none;
+    margin-left: 10px;
+}
+
+@media (min-width: 750px) {
+    .userProfileSection {
+        padding-left: 25px;
+    }
+}

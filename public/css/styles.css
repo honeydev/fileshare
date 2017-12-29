@@ -1,20 +1,10 @@
+@import url('profile.css');
+
 #logOutA {
 	display: none;
 }
 
 #profileA {
-	display: none;
-}
-
-#avatarUploadInput {
-	display: none;
-}
-
-#userDataList {
-	list-style: none;
-}
-
-#cancelPorfileButton, #changeProfileButton {
 	display: none;
 }
 
@@ -45,28 +35,9 @@
 	height: 92vh;
 }
 
-#userDataList a {
-	text-decoration: none;
-	color: red;
-}
-
-.userProfileSection {
-	padding-left: 25px;
-}
-
-.userProfileSection a img {
-	width: 150px;
-	height: 150px;
-}
-
-.userDataEditIcon {
-	display: none;
-	margin-left: 10px;
-}
-
 .dndWrap {
-	display: none;
-	position: absolute;
+    display: none;
+    position: absolute;
     width: 100%;
     height: 100%;
     border: 10px solid #337ab7a6;

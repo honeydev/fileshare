@@ -14,6 +14,7 @@ ProfileHandlers.prototype.setHandlers = function () {
     this._closeProfile();
     this._cancelProfile();
     this._changeProfile();
+    this._applyProfile();
 };
 
 ProfileHandlers.prototype.setEditDataIcons = function () {
@@ -30,7 +31,7 @@ ProfileHandlers.prototype.setEditDataIcons = function () {
 };
 
 ProfileHandlers.prototype._setAvatarHandlers = function () {
-    $('#uploadAvatarA').click(function () {
+    $('#uploadAvatarAInProfile, #uploadAvatarAInForm').click(function () {
         $('#avatarUploadInput').trigger('click');
     });
     $('#avatarUploadInput').change({profile: this._profile}, function (e) {
@@ -40,7 +41,7 @@ ProfileHandlers.prototype._setAvatarHandlers = function () {
 };
 
 ProfileHandlers.prototype._closeProfile = function () {
-    $('#profileClose, #cancelPorfileButton').click(function (e) {
+    $('#profileClose').click(function (e) {
         console.log('close modal');
     });
 };
@@ -54,6 +55,13 @@ ProfileHandlers.prototype._cancelProfile = function () {
 
 ProfileHandlers.prototype._changeProfile = function () {
     $('#changeProfileButton').click({profile: this._profile}, function (e) {
+        console.log('switch to form');
+        e.data.profile.switchToForm();
+    });
+};
+
+ProfileHandlers.prototype._applyProfile = function () {
+    $('#applyProfileButton').click({profile: this._profile}, function (e) {
         console.log('apply changes');
         e.data.profile.applyChanges();
     });
