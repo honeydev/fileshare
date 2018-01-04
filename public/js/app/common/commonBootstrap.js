@@ -35,6 +35,7 @@ import {ImageValidator} from './validators/imageValidator';
 import {ProfileErrorSetter} from './setters/profileErrorSetter';
 import {ProfileButtonSetter} from './setters/profileButtonSetter';
 import {ProfileUploader} from './profileUploader';
+import {AdminModel} from './models/adminModel';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {

@@ -6,7 +6,8 @@ const webpack = require('webpack');
 module.exports = {
     context: __dirname + '/js/app/',
     entry: {
-        main: './mainpage/main'
+        main: './mainpage/main',
+        tests: '../tests/bootstrap'
     },
     output: {
         filename: '[name].js',
@@ -37,6 +38,9 @@ module.exports = {
             chai: 'chai/chai.js'
         })
     ],
+    node: {
+        fs: 'empty'
+    },
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js'],

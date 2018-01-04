@@ -3,7 +3,6 @@
 export {SessionModelTest};
 
 import {assert} from 'chai';
-import {bootstrap} from './bootstrap';
 import {SessionModel} from '../app/common/models/sessionModel';
 
 function SessionModelTest() {
@@ -32,6 +31,3 @@ SessionModelTest.prototype._getSessionModelInstance = function () {
         });
     });
 };
-
-let sessionModelTest = new SessionModelTest();
-sessionModelTest.test();

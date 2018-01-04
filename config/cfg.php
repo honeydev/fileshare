@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'development' => true,
     'displayErrorDetails' => true,
     'logging' => true,
     'addContentLengthHeader' => false,

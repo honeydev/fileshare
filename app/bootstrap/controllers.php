@@ -18,3 +18,7 @@ $container['LogoutController'] = function () use ($container) {
 $container['RegisteredController'] = function () use ($container) {
     return new Fileshare\Controllers\RegisteredController($container);
 };
+
+$container['TestsController'] = function () use ($container) {
+	return new Fileshare\Controllers\TestsController($container);
+};

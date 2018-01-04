@@ -70,81 +70,10 @@ Profile.prototype.switchToProfile = function () {
  * @return {void}
  */
 Profile.prototype.applyChanges = function () {
-
-    let profileInputs = this._selectInputsFromForm();
-    let changedInputs = this._calculateUserDataDiff(profileInputs);
-    console.log('selected inputs', profileInputs);
-    if (this._userWantChangePass(profileInputs)) {
-        console.log('yeah user try change pass');
-        changedInputs = this._selectPassword(profileInputs, changedInputs);
-    }
-    console.log('we have changed inputs', changedInputs);
-    this._profileUploader.upload(changedInputs);
-};
-
-Profile.prototype._selectInputsFromForm = function () {
-    let profileInputs = $('#profileForm > .form-group > input');
-    let profileInputsWithIdKeys = {};
-
-    for (let input of profileInputs) {
-        profileInputsWithIdKeys[$(input).attr('id')] = input;
-    }
-
-    return profileInputsWithIdKeys;
-};
-/**
- * @param  {object}
- * @return {object}
- */
-Profile.prototype._calculateUserDataDiff = function (profileInputs, changedInputs = {}) {
     let userData = this._getUserData();
-
-    if ($(profileInputs['profileEmailInput']).val() != userData['email']) {
-        changedInputs['profileEmailInput'] = profileInputs['profileEmailInput'];
-    }
-
-    if ($(profileInputs['profileNameInput']).val() != userData['name']) {
-        changedInputs['profileNameInput'] = profileInputs['profileNameInput'];
-    }
-
-    return changedInputs;
+    this._profileUploader.upload(userData);
 };
-/**
- * @param  {object} profileInputs
- * @param  {Object} changedInputs
- * @return {object}
- */
-Profile.prototype._selectPassword = function (profileInputs, changedInputs = {}) {
-    changedInputs['profileCurrentPasswordInput'] = profileInputs['profileCurrentPasswordInput'];
-    changedInputs['profileNewPasswordInput'] = profileInputs['profileNewPasswordInput'];
-    changedInputs['profileNewPasswordRepeatInput'] = profileInputs['profileNewPasswordRepeatInput'];
 
-    return changedInputs;
-};
-/**
- * if some one password field not empty - user want change password
- * @param  {object}
- * @return {bool}
- */
-Profile.prototype._userWantChangePass = function (profileInputs) {
-    let currentPasswordVal = $(profileInputs['profileCurrentPasswordInput']).val();
-    let newPasswordVal = $(profileInputs['profileNewPasswordInput']).val();
-    let repeatNewPasswordVal = $(profileInputs['profileNewPasswordRepeatInput']).val();
-    
-    if (currentPasswordVal !== "" && currentPasswordVal !== null && currentPasswordVal !== undefined) {
-        return true;
-    }
-
-    if (newPasswordVal !== "" && newPasswordVal !== null && newPasswordVal !== undefined) {
-        return true;
-    }
-
-    if (repeatNewPasswordVal !== "" && repeatNewPasswordVal !== null && repeatNewPasswordVal !== undefined) {
-        return true;
-    }
-
-    return false;
-};
 /**
  * @return {object} [userData]
  */

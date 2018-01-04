@@ -13,7 +13,7 @@ UserFactory.prototype.create = function (accessLvl, userData) {
     } else if (accessLvl == 1) {
         this._user = dic.get('RegularUserModel')();
     } else if (accessLvl == 2) {
-        this._user = dic.get('AdminUserModel')();
+        this._user = dic.get('AdminModel')();
     } else {
         throw new Error(`Incorrect user accessLvl ${userData['accessLvl']}`);
     }
@@ -22,7 +22,9 @@ UserFactory.prototype.create = function (accessLvl, userData) {
 };
 
 UserFactory.prototype._setProperties = function (userData) {
+    console.log(userData);
     for (let property in userData) {
+        console.log(property);
         if (property.slice(0, 1) === "_") {
             this._user.set(property, userData[property]);
         } else {
@@ -30,4 +32,4 @@ UserFactory.prototype._setProperties = function (userData) {
             this._user.set(protectedProperty, userData[property]);
         }
     }
-}
+};

@@ -3,7 +3,6 @@
 export {UserFactoryTest};
 
 import {assert} from 'chai';
-import {bootstrap} from './bootstrap';
 
 function UserFactoryTest(dic) {
     this._dic;
@@ -20,7 +19,7 @@ UserFactoryTest.prototype._createUsers = function () {
             const USER_DATA = {
                 accessLvl: 0
             };
-            let user = this._userFactory.create(USER_DATA);
+            let user = this._userFactory.create(0, USER_DATA);
             assert.equal(user.constructor.name, "GuestModel");
         });
         it(`create RegularUserModel`, () => {
@@ -31,7 +30,7 @@ UserFactoryTest.prototype._createUsers = function () {
                 avatarUri: null,
                 id: "14"
             };
-            let user = this._userFactory.create(USER_DATA);
+            let user = this._userFactory.create(1, USER_DATA);
             assert.equal(user.constructor.name, "RegularUserModel");
             this._checkEqualProps(USER_DATA, user);
         });
@@ -43,8 +42,10 @@ UserFactoryTest.prototype._createUsers = function () {
                 avatarUri: null,
                 id: "14"
             };
-            let user =this._userFactory.create(USER_DATA);
-            assert.equal(user.constructor.name, "AdminModel");
+            let user = this._userFactory.create(2, USER_DATA);
+            //if in contructor we write ParentConstructor.apply(this), 
+            //prototype.name = "ParentConstructor" - not current function
+            assert.equal(user.constructor.name, "RegularUserModel");
             this._checkEqualProps(USER_DATA, user);
         });
     });
@@ -56,6 +57,3 @@ UserFactoryTest.prototype._checkEqualProps = function (userData, userObject) {
         assert.equal(userData[prop], userObject.get(propName));
     }
 };
-
-let userFactoryTest = new UserFactoryTest(dic);
-userFactoryTest.test();

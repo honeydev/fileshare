@@ -1,6 +1,6 @@
 'use strict';
 
-export {BaseTest};
+export {FileValidatorTest};
 
 import {assert} from 'chai';
 import {FileValidator} from '../app/mainpage/fileValidator.js';
@@ -15,7 +15,7 @@ function FileValidatorTest() {
     this._fileValidator = new FileValidator();
 }
 
-FileValidatorTest.prototype.validate = function () {
+FileValidatorTest.prototype.test = function () {
     this._checkFileName();
 };
 
@@ -83,10 +83,6 @@ FileValidatorTest.prototype._getIncorrectNameCreateMethods = function () {
         }.bind(this),
         function (ext) {
             return 'incorect_name with.' + ext + 'text after extension';
-        },
-        function (ext) {
-            let invalidExpWithSpace = ext.substr(0, 1) + ' ' + ext.substr(1, ext.length - 1);
-            return 'name with space in extension.' + invalidExpWithSpace;
         }
     ];
 };
@@ -94,6 +90,3 @@ FileValidatorTest.prototype._getIncorrectNameCreateMethods = function () {
 FileValidatorTest.prototype._addSpacesInExt = function (ext) {
     return ext.replace(/\./gi, '. ');
 };
-
-let fileValidatorTest = new FileValidatorTest();
-fileValidatorTest.validate();

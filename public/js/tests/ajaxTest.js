@@ -1,16 +1,16 @@
 'use strict';
 
-export {AjaxTest};
 
-import {assert} from 'chai';
-import {bootstrap} from './bootstrap';
 
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
+const page = new JSDOM('', {
+    url: "http://fileshare.dev"
+});
+const $ = require('jquery')(page.window);
 
 function AjaxTest() {
-    this._ajax = dic.get('Ajax')();
-    console.log($());
-    console.log(dic);
-    console.log(jsdom);
+    
 }
 
 AjaxTest.prototype.test = function () {
@@ -41,6 +41,4 @@ AjaxTest.prototype._sendCorrectRequest = function () {
         });
     });
 };
-
-let ajaxTest = new AjaxTest();
-//ajaxTest._sendCorrectRequest();
+console.log($)

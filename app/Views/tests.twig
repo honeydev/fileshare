@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% if showTests %}
+	<div id="mocha"></div>
+    <script src="js/public/tests.js"></script>
+{% else %}
+    <p>
+        Tests not available in production mode.
+        Just go back <a href="http://{{hostUrl}}">{{hostUrl}}</a>
+    </p>
+{% endif %}
+</body>
