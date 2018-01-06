@@ -18,10 +18,11 @@ Ajax.prototype.sendJSON = function (requestSettings) {
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.requestHandler(JSON.parse(qXHR.responseText));
-                this._logger.log('valid json');
+                this._logger.log('valid error json');
+                this._logger.log(qXHR.responseText);
             } catch (e) {
                 this._logger.log(e);
-                this._logger.log('invalid json');
+                this._logger.log('invalid error json');
                 this._logger.log(qXHR.responseText);
             }
         }

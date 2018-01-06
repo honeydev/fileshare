@@ -21,8 +21,9 @@ function LoginForm(dic) {
 }
 
 LoginForm.prototype.sendLoginForm = function () {
-    this._loginFormSetter.deleteErrorsClass();
+    this._loginFormSetter.clearAuthorizeFailedStatment();
     this._setLoginFormValues();
+    console.log('emailpass', this._email, this._password);
     this._validate();
     this._ajax.sendJSON({
         "url": "login.form",
@@ -47,9 +48,11 @@ LoginForm.prototype._validate = function () {
 
 LoginForm.prototype._errorStrategy = function (Error) {
     if (Error instanceof EmailValidError) {
-        this._loginFormSetter.setEmailError();
+        this._loginFormSetter.setFailedAuthorizeStatment('email_error');
     } else if (Error instanceof PasswordValidError) {
-        this._loginFormSetter.setPasswordError();
+        this._loginFormSetter.setFailedAuthorizeStatment('password_error');
+    } else {
+        throw new Error(`Invalid error instance ${Error}`);
     }
 };
 
@@ -63,6 +66,6 @@ LoginForm.prototype._loginFormResponseHandler = function (response) {
         this._user.initNewUser(response.loginData);
         this._loginFormSetter.setAuthorizedStatment();
     } else if (response.loginStatus === 'failed') {
-        this._loginFormSetter.setFailedAuthorizeStatment();
+        this._loginFormSetter.setFailedAuthorizeStatment(response.errorType);
     }
 };

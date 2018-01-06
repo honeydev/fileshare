@@ -40,7 +40,7 @@ class LoginMiddleware extends AbstractMiddleware
         } catch (FileshareException $e) {
             $response = $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
-                'errorType' => 'Invalid login data',
+                'errorType' => 'invalid_data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response); 
@@ -48,7 +48,7 @@ class LoginMiddleware extends AbstractMiddleware
         } catch (AuthorizeException $e) {
             $response = $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
-                'errorType' => 'User not exist',
+                'errorType' => 'user_not_exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

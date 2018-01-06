@@ -46,7 +46,7 @@ class LoginAuth extends AbstractAuth
 
     private function existUserWithThisEmail($targetUserData)
     {
-        if (!empty($targetUserData)) {
+        if (!empty($targetUserData) && $targetUserData !== false) {
             return true;
         }
         throw new AuthorizeException('User with this email not registred');

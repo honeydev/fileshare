@@ -43,8 +43,9 @@ trait UsersCRUDs
     /**
      * @param {array} $userIdentificator asscoc array were key type of select data from base
      * (id | email) ["identificatorType" => 'id', "identificatorValue" => "some value"]
+     * @return {array|boolean} - return false if user not exist in base
      */
-    protected function selectUserData(array $columnValue): array
+    protected function selectUserData(array $columnValue)
     {
         extract($columnValue);
         $userData = "SELECT email, hash, id FROM users WHERE $column = '$value'";
