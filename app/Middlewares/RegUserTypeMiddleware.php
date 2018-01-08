@@ -37,14 +37,15 @@ class RegUserTypeMiddleware extends AbstractMiddleware
         } catch (FileshareException $e) {
             $response = $this->sendErrorWithJson([
                'regStatus' => 'faield',
-               'errorType' => 'Invalid registration data',
+               'errorType' => 'invalid_registration_data',
                'exception' => $e,
                'errorCode' => 401
             ], $response);
             return $response;
         } catch (\InvalidArgumentException $e) {
             $response = $this->sendErrorWithJson([
-                'errorType' => 'Invalid registration data',
+                'regStatus' => "failed",
+                'errorType' => 'invalid_registration_data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

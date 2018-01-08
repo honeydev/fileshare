@@ -42,7 +42,7 @@ class RegValidateMiddleware extends AbstractMiddleware
         } catch (FileshareException $e) {
             $response = $this->sendErrorWithJson([
                 'regStatus' => 'faield',
-                'errorType' => 'Invalid registration data',
+                'errorType' => 'invalid_registration_data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

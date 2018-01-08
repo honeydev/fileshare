@@ -35,7 +35,7 @@ class RegDbMiddleware extends AbstractMiddleware
         } catch (AuthorizeException $e) {
             $response = $this->sendErrorWithJson([
                 'regStatus' => 'faield',
-                'errorType' => 'Invalid registration data',
+                'errorType' => 'user_already_exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

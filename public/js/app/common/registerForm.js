@@ -1,7 +1,7 @@
 /**
  * Created by honey on 29/10/17.
  */
-
+ 
 'use strict';
 
 export {RegisterForm};
@@ -58,14 +58,11 @@ RegisterForm.prototype._validate = function() {
 
 RegisterForm.prototype._errorStrategy = function(Error) {
     if (Error instanceof EmailValidError) {
-        console.log('emailValidError');
-        this._registerFormSetter.setEmailError();
+        this._registerFormSetter.setFailedRegStatment('email_error');
     } else if (Error instanceof PasswordValidError) {
-        console.log('passwordValidError', Error.message);
-        this._registerFormSetter.setPasswordError();
+        this._registerFormSetter.setFailedRegStatment('password_error');
     } else if (Error instanceof NameValidError) {
-        console.log('nameValidError');
-        this._registerFormSetter.setNameError();
+        this._registerFormSetter.setFailedRegStatment('name_error');
     }
 };
 
@@ -76,6 +73,13 @@ RegisterForm.prototype._setRegisterFormValues = function() {
     this._passwordRepeat = $('#passwordRepeat').prop('value');
 };
 
-RegisterForm.prototype._registerFormHandler = function (request) {
-    console.log(request);
+RegisterForm.prototype._registerFormHandler = function (response) {
+    console.log(response);
+    if (response.status === 'success') {
+        this._registerFormSetter.successRegistrationStatment();
+    } else if (response.status === 'failed') {
+        this._registerFormSetter.setFailedRegStatment(response.errorType);
+    } else {
+        throw new Error(`Invalid response status ${response.status}`);
+    }
 };

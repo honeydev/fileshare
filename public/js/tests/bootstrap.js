@@ -13,19 +13,28 @@ import {AuthorizedStatmentSetterTest} from './setters/authorizedStatmentSetterTe
 import {AjaxTest} from './ajaxTest';
 import {LoginFormSetterTest} from './setters/loginFormSetterTest';
 import {LoginFormTest} from './loginFormTest';
+import {RegisterFormTest} from './registerFormTest';
+import {RegisterFormSetterTest} from './setters/registerFormSetterTest';
 import {dic} from 'dic';
 
+let tests = {};
 mocha.setup('bdd');
 commonBootstrap();
 
-let fileValidatorTest = new FileValidatorTest();
-let sessionModelTest = new SessionModelTest();
-let userFactoryTest = new UserFactoryTest(dic);
-let ajaxTest = new AjaxTest(dic);
-let loginFormTest = new LoginFormTest(dic);
-// fileValidatorTest.test();
-// sessionModelTest.test();
-// userFactoryTest.test();
-//authorizedStatmentSetterTest.test();
-loginFormTest.test();
+tests['fileValidatorTest'] = new FileValidatorTest(dic);
+tests['sessionModelTest'] = new SessionModelTest(dic);
+tests['userFactoryTest'] = new UserFactoryTest(dic);
+tests['loginFormTest'] = new LoginFormTest(dic);
+tests['registerFormTest'] = new RegisterFormTest(dic);
+tests['loginFormSetterTest'] = new LoginFormSetterTest(dic);
+tests['registerFormSetterTest'] = new RegisterFormSetterTest(dic);
+
+console.log(TEST_NAME);
+if (TEST_NAME === 'all') {
+    for (let test in tests) {
+        tests[test].test();
+    }
+} else {
+    tests[TEST_NAME].test();
+}
 mocha.run();

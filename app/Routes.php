@@ -21,6 +21,6 @@ class Routes
         ;
         $app->post('/profile.form', 'ProfileController:changeProfile');
         $app->get('/logout.action', 'LogoutController:logout');
-        $app->get('/tests', 'TestsController:testsPage');
+        $app->get('/tests/{testName}', 'TestsController:testsPage');
     }
 }

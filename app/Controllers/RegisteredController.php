@@ -14,6 +14,6 @@ class RegisteredController extends AbstractController
         $userData = $request->getAttribute('userData');
         $addUserService = $this->container->get('AddUserService');
         $addUserService->addUser($request->getAttribute('regData'));
-        return $response->withJson(['regStatus' => 'success'], 200);
+        return $response->withJson(['status' => 'success'], 200);
     }
 }

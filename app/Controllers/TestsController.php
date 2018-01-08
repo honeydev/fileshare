@@ -9,12 +9,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class TestsController extends AbstractController
 {
-    public function testsPage(Request $request, Response $response)
+    public function testsPage(Request $request, Response $response, $args)
     {
         if ($this->container->get('settings')['development']) {
             $this->dataFromView = [
                 'title' => 'Frontend tests',
-                'showTests' => true
+                'showTests' => true,
+                'testName' => $args['testName']
             ];
             $response = $this->container->view->render(
                 $response, 

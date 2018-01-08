@@ -62,10 +62,12 @@ LoginForm.prototype._setLoginFormValues = function () {
 };
 
 LoginForm.prototype._loginFormResponseHandler = function (response) {
-    if (response.loginStatus === 'success') {
+    if (response.status === 'success') {
         this._user.initNewUser(response.loginData);
         this._loginFormSetter.setAuthorizedStatment();
-    } else if (response.loginStatus === 'failed') {
+    } else if (response.status === 'failed') {
         this._loginFormSetter.setFailedAuthorizeStatment(response.errorType);
+    } else {
+        throw new Error(`Invalid request status ${response.status}`);
     }
 };

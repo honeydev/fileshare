@@ -3,26 +3,32 @@
 export {LoginFormSetterTest};
 
 import {assert} from 'chai';
-import {loginFormTemplate} from './templates/login_form_template.js';
+import {BaseTest} from '../baseTest.js';
 
 function LoginFormSetterTest(dic) {
-	this._loginFormSetter = dic.get('LoginFormSetter')(dic);
+    this._loginFormSetter = dic.get('LoginFormSetter')(dic);
 }
 
-LoginFormSetterTest.prototype.test = function () {
-    console.log('loginformsetter', this._loginFormSetter);
+LoginFormSetterTest.prototype = Object.create(BaseTest.prototype);
+LoginFormSetterTest.prototype.constructor = LoginFormSetterTest;
 
+LoginFormSetterTest.prototype.test = function () {
     this._failedAuthorizationStatment();
     this._clearAuthorizeFailedStatment();
-    //this._removeDomEnv();
 };
 
 LoginFormSetterTest.prototype._failedAuthorizationStatment = function () {
-    describe('Set failed authorization statment on modal window', () => {
-        this._createDomEnv();
-        this._loginFormSetter.setFailedAuthorizeStatment('invalid_data'); 
-        it('Must be error message', () => {
-            console.log($('#loginFormAlert').length);
+    describe('Set failed authorization statment on login modal window', () => {
+        before((done) => {
+            this._createDomEnv('http://'+location.host, '#loginModal', done);
+        });
+        after(() => {
+            this._removeDomEnv('#loginModal');
+        });
+
+        it('Set failed', () => this._loginFormSetter.setFailedAuthorizeStatment('invalid_data'));
+ 
+        it('Must be error message', () => { 
             const ELEMENT_EXIST = Boolean($('#loginFormAlert').length);
             assert.isTrue(ELEMENT_EXIST);
         });
@@ -40,8 +46,17 @@ LoginFormSetterTest.prototype._failedAuthorizationStatment = function () {
 };
 
 LoginFormSetterTest.prototype._clearAuthorizeFailedStatment = function () {
-    describe('Drop error message, delete error classes', () => {
-        this._loginFormSetter.clearAuthorizeFailedStatment();
+    describe('Clear failed authorization statment on login modal window', () => {
+        before((done) => {
+            this._createDomEnv('http://'+location.host, '#loginModal', done);
+        });
+        after(() => {
+            this._removeDomEnv('#loginModal');
+        });
+        it('Set authorize failed and clear', ()=> {
+            this._loginFormSetter.setFailedAuthorizeStatment('invalid_data');
+            this._loginFormSetter.clearAuthorizeFailedStatment();
+        });
         it('Drop Error message', () => {
             const ELEMENT_EXIST  = Boolean($('#loginFormAlert').length);
             assert.isFalse(ELEMENT_EXIST);
@@ -54,18 +69,5 @@ LoginFormSetterTest.prototype._clearAuthorizeFailedStatment = function () {
             assert.isFalse($('#loginPasswordGroup').hasClass('has-error'));
             assert.isFalse($('#loginPasswordGroup').hasClass('has-feedback'));                
         });
-        setTimeout(() => this._removeDomEnv(), 100);
     });
-};
-
-LoginFormSetterTest.prototype._checkErrorClass = function () {
-
-}
-
-LoginFormSetterTest.prototype._createDomEnv = function () {
-    $('body').append(loginFormTemplate);
-};
-
-LoginFormSetterTest.prototype._removeDomEnv = function () {
-    $('#loginModal').remove();
 };

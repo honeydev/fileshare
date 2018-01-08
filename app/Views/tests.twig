@@ -8,8 +8,9 @@
 </head>
 <body>
 {% if showTests %}
+    <script>const TEST_NAME = "{{testName}}";</script>
 	<div id="mocha"></div>
-    <script src="js/public/tests.js"></script>
+    <script src="../js/public/tests.js"></script>
 {% else %}
     <p>
         Tests not available in production mode.

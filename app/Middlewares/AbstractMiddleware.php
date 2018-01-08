@@ -33,7 +33,7 @@ abstract class AbstractMiddleware
     protected function sendErrorWithJson($errorElements, $response)
     {
             $error = [
-                'loginStatus' => 'failed',
+                'status' => 'failed',
                 'errorType' => $errorElements['errorType']
             ];
 

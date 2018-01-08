@@ -8,18 +8,18 @@ function LoginFormSetter(dic) {
 
 LoginFormSetter.prototype.setFailedAuthorizeStatment = function (errorType) {
     if (errorType === "invalid_data") {
-        this._setEmailError();
-        this._setPasswordError();
         this._setErrorMessage('Invalid email or password');
-    } else if (errorType === "user_not_exist") {
         this._setEmailError();
-        this._setErrorMessage('User not exist');
-    } else if (errorType === 'password_error') {
         this._setPasswordError();
-        this._setErrorMessage('Invalid password format');
-    } else if (errorType === 'email_error') {
+    } else if (errorType === "user_not_exist") {
+        this._setErrorMessage('User not exist');
         this._setEmailError();
+    } else if (errorType === 'password_error') {
+        this._setErrorMessage('Invalid password format');
+        this._setPasswordError();
+    } else if (errorType === 'email_error') {
         this._setErrorMessage('Invalid email format');
+        this._setEmailError();
     } else {
         throw new Error(`Invalid error type ${errorType}`);
     }
