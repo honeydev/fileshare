@@ -31,7 +31,9 @@ ProfileHandlers.prototype.setEditDataIcons = function () {
 };
 
 ProfileHandlers.prototype._setAvatarHandlers = function () {
-    $('#uploadAvatarAInProfile, #uploadAvatarAInForm').click(function () {
+    $('#uploadAvatarAInProfile, #uploadAvatarAInForm').click(function (e) {
+        console.log('click on avatar');
+        e.stopPropagation();
         $('#avatarUploadInput').trigger('click');
     });
     $('#avatarUploadInput').change({profile: this._profile}, function (e) {

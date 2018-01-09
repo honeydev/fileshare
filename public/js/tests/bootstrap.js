@@ -15,6 +15,7 @@ import {LoginFormSetterTest} from './setters/loginFormSetterTest';
 import {LoginFormTest} from './loginFormTest';
 import {RegisterFormTest} from './registerFormTest';
 import {RegisterFormSetterTest} from './setters/registerFormSetterTest';
+import {ProfileUploaderTest} from './profileUploaderTest';
 import {dic} from 'dic';
 
 let tests = {};
@@ -28,8 +29,9 @@ tests['loginFormTest'] = new LoginFormTest(dic);
 tests['registerFormTest'] = new RegisterFormTest(dic);
 tests['loginFormSetterTest'] = new LoginFormSetterTest(dic);
 tests['registerFormSetterTest'] = new RegisterFormSetterTest(dic);
+tests['profileUploaderTest'] = new ProfileUploaderTest(dic);
 
-console.log(TEST_NAME);
+console.log(TEST_NAME, tests['profileUploaderTest']);
 if (TEST_NAME === 'all') {
     for (let test in tests) {
         tests[test].test();
@@ -37,4 +39,5 @@ if (TEST_NAME === 'all') {
 } else {
     tests[TEST_NAME].test();
 }
+
 mocha.run();

@@ -7,6 +7,7 @@ import {NameValidError} from './errors/nameValidError';
 import {PasswordValidError} from './errors/passwordValidError';
 
 function ProfileUploader(dic) {
+    this._ajax = dic.get('Ajax')(dic);
     this._emailValidator = dic.get('EmailValidator')();
     this._nameValidator = dic.get('NameValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
@@ -18,6 +19,7 @@ function ProfileUploader(dic) {
  */
 ProfileUploader.prototype.upload = function (userData) {
     try {
+        console.log(userData);
         let profileInputs = this._selectInputsFromForm();
         let changedInputs = this._calculateUserDataDiff(userData, profileInputs);
         console.log('selected inputs', profileInputs);

@@ -36,7 +36,7 @@ ProfileSetter.prototype._setUserData = function (userData) {
     $('.userProfileSection').append(userDataList);
     $('#userDataList').append(`<li><label>Email:</label> ${userData['email']}</li>`);
     if (userData.hasOwnProperty('name')) {
-        $('#userDataList').append(`<li><label>Name:</label> ${userData['name']}</li>`);
+            $('#userDataList').append(`<li><label>Name:</label> ${userData['name']}</li>`);
     }
 };
 /**
