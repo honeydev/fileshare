@@ -25,6 +25,15 @@ Profile.prototype.setUserData = function () {
     let profileHandlers = dic.get('ProfileHandlers')(dic);
     profileHandlers.setHandlers();
 };
+
+Profile.prototype.removeProfile = function () {
+    if ($('#profileForm').length) {
+        this._profileSetter.setProfileStyles();
+        this._profileFormSetter.removeForm();
+    } else {
+        this._profileSetter.removeProfile();
+    }
+};
 /**
  * @param {object} image File API object
  * @return {void}

@@ -18,12 +18,14 @@ Logout.prototype.logout = function () {
 };
 
 Logout.prototype._handler = function (response) {
-    if (response.logout === "success") {
+    if (response.status === "success") {
         this._session.destroySession();
         this._unauthorizedStatmentSetter.setUnatuhorized();
-        this._profile.dropUserData();
-    } else {
+        this._profile.removeProfile();
+    } else if (resposne.status === "failed") {
         this._logger.log('Failed log out');
         this._logger.log(response);
+    } else {
+        throw new Error(`Invalid response status ${response.status}`);
     }
 };

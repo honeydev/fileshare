@@ -13,6 +13,6 @@ class LogoutController extends AbstractController
     {
         $sessionService = $this->container->get('SessionService');
         $sessionService->destroySession();
-        return $response->withJson(['logout' => 'success']);
+        return $response->withJson(['status' => 'success']);
     }
 }
