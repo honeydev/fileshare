@@ -22,7 +22,7 @@ PasswordValidator.prototype.validate = function(password) {
     throw new PasswordValidError(`Invalid password ${password}`);
 };
 
-PasswordValidator.prototype.checkEqual = function(password, passwordRepeat) {
+PasswordValidator.prototype.checkEqual = function (password, passwordRepeat) {
     if (password === passwordRepeat) {
         return true;
     }

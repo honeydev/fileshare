@@ -28,7 +28,7 @@ ProfileUploader.prototype.upload = function (userData) {
             changedInputs = this._selectPassword(profileInputs, changedInputs);
         }
         changedInputs = this._categorizeChangedInputs(changedInputs);
-        this._validateInputs(changed);
+        this._validateInputs(changedInputs);
     } catch (Error) {
         console.log('error', Error);
         if (Error instanceof EmailValidError) {
@@ -61,7 +61,6 @@ ProfileUploader.prototype._selectInputsFromForm = function () {
  * @return {object}
  */
 ProfileUploader.prototype._calculateUserDataDiff = function (userData, profileInputs, changedInputs = {}) {
-
 
     if ($(profileInputs['profileEmailInput']).val() != userData['email']) {
         changedInputs['profileEmailInput'] = profileInputs['profileEmailInput'];
@@ -142,10 +141,17 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
         'profileNewPasswordInput': 'passwordValidator',
         'profileNewPasswordRepeatInput': 'passwordValidator'
     };
-    let validate = function (elementList) {
+    const validate = (elementList) => {
+        console.log('element list', elementList);
         let validatorName, validator, valueToValidate;
+        if (elementList.hasOwnProperty('profileNewPasswordInput')) {
+            this._passwordValidator.checkEqual(
+                $(elementList['profileNewPasswordInput']).val(),
+                $(elementList['profileNewPasswordRepeatInput']).val()
+                );
+        }
+
         for (let input in elementList) {
-            console.log(profileForm[input]);
             validatorName = '_' + VALIDATORS_MAP[input];
             validator = this[validatorName];
             valueToValidate = $(elementList[input]).val();
