@@ -64,7 +64,7 @@ RegisterFormSetterTest.prototype._clearFailedRegStatment = function () {
             createDomEnv.apply(context, [location.host, '#registerModal', done]);
         });
         after(() => {
-            this._removeDomEnv();
+            this._removeDomEnv('#registerModal');
         });
         it('Set failed statment', () => this._registerFormSetter.setFailedRegStatment('invalid_registration_data'));
         it('Clear failed statment', () => this._registerFormSetter.clearFailedRegStatment());

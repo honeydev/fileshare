@@ -36,11 +36,12 @@ RegisterFormSetter.prototype.setFailedRegStatment = function (errorType) {
 };
 
 RegisterFormSetter.prototype.successRegistrationStatment = function () {
-    //close reg modal
-    //open login modal
+    $('#registerModal').modal('hide');
+    $('#loginModal').modal('show');
 };
 
 RegisterFormSetter.prototype.clearFailedRegStatment = function () {
+    console.log('clear failed reg statment');
     this._clearErrorMessage();
     this._clearEmailError();
     this._clearPasswordError();
@@ -57,7 +58,7 @@ RegisterFormSetter.prototype._clearErrorMessage = function () {
     $('#registerFormAlert').remove();
 };
 
-RegisterFormSetter.prototype._setEmailError = function() {
+RegisterFormSetter.prototype._setEmailError = function () {
     $('#registerEmailGroup').addClass('has-error has-feedback');
 };
 
@@ -65,7 +66,7 @@ RegisterFormSetter.prototype._clearEmailError = function () {
     $('#registerEmailGroup').removeClass('has-error has-feedback');
 };
 
-RegisterFormSetter.prototype._setPasswordError = function() {
+RegisterFormSetter.prototype._setPasswordError = function () {
     $('#registerPasswordGroup').addClass('has-error has-feedback');
     $('#regPasswordRepeat').addClass('has-error has-feedback');
 };
@@ -81,8 +82,4 @@ RegisterFormSetter.prototype._setNameError = function () {
 
 RegisterFormSetter.prototype._clearNameError = function () {
     $('#registerNameGroup').removeClass('has-error has-feedback');
-};
-
-RegisterFormSetter.prototype._clearPasswordError = function () {
-    $('#registerNameGroup').removeClass('has-error has-feedback');    
 };

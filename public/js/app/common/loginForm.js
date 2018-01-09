@@ -62,6 +62,7 @@ LoginForm.prototype._setLoginFormValues = function () {
 };
 
 LoginForm.prototype._loginFormResponseHandler = function (response) {
+    console.log(response);
     if (response.status === 'success') {
         this._user.initNewUser(response.loginData);
         this._loginFormSetter.setAuthorizedStatment();

@@ -24,7 +24,7 @@ function RegisterForm(dic) {
 }
 
 RegisterForm.prototype.sendRegisterForm = function() {
-    this._registerFormSetter.deleteErrorsClass();
+    this._registerFormSetter.clearFailedRegStatment();
     this._setRegisterFormValues();
     this._validate();
     this._ajax.sendJSON(
