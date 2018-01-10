@@ -15,6 +15,7 @@ ProfileUploaderTest.prototype = Object.create(BaseTest.prototype);
 ProfileUploaderTest.prototype.constructor = ProfileUploaderTest;
 
 ProfileUploaderTest.prototype.test = function () {
+    this._testMethods();
     describe('Chnage user data in profile', () => {
         let profileUploader = this._profileUploader;
         const context = this;
@@ -48,9 +49,34 @@ ProfileUploaderTest.prototype.test = function () {
                 id: 1,
                 avatarUri: null
             });
+            assert.isFalse(Boolean($('#profileForm').length, 'switch to profile'))
+            assert.isTrue(Boolean($('#userDataList').length));
         });
     });
 };
+
+ProfileUploaderTest.prototype._testMethods = function () {
+    describe('Test profileUploader methods', () => {
+        it('Test prepareUserData method', () => {
+            const USER_DATA = {
+                email: "newEmail@email.com",
+                name: "newName",
+                currentPassword: "currentPassword",
+                newPassword: "newPassword",
+                repeatNewPassword: "repeatNewPassword"
+            };
+            const CHANGED_INPUTS = {
+                'profileEmailInput': $('<input value="newEmail@email.com">'),
+                'profileNameInput': $('<input value="newName">'),
+                'profileCurrentPassowrdInput': $('<input value="currentPassword">'),
+                'profileNewPasswordInput':  $('<input value="newPassword">'),
+                'profileNewPasswordRepeatInput': $('<input value="repeatNewPassword">')
+            };
+            
+            assert.deepEqual(this._profileUploader._prepareUserData(CHANGED_INPUTS), USER_DATA);
+        });
+    });
+};;
 
 ProfileUploaderTest.prototype._createDomEnv = function (url, elem, done) {
     BaseTest.prototype._createDomEnv.apply(this, arguments);

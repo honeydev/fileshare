@@ -36,6 +36,7 @@ import {ProfileErrorSetter} from './setters/profileErrorSetter';
 import {ProfileButtonSetter} from './setters/profileButtonSetter';
 import {ProfileUploader} from './profileUploader';
 import {AdminModel} from './models/adminModel';
+import {UrlHelper} from './helpers/urlHelper';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -137,5 +138,8 @@ function commonBootstrap() {
 
     dic.add('ProfileHandlers', function (...args) {
         return new ProfileHandlers(...args);
+    });
+    dic.add('UrlHelper', function (...args) {
+        return new UrlHelper(...args);
     });
 }

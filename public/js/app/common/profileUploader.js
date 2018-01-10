@@ -12,6 +12,7 @@ function ProfileUploader(dic) {
     this._nameValidator = dic.get('NameValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
     this._profileFormSetter = dic.get('ProfileFormSetter')();
+    this._urlHelper = dic.get('UrlHelper')();
 }
 /**
  * @param  {object} profileForm [
@@ -29,6 +30,12 @@ ProfileUploader.prototype.upload = function (userData) {
         }
         changedInputs = this._categorizeChangedInputs(changedInputs);
         this._validateInputs(changedInputs);
+        const NEW_USER_DATA = this._prepareUserData(changedInputs);
+        this._ajax.sendJSON({
+            url: 'profile.form',
+            method: "POST",
+            requestData: NEW_USER_DATA
+        });
     } catch (Error) {
         console.log('error', Error);
         if (Error instanceof EmailValidError) {
@@ -144,6 +151,7 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
     const validate = (elementList) => {
         console.log('element list', elementList);
         let validatorName, validator, valueToValidate;
+
         if (elementList.hasOwnProperty('profileNewPasswordInput')) {
             this._passwordValidator.checkEqual(
                 $(elementList['profileNewPasswordInput']).val(),
@@ -159,7 +167,28 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
             console.log('validator name', validatorName, 'validator', validator, 'value to validate', valueToValidate);
         }
     };
+
     validate(profileInputs['userData']);
     validate(profileInputs['userPasswords']);
     console.log('validate end');
+};
+
+ProfileUploader.prototype._prepareUserData = function (inputs) {
+    const USER_DATA_KEYS_MAP = {
+        'profileEmailInput': 'email',
+        'profileNameInput': 'name',
+        'profileCurrentPassowrdInput': 'currentPassword',
+        'profileNewPasswordInput': 'newPassword',
+        'profileNewPasswordRepeatInput': 'repeatNewPassword'
+    };
+
+    let userData = {};
+
+    for (let input in inputs) {
+        console.log('input', input, 'key map', USER_DATA_KEYS_MAP[input], 'input val',  $(inputs[input]).val());
+        
+    userData[USER_DATA_KEYS_MAP[input]] = $(inputs[input]).val();
+    }
+
+    return userData;
 };
