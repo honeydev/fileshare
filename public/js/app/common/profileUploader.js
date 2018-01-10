@@ -144,7 +144,7 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
     const VALIDATORS_MAP = {
         'profileEmailInput': 'emailValidator',
         'profileNameInput': 'nameValidator',
-        'profileCurrentPassowrdInput': 'passwordValidator',
+        'profileCurrentPasswordInput': 'passwordValidator',
         'profileNewPasswordInput': 'passwordValidator',
         'profileNewPasswordRepeatInput': 'passwordValidator'
     };
@@ -163,8 +163,8 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
             validatorName = '_' + VALIDATORS_MAP[input];
             validator = this[validatorName];
             valueToValidate = $(elementList[input]).val();
+            console.log('input', input, 'validator name', validatorName, 'validator', validator, 'value to validate', valueToValidate);
             this[validatorName].validate(valueToValidate);
-            console.log('validator name', validatorName, 'validator', validator, 'value to validate', valueToValidate);
         }
     };
 
@@ -174,21 +174,25 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
 };
 
 ProfileUploader.prototype._prepareUserData = function (inputs) {
+    console.log('inputs in prepare user data', inputs);
     const USER_DATA_KEYS_MAP = {
         'profileEmailInput': 'email',
         'profileNameInput': 'name',
-        'profileCurrentPassowrdInput': 'currentPassword',
+        'profileCurrentPasswordInput': 'currentPassword',
         'profileNewPasswordInput': 'newPassword',
         'profileNewPasswordRepeatInput': 'repeatNewPassword'
     };
 
     let userData = {};
 
-    for (let input in inputs) {
-        console.log('input', input, 'key map', USER_DATA_KEYS_MAP[input], 'input val',  $(inputs[input]).val());
-        
-    userData[USER_DATA_KEYS_MAP[input]] = $(inputs[input]).val();
-    }
+    const addInputValueToUserData = (elementList) => {
+        for (let input in elementList) {
+            userData[USER_DATA_KEYS_MAP[input]] = $(elementList[input]).val();
+        }
+    };
+
+    addInputValueToUserData(inputs['userData']);
+    addInputValueToUserData(inputs['userPasswords']);
 
     return userData;
 };
