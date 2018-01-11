@@ -20,5 +20,9 @@ $container['RegisteredController'] = function () use ($container) {
 };
 
 $container['TestsController'] = function () use ($container) {
-	return new Fileshare\Controllers\TestsController($container);
+    return new Fileshare\Controllers\TestsController($container);
+};
+
+$container['ProfileController'] = function () use ($container) {
+    return new Fileshare\Controllers\ProfileController($container);
 };
