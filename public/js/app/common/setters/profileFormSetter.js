@@ -64,7 +64,10 @@ ProfileFormSetter.prototype._setEmailGroupProps = function (emailGroup, email) {
     let label = $(emailGroup).children()[this._LABEL_INDEX];
     let input = $(emailGroup).children()[this._INPUT_INDEX];
 
-    $(emailGroup).attr("class", "form-group");
+    $(emailGroup).attr({
+        class: "form-group",
+        id: "profileEmailGroup"
+        });
     $(label).attr({
         for: `profileEmailInput`,
         class: "profileFormLabel"
@@ -81,7 +84,10 @@ ProfileFormSetter.prototype._setNameGroupProps = function (nameGroup, name) {
     let label = $(nameGroup).children()[this._LABEL_INDEX];
     let input = $(nameGroup).children()[this._INPUT_INDEX];
 
-    $(nameGroup).attr("class", "form-group");
+    $(nameGroup).attr({
+        class: "form-group",
+        id: "profileNameGroup"
+    });
     $(label).attr({
         for: `profileNameInput`,
         class: "profileFormLabel"
@@ -98,7 +104,10 @@ ProfileFormSetter.prototype._setCurrentPasswordGroupProps = function (currentPas
     let label = $(currentPasswordGroup).children()[this._LABEL_INDEX];
     let input = $(currentPasswordGroup).children()[this._INPUT_INDEX];
 
-    $(currentPasswordGroup).attr("class", "form-group");
+    $(currentPasswordGroup).attr({
+        class: "form-group",
+        id: "profileCurrentPasswordGroup"
+    });
     $(label).attr({
         for: `profileCurrentPasswordInput`,
         class: "profileFormLabel"
@@ -114,7 +123,10 @@ ProfileFormSetter.prototype._setNewPasswordGroupProps = function (newPasswordGro
     let label = $(newPasswordGroup).children()[this._LABEL_INDEX];
     let input = $(newPasswordGroup).children()[this._INPUT_INDEX];
 
-    $(newPasswordGroup).attr("class", "form-group");
+    $(newPasswordGroup).attr({
+        class: "form-group",
+        id: "profileNewPasswordGroup"
+    });
     $(label).attr({
         for: `profileNewPasswordInput`,
         class: "profileFormLabel"
@@ -130,7 +142,10 @@ ProfileFormSetter.prototype._setNewPasswordRepeatGropuProps = function (repeatNe
     let label = $(repeatNewPasswordGroup).children()[this._LABEL_INDEX];
     let input = $(repeatNewPasswordGroup).children()[this._INPUT_INDEX];
 
-    $(repeatNewPasswordGroup).attr("class", "form-group");
+    $(repeatNewPasswordGroup).attr({
+        class: "form-group",
+        id: "repeatNewPasswordGroup"
+    });
     $(label).attr({
         for: `profileNewPasswordRepeatInput`,
         class: "profileFormLabel"
@@ -141,32 +156,6 @@ ProfileFormSetter.prototype._setNewPasswordRepeatGropuProps = function (repeatNe
         type: "password"
     });
 };
-/**
- * @param {object} jQuery form object
- * @param {form} jQuery form object
- */
-ProfileFormSetter.prototype._addUserDataFields = function (form, userData) {
-    let id, wrap, label, input;
-    for (let key in userData) {
-        id = this._stringEditorHelper.toUpperCaseFirstWord(key);
-        wrap = $('<div class="form-group"></div>');
-        label = $('<label>').attr({
-            for: `profile${id}Input`,
-            class: "profileFormLabel"
-        }).text(key);
-        input = $('<input>').attr({
-            class: "form-control profileFormInput",
-            id: `profile${id}Input`,
-            value: userData[key]
-        });
-
-        $(form).append(wrap);
-        $(wrap).append(label);
-        $(input).insertAfter(label);
-    }
-    return form;
-};
-
 /**
  * @return {void}
  */

@@ -8,7 +8,6 @@ function ProfileErrorSetter() {
 
 ProfileErrorSetter.prototype.setError = function (message) {
     let errorElement = this._renderMessage(message);
-    this._cleanMessage(errorElement)
 };
 
 ProfileErrorSetter.prototype._renderMessage = function (message) {
@@ -20,8 +19,12 @@ ProfileErrorSetter.prototype._renderMessage = function (message) {
     return error;
 };
 
-ProfileErrorSetter.prototype._cleanMessage = function (errorElement) {
-    setTimeout(() => {
+ProfileErrorSetter.prototype.removeMessage = function (errorElement = "#profileErrorMessage", timeout = null) {
+    if (timeout !== null) {
+        setTimeout(() => {
+            $(errorElement).remove();
+        }, timeout);
+    } else {
         $(errorElement).remove();
-    }, 4000);
+    }
 };

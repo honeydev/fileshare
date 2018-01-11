@@ -1,24 +1,22 @@
 'use strict';
 
-export {ProfileUploader};
+export {ProfileDataCollector};
 
 import {EmailValidError} from './errors/emailValidError';
 import {NameValidError} from './errors/nameValidError';
 import {PasswordValidError} from './errors/passwordValidError';
 
-function ProfileUploader(dic) {
-    this._ajax = dic.get('Ajax')(dic);
+function ProfileDataCollector(dic) {
     this._emailValidator = dic.get('EmailValidator')();
     this._nameValidator = dic.get('NameValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
     this._profileFormSetter = dic.get('ProfileFormSetter')();
-    this._urlHelper = dic.get('UrlHelper')();
 }
 /**
  * @param  {object} profileForm [
  * @return {void}
  */
-ProfileUploader.prototype.upload = function (userData) {
+ProfileDataCollector.prototype.collect = function (userData) {
     try {
         console.log(userData);
         let profileInputs = this._selectInputsFromForm();
@@ -31,11 +29,7 @@ ProfileUploader.prototype.upload = function (userData) {
         changedInputs = this._categorizeChangedInputs(changedInputs);
         this._validateInputs(changedInputs);
         const NEW_USER_DATA = this._prepareUserData(changedInputs);
-        this._ajax.sendJSON({
-            url: 'profile.form',
-            method: "POST",
-            requestData: NEW_USER_DATA
-        });
+        return NEW_USER_DATA;
     } catch (Error) {
         console.log('error', Error);
         if (Error instanceof EmailValidError) {
@@ -49,7 +43,7 @@ ProfileUploader.prototype.upload = function (userData) {
     }
 };
 
-ProfileUploader.prototype._selectInputsFromForm = function () {
+ProfileDataCollector.prototype._selectInputsFromForm = function () {
 
     let profileInputs = $('#profileForm > .form-group > input');
     let profileInputsWithIdKeys = {
@@ -67,7 +61,7 @@ ProfileUploader.prototype._selectInputsFromForm = function () {
  * @param  {object}
  * @return {object}
  */
-ProfileUploader.prototype._calculateUserDataDiff = function (userData, profileInputs, changedInputs = {}) {
+ProfileDataCollector.prototype._calculateUserDataDiff = function (userData, profileInputs, changedInputs = {}) {
 
     if ($(profileInputs['profileEmailInput']).val() != userData['email']) {
         changedInputs['profileEmailInput'] = profileInputs['profileEmailInput'];
@@ -84,7 +78,7 @@ ProfileUploader.prototype._calculateUserDataDiff = function (userData, profileIn
  * @param  {Object} changedInputs
  * @return {object}
  */
-ProfileUploader.prototype._selectPassword = function (profileInputs, changedInputs = {}) {
+ProfileDataCollector.prototype._selectPassword = function (profileInputs, changedInputs = {}) {
     changedInputs['profileCurrentPasswordInput'] = profileInputs['profileCurrentPasswordInput'];
     changedInputs['profileNewPasswordInput'] = profileInputs['profileNewPasswordInput'];
     changedInputs['profileNewPasswordRepeatInput'] = profileInputs['profileNewPasswordRepeatInput'];
@@ -96,7 +90,7 @@ ProfileUploader.prototype._selectPassword = function (profileInputs, changedInpu
  * @param  {object}
  * @return {bool}
  */
-ProfileUploader.prototype._userWantChangePass = function (profileInputs) {
+ProfileDataCollector.prototype._userWantChangePass = function (profileInputs) {
     let currentPasswordVal = $(profileInputs['profileCurrentPasswordInput']).val();
     let newPasswordVal = $(profileInputs['profileNewPasswordInput']).val();
     let repeatNewPasswordVal = $(profileInputs['profileNewPasswordRepeatInput']).val();
@@ -119,7 +113,7 @@ ProfileUploader.prototype._userWantChangePass = function (profileInputs) {
  * @param  {object} changedInputs
  * @return {object}
  */
-ProfileUploader.prototype._categorizeChangedInputs = function (changedInputs) {
+ProfileDataCollector.prototype._categorizeChangedInputs = function (changedInputs) {
     console.log('inputs pre categorize', changedInputs);
     const PASSWORDS_INPUTS_ID = [
         'profileCurrentPasswordInput', 
@@ -139,7 +133,7 @@ ProfileUploader.prototype._categorizeChangedInputs = function (changedInputs) {
     return categorizedChangedInputs;
 };
 
-ProfileUploader.prototype._validateInputs = function (profileInputs) {
+ProfileDataCollector.prototype._validateInputs = function (profileInputs) {
     console.log('inputs to validate', profileInputs);
     const VALIDATORS_MAP = {
         'profileEmailInput': 'emailValidator',
@@ -173,7 +167,7 @@ ProfileUploader.prototype._validateInputs = function (profileInputs) {
     console.log('validate end');
 };
 
-ProfileUploader.prototype._prepareUserData = function (inputs) {
+ProfileDataCollector.prototype._prepareUserData = function (inputs) {
     console.log('inputs in prepare user data', inputs);
     const USER_DATA_KEYS_MAP = {
         'profileEmailInput': 'email',

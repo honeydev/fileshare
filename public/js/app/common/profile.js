@@ -13,7 +13,7 @@ function Profile(dic) {
     this._imageValidator = dic.get('ImageValidator')();
     this._profileErrorSetter = dic.get('ProfileErrorSetter')();
     this._profileButtonSetters = dic.get('ProfileButtonSetter')();
-    this._profileUploader = dic.get('ProfileUploader')(dic);
+    this._profileDataCollector = dic.get('ProfileDataCollector')(dic);
 }
 /**
  * @return void
@@ -53,6 +53,7 @@ Profile.prototype.setAvatarPreview = function (image) {
         if (Error instanceof ImageTypeError) {
             this._logger.log(Error.message);
             this._profileErrorSetter.setError(`Invalid image ${image.name} file type`);
+            this._profileErrorSetter.removeMessage('#profileErrorMessage', 4000);
         }
     }
 };
@@ -79,8 +80,19 @@ Profile.prototype.switchToProfile = function () {
  * @return {void}
  */
 Profile.prototype.applyChanges = function () {
-    let userData = this._getUserData();
-    this._profileUploader.upload(userData);
+    const CURRENT_USER_DATA = this._getUserData();
+    const CHANGED_USER_DATA_READY_TO_SEND = this._profileUploader.collect(CURRENT_USER_DATA);
+    console.log(CHANGED_USER_DATA_READY_TO_SEND);
+};
+
+Profile.prototype._profileResponseHandler = function (response) {
+    if (response.status === "success") {
+
+    } else if (response.status === "failed") {
+
+    } else {
+        throw new Error(`Invalid response stratus ${response.status}`);
+    }
 };
 
 /**

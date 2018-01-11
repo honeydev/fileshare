@@ -34,9 +34,10 @@ import {ProfileHandlers} from './profileHandlers';
 import {ImageValidator} from './validators/imageValidator';
 import {ProfileErrorSetter} from './setters/profileErrorSetter';
 import {ProfileButtonSetter} from './setters/profileButtonSetter';
-import {ProfileUploader} from './profileUploader';
+import {ProfileDataCollector} from './profileDataCollector';
 import {AdminModel} from './models/adminModel';
 import {UrlHelper} from './helpers/urlHelper';
+import {ProfileFailedStatmentSetter} from './setters/profileFailedStatmentSetter';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -59,8 +60,8 @@ function commonBootstrap() {
         return SessionModel.getInstance();
     });
     /** services */
-    dic.add('ProfileUploader', function (...args) {
-        return new ProfileUploader(...args);
+    dic.add('ProfileDataCollector', function (...args) {
+        return new ProfileDataCollector(...args);
     });
     dic.add('Profile', function (...args) {
         return new Profile(...args);
@@ -123,6 +124,9 @@ function commonBootstrap() {
     });
     dic.add('ProfileButtonSetter', function (...args) {
         return new ProfileButtonSetter(...args);
+    });
+    dic.add('ProfileFailedStatmentSetter', function (...args) {
+        return new ProfileFailedStatmentSetter(...args);
     });
     /** factorys */
     dic.add('UserFactory', function (...args) {

@@ -1,26 +1,26 @@
 'use strict';
 
-export {ProfileUploaderTest};
+export {ProfileDataCollectorTest};
 
 import {assert} from 'chai';
 import {BaseTest} from './baseTest';
 
-function ProfileUploaderTest(dic) {
-    this._profileUploader = dic.get('ProfileUploader')(dic);
+function ProfileDataCollectorTest(dic) {
+    this._profileDataCollector = dic.get('ProfileDataCollector')(dic);
     this._profile = dic.get('Profile')(dic);
     this._profileFormSetter = dic.get('ProfileFormSetter')(dic);
 }
 
-ProfileUploaderTest.prototype = Object.create(BaseTest.prototype);
-ProfileUploaderTest.prototype.constructor = ProfileUploaderTest;
+ProfileDataCollectorTest.prototype = Object.create(BaseTest.prototype);
+ProfileDataCollectorTest.prototype.constructor = ProfileDataCollectorTest;
 
-ProfileUploaderTest.prototype.test = function () {
+ProfileDataCollectorTest.prototype.test = function () {
     this._testMethods();
     this._testInterface();
 };
 
-ProfileUploaderTest.prototype._testMethods = function () {
-    describe('Test profileUploader methods', () => {
+ProfileDataCollectorTest.prototype._testMethods = function () {
+    describe('Test profileDataCollector methods', () => {
         it('Test prepareUserData method', () => {
             const USER_DATA = {
                 email: "newEmail@email.com",
@@ -40,16 +40,16 @@ ProfileUploaderTest.prototype._testMethods = function () {
                     'profileNewPasswordRepeatInput': $('<input value="repeatNewPassword">')
                 }
             };
-            console.log(this._profileUploader._prepareUserData(CHANGED_INPUTS), USER_DATA);
-            assert.deepEqual(this._profileUploader._prepareUserData(CHANGED_INPUTS), USER_DATA);
+            console.log(this._profileDataCollector._prepareUserData(CHANGED_INPUTS), USER_DATA);
+            assert.deepEqual(this._profileDataCollector._prepareUserData(CHANGED_INPUTS), USER_DATA);
         });
     });
 };;
 
-ProfileUploaderTest.prototype._testInterface = function () {
+ProfileDataCollectorTest.prototype._testInterface = function () {
     describe('Chnage user data in profile', () => {
-        let profileUploader = this._profileUploader;
-        const context = this;
+        let profileDataCollector = this._profileDataCollector;
+        let context = this;
         const createDomEnv = this._createDomEnv;
 
         before(function (done) {
@@ -69,11 +69,11 @@ ProfileUploaderTest.prototype._testInterface = function () {
                 avatarUri: null
         }));
 
-        it('Send coorect changed form', function () {
+        it('Colect changed user data from from', function () {
             $('#profileCurrentPasswordInput').val('currentPassword');
             $('#profileNewPasswordInput').val('newpassword');
             $('#profileNewPasswordRepeatInput').val('newpassword');
-            profileUploader.upload({
+            profileDataCollector.collect({
                 email: "testuser@mail.com",
                 name: "username",
                 accessLvl: 1,
@@ -86,7 +86,6 @@ ProfileUploaderTest.prototype._testInterface = function () {
     });
 };
 
-ProfileUploaderTest.prototype._createDomEnv = function (url, elem, done) {
+ProfileDataCollectorTest.prototype._createDomEnv = function (url, elem, done) {
     BaseTest.prototype._createDomEnv.apply(this, arguments);
-
 };

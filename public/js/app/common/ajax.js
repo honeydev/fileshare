@@ -4,16 +4,18 @@ export {Ajax};
 
 function Ajax(dic) {
     this._logger = dic.get('Logger')(dic);
+    this._urlHelper = dic.get('UrlHelper')(dic);
 }
 
 Ajax.prototype.sendJSON = function (requestSettings) {
-    let json = JSON.stringify(requestSettings.requestData);
+    const requestJSON = JSON.stringify(requestSettings.requestData);
+    const URL = this._urlHelper.correctUrl(requestSettings.url);
     $.ajax({
-        url: requestSettings.url,
+        url: URL,
         method: requestSettings.method,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: json,
+        data: requestJSON,
         success: requestSettings.requestHandler,
         error: (qXHR, textStatus, errorThrown) => {
             try {
