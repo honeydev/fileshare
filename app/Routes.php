@@ -19,7 +19,12 @@ class Routes
             ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
             ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
         ;
-        $app->post('/profile.form', 'ProfileController:changeProfile');
+        $app->post('/profile.form', function ($request, $response) {
+            var_dump($request->getParsedBody());
+        });
+        $app->post('/userAvatar.file', function ($request, $response) {
+            var_dump($request->getUploadedFiles());
+        });
         $app->get('/logout.action', 'LogoutController:logout');
         $app->get('/tests/{testName}', 'TestsController:testsPage');
     }

@@ -38,7 +38,6 @@ ProfileHandlers.prototype._setAvatarHandlers = function () {
     });
     $('#avatarUploadInput').change({profile: this._profile}, function (e) {
         e.data.profile.setAvatarPreview($(this)[0].files[0]);
-        $(this).val(null);
     });
 };
 

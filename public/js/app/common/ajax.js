@@ -16,10 +16,10 @@ Ajax.prototype.sendJSON = function (requestSettings) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: requestJSON,
-        success: requestSettings.requestHandler,
+        success: requestSettings.responseHandler,
         error: (qXHR, textStatus, errorThrown) => {
             try {
-                requestSettings.requestHandler(JSON.parse(qXHR.responseText));
+                requestSettings.responseHandler(JSON.parse(qXHR.responseText));
                 this._logger.log('valid error json');
                 this._logger.log(qXHR.responseText);
             } catch (e) {
@@ -31,15 +31,14 @@ Ajax.prototype.sendJSON = function (requestSettings) {
     });
 };
 
-
 Ajax.prototype.doAction = function (requestSettings) {
     $.ajax({
         url: requestSettings.url,
         type: "GET",
-        success: requestSettings.requestHandler,
+        success: requestSettings.responseHandler,
         error: (qXHR, textStatus, errorThrown) => {
             try {
-                requestSettings.requestHandler(JSON.parse(qXHR.responseText));
+                requestSettings.responseHandler(JSON.parse(qXHR.responseText));
                 this._logger.log('valid json');
             } catch (e) {
                 this._logger.log(e);
@@ -50,16 +49,28 @@ Ajax.prototype.doAction = function (requestSettings) {
     });
 };
 
-Ajax.prototype.sendFile = function (file, url) {
-
+Ajax.prototype.sendFile = function (requestSettings) {
+    const URL = this._urlHelper.correctUrl(requestSettings.url);
     let formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', requestSettings.file);
 
     $.ajax({
-        url: url,
+        url: URL,
         type: 'POST',
         data: formData,
         processData: false,
-        contentType: false
+        contentType: false,
+        success: requestSettings.responseHandler,
+        error: (qXHR, textStatus, errorThrown) => {
+            try {
+                requestSettings.responseHandler(JSON.parse(qXHR.responseText));
+                this._logger.log('valid error json');
+                this._logger.log(qXHR.responseText);
+            } catch (e) {
+                this._logger.log(e);
+                this._logger.log('invalid error json');
+                this._logger.log(qXHR.responseText);
+            }
+        }
     });
 };

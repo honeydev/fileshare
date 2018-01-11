@@ -31,7 +31,7 @@ LoginForm.prototype.sendLoginForm = function () {
             email: this._email,
             password: this._password
         },
-        "requestHandler": this._loginFormResponseHandler.bind(this),
+        "responseHandler": this._loginFormResponseHandler.bind(this),
         "method": "POST"
     });
 };

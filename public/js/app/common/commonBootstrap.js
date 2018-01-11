@@ -38,6 +38,7 @@ import {ProfileDataCollector} from './profileDataCollector';
 import {AdminModel} from './models/adminModel';
 import {UrlHelper} from './helpers/urlHelper';
 import {ProfileFailedStatmentSetter} from './setters/profileFailedStatmentSetter';
+import {ProfileUploader} from './profileUploader';
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -60,6 +61,9 @@ function commonBootstrap() {
         return SessionModel.getInstance();
     });
     /** services */
+    dic.add('ProfileUploader', function (...args) {
+        return new ProfileUploader(...args);
+    });
     dic.add('ProfileDataCollector', function (...args) {
         return new ProfileDataCollector(...args);
     });

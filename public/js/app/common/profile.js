@@ -14,6 +14,7 @@ function Profile(dic) {
     this._profileErrorSetter = dic.get('ProfileErrorSetter')();
     this._profileButtonSetters = dic.get('ProfileButtonSetter')();
     this._profileDataCollector = dic.get('ProfileDataCollector')(dic);
+    this._profileUploader = dic.get('ProfileUploader')(dic);
 }
 /**
  * @return void
@@ -80,14 +81,25 @@ Profile.prototype.switchToProfile = function () {
  * @return {void}
  */
 Profile.prototype.applyChanges = function () {
-    const CURRENT_USER_DATA = this._getUserData();
-    const CHANGED_USER_DATA_READY_TO_SEND = this._profileUploader.collect(CURRENT_USER_DATA);
-    console.log(CHANGED_USER_DATA_READY_TO_SEND);
+
+    let changedProfileDataReadyToSend = {};
+    
+    if ($('#avatarUploadInput').prop('files').length) {
+        changedProfileDataReadyToSend.avatar = $('#avatarUploadInput').prop('files')[0];
+    }
+
+    if ($('#profileForm').length) {
+        const CURRENT_USER_DATA = this._getUserData();
+        changedProfileDataReadyToSend.userData = this._profileDataCollector.collect(CURRENT_USER_DATA);
+    }
+
+    console.log('changed profile data ready to send', changedProfileDataReadyToSend);
+    this._profileUploader.upload(changedProfileDataReadyToSend);
 };
 
 Profile.prototype._profileResponseHandler = function (response) {
     if (response.status === "success") {
-
+        
     } else if (response.status === "failed") {
 
     } else {

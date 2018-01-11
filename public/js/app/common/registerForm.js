@@ -37,7 +37,7 @@ RegisterForm.prototype.sendRegisterForm = function() {
                 passwordRepeat: this._passwordRepeat,
                 userType: 1
             },
-            "requestHandler": this._registerFormHandler.bind(this),
+            "responseHandler": this._registerFormHandler.bind(this),
             "method": "POST"
         }
     );
