@@ -5,6 +5,7 @@ export {ProfileDataCollector};
 import {EmailValidError} from './errors/emailValidError';
 import {NameValidError} from './errors/nameValidError';
 import {PasswordValidError} from './errors/passwordValidError';
+import {PasswordsNotEqualError} from './errors/passwordsNotEqualError';
 
 function ProfileDataCollector(dic) {
     this._emailValidator = dic.get('EmailValidator')();
@@ -39,6 +40,8 @@ ProfileDataCollector.prototype.collect = function (userData) {
             console.log('name error');
         } else if (Error instanceof PasswordValidError) {
             console.log('password error');
+        } else if (Error instanceof PasswordsNotEqualError) {
+            console.log('password not equal');
         }
     }
 };

@@ -19,7 +19,7 @@ class OwnerMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        $profileData = $request->get('profileData');
+        $profileData = $request->getAttribute('profileData');
         var_dump($profileData);
         if ($this->userIsOwner() || $this->userIsAdmin) {
             $response = $next($request, $response);

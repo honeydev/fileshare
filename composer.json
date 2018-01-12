@@ -20,7 +20,8 @@
         "slim/twig-view": "^2.2"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.8 < 6.0"
+        "phpunit/phpunit": ">=4.8 < 6.0",
+        "herloct/codeception-slim-module": "^1.1"
     },
     "autoload-dev": {
         "psr-4": {

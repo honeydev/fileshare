@@ -11,7 +11,7 @@ class ProfileController extends AbstractController
 {
     public function changeProfile(Request $request, Response $response)
     {
-       $profileData = null;
-       return $response->withJson(['profileStatus' => 'success', 'profileData' => $profileData], 200);
+       $response = $response->withJson(['status' => 'success'], 200);
+       return $response;
     }
 }

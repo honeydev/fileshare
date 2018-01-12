@@ -5,8 +5,11 @@
 # Include one of framework modules (Symfony2, Yii2, Laravel5) to use it
 # Remove this suite if you don't use frameworks
 
-actor: FunctionalTester
+class_name: FunctionalTester
 modules:
     enabled:
-        # add a framework module here
         - \Helper\Functional
+        - \Herloct\Codeception\Module\Slim:
+            container: container.php
+        - REST:
+            depends: \Herloct\Codeception\Module\Slim

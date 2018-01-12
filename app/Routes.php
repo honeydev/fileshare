@@ -19,9 +19,7 @@ class Routes
             ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
             ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
         ;
-        $app->post('/profile.form', function ($request, $response) {
-            var_dump($request->getParsedBody());
-        });
+        $app->post('/profile.form', 'ProfileController:changeProfile');
         $app->post('/userAvatar.file', function ($request, $response) {
             var_dump($request->getUploadedFiles());
         });
