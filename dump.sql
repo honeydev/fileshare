@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.25-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.16  Distrib 10.1.25-MariaDB, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: fileshare
 -- ------------------------------------------------------
--- Server version	10.1.25-MariaDB
+-- Server version	10.1.25-MariaDB-1~xenial
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `email` char(255) DEFAULT NULL,
+  `email` char(30) DEFAULT NULL,
   `hash` char(255) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,18 +36,18 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('devspades4@gmail.com','$2y$10$z1VFNwLPqtHIok/80MzrIefd4tvE5xnMtkcZ6K3P5XvAuMhunde3y',37);
+INSERT INTO `users` VALUES ('devspades@gmail.com','$2y$10$rTAswocxyRjIF4epaevTA.5nqzhORHfrCEELz/tjIHP3nNZqIq1ZS',6);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usersinfo`
+-- Table structure for table `usersInfo`
 --
 
-DROP TABLE IF EXISTS `usersinfo`;
+DROP TABLE IF EXISTS `usersInfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usersinfo` (
+CREATE TABLE `usersInfo` (
   `name` char(255) DEFAULT NULL,
   `avatarUri` char(255) DEFAULT NULL,
   `userId` int(11) NOT NULL,
@@ -56,22 +56,23 @@ CREATE TABLE `usersinfo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usersinfo`
+-- Dumping data for table `usersInfo`
 --
 
-LOCK TABLES `usersinfo` WRITE;
-/*!40000 ALTER TABLE `usersinfo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usersinfo` ENABLE KEYS */;
+LOCK TABLES `usersInfo` WRITE;
+/*!40000 ALTER TABLE `usersInfo` DISABLE KEYS */;
+INSERT INTO `usersInfo` VALUES ('alexey',NULL,6);
+/*!40000 ALTER TABLE `usersInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `userssettings`
+-- Table structure for table `usersSettings`
 --
 
-DROP TABLE IF EXISTS `userssettings`;
+DROP TABLE IF EXISTS `usersSettings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `userssettings` (
+CREATE TABLE `usersSettings` (
   `accountStatus` tinyint(1) NOT NULL DEFAULT '1',
   `accessLvl` smallint(6) DEFAULT NULL,
   `userId` int(11) NOT NULL,
@@ -80,13 +81,13 @@ CREATE TABLE `userssettings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userssettings`
+-- Dumping data for table `usersSettings`
 --
 
-LOCK TABLES `userssettings` WRITE;
-/*!40000 ALTER TABLE `userssettings` DISABLE KEYS */;
-INSERT INTO `userssettings` VALUES (1,1,37);
-/*!40000 ALTER TABLE `userssettings` ENABLE KEYS */;
+LOCK TABLES `usersSettings` WRITE;
+/*!40000 ALTER TABLE `usersSettings` DISABLE KEYS */;
+INSERT INTO `usersSettings` VALUES (1,1,6);
+/*!40000 ALTER TABLE `usersSettings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -98,4 +99,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-27 17:59:55
+-- Dump completed on 2018-01-14  6:59:06
