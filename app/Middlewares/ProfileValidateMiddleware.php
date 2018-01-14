@@ -5,6 +5,7 @@
  * Date: 10/4/17
  * Time: 9:17 PM
  */
+declare(strict_types=1);
 
 namespace Fileshare\Middlewares;
 

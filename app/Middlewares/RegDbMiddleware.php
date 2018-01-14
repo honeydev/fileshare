@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fileshare\Middlewares;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;

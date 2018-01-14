@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fileshare\Middlewares;
 
 use Fileshare\Exceptions\FileshareException as FileshareException;
@@ -26,7 +28,7 @@ abstract class AbstractMiddleware
 
     protected function sendErrorWithJson($errorElements, $response)
     {
-            $error = [
+        $error = [
                 'status' => 'failed',
                 'errorType' => $errorElements['errorType']
             ];

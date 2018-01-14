@@ -13,3 +13,4 @@ modules:
             container: container.php
         - REST:
             depends: \Herloct\Codeception\Module\Slim
+            

@@ -1,6 +1,6 @@
 <?php
 
-require dirname(dirname(__DIR__)).'/vendor/autoload.php';
+require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -11,12 +11,29 @@ use Slim\Container;
 define('ROOT', dirname(dirname(__DIR__)));
 
 $container = new Container([
-    App::class => function (ContainerInterface $c) {
-        $app = new App($c);
-        $settings = $c->get('settings');
-        $settings->replace(['debug' => true, 'displayErrorDetails' => true]);
+    App::class => function (ContainerInterface $container) {
+        $app = new App($container);
+        $settings = $container->get('settings');
+        $settings->replace(require ROOT . '/config/cfg.php');
         // routes and middlewares here
-        $app->post('/profile.form', 'ProfileController:changeProfile');
+        $app->group('', function () use ($app, $container) {
+            $app->get('/', 'MainPageController:indexPage');
+            $app->post('/upload.file', 'MainPageController:uploadFile');
+            $app->post('/login.form', 'LoginController:login')
+                ->add(new \Fileshare\Middlewares\LoginMiddleware($container))
+                ;
+            $app->post('/register.form', 'RegisteredController:registered')
+                ->add(new \Fileshare\Middlewares\RegDbMiddleware($container))
+                ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
+                ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
+            ;
+            $app->post('/profile.form', 'ProfileController:changeProfile');
+            $app->post('/userAvatar.file', function ($request, $response) {
+                var_dump($request->getUploadedFiles());
+            });
+            $app->get('/logout.action', 'LogoutController:logout');
+            $app->get('/tests/{testName}', 'TestsController:testsPage');
+        })->add(new \Fileshare\Middlewares\SessionMiddleware($container));
         return $app;
     }
 ]);

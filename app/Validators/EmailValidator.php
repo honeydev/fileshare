@@ -5,6 +5,8 @@
  * Date: 29/10/17
  * Time: 13:56
  */
+declare(strict_types=1);
+
 namespace Fileshare\Validators;
 
 use \Fileshare\Exceptions\FileshareException as FileshareException;

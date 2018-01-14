@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lebedev
- * Date: 10/4/17
- * Time: 9:18 PM
- */
+
+declare(strict_types=1);
 
 namespace Fileshare\Middlewares;
 

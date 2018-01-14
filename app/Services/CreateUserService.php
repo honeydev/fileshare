@@ -46,6 +46,7 @@ class CreateUserService
             $this->user->setUserVars($userData);
         } elseif ($userObjectExistInSession = !empty($this->sessionModel->user)) {
             $this->user = $this->sessionModel->user;
+            echo 'user in session';
         } elseif ($guestFirstTimeLoadPage = !$this->sessionModel->authorizeStatus) {
             $this->user = $this->container->get('GuestUserModel');
         } else {

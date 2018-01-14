@@ -13,11 +13,12 @@ function Logout(dic) {
 Logout.prototype.logout = function () {
     this._ajax.doAction({
         url: location.host + '/logout.action',
-        responeHandler: this._handler.bind(this)
+        responseHandler: this._handler.bind(this)
     });
 };
 
 Logout.prototype._handler = function (response) {
+    console.log(response);
     if (response.status === "success") {
         this._session.destroySession();
         this._unauthorizedStatmentSetter.setUnatuhorized();

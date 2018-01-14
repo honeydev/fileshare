@@ -10,6 +10,7 @@ function Ajax(dic) {
 Ajax.prototype.sendJSON = function (requestSettings) {
     const requestJSON = JSON.stringify(requestSettings.requestData);
     const URL = this._urlHelper.correctUrl(requestSettings.url);
+    console.log('sended json', requestJSON);
     $.ajax({
         url: URL,
         method: requestSettings.method,
@@ -32,8 +33,9 @@ Ajax.prototype.sendJSON = function (requestSettings) {
 };
 
 Ajax.prototype.doAction = function (requestSettings) {
+    const URL = this._urlHelper.correctUrl(requestSettings.url);
     $.ajax({
-        url: requestSettings.url,
+        url: URL,
         type: "GET",
         success: requestSettings.responseHandler,
         error: (qXHR, textStatus, errorThrown) => {

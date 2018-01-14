@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 19/11/17
- * Time: 15:50
- */
+
+declare(strict_types=1);
 
 namespace Fileshare\Middlewares;
 

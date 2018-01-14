@@ -2,6 +2,7 @@
 /**
  * @class SessionService - start session, create and manage session model
  */
+declare(strict_types=1);
 
 namespace Fileshare\Services;
 
@@ -16,25 +17,29 @@ class SessionService
         $this->createSession();
         $this->container = $container;
         $this->createUserService = $container->get('CreateUserService', $container);
-        $this->setSessionVariables();
     }
 
-    private function setSessionVariables()
+    public function runSession(array $envelopment)
+    {
+        $this->setSessionVariables($envelopment);
+    }
+
+    private function setSessionVariables(array $envelopment)
     {
         if (!empty($_SESSION['sessionModel'])) {
             $this->sessionModel = $_SESSION['sessionModel'];
         } else {
-            $this->createGuestSession();
+            $this->createGuestSession($envelopment);
         }
     }
 
-    private function createGuestSession()
+    private function createGuestSession(array $envelopment)
     {
         $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
         $this->sessionModel->authorizeStatus = false;
-        $this->accessLvl = 0;
-        $this->user = $this->createUserService->createUser();
-        $this->ip = $_SERVER['REMOTE_ADDR'];
+        $this->sessionModel->accessLvl = 0;
+        $this->sessionModel->user = $this->createUserService->createUser();
+        $this->sessionModel->ip = $envelopment['ip'];
     }
 
     private function createSession()

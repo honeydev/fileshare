@@ -4,6 +4,8 @@
  * @class OwnerMiddleware check equal user id and user id in base. 
  * if user category > 1, it is equal to the owner
  */
+declare(strict_types=1);
+
 namespace Fileshare\Middlewares;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
