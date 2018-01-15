@@ -16,34 +16,9 @@ class SessionMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        $clientEnvelopment = $this->getEnvVars($request);
         $sessionService = $this->container->get('SessionService');
-        $sessionService->runSession($clientEnvelopment);
+        $sessionService->runSession();
         $response = $next($request, $response);
         return $response;
-    }
-
-    private function getEnvVars(Request $request): array
-    {
-        $clientEnvelopment = [];
-        $clientEnvelopment['ip'] = $request->getServerParam('REMOTE_ADDR');
-        /*
-            i can't emulare global vars $_SERVER in test envelopment for my
-            functional tests, so add adres here
-        */
-        if (empty($clientEnvelopment['ip']) && $this->userAgentIsTestBrowser($request)) {
-             $clientEnvelopment['ip'] = '192.168.1.2';
-        }
-
-        return $clientEnvelopment;
-    }
-
-    private function userAgentIsTestBrowser(Request $request)
-    {
-        define('HEADERS', $request->getHeaders());
-        if (array_key_exists('user-agent', HEADERS) && HEADERS['user-agent'][0] === 'Symfony BrowserKit') {
-            return true;
-        }
-        return false;
     }
 }

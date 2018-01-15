@@ -19,28 +19,28 @@ class SessionService
         $this->createUserService = $container->get('CreateUserService', $container);
     }
 
-    public function runSession(array $clientEnvelopment)
+    public function runSession()
     {
-        $this->setSessionVariables($clientEnvelopment);
-        var_dump('xhr status', $this->container->get('request'),  $this->container->get('request')->getHeaders());
+        $this->setSessionVariables();
+        var_dump('xhr status', $this->container->get('request')->isXhr(),  $_SERVER);
     }
 
-    private function setSessionVariables(array $clientEnvelopment)
+    private function setSessionVariables()
     {
         if (!empty($_SESSION['sessionModel'])) {
             $this->sessionModel = $_SESSION['sessionModel'];
         } else {
-            $this->createGuestSession($clientEnvelopment);
+            $this->createGuestSession();
         }
     }
 
-    private function createGuestSession(array $clientEnvelopment)
+    private function createGuestSession()
     {
         $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
         $this->sessionModel->authorizeStatus = false;
         $this->sessionModel->accessLvl = 0;
         $this->sessionModel->user = $this->createUserService->createUser();
-        $this->sessionModel->ip = $clientEnvelopment['ip'];
+        $this->sessionModel->ip = $this->container->get('request')->getServerParam('REMOTE_ADDR');
     }
 
     private function createSession()

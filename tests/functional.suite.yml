@@ -13,4 +13,8 @@ modules:
             container: container.php
         - REST:
             depends: \Herloct\Codeception\Module\Slim
-            
+        - PhpBrowser:
+            url: 'http://localhost'
+            curl:
+                CURLOPT_RETURNTRANSFER: true
+            cookies:
