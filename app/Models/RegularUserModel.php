@@ -11,7 +11,8 @@ namespace Fileshare\Models;
 
 class RegularUserModel extends AbstractUserModel implements UserInterface
 {
-    protected $email = 'regular user email';
+    /** @property string */
+    protected $email;
     /** @property string */
     protected $name;
     /** @property string */

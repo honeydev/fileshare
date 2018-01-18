@@ -20,10 +20,11 @@ ProfileUploader.prototype.upload = function (profileData) {
     }
 
     if (profileData.hasOwnProperty('userData')) {
+        console.log(profileData.userData);
         this._ajax.sendJSON({
             url: location.host + "/profile.form",
             method: "POST",
-            data: profileData.userData,
+            requestData: profileData.userData,
             responseHandler: this._userDataHandler
         });
     }

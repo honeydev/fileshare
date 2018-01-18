@@ -13,6 +13,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class OwnerMiddleware extends AbstractMiddleware
 {
+    private $sessionModel;
+    private $userId;
+
     public function __construct($container)
     {
         parent::__construct($container);
@@ -21,9 +24,8 @@ class OwnerMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        $profileData = $request->getAttribute('profileData');
-        var_dump($profileData);
-        if ($this->userIsOwner() || $this->userIsAdmin) {
+        $this->id = $request->getParsedBody()['id'];
+        if ($this->userIsOwner() || $this->userIsAdmin()) {
             $response = $next($request, $response);
         } else {
             throw new AuthorizeException(`User not owner this data {$profileData}`);
@@ -33,11 +35,17 @@ class OwnerMiddleware extends AbstractMiddleware
 
     private function userIsOwner()
     {
-
+        if ($this->id === $this->sessionModel->user->id) {
+            return true;
+        }
+        return false;
     }
 
     private function userIsAdmin()
     {
-
+        if ($this->sessionModel->accessLvl > 1) {
+            return true;
+        }
+        return false;
     }
 }
