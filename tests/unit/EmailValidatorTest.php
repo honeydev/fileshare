@@ -1,6 +1,6 @@
 <?php
 
-namespace FileshareTests;
+namespace FileshareTests\unit;
 
 class EmailValidatorTest extends \Codeception\Test\Unit
 {

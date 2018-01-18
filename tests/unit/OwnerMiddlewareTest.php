@@ -1,20 +1,33 @@
 <?php
 
-namespace FileshareTests;
+namespace FileshareTests\unit;
 
 use Codeception\Util\Fixtures;
 use \Codeception\Util\Debug as debug;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class OwnerMiddlewareTest extends \Codeception\Test\Unit
 {
+    use \FileshareTests\unit\traits\CreateUserSessionTrait;
+    use \FileshareTests\unit\traits\CreateRequestTrait;
+    use \FileshareTests\unit\traits\CreateResponseTrait;
     /**
      * @var \UnitTester
      */
     protected $tester;
     private $container;
-    private $ownerMiddleware;
+    /**
+     * @property \Fileshare\Models\SessionModel
+     */
     private $sessionModel;
+    /**
+     * @property \Psr\Http\Message\ServerRequestInterface
+     */
     private $request;
+    /**
+     * @property \Psr\Http\Message\ResponseInterface
+     */
     private $response;
 
     public function __construct()
@@ -35,45 +48,24 @@ class OwnerMiddlewareTest extends \Codeception\Test\Unit
     // tests
     public function testSomeFeature()
     {
-        $this->createRegularUserEnv();
         $this->testWithRegularUser();
     }
 
     private function testWithRegularUser()
     {
-        Debug::debug($this->ownerMiddleware);
-        (new \Fileshare\Middlewares\OwnerMiddleware($this->container))($this->request, $this->response, null);
+        $this->createRegularUserEnv();
+        $this->tester->assertInstanceOf(
+            '\Psr\Http\Message\ResponseInterface',
+            (new \Fileshare\Middlewares\OwnerMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
+                return $response;
+            })
+        );
     }
 
     private function createRegularUserEnv()
     {
-        $this->createRegularUserSession();
-        $this->createRequestWithUserId('7');
-        $this->createResponse();
-    }
-
-    private function createRegularUserSession()
-    {
-        $this->sessionModel = $this->container->get('SessionModel');
-        $this->sessionModel->authorizeStatus = true;
-        $this->sessionModel->accessLvl = 1;
-        $this->sessionModel->ip = '192.168.54.2';
-        $this->sessionModel->user = $this->container->get('RegularUserModel');
-        $this->sessionModel->user->email = 'testuesr@test.com';
-        $this->sessionModel->user->name = 'Test user';
-        $this->sessionModel->user->id = '7';
-    }
-
-    private function createRequestWithUserId(string $id)
-    {
-        $this->request = $this->container->get('request');
-        $this->request->withParsedBody(array(
-            'id' => $id
-            ));
-    }
-
-    private function createResponse()
-    {
-        $this->response = $this->container->get('response');
+        $this->sessionModel = $this->createRegularUserSession($this->container);
+        $this->request = $this->createRequest($this->container, array('id' => '7'));
+        $this->response = $this->createResponse($this->container);
     }
 }
