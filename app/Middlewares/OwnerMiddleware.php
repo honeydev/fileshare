@@ -13,7 +13,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class OwnerMiddleware extends AbstractMiddleware
 {
+    /** @property \Fileshare\Models\SessionModel */
     private $sessionModel;
+    /** @property string */
     private $id;
 
     public function __construct($container)
@@ -46,6 +48,7 @@ class OwnerMiddleware extends AbstractMiddleware
 
     private function userIsAdmin(): bool
     {
+        \Codeception\Util\Debug::debug($this->sessionModel);
         return $this->sessionModel->accessLvl > 1;
     }
 }

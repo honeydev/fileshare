@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 trait CreateRequestTrait
 {
-    protected function createRequest($container, array $requestBody = array(), array $requestParams = array()): Request
+    private function createRequest($container, array $requestBody = array(), array $requestParams = array()): Request
     {
         $request = $container->get('request');
         $request = $request->withParsedBody($requestBody);

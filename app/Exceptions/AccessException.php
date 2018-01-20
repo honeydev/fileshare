@@ -2,7 +2,7 @@
 
 namespace Fileshare\Exceptions;
 
-class AuthorizeException extends AbstractAppException
+class AccessException extends AbstractAppException
 {
     public function __construct(string $message)
     {

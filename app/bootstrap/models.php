@@ -19,5 +19,5 @@ $container['GuestUserModel'] = function ($container) {
 };
 
 $container['AdminUserModel'] = function ($container) {
-    return new Fileshare\Models\AdminUserMode($container);
+    return new Fileshare\Models\AdminUserModel($container);
 };

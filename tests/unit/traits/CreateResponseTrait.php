@@ -8,9 +8,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 trait CreateResponseTrait
 {
-	protected function createResponse($container): Response
-	{
-		$response = $this->container->get('response');
-		return $response;
-	}
+    private function createResponse($container): Response
+    {
+        $response = $this->container->get('response');
+        return $response;
+    }
 }

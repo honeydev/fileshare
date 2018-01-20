@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class AdminUserModel extends AbstractUserModel implements UserInterface
+class AdminUserModel extends RegularUserModel implements UserInterface
 {
     protected $privileges = [
         'see_open_notes' => true,
         'add_notes' => true,
-        'edit_self_notes' => false,
-        'see_all_notes' => false,
+        'edit_self_notes' => true,
+        'see_all_notes' => true,
         'admin_privileges' => [
             'delete_any_note' => true,
             'edit_any_note' => true,
