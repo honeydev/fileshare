@@ -15,7 +15,7 @@ abstract class AbstractAuth
     public function __construct($container)
     {
         $this->container = $container;
-        $this->logger = $container->get('logger');
+        $this->logger = $container->get('Logger');
     }
 
     abstract public function auth($dataToCheck);

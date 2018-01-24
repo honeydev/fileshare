@@ -7,9 +7,11 @@ modules:
     enabled:
         - Asserts
         - \Helper\Unit
+        - Filesystem
         - PhpBrowser:
             url: fileshare.me/
         - \Helper\Acceptance
+        - \Helper\Functional
         - Db:
             dsn: 'mysql:host=localhost;dbname=fileshare'
             user: 'honey'
