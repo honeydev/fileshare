@@ -22,7 +22,6 @@ class SessionService
     public function runSession()
     {
         $this->setSessionVariables();
-       // var_dump('xhr status', $this->container->get('request')->isXhr(),  $_SERVER, $_SESSION);
     }
 
     private function setSessionVariables()

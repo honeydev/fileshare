@@ -15,8 +15,9 @@ class AbstractErrorHandler
     protected $logging;
     /** @array */
     protected $errorMessage;
-    /** @array */
-
+    /** @property \Fileshare\Components\Logger */
+    protected $logger;
+    /** @property \Fileshare\Helpers\PrepareErrorHelper */
     protected $prepareErrorHelper;
 
     protected $container;
@@ -27,14 +28,14 @@ class AbstractErrorHandler
 
         $this->debug = $this->container['settings']['displayErrorDetails'];
         $this->logging = $this->container['settings']['logging'];
-        $this->logger = $this->container->get('logger');
+        $this->logger = $this->container->get('Logger');
         $this->prepareErrorHelper = $this->container->get('PrepareErrorHelper');
     }
 
     protected function handleError($exception, Response $response)
     {
-        $this->errorMessage = $this->prepareErrorHelper->prepareErrorMessage($exception);
-        $this->errorLog();
+        $this->errorMessage = $this->prepareErrorHelper->prepareErrorAsArray($exception);
+        $this->logger->errorLog($this->prepareErrorHelper->prepareErrorAsString($exception));
         return $response;
     }
 

@@ -6,7 +6,7 @@ use \Codeception\Util\Debug as debug;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class OwnerMiddlewareInterfaceTest extends \FileshareTests\unit\AbstractTest
+class OwnerMiddlewareMethodsTest extends \FileshareTests\unit\AbstractTest
 {
     /** @property string */
     const CORRECT_TEST_USER_ID = '7';

@@ -10,6 +10,8 @@ abstract class AbstractMiddleware
 {
     protected $container;
     protected $prepareErrorHelper;
+    /** @property \Fileshare\Components\Logger */
+    protected $logger;
     private $sessionModel;
 
     public function __construct($container)
@@ -17,6 +19,7 @@ abstract class AbstractMiddleware
         $this->container = $container;
         $this->sessionModel = $container->get('SessionModel');
         $this->prepareErrorHelper = $container->get('PrepareErrorHelper');
+        $this->logger = $container->get('Logger');
     }
 
     protected function userAlreadyAuthorized()
@@ -33,8 +36,8 @@ abstract class AbstractMiddleware
                 'errorType' => $errorElements['errorType']
             ];
 
-        if (false) {
-            $error = array_merge($error, $this->prepareErrorHelper->prepareErrorMessage($errorElements['exception']));
+        if (true) {
+            $error = array_merge($error, $this->prepareErrorHelper->prepareErrorAsArray($errorElements['exception']));
         }
         return $response->withJson($error, $errorElements['errorCode']);
     }

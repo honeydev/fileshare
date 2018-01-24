@@ -48,7 +48,6 @@ class OwnerMiddleware extends AbstractMiddleware
 
     private function userIsAdmin(): bool
     {
-        \Codeception\Util\Debug::debug($this->sessionModel);
         return $this->sessionModel->accessLvl > 1;
     }
 }

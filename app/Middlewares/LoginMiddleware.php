@@ -13,6 +13,8 @@ class LoginMiddleware extends AbstractMiddleware
 {
     private $emailValidator;
     private $passwordValidator;
+    /** @param string */
+    private $loginData;
     private $loginAuth;
 
     public function __construct($container)
@@ -26,14 +28,15 @@ class LoginMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            $loginData = $request->getParsedBody();
-            $this->emailValidator->validate($loginData['email']);
-            $this->passwordValidator->validate($loginData['password']);
+            $this->loginData = $request->getParsedBody();
+            $this->emailValidator->validate($this->loginData['email']);
+            $this->passwordValidator->validate($this->loginData['password']);
             $this->userAlreadyAuthorized();
-            $request = $request->withAttribute('loginData', $this->loginAuth->auth($loginData));
+            $request = $request->withAttribute('loginData', $this->loginAuth->auth($this->loginData));
             $response = $next($request, $response);
             return $response;
         } catch (FileshareException $e) {
+            $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
             $response = $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
                 'errorType' => 'invalid_data',
@@ -50,5 +53,15 @@ class LoginMiddleware extends AbstractMiddleware
             ], $response);
             return $response;
         }
+    }
+
+    private function prepareFailedAuthorizeLog(\Exception $e): string
+    {
+        $request = $this->container->get('request');
+        $logMessage = '';
+        $logMessage .= `Failed request on authorize account ` . $this->loginData['email'];
+        $logMessage .= ' from ip address' . $request->getServerParam('REMOTE_ADDR');
+        $logMessage .= $this->prepareErrorHelper->prepareErrorAsString($e);
+        return $logMessage;
     }
 }

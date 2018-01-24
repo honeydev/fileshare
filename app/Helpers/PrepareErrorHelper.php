@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 19/11/17
- * Time: 18:01
- */
+
+declare(strict_types=1);
 
 namespace Fileshare\Helpers;
 
 class PrepareErrorHelper
 {
-    public function prepareErrorMessage($exception)
+    public function prepareErrorAsArray($exception): array
     {
         $errorMessage = [];
         $errorMessage['error'] = $exception->getMessage();
@@ -19,6 +15,17 @@ class PrepareErrorHelper
         $errorMessage['line'] = $exception->getLine();
         $errorMessage['stackString'] = $exception->getTraceAsString();
         $errorMessage['stackArray'] = explode('#', $errorMessage['stackString']);
+        return $errorMessage;
+    }
+
+    public function prepareErrorAsString($exception): string
+    {
+        $errorMessage = '';
+        $errorMessage .= $exception->getMessage();
+        $errorMessage .= $exception->getCode();
+        $errorMessage .= $exception->getFile();
+        $errorMessage .= $exception->getLine();
+        $errorMessage .= $exception->getTraceAsString();
         return $errorMessage;
     }
 }
