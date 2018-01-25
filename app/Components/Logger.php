@@ -12,31 +12,45 @@ class Logger
     private $warningLogger;
     /** @property \Monolog\Logger */
     private $authorizeLogger;
+    /** @propety bool */
+    private $logging;
 
     public function __construct($container)
     {
+        $this->logging = $container->get('settings')['logging'];
         $this->errorLogger = $container->get('ErrorLogger');
         $this->noticeLogger = $container->get('NoticeLogger');
         $this->warningLogger = $container->get('WarningLogger');
         $this->authorizeLogger = $container->get('AuthorizeLogger');
     }
+    /** @throw \InvalidArgumentException */
+    public function __call($name, $arguments)
+    {
+        if (!method_exists($this, $name)) {
+            throw new \InvalidArgumentException(`Logger no found {$name}`);
+        }
+
+        if ($this->logging) {
+            $this->$name(...$arguments);
+        }
+    }
     
-    public function errorlog(string $message)
+    private function errorlog(string $message)
     {
         $this->errorLogger->error($message);
     }
     
-    public function noticeLog(string $message)
+    private function noticeLog(string $message)
     {
         $this->noticeLogger->notice($message);
     }
 
-    public function warningLog(string $message)
+    private function warningLog(string $message)
     {
         $this->warningLogger->warning($message);
     }
 
-    public function authorizeLog(string $message)
+    private function authorizeLog(string $message)
     {
         $this->authorizeLogger->notice($message);
     }

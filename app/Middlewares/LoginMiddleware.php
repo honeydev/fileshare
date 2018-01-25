@@ -37,21 +37,20 @@ class LoginMiddleware extends AbstractMiddleware
             return $response;
         } catch (FileshareException $e) {
             $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
-            $response = $this->sendErrorWithJson([
+            return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
                 'errorType' => 'invalid_data',
                 'exception' => $e,
                 'errorCode' => 401
-            ], $response); 
-            return $response; 
+            ], $response);
         } catch (AuthorizeException $e) {
-            $response = $this->sendErrorWithJson([
+            $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
+            return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
                 'errorType' => 'user_not_exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-            return $response;
         }
     }
 

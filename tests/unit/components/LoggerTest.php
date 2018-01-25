@@ -76,6 +76,6 @@ class LoggerTest extends \Codeception\Test\Unit
 
     private function generateRandomTokenForLogTestIdent()
     {
-        return uniqid('log'); 
+        return uniqid('log');
     }
 }
