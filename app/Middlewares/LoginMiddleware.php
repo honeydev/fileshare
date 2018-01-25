@@ -11,6 +11,8 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class LoginMiddleware extends AbstractMiddleware
 {
+    use \Fileshare\Helpers\AuthorizeLogFormatHelperTrait;
+
     private $emailValidator;
     private $passwordValidator;
     /** @param string */
@@ -34,6 +36,7 @@ class LoginMiddleware extends AbstractMiddleware
             $this->userAlreadyAuthorized();
             $request = $request->withAttribute('loginData', $this->loginAuth->auth($this->loginData));
             $response = $next($request, $response);
+            $this->logger->authorizeLog($this->prepareSuccessAuthorizeLog());
             return $response;
         } catch (FileshareException $e) {
             $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
@@ -52,15 +55,5 @@ class LoginMiddleware extends AbstractMiddleware
                 'errorCode' => 401
             ], $response);
         }
-    }
-
-    private function prepareFailedAuthorizeLog(\Exception $e): string
-    {
-        $request = $this->container->get('request');
-        $logMessage = '';
-        $logMessage .= `Failed request on authorize account ` . $this->loginData['email'];
-        $logMessage .= ' from ip address' . $request->getServerParam('REMOTE_ADDR');
-        $logMessage .= $this->prepareErrorHelper->prepareErrorAsString($e);
-        return $logMessage;
     }
 }
