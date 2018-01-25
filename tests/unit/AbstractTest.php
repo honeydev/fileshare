@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FileshareTests\unit;
 
 use Codeception\Util\Fixtures;

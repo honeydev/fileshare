@@ -11,6 +11,8 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class LoginMiddleware extends AbstractMiddleware
 {
+    use \Fileshare\Helpers\AuthorizeLogFormatHelperTrait;
+
     private $emailValidator;
     private $passwordValidator;
     /** @param string */
@@ -34,34 +36,24 @@ class LoginMiddleware extends AbstractMiddleware
             $this->userAlreadyAuthorized();
             $request = $request->withAttribute('loginData', $this->loginAuth->auth($this->loginData));
             $response = $next($request, $response);
+            $this->logger->authorizeLog($this->prepareSuccessAuthorizeLog());
             return $response;
         } catch (FileshareException $e) {
             $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
-            $response = $this->sendErrorWithJson([
+            return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
                 'errorType' => 'invalid_data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response); 
-            return $response; 
         } catch (AuthorizeException $e) {
-            $response = $this->sendErrorWithJson([
+            $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
+            return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
                 'errorType' => 'user_not_exist',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-            return $response;
         }
-    }
-
-    private function prepareFailedAuthorizeLog(\Exception $e): string
-    {
-        $request = $this->container->get('request');
-        $logMessage = '';
-        $logMessage .= `Failed request on authorize account ` . $this->loginData['email'];
-        $logMessage .= ' from ip address' . $request->getServerParam('REMOTE_ADDR');
-        $logMessage .= $this->prepareErrorHelper->prepareErrorAsString($e);
-        return $logMessage;
     }
 }
