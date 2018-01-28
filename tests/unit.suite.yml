@@ -16,7 +16,7 @@ modules:
             dsn: 'mysql:host=localhost;dbname=fileshare'
             user: 'honey'
             password: 'd5d7'
-            dump: 'tests/_data/dump.sql'
+            dump: 'dump.sql'
 
             cleanup: true
             reconnect: true

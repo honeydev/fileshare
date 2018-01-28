@@ -1,7 +1,6 @@
 <?php
-
 /**
- * @class OwnerMiddleware check equal user id and user id in base. 
+ * @class OwnerMiddleware check equal user id and user id in base.
  * if user category > 1, it is equal to the owner
  */
 declare(strict_types=1);
@@ -13,8 +12,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class OwnerMiddleware extends AbstractMiddleware
 {
+    use \Fileshare\Helpers\OwnerMiddlewareLogHelperTrait;
     /** @property \Fileshare\Models\SessionModel */
-    private $sessionModel;
+    private $sessionModel; 
     /** @property string */
     private $id;
 
@@ -26,10 +26,20 @@ class OwnerMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        $this->id = $request->getParsedBody()['id'];
-        $this->userCanChangeData();
-        $response = $next($request, $response);
-        return $response;
+        try {
+            $this->id = $request->getParsedBody()['id'];
+            $this->userCanChangeData();
+            $response = $next($request, $response);
+            return $response;
+        } catch (\Fileshare\Exceptions\AccessException $e) {
+            $this->logger->noticeLog($this->prepareFailedProfileChange($e));
+            return $this->sendErrorWithJson([
+                'loginStatus' => 'failed',
+                'errorType' => 'user_not_exist',
+                'exception' => $e,
+                'errorCode' => 401
+            ], $response);
+        }
     }
     /**
      * @throws \Fileshare\Exceptions\AccessException

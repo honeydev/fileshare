@@ -4,25 +4,26 @@ namespace FileshareTests\unit\components;
 
 use Codeception\Util\Fixtures;
 use \Codeception\Util\Debug as debug;
+use FileshareTests\unit\AbstractTest as AbstractTest;
 
-class LoggerTest extends \Codeception\Test\Unit
+class LoggerTest extends AbstractTest
 {
     /**
      * @var \UnitTester
      */
     protected $tester;
 
-    private $container;
-
     private $logger;
-    /** @property string */
-    private $logsDir;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     protected function _before()
     {
-        $this->container = Fixtures::get('container');
         $this->logger = $this->container->get('Logger');
-        $this->logsDir = dirname(dirname(dirname(__DIR__))) . "/logs/";
     }
 
     protected function _after()

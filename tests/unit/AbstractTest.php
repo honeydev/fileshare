@@ -11,14 +11,15 @@ abstract class AbstractTest extends \Codeception\Test\Unit
     use \FileshareTests\unit\traits\CreateUserSessionTrait;
     use \FileshareTests\unit\traits\CreateRequestTrait;
     use \FileshareTests\unit\traits\CreateResponseTrait;
-
-
+    /** @property string */
+    protected $logsDir;
     protected $container;
 
     public function __construct()
     {
         parent::__construct();
         $this->container = Fixtures::get('container');
+        $this->logsDir = $this->logsDir = dirname(dirname(__DIR__)) . "/logs/";
     }
 
     protected function createRegularUserEnv(array $requestBody = array())

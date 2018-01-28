@@ -34,9 +34,9 @@ class AddUserServiceTest extends \Codeception\Test\Unit
     private function addCorrectUsers()
     {
         define("CORRECT_USERS", [
-            ['email' => 'mailmail1@email.com', 'password' => 'password1'],
-            ['email' => 'mailmail2@email.com', 'password' => 'password2'],
-            ['email' => 'mailmail3@email.com', 'password' => 'password4']
+            ['email' => 'mailmail1@email.com', 'password' => 'password1', 'accessLvl' => '1'],
+            ['email' => 'mailmail2@email.com', 'password' => 'password2', 'accessLvl' => '1'],
+            ['email' => 'mailmail3@email.com', 'password' => 'password4', 'accessLvl' => '1']
         ]);
 
         foreach (CORRECT_USERS as $correctUser) {
