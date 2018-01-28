@@ -10,10 +10,11 @@ use \Codeception\Util;
 
 abstract class BaseTest extends \Codeception\Module
 {
+    use \FileshareTests\traits\CreateFakeUserTrait;
     /** @object \FunctionalTester @class*/
     protected $tester;
-    /** @int */
-    const TEST_USER_ID = 7;
+    /** @param string */
+    protected $testUserId;
 
     public function __construct(\FunctionalTester $tester)
     {
@@ -36,9 +37,21 @@ abstract class BaseTest extends \Codeception\Module
         $this->tester->seeCookie('PHPSESSID');
     }
 
-    protected function loginTestUser()
+    protected function createRegularUser(): string
     {
-        $this->tester->sendAjaxPostRequest('/login.form', array('email' => 'testuser@test.com', 'password' => 'password'));
+        $userId = $this->createUser(array(
+            'users' => ['email' => 'testuser@test.com', 'hash' => password_hash('testuserpassword', PASSWORD_DEFAULT)],
+            'usersInfo' => ['name' => 'testuser'],
+            'usersSettings' => ['accessLvl' => '1']
+        ));
+        return $userId;
+    }
+
+    protected function loginTestUser(array $userData)
+    {
+        $this->tester->sendAjaxPostRequest('/login.form', array(
+            'email' => $userData['email'], 'password' => $userData['password']
+        ));
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(array("status" => "success"));
     }

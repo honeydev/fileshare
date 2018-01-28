@@ -38,11 +38,36 @@ $container = new Container([
     }
 ]);
 
-$container['logger'] = function () {
-    $logger = new \Monolog\Logger('my_logger');
-    $file_handler = new \Monolog\Handler\StreamHandler('../logs/app.log');
+$container['ErrorLogger'] = function () {
+    $logger = new \Monolog\Logger('errorLogger');
+    $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/errors.log');
     $logger->pushHandler($file_handler);
     return $logger;
+};
+
+$container['WarningLogger'] = function () {
+    $logger = new \Monolog\Logger('warningLogger');
+    $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/warnings.log');
+    $logger->pushHandler($file_handler);
+    return $logger;
+};
+
+$container['NoticeLogger'] = function () {
+    $logger = new \Monolog\Logger('noticeLogger');
+    $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/notices.log');
+    $logger->pushHandler($file_handler);
+    return $logger;
+};
+
+$container['AuthorizeLogger'] = function () {
+    $logger = new \Monolog\Logger('authorizeLogger');
+    $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/authorizes.log');
+    $logger->pushHandler($file_handler);
+    return $logger;
+};
+
+$container['Logger'] = function ($container) {
+    return new \Fileshare\Components\Logger($container);
 };
 
 $container['db'] = function ($container) {

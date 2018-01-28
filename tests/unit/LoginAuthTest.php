@@ -7,17 +7,17 @@ use \Codeception\Util\Debug as debug;
 
 class LoginAuthTest extends \Codeception\Test\Unit
 {
+    const FAKE_USERS = [
+        ['email' => 'fake1@email.com', 'password' => 'fakePassword1'],
+        ['email' => 'fake2@email.com', 'password' => 'fakePassword2'],
+        ['email' => 'fake3@email.com', 'password' => 'fakePassword3']
+    ];
     /**
      * @var \UnitTester
      */
     protected $tester;
     private $container;
     private $loginAuth;
-    const FAKE_USERS = [
-        ['email' => 'fake1@email.com', 'password' => 'fakePassword1'],
-        ['email' => 'fake2@email.com', 'password' => 'fakePassword2'],
-        ['email' => 'fake3@email.com', 'password' => 'fakePassword3']
-    ];
 
     protected function _before()
     {

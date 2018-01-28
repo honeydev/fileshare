@@ -13,3 +13,11 @@ modules:
             container: container.php
         - REST:
             depends: \Herloct\Codeception\Module\Slim
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=fileshare'
+            user: 'honey'
+            password: 'd5d7'
+            dump: 'dump.sql'
+
+            cleanup: true
+            reconnect: true
