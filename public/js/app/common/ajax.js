@@ -8,9 +8,10 @@ function Ajax(dic) {
 }
 
 Ajax.prototype.sendJSON = function (requestSettings) {
+    console.log('request settings', requestSettings);
     const requestJSON = JSON.stringify(requestSettings.requestData);
     const URL = this._urlHelper.correctUrl(requestSettings.url);
-    console.log('sended json', requestJSON);
+    this._logger.log('sended json', requestJSON);
     $.ajax({
         url: URL,
         method: requestSettings.method,

@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: lebedev
- * Date: 10/4/17
- * Time: 9:17 PM
+ * @class ProfileValidateMiddleware validate profile change request
  */
 declare(strict_types=1);
 
@@ -26,11 +23,8 @@ abstract class ProfileVadlidateMiddleware extends AbstractMiddleware
     {
         try {
             $profileData = $request->getParsedBody();
-            $this->emailValidator->validate($registrationData['email']);
-            $this->passwordValidator->validate($registrationData['password']);
-            $this->passwordValidator->validate($registrationData['passwordRepeat']);
-            $this->nameValidator->validate($registrationData['name']);
-            $request = $request->withAttribute('regData', $registrationData);
+            $this->validate($profileData);
+            $request = $request->withAttribute('profileData', $profileData);
             $response = $next($request, $response);
             return $response;
         } catch (FileshareException $e) {
@@ -41,6 +35,13 @@ abstract class ProfileVadlidateMiddleware extends AbstractMiddleware
                 'errorCode' => 401
             ], $response);
             return $response;
+        }
+    }
+
+    private function validate(array $profileData)
+    {
+        if (array_key_exists('email', $profileData)) {
+            $this->emailValidator->validate($profileData['email']);
         }
     }
 }

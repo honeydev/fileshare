@@ -17,14 +17,6 @@ class OwnerMiddlewareInterfaceTest extends \FileshareTests\unit\AbstractTest
      * @property \Fileshare\Models\SessionModel
      */
     protected $sessionModel;
-    /**
-     * @property \Psr\Http\Message\ServerRequestInterface
-     */
-    protected $request;
-    /**
-     * @property \Psr\Http\Message\ResponseInterface
-     */
-    protected $response;
     /** @property string */
     private $correctUserId;
     /** @property string */
