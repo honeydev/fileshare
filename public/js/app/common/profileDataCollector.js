@@ -11,7 +11,7 @@ function ProfileDataCollector(dic) {
     this._emailValidator = dic.get('EmailValidator')();
     this._nameValidator = dic.get('NameValidator')();
     this._passwordValidator = dic.get('PasswordValidator')();
-    this._profileFormSetter = dic.get('ProfileFormSetter')();
+    this._profileFailedStatmentSetter = dic.get('ProfileFailedStatmentSetter')(dic);
 }
 /**
  * @param  {object} profileForm [
@@ -30,18 +30,22 @@ ProfileDataCollector.prototype.collect = function (userData) {
         changedInputs = this._categorizeChangedInputs(changedInputs);
         this._validateInputs(changedInputs);
         const NEW_USER_DATA = this._prepareUserData(changedInputs);
+        console.log('new user data', NEW_USER_DATA);
         return NEW_USER_DATA;
     } catch (Error) {
         console.log('error', Error);
         if (Error instanceof EmailValidError) {
             console.log('email error');
-            //this._profileFormSetter.setError(profileForm['profileEmailInput']);
+            this._profileFailedStatmentSetter.setFailedStatment('invalid_email');
         } else if (Error instanceof NameValidError) {
             console.log('name error');
+            this._profileFailedStatmentSetter.setFailedStatment('invalid_name');
         } else if (Error instanceof PasswordValidError) {
             console.log('password error');
+            this._profileFailedStatmentSetter.setFailedStatment('invalid_passwords');
         } else if (Error instanceof PasswordsNotEqualError) {
             console.log('password not equal');
+            this._profileFailedStatmentSetter.setFailedStatment('passwords_not_equal');
         }
     }
 };

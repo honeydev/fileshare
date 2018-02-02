@@ -15,39 +15,12 @@ ProfileDataCollectorTest.prototype = Object.create(BaseTest.prototype);
 ProfileDataCollectorTest.prototype.constructor = ProfileDataCollectorTest;
 
 ProfileDataCollectorTest.prototype.test = function () {
-    this._testMethods();
-    this._testInterface();
+    this._testInterfaceWithCorrectInputs();
+    this._testInterfaceWithIncorrectInputs();
 };
 
-ProfileDataCollectorTest.prototype._testMethods = function () {
-    describe('Test profileDataCollector methods', () => {
-        it('Test prepareUserData method', () => {
-            const USER_DATA = {
-                email: "newEmail@email.com",
-                name: "newName",
-                currentPassword: "currentPassword",
-                newPassword: "newPassword",
-                repeatNewPassword: "repeatNewPassword"
-            };
-            const CHANGED_INPUTS = {
-                userData: {
-                    'profileEmailInput': $('<input value="newEmail@email.com">'),
-                    'profileNameInput': $('<input value="newName">')
-                },
-                userPasswords: {
-                    'profileCurrentPasswordInput': $('<input value="currentPassword">'),
-                    'profileNewPasswordInput': $('<input value="newPassword">'),
-                    'profileNewPasswordRepeatInput': $('<input value="repeatNewPassword">')
-                }
-            };
-            console.log(this._profileDataCollector._prepareUserData(CHANGED_INPUTS), USER_DATA);
-            assert.deepEqual(this._profileDataCollector._prepareUserData(CHANGED_INPUTS), USER_DATA);
-        });
-    });
-};;
-
-ProfileDataCollectorTest.prototype._testInterface = function () {
-    describe('Chnage user data in profile', () => {
+ProfileDataCollectorTest.prototype._testInterfaceWithCorrectInputs = function () {
+    describe('Give on input correct values', () => {
         let profileDataCollector = this._profileDataCollector;
         let context = this;
         const createDomEnv = this._createDomEnv;
@@ -58,21 +31,70 @@ ProfileDataCollectorTest.prototype._testInterface = function () {
         });
 
         after(() => {
-            //this._removeDomEnv();
+            this._removeDomEnv('#profileModal');
         });
 
-        it('Switch profile to form', () => this._profileFormSetter.switchToForm({
+        this._switchProfileToForm();
+
+        it('Colect and return changed user data from from', function () {
+            $('#profileEmailInput').val('newTestUserEmail@email.com');
+            $('#profileNameInput').val('new name');
+            $('#profileCurrentPasswordInput').val('currentPassword');
+            $('#profileNewPasswordInput').val('newpassword');
+            $('#profileNewPasswordRepeatInput').val('newpassword');
+            const COLLECTED_DATA = profileDataCollector.collect({
                 email: "testuser@mail.com",
+                name: "username",
+                accessLvl: 1,
+                id: 1,
+                avatarUri: null
+            });
+            assert.isObject(COLLECTED_DATA);
+            assert.property(COLLECTED_DATA, 'email');
+            assert.property(COLLECTED_DATA, 'name');
+            assert.property(COLLECTED_DATA, 'currentPassword');
+            assert.property(COLLECTED_DATA, 'newPassword');
+            assert.property(COLLECTED_DATA, 'repeatNewPassword');
+        });
+
+        it('Return null because form not changed', function () {
+            $('#profileEmailInput').val(null);
+            $('#profileNameInput').val(null);
+            $('#profileCurrentPasswordInput').val(null);
+            $('#profileNewPasswordInput').val(null);
+            $('#profileNewPasswordRepeatInput').val(null);           
+
+            const COLLECTED_DATA = profileDataCollector.collect({
+                email: "testuser14@mail.com",
                 name: "newusername",
                 accessLvl: 1,
                 id: 1,
                 avatarUri: null
-        }));
+            });
+            assert.notExists(COLLECTED_DATA);
+        });
+    });
+};
 
-        it('Colect changed user data from from', function () {
-            $('#profileCurrentPasswordInput').val('currentPassword');
-            $('#profileNewPasswordInput').val('newpassword');
-            $('#profileNewPasswordRepeatInput').val('newpassword');
+ProfileDataCollectorTest.prototype._testInterfaceWithIncorrectInputs = function () {
+    describe('Give on input incorrect values', () => {
+        let profileDataCollector = this._profileDataCollector;
+        let context = this;
+        const createDomEnv = this._createDomEnv;
+        const INCORRECT_SYMBOL = "#";
+
+        before(function (done) {
+            this.timeout(4000);
+            createDomEnv.apply(context, [location.host, '#profileModal', done]);
+        });
+
+        after(() => {
+            this._removeDomEnv('#profileModal');
+        });
+
+        this._switchProfileToForm();
+        it('Showed error about incorrect email', function () {
+            $('#profileEmailInput').val('newIncorrectEmail' + INCORRECT_SYMBOL);
             profileDataCollector.collect({
                 email: "testuser@mail.com",
                 name: "username",
@@ -80,12 +102,71 @@ ProfileDataCollectorTest.prototype._testInterface = function () {
                 id: 1,
                 avatarUri: null
             });
-            assert.isFalse(Boolean($('#profileForm').length, 'switch to profile'))
-            assert.isTrue(Boolean($('#userDataList').length));
+            assert.isTrue(Boolean($('#profileErrorMessage').length));
+            assert.equal('Invalid new email', $('#profileErrorMessage').text());
+            $('#profileEmailInput').val('testuser@mail.com');
+            $('#profileErrorMessage').remove();
+        });
+        it('Showed error about incorrect name', function () {
+            $('#profileNameInput').val('incorrect name' + INCORRECT_SYMBOL);
+            profileDataCollector.collect({
+                email: "testuser14@mail.com",
+                name: "username",
+                accessLvl: 1,
+                id: 1,
+                avatarUri: null
+            });
+            assert.isTrue(Boolean($('#profileErrorMessage').length));
+            assert.equal('Invalid new name', $('#profileErrorMessage').text());
+            $('#profileNameInput').val("username");
+            $('#profileErrorMessage').remove();
+        });
+        it('Showed error about incorrect password', function () {
+            $('#profileCurrentPasswordInput').val('incorrectPassword' + INCORRECT_SYMBOL);
+            profileDataCollector.collect({
+                email: "testuser14@mail.com",
+                name: "username",
+                accessLvl: 1,
+                id: 1,
+                avatarUri: null
+            });
+            assert.isTrue(Boolean($('#profileErrorMessage').length));
+            assert.equal('Invalid password value', $('#profileErrorMessage').text());   
+            $('#profileCurrentPasswordInput').val(null); 
+            $('#profileErrorMessage').remove();
+        });
+        it('Showed error about not equal new passwords', function () {
+            $('#profileCurrentPasswordInput').val('password');
+            $('#profileNewPasswordInput').val('newPassword');
+            $('#profileNewPasswordRepeatInput').val('invalidRepeat');  
+            profileDataCollector.collect({
+                email: "testuser14@mail.com",
+                name: "username",
+                accessLvl: 1,
+                id: 1,
+                avatarUri: null
+            });
+            assert.isTrue(Boolean($('#profileErrorMessage').length));
+            assert.equal('Passwords not equal', $('#profileErrorMessage').text());   
+            $('#profilePassowrdInput').val(null);
+            $('#profileNewPasswordInput').val(null);
+            $('#profileNewPasswordRepeatInput').val(null); 
+            $('#profileErrorMessage').remove();
         });
     });
+};
+
+ProfileDataCollectorTest.prototype._switchProfileToForm = function () {
+    it('Switch profile to form', () => this._profileFormSetter.switchToForm({
+            email: "testuser@mail.com",
+            name: "username",
+            accessLvl: 1,
+            id: 1,
+            avatarUri: null
+    }));
 };
 
 ProfileDataCollectorTest.prototype._createDomEnv = function (url, elem, done) {
     BaseTest.prototype._createDomEnv.apply(this, arguments);
 };
+

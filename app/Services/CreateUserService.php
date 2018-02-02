@@ -37,6 +37,7 @@ class CreateUserService
     }
     /**
      * @param {null|array}
+     * @throws \LogicException
      */
     private function createConcretUser($loginData = null)
     {
@@ -53,7 +54,7 @@ class CreateUserService
             throw new \LogicException('None of the condition is not satisfied in ' . get_class());
         }
     }
-    /** @return void */
+    /**@return void */
     private function createConcretUserAccordAccessLvl($userData)
     {
         if ($userData['accessLvl'] == 1) {

@@ -2,12 +2,12 @@
 
 export {PasswordsNotEqualError};
 
-function PasswordNotEqualError(message) {
+function PasswordsNotEqualError(message) {
 	Error.call(this, message);
 	this.name = 'PasswordNotEqualError';
 	this.message = message;
 	this.stack = (new Error()).stack;
 }
 
-PasswordNotEqualError.prototype = Object.create(Error.prototype);
-PasswordNotEqualError.prototype.constructor = PasswordNotEqualError;
+PasswordsNotEqualError.prototype = Object.create(Error.prototype);
+PasswordsNotEqualError.prototype.constructor = PasswordsNotEqualError;

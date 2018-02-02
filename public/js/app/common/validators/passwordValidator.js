@@ -8,6 +8,7 @@ export {PasswordValidator};
 
 import {BaseValidator} from './baseValidator';
 import {PasswordValidError} from '../errors/passwordValidError.js';
+import {PasswordsNotEqualError} from '../errors/passwordsNotEqualError';
 
 function PasswordValidator() {
     this._regExp = /^([a-z]|[0-9]|@|#|\$|%|\+|&|\*|\(|\)|!|~|@|\^|_|-|=){5,20}$/i;
@@ -26,5 +27,5 @@ PasswordValidator.prototype.checkEqual = function (password, passwordRepeat) {
     if (password === passwordRepeat) {
         return true;
     }
-    throw new PasswordValidError(`Input ${password} and ${passwordRepeat} is not equal`);
+    throw new PasswordsNotEqualError(`Input ${password} and ${passwordRepeat} is not equal`);
 };

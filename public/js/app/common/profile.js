@@ -15,6 +15,7 @@ function Profile(dic) {
     this._profileButtonSetters = dic.get('ProfileButtonSetter')();
     this._profileDataCollector = dic.get('ProfileDataCollector')(dic);
     this._profileUploader = dic.get('ProfileUploader')(dic);
+    this._profileFailedStatmentSetter = dic.get('ProfileFailedStatmentSetter')(dic);
 }
 /**
  * @return void
@@ -84,6 +85,8 @@ Profile.prototype.applyChanges = function () {
 
     let changedProfileDataReadyToSend = {};
     
+    this._profileFailedStatmentSetter.clearFailedStatment();
+
     if ($('#avatarUploadInput').prop('files').length) {
         changedProfileDataReadyToSend.avatar = $('#avatarUploadInput').prop('files')[0];
     }
@@ -96,17 +99,6 @@ Profile.prototype.applyChanges = function () {
     console.log('changed profile data ready to send', changedProfileDataReadyToSend);
     this._profileUploader.upload(changedProfileDataReadyToSend);
 };
-
-Profile.prototype._profileResponseHandler = function (response) {
-    if (response.status === "success") {
-        
-    } else if (response.status === "failed") {
-
-    } else {
-        throw new Error(`Invalid response stratus ${response.status}`);
-    }
-};
-
 /**
  * @return {object} [userData]
  */

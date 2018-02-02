@@ -29,7 +29,7 @@ LoginFormSetter.prototype.clearAuthorizeFailedStatment = function () {
     this._clearErrorMessage();
     this._clearEmailError();
     this._clearPasswordError();
-    this._clearInputs();
+    //this._clearInputs();
 };
 
 LoginFormSetter.prototype._setErrorMessage = function (errorMessage) {
@@ -40,10 +40,6 @@ LoginFormSetter.prototype._setErrorMessage = function (errorMessage) {
 
 LoginFormSetter.prototype._clearErrorMessage = function () {
     $("#loginFormAlert").remove();
-
-};
-
-LoginFormSetter.prototype._clearInputs = function () {
 
 };
 

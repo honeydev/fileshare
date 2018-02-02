@@ -11,6 +11,9 @@ function ProfileUploader(dic) {
  * @return {void}
  */
 ProfileUploader.prototype.upload = function (profileData) {
+
+    console.log('praofile data', profileData);
+
     if (profileData.hasOwnProperty('avatar')) {
         this._ajax.sendFile({
             file: profileData.avatar, 
@@ -32,12 +35,11 @@ ProfileUploader.prototype.upload = function (profileData) {
 
 ProfileUploader.prototype._avatarHandler = function (response) {
     if (response.status === "success") {
-
+        console.log(response);
     } else if (response.status === "failed") {
-
-    } else {
-        throw new Error(`Invalid response status ${response.status}`);
+        console.log(response);
     }
+    console.log(response);
 }.bind(this);
 
 ProfileUploader.prototype._userDataHandler = function (response) {

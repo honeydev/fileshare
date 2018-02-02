@@ -33,62 +33,32 @@ ProfileFailedStatmentSetter.prototype.setFailedStatment = function (errorType) {
 };
 
 ProfileFailedStatmentSetter.prototype.clearFailedStatment = function () {
-    if (this._errorType === "invalid_avatar") {
-        //just remove error message
-    } else if (this._errorType === "invalid_email") {
-        this._clearEmailError();
-    } else if (this._errorType === "invalid_name") {
-        this._clearNameError();
-    } else if (this._errorType === "invalid_passwords") {
-        this._clearCurrentPasswordError();
-        this._clearNewPasswordError();
-        this._clearNewPasswordRepeat();
-    } else if (this._errorType === "passwords_not_equal") {
-        this._clearNewPasswordError();
-        this._clearNewPasswordRepeat();
-    }  else {
-        throw new Error(`Invalid error type ${this._errorType}`);
-    }
     this._profileErrorSetter.removeMessage();
+    this._clearInputs();
+};
+
+ProfileFailedStatmentSetter.prototype._clearInputs = function () {
+    $.each($('#profileForm').children(), function (num, elem) {
+        $(elem).removeClass('has-error has-feedback');
+    });
 };
 
 ProfileFailedStatmentSetter.prototype._setEmailError = function () {
     $('#profileEmailGroup').addClass('has-error has-feedback');
-
-};
-
-ProfileFailedStatmentSetter.prototype._clearEmailError = function () {
-    $('#profileEmailGroup').removeClass('has-error has-feedback');
 };
 
 ProfileFailedStatmentSetter.prototype._setNameError = function () {
     $('#profileNameGroup').addClass('has-error has-feedback');
 };
 
-ProfileFailedStatmentSetter.prototype._clearNameError = function () {
-    $('#profileNameGroup').removeClass('has-error has-feedback');
-};
-
 ProfileFailedStatmentSetter.prototype._setCurrentPasswordError = function () {
     $('#profileCurrentPasswordGroup').addClass('has-error has-feedback');
-};
-
-ProfileFailedStatmentSetter.prototype._clearCurrentPasswordError = function () {
-    $('#profileCurrentPasswordGroup').removeClass('has-error has-feedback');
 };
 
 ProfileFailedStatmentSetter.prototype._setNewPassowrdError = function () {
     $('#profileNewPasswordGroup').addClass('has-error has-feedback');
 };
 
-ProfileFailedStatmentSetter.prototype._clearNewPasswordError = function () {
-    $('#profileNewPasswordGroup').removeClass('has-error has-feedback');
-};
-
 ProfileFailedStatmentSetter.prototype._setNewPasswordRepeatError = function () {
     $('#repeatNewPasswordGroup').addClass('has-error has-feedback');
-};
-
-ProfileFailedStatmentSetter.prototype._clearNewPasswordRepeat = function () {
-    $('#repeatNewPasswordGroup').removeClass('has-error has-feedback');
-};
+}
