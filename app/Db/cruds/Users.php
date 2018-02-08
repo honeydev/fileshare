@@ -9,7 +9,6 @@ namespace Fileshare\Db\cruds;
 trait Users
 {
     /**
-     * @param string $email
      * @return mixed {bool|array}
      */
     protected function findEqualUserEmail(string $email)
@@ -18,10 +17,12 @@ trait Users
         $equalsId = $this->db->query($getIdIfEmailsEqual);
         return $equalsId->fetch();
     }
-
+    /**
+     * @param array $userData keys email => string, hash => string
+     * @return string
+     */
     protected function addUserInUsers(array $userData): string
     {
-        //expected var $email, $hash
         extract($userData);
     	$addUser = "INSERT INTO users (email, hash, id) VALUES (:email, :hash, NULL)";
 		$request = $this->db->prepare($addUser);
@@ -29,6 +30,7 @@ trait Users
 		return $this->db->lastInsertId();
     }
     /**
+     * method for universal
      * @param array $userIdentificator asscoc array were key type of select data from base
      * (id, email)
      * @return {void}
@@ -39,7 +41,6 @@ trait Users
         $deleteUser = "DELETE FROM users WHERE '$column' = '$value'";
         $this->db->query($deleteUser);
     }
-
     /**
      * @param {array} $userIdentificator asscoc array were key type of select data from base
      * (id | email) ["identificatorType" => 'id', "identificatorValue" => "some value"]
@@ -53,11 +54,18 @@ trait Users
         $userData = $userData->fetch();
         return $userData;
     }
-
+    /**
+     * @param string $userId
+     * @return array
+     */
     protected function selectConcreteUserData(string $userId): array
     {
         $userId = (int) $userId;
-        $selectConcreteUserData = "SELECT users.email, users.id, usersInfo.name,  usersInfo.avatarUri, usersSettings.accountStatus, usersSettings.accessLvl FROM users LEFT JOIN usersInfo ON users.id = usersInfo.userId LEFT JOIN usersSettings ON users.id = usersSettings.userId WHERE users.id = $userId";
+        $selectConcreteUserData = "
+            SELECT users.email, users.id, usersInfo.name,  usersInfo.avatarUri, usersSettings.accountStatus, usersSettings.accessLvl 
+            FROM users LEFT JOIN usersInfo ON users.id = usersInfo.userId LEFT JOIN usersSettings 
+            ON users.id = usersSettings.userId WHERE users.id = $userId
+            ";
         $selectConcreteUserData = $this->db->query($selectConcreteUserData);
         return $selectConcreteUserData->fetch();
     }

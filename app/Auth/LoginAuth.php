@@ -12,7 +12,7 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 class LoginAuth extends AbstractAuth
 {
     private $cryptoService;
-    /** @property \Fileshare\Db\models\Users */
+    /** @property \Fileshare\Db\models\User */
     private $dbUser;
 
     public function __construct($container)

@@ -10,20 +10,19 @@ use Fileshare\Models\UserInterface;
 
 class CreateUserService
 {
-    use \Fileshare\CRUDs\UsersCRUDs;
-    use \Fileshare\CRUDs\UsersInfoCRUDs;
-    use \Fileshare\CRUDs\UsersSettingsCRUDs;
-
+    /** @property \Fileshare\Models\UserInterface */
     private $user;
+    /** @property \Fileshare\Db\models\User */
+    private $dbUser;
+    /** @property \Fileshare\Models\SessionModel */
     private $sessionModel;
     private $container;
-    protected $db;
 
     public function __construct($container)
     {
         $this->container = $container;
+        $this->dbUser = $this->container->get('User');
         $this->sessionModel = $this->container->get('SessionModel');
-        $this->db = $this->container->get('db');
     }
 
     /**
@@ -42,7 +41,7 @@ class CreateUserService
     private function createConcretUser($loginData = null)
     {
         if ($userLoggedIn = !empty($loginData)) {
-            $userData = $this->selectConcreteUserData($loginData['id']);
+            $userData = $this->dbUser->selectConcreteUserData($loginData['id']);
             $this->createConcretUserAccordAccessLvl($userData);
             $this->user->setUserVars($userData);
         } elseif ($userObjectExistInSession = !empty($this->sessionModel->user)) {

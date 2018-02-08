@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 07/11/17
- * Time: 21:47
- */
+
 declare(strict_types=1);
 
 namespace Fileshare\Services;
@@ -14,33 +9,30 @@ use Fileshare\Exceptions\FileshareException;
 
 class AddUserService
 {
-    use \Fileshare\CRUDs\UsersCRUDs;
-    use \Fileshare\CRUDs\UsersSettingsCRUDs;
-    use \Fileshare\CRUDs\UsersInfoCRUDs {
-        \Fileshare\CRUDs\UsersInfoCRUDs::__construct as initUsersInfoCRUDs;
-    }
+    /** @property \Fileshare\Db\models\User */
+    private $dbUser;
 
     private $cryptoService;
 
     public function __construct($container)
     {
         $this->db = $container->get('db');
+        $this->dbUser = $container->get('User');
         $this->cryptoService = $container->get('CryptoService');
-        $this->initUsersInfoCRUDs($container);
     }
 
     public function addUser(array $userData)
     {
         $userData['hash'] = $this->cryptoService->getPasswordHash($userData['password']);
-        $userData['id'] = $this->addUserInUsers($userData);
-        $this->addUserSettings($userData);
+        $userData['id'] = $this->dbUser->addUserInUsers($userData);
+        $this->dbUser->addUserSettings($userData);
         $this->ifNameExistAddNameInBase($userData);
     }
 
     protected function ifNameExistAddNameInBase(array $userData)
     {
         if (array_key_exists('name', $userData)) {
-            $this->addUserInfo([
+            $this->dbUser->addUserInfo([
                 'name' => $userData['name'],
                 'userId' => $userData['id']
                 ]);

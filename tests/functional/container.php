@@ -89,6 +89,7 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+require ROOT . '/app/bootstrap/dbmodels.php';
 require ROOT . '/app/bootstrap/errorhandlers.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';

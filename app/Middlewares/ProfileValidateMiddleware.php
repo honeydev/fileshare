@@ -8,7 +8,7 @@ namespace Fileshare\Middlewares;
 
 use Fileshare\Exceptions\FileshareException as FileshareException;
 
-abstract class ProfileVadlidateMiddleware extends AbstractMiddleware
+class ProfileValidateMiddleware extends AbstractMiddleware
 {
 	public function __construct($container)
     {

@@ -12,12 +12,13 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class RegisterAuth extends AbstractAuth
 {
-    use \Fileshare\CRUDs\UsersCRUDs;
+    /** @property \Fileshare\Db\models\User */
+    private $dbUser;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->db = $container->get('db');
+        $this->dbUser = $container->get('User');
     }
 
     public function auth($regFormData)
@@ -28,7 +29,7 @@ class RegisterAuth extends AbstractAuth
 
     private function emailIsFree($email)
     {
-        if ($this->findEqualUserEmail($email) === false) {
+        if ($this->dbUser->findEqualUserEmail($email) === false) {
             return true;
         }
         throw new AuthorizeException("Another user registred with email ${email}");

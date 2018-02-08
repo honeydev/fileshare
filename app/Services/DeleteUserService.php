@@ -6,9 +6,6 @@ namespace Fileshare\Services;
 
 class DeleteUserService
 {
-    use \Fileshare\Checkers\UsersChecker;
-    use \Fileshare\CRUDs\UsersCRUDs;
-
     public function __construct($container)
     {
 
@@ -21,11 +18,6 @@ class DeleteUserService
      */
     public function deleteUser(array $userIdentificator)
     {
-        try {
-            $this->checkUserIdentificator($userIdentificator);
-            $this->deleteUser($userIdentificator);
-        } catch (Fileshare\Exceptions\DatabaseException $e) {
 
-        }
     }
 }

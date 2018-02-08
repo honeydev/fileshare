@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class ProfileValidateMiddlewareTest extends \FileshareTests\unit\AbstractTest
 {
+    use \FileshareTests\unit\traits\CreateFakeUserTrait;
     /**
      * @var \UnitTester
      */
