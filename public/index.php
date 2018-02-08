@@ -22,6 +22,7 @@ define('ROOT', dirname(__DIR__));
 require ROOT . '/vendor/autoload.php';
 require ROOT . '/app/bootstrap/app.php';
 require ROOT . '/app/bootstrap/components.php';
+require ROOT . '/app/bootstrap/dbmodels.php';
 require ROOT . '/app/bootstrap/errorhandlers.php';
 require ROOT . '/app/bootstrap/helpers.php';
 require ROOT . '/app/bootstrap/controllers.php';

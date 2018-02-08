@@ -11,14 +11,14 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class LoginAuth extends AbstractAuth
 {
-    use \Fileshare\CRUDs\UsersCRUDs;
-
     private $cryptoService;
+    /** @property \Fileshare\Db\models\Users */
+    private $dbUser;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->db = $container->get('db');
+        $this->dbUser = $container->get('User');
         $this->cryptoService = $container->get('CryptoService');
     }
 
@@ -30,7 +30,7 @@ class LoginAuth extends AbstractAuth
 
     private function userCanBeAuthorized($loginFormData)
     {
-        $targetUserData = $this->selectUserData(
+        $targetUserData = $this->dbUser->selectUserData(
             [
                 'column' => 'email',
                 'value' => $loginFormData['email']

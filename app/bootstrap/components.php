@@ -44,7 +44,7 @@ $container['Logger'] = function ($container) {
     return new \Fileshare\Components\Logger($container);
 };
 
-$container['mysql'] = function ($container) {
+$container['db'] = function ($container) {
     $db = $container['settings']['db'];
     $pdo = new \PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'], $db['user'], $db['pass']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
