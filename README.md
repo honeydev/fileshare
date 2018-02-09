@@ -16,8 +16,8 @@ mysql/mariadb
 
 $ composer install
 
-$ cd/public
+$ cd /public
 
 $ npm install
 
-$ ./webpack.js
+$ node webpack.js
