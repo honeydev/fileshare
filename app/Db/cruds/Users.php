@@ -3,7 +3,6 @@
  * @trait UsersCRUDs require in class @property $db - PDO 
  * class instance
  */
-
 namespace Fileshare\Db\cruds;
 
 trait Users
@@ -30,16 +29,14 @@ trait Users
 		return $this->db->lastInsertId();
     }
     /**
-     * method for universal
-     * @param array $userIdentificator asscoc array were key type of select data from base
-     * (id, email)
      * @return {void}
      */
-    protected function deleteUser(array $columnValue)
+    protected function deleteUser(string $userId)
     {
-        extract($columnValue);
-        $deleteUser = "DELETE FROM users WHERE '$column' = '$value'";
-        $this->db->query($deleteUser);
+        $deleteUser = "DELETE FROM users WHERE id = '$userId'";
+        $userId = $this->db->query($deleteUser);
+        $userId = $userId->fetch();
+        return $userId;
     }
     /**
      * @param {array} $userIdentificator asscoc array were key type of select data from base
@@ -68,5 +65,20 @@ trait Users
             ";
         $selectConcreteUserData = $this->db->query($selectConcreteUserData);
         return $selectConcreteUserData->fetch();
+    }
+    /**
+     * @param array $columnAndValue column name, column value
+     * @return string|bool
+     */
+    public function selectUserIdByEmail(string $email)
+    {
+        $selectId = "SELECT id FROM users WHERE email = '$email'";
+        $selectId = $this->db->query($selectId);
+        $selectId = $selectId->fetch();
+        if ($selectId === false) {
+            return $selectId;
+        } else {
+            return $selectId[0];
+        }
     }
 }

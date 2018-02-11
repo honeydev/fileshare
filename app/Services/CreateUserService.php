@@ -5,7 +5,6 @@
 
 namespace Fileshare\Services;
 
-use Fileshare\CRUDs\UsersInfoCRUDs;
 use Fileshare\Models\UserInterface;
 
 class CreateUserService
@@ -50,7 +49,7 @@ class CreateUserService
         } elseif ($guestFirstTimeLoadPage = !$this->sessionModel->authorizeStatus) {
             $this->user = $this->container->get('GuestUserModel');
         } else {
-            throw new \LogicException('None of the condition is not satisfied in ' . get_class());
+            throw new \LogicException('None of the condition is not satisfied for create user in class ' . get_class());
         }
     }
     /**@return void */
