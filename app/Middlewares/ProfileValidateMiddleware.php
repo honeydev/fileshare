@@ -6,17 +6,25 @@ declare(strict_types=1);
 
 namespace Fileshare\Middlewares;
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\FileshareException as FileshareException;
 
 class ProfileValidateMiddleware extends AbstractMiddleware
 {
+    /** @property \Fileshare\Validators\EmailValidator */
+    private $emailValidator;
+    /** @property \Fileshare\Validators\PasswordValidator */
+    private $passwordValidator;
+    /** @property \Fileshare\Validators\NameValidator */
+    private $nameValidator;
+    
 	public function __construct($container)
     {
         parent::__construct($container);
         $this->emailValidator = $container->get('EmailValidator');
         $this->passwordValidator = $container->get('PasswordValidator');
         $this->nameValidator = $container->get('NameValidator');
-        $this->registrationAuth = $container->get('RegisterAuth');
     }
     
 	public function __invoke(Request $request, Response $response, $next)

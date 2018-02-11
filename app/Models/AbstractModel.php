@@ -20,7 +20,7 @@ abstract class AbstractModel
             return $this->$propertyName;
         }
         throw new \InvalidArgumentException(
-            `Incorrect session variable [{$propertyName}] in class ` . get_class($this)
+            "Incorrect session variable [{$propertyName}] in class " . get_class($this)
         );
     }
 

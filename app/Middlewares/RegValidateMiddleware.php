@@ -13,6 +13,7 @@ class RegValidateMiddleware extends AbstractMiddleware
     private $emailValidator;
     private $passwordValidator;
     private $nameValidator;
+    private $passwordEqualValidator;
     private $registrationAuth;
 
     public function __construct($container)
@@ -22,6 +23,7 @@ class RegValidateMiddleware extends AbstractMiddleware
         $this->passwordValidator = $container->get('PasswordValidator');
         $this->nameValidator = $container->get('NameValidator');
         $this->registrationAuth = $container->get('RegisterAuth');
+        $this->passwordEqualValidator = $container->get('PasswordEqualValidator');
     }
 
     public function __invoke(Request $request, Response $response, $next)

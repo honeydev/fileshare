@@ -10,7 +10,7 @@ trait AuthorizeLogFormatHelperTrait
     {
         $request = $this->container->get('request');
         $logMessage = '';
-        $logMessage .= `Failed request on authorize account ` . $this->loginData['email'];
+        $logMessage .= "Failed request on authorize account " . $this->loginData['email'];
         $logMessage .= ' from ip address' . $request->getServerParam('REMOTE_ADDR');
         $logMessage .= $this->prepareErrorHelper->prepareErrorAsString($e);
         return $logMessage;
@@ -20,7 +20,7 @@ trait AuthorizeLogFormatHelperTrait
     {
         $request = $this->container->get('request');
         $logMessage = '';
-        $logMessage .= `Success authorize account ` . $this->loginData['email'];
+        $logMessage .= "Success authorize account " . $this->loginData['email'];
         $logMessage .= ' from ip address' . $request->getServerParam('REMOTE_ADDR');
         return $logMessage;
     }

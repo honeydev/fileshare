@@ -14,9 +14,9 @@ abstract class AbstractValidator
     protected $regExpPattern = [];
     /**
      * @method validate - validate some data
-     * @param {array} $dataFromValidation
+     * @param {mixed} $dataFromValidation
      */
-    public abstract function validate($patternType);
+    public abstract function validate($dataFromValidation);
 
     protected function dataIsMatchRegExp($pattern, string $validationData) {
         if (preg_match($pattern, $validationData)) {

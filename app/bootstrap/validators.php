@@ -25,3 +25,7 @@ $container['UserTypeValidator'] = function () {
     return new Fileshare\Validators\UserTypeValidator();
 };
 
+$container['PasswordEqualValidator'] = function () {
+    return new Fileshare\Validators\PasswordsEqualValidator();
+};
+

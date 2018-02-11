@@ -25,6 +25,6 @@ class User
         if (method_exists($this, $methodName)) {
             return $this->$methodName(...$args);
         }
-        throw new \InvalidArgumentException(`Method ${$methodName} not exist`);
+        throw new \InvalidArgumentException("Method ${$methodName} not exist");
     }
 }
