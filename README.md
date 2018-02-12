@@ -16,7 +16,7 @@ mysql/mariadb
 
 $ composer install
 
-$ cd /public
+$ cd ./public
 
 $ npm install
 
