@@ -42,40 +42,66 @@ class RegValidateMiddlewareTest extends \FileshareTests\unit\AbstractTest
     // tests
     public function testSomeFeature()
     {
-       // $this->validateCorrectRegData();
+       $this->validateCorrectRegData();
         $this->validateIncorrectData();
     }
 
     private function validateCorrectRegData()
     {
         define('EMPTY_BODY', '');
-        $this->createGuestSessionEnv(array(
-            'email' => 'newemail@email.com',
-            'name' => 'new name',
-            'password' => 'password',
-            'passwordRepeat' => 'password'
-        ));
+        $this->createGuestSessionEnv(
+            array(
+                'email' => 'newemail@email.com',
+                'name' => 'new name',
+                'password' => 'password',
+                'passwordRepeat' => 'password'
+            )
+        );
         $response = (new \Fileshare\Middlewares\RegValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
-                return $response;
+            return $response;
         });
-        debug::debug($response);
-        $responseBody = $response->getBody();
-        $this->tester->assertEquals(EMPTY_BODY, $responseBody);
+
+        $responseContent = $this->prepareResponseContent($response);
+        $this->tester->assertEquals(EMPTY_BODY, $responseContent);
     }
 
     private function validateIncorrectData()
     {
-        $this->createGuestSessionEnv(array(
+        $this->withIncorrectEmail();
+        $this->withIncorrectName();
+        $this->withIncorrectName();
+        $this->withNotEqualPasswords();
+        $this->withInvalidPassword();
+    }
+
+    private function withIncorrectEmail()
+    {
+        $requestBody = array(
             'email' => 'newemailemail.com',
             'name' => 'new name',
             'password' => 'password',
             'passwordRepeat' => 'passworder'
-        ));
+        );
+        $this->createGuestSessionEnv($requestBody);
         $response = (new \Fileshare\Middlewares\RegValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
-                return $response;
+            return $response;
         });
-        debug::debug($response);
-        $responseBody = $response->getBody();
-        debug::debug('response', $responseBody);
+        $responseContent = $this->prepareResponseContent($response);
+        //todo write asssert - array must contain registration failed status
+    }
+
+    private function withIncorrectName()
+    {
+
+    }
+
+    private function withNotEqualPasswords()
+    {
+
+    }
+
+    private function withInvalidPassword()
+    {
+
     }
 }

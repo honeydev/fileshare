@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FileshareTests\unit;
 
 use Codeception\Util\Fixtures;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 abstract class AbstractTest extends \Codeception\Test\Unit
 {
@@ -42,5 +43,13 @@ abstract class AbstractTest extends \Codeception\Test\Unit
         $this->sessionModel = $this->createAdminUserSession($this->container);
         $this->request = $this->createRequest($this->container, $requestBody);
         $this->response = $this->createResponse($this->container);
+    }
+
+    protected function prepareResponseContent(Response $response)
+    {
+        $responseBody = $response->getBody();
+        $responseBody->rewind();
+        $content = $responseBody->getContents();
+        return $content;
     }
 }
