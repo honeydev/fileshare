@@ -22,9 +22,12 @@ abstract class AbstractTest extends \Codeception\Test\Unit
         $this->logsDir = $this->logsDir = dirname(dirname(__DIR__)) . "/logs/";
     }
 
-    protected function createGuestSessionEnv(array $requstBody = array())
+    protected function createGuestSessionEnv(array $requestBody = array())
     {
         //todo implement
+        $this->sessionModel = $this->createGuestSession($this->container);
+        $this->request = $this->createRequest($this->container, $requestBody);
+        $this->response = $this->createResponse($this->container);
     }
 
     protected function createRegularUserEnv(array $requestBody = array())

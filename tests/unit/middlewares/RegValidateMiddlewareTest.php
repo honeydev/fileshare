@@ -42,28 +42,40 @@ class RegValidateMiddlewareTest extends \FileshareTests\unit\AbstractTest
     // tests
     public function testSomeFeature()
     {
-        $this->validateCorrectRegData();
+       // $this->validateCorrectRegData();
+        $this->validateIncorrectData();
     }
 
     private function validateCorrectRegData()
     {
-            $this->addInRequestCorrectUserData();
-            $response = (new \Fileshare\Middlewares\OwnerMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
+        define('EMPTY_BODY', '');
+        $this->createGuestSessionEnv(array(
+            'email' => 'newemail@email.com',
+            'name' => 'new name',
+            'password' => 'password',
+            'passwordRepeat' => 'password'
+        ));
+        $response = (new \Fileshare\Middlewares\RegValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
                 return $response;
-            });
-            $responseBody = $response->getBody();
-            $this->tester->assertArrayNotHasKey('regStatus', $responseBody);
+        });
+        debug::debug($response);
+        $responseBody = $response->getBody();
+        $this->tester->assertEquals(EMPTY_BODY, $responseBody);
     }
 
-    private function addInRequestCorrectUserData()
+    private function validateIncorrectData()
     {
-        $this->request->withParsedBody(
-            array(
-                'email' => 'newemail@email.com',
-                'name' => 'new name',
-                'password' => 'password',
-                'passwordRepeat' => 'password'
-            )
-        );
+        $this->createGuestSessionEnv(array(
+            'email' => 'newemailemail.com',
+            'name' => 'new name',
+            'password' => 'password',
+            'passwordRepeat' => 'passworder'
+        ));
+        $response = (new \Fileshare\Middlewares\RegValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
+                return $response;
+        });
+        debug::debug($response);
+        $responseBody = $response->getBody();
+        debug::debug('response', $responseBody);
     }
 }
