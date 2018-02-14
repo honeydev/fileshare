@@ -50,6 +50,7 @@ abstract class AbstractTest extends \Codeception\Test\Unit
         $responseBody = $response->getBody();
         $responseBody->rewind();
         $content = $responseBody->getContents();
+        $content = json_decode($content, true);
         return $content;
     }
 }

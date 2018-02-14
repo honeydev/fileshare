@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 29/10/17
- * Time: 18:05
- */
 
 namespace Fileshare\Validators;
 
@@ -15,7 +9,7 @@ class NameValidator extends AbstractValidator
     public function validate($name)
     {
         if (!$this->dataIsMatchRegExp($this->regExpPattern, $name)) {
-            throw new FileshareException("Invalid login Value {$name}");
+            throw new \Fileshare\Exceptions\ValidateException("Invalid login Value {$name}");
         }
         return true;
     }

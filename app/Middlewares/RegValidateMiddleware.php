@@ -6,7 +6,7 @@ namespace Fileshare\Middlewares;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use Fileshare\Exceptions\FileshareException as FileshareException;
+use Fileshare\Exceptions\ValidateException as ValidateException;
 use \Codeception\Util\Debug as debug;
 
 class RegValidateMiddleware extends AbstractMiddleware
@@ -30,16 +30,22 @@ class RegValidateMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            debug::debug('MIDDLEWARE');
             $registrationData = $request->getParsedBody();
             $this->emailValidator->validate($registrationData['email']);
             $this->passwordValidator->validate($registrationData['password']);
             $this->passwordValidator->validate($registrationData['passwordRepeat']);
             $this->nameValidator->validate($registrationData['name']);
+            $this->passwordEqualValidator->validate(
+                array(
+                    'password' => $registrationData['password'],
+                    'passwordRepeat' => $registrationData['passwordRepeat']
+                )
+            );
             $request = $request->withAttribute('regData', $registrationData);
             $response = $next($request, $response);
             return $response;
-        } catch (FileshareException $e) {
+        } catch (ValidateException $e) {
+            debug::debug('exception');
             $response = $this->sendErrorWithJson([
                 'regStatus' => 'faield',
                 'errorType' => 'invalid_registration_data',

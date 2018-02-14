@@ -8,8 +8,6 @@
 
 namespace Fileshare\Validators;
 
-use Fileshare\Exceptions\FileshareException;
-
 class UserTypeValidator extends AbstractValidator
 {
     public function validate($userType)
@@ -17,6 +15,6 @@ class UserTypeValidator extends AbstractValidator
         if ($userType >= 0 && $userType <= 2) {
             return true;
         }
-        throw new FileshareException("Invalid user type {$userType}");
+        throw new \Fileshare\Exceptions\ValidateException("Invalid user type {$userType}");
     }
 }

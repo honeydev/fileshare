@@ -8,8 +8,6 @@
 
 namespace Fileshare\Validators;
 
-use Fileshare\Exceptions\FileshareException as FileshareException;
-
 class PasswordValidator extends AbstractValidator
 {
     protected $regExpPattern = '/^([a-z]|[0-9]|@|#|\$|%|\+|&|\*|\(|\)|!|~|@|\^|_|-|=){5,20}$/i';
@@ -17,7 +15,7 @@ class PasswordValidator extends AbstractValidator
     public function validate($password)
     {
         if (!$this->dataIsMatchRegExp($this->regExpPattern, $password)) {
-            throw new FileshareException("Invalid password Value {$password}");
+            throw new \Fileshare\Exceptions\ValidateException("Invalid password Value {$password}");
         }
         return true;
     }

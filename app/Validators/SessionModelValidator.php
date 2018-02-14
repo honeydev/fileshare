@@ -19,7 +19,6 @@ class SessionModelValidator extends AbstractValidator
         $this->checkPropertyName($key);
         $pattern = $this->regExpPattern[$key];
         $this->checkPropertyValue($pattern, $propertyValue);
-
         return true;
     }
 
@@ -47,7 +46,7 @@ class SessionModelValidator extends AbstractValidator
         }
 
         if (!$this->dataIsMatchRegExp($pattern, $propertyValue)) {
-            throw new \Exception("
+            throw new \Fileshare\Exceptions\ValidateException("
                 Incorrect  value [{$propertyValue}]
                 not match [{$pattern}]
             ");
