@@ -17,6 +17,15 @@ class ProfileValidateMiddlewareTest extends \FileshareTests\unit\AbstractTest
      * @property \Fileshare\Models\SessionModel
      */
     protected $sessionModel;
+    /** 
+     * @property array
+     */
+    private $correctProfileData = array(
+                'email' => 'newemail@email.com', 
+                'name' => 'new name',
+                'password' => 'password',
+                'passwordRepeat' => 'password'
+            );
 
     public function __construct()
     {
@@ -28,29 +37,51 @@ class ProfileValidateMiddlewareTest extends \FileshareTests\unit\AbstractTest
         $this->correctUserId = $this->createUser([
             'users' => ['email' => 'testuser@test.com', 'hash' => 'fakehash']
         ]);
-        $this->createRegularUserEnv(array('id' => $this->correctUserId));
     }
 
     public function testSomeFeature()
     {
         $this->testProfileDataWithCorrectValues();
+        $this->testProfileDataWithIncorrectValues();
     }
 
     private function testProfileDataWithCorrectValues()
     {
-        $this->request->withParsedBody(
-            array(
-                'email' => 'newemail@email.com', 
-                'name' => 'new name'
-                //add passwords
-                //fix front end
-            )
-        );
-        $this->tester->assertInstanceOf(
-            '\Psr\Http\Message\ResponseInterface',
-            (new \Fileshare\Middlewares\ProfileValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
+        define('EMPTY_BODY', '');
+        $this->createRegularUserEnv($this->correctProfileData);
+        $response = (new \Fileshare\Middlewares\ProfileValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
                 return $response;
-            }, 'must return response without exceptions')
-        );
+            });
+        $responseContent = $this->prepareResponseContent($response);
+        $this->tester->assertEquals(EMPTY_BODY, $responseContent);
+    }
+
+    private function testProfileDataWithIncorrectValues()
+    {
+        define('INCORRECT_PROFILE_DATA', array(
+            'email' => 'incorrectemail.com',
+            'name' => '##$@',
+            'password' => '1a',
+            'passwordRepeat' => 'not_equal_invalid_password<>'
+        ));
+
+        foreach (INCORRECT_PROFILE_DATA as $incorrectPropertyName => $incorrectPropertyValue) {
+            $incorrectProfileData = array_merge($this->correctProfileData, array($incorrectPropertyName => $incorrectPropertyValue));
+            $this->createRegularUserEnv($this->correctProfileData);
+            $response = (new \Fileshare\Middlewares\ProfileValidateMiddleware($this->container))($this->request, $this->response, function ($request, $response) {
+                    return $response;
+            });
+            $responseContent = $this->prepareResponseContent($response);
+
+            $this->tester->assertArraySubset(
+                [
+                    'status' => 'failed', 
+                    'errorType' => 'invalid_new_profile_data'
+                ], 
+                $responseContent
+            );
+        }
+
+        debug::debug('response content', $responseContent);
     }
 }

@@ -12,7 +12,9 @@ class LoginController extends AbstractController
     public function login(Request $request, Response $response)
     {
         $createUserService = $this->container->get('CreateUserService');
-        $userData = $createUserService->createUser($request->getAttribute('loginData'))->getAllProperties();
+        $user = $createUserService->createRegistredUser($request->getAttribute('loginData')); 
+        $this->sessionService->createAuthorizedUserSession($user);
+        $userData = $this->sessionModel->user->getAllProperties();
         return $response->withJson(['status' => 'success', 'loginData' => $userData], 200);
     }
 }

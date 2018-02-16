@@ -40,6 +40,7 @@ class AbstractErrorHandler
     }
 
     protected function showError(Response $response) {
+        $response = $response->withStatus(500);
         $this->container['view']->render(
             $response,
             "index.twig",

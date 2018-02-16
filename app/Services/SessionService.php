@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace Fileshare\Services;
 
+use Fileshare\Models\UserInterface as UserInterface;
+
 class SessionService
 {
     private $container;
@@ -19,7 +21,7 @@ class SessionService
         $this->createUserService = $container->get('CreateUserService', $container);
     }
 
-    public function runSession()
+    public function run()
     {
         $this->setSessionVariables();
     }
@@ -38,7 +40,16 @@ class SessionService
         $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
         $this->sessionModel->authorizeStatus = false;
         $this->sessionModel->accessLvl = 0;
-        $this->sessionModel->user = $this->createUserService->createUser();
+        $this->sessionModel->user = $this->createUserService->createGuest();
+        $this->sessionModel->ip = $this->container->get('request')->getServerParam('REMOTE_ADDR');
+    }
+
+    public function createAuthorizedUserSession(UserInterface $user)
+    {
+        $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
+        $this->sessionModel->authorizeStatus = true;
+        $this->sessionModel->accessLvl = $user->accessLvl;
+        $this->sessionModel->user = $user;
         $this->sessionModel->ip = $this->container->get('request')->getServerParam('REMOTE_ADDR');
     }
 

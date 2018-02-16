@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace FileshareTests\Functional;
 
 use \Codeception\Util;
+use \Codeception\Util\Debug as debug;
 
 abstract class BaseTest extends \Codeception\Module
 {
@@ -49,6 +50,7 @@ abstract class BaseTest extends \Codeception\Module
 
     protected function loginTestUser(array $userData)
     {
+        //$_COOKIE['PHPSESSID'] = 'el4ukv0kqbvoirg7nkp4dncpk3';
         $this->tester->sendAjaxPostRequest('/login.form', array(
             'email' => $userData['email'], 'password' => $userData['password']
         ));

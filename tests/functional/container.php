@@ -16,24 +16,8 @@ $container = new Container([
         $settings = $container->get('settings');
         $settings->replace(require ROOT . '/config/cfg.php');
         // routes and middlewares here
-        $app->group('', function () use ($app, $container) {
-            $app->get('/', 'MainPageController:indexPage');
-            $app->post('/upload.file', 'MainPageController:uploadFile');
-            $app->post('/login.form', 'LoginController:login')
-                ->add(new \Fileshare\Middlewares\LoginMiddleware($container))
-                ;
-            $app->post('/register.form', 'RegisteredController:registered')
-                ->add(new \Fileshare\Middlewares\RegDbMiddleware($container))
-                ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
-                ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
-            ;
-            $app->post('/profile.form', 'ProfileController:changeProfile');
-            $app->post('/userAvatar.file', function ($request, $response) {
-                var_dump($request->getUploadedFiles());
-            });
-            $app->get('/logout.action', 'LogoutController:logout');
-            $app->get('/tests/{testName}', 'TestsController:testsPage');
-        })->add(new \Fileshare\Middlewares\SessionMiddleware($container));
+        $routes = new \Fileshare\Routes();
+        $routes->startRoutes($app, $container);
         return $app;
     }
 ]);

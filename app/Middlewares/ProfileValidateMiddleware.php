@@ -9,6 +9,7 @@ namespace Fileshare\Middlewares;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\ValidateException as ValidateException;
+use \Codeception\Util\Debug as debug;
 
 class ProfileValidateMiddleware extends AbstractMiddleware
 {
@@ -21,16 +22,17 @@ class ProfileValidateMiddleware extends AbstractMiddleware
     /** @property \Fileshare\Validators\PasswordEqualValidator */
     private $passwordEqualValidator;
 
-	public function __construct($container)
+    public function __construct($container)
     {
         parent::__construct($container);
         $this->emailValidator = $container->get('EmailValidator');
         $this->passwordValidator = $container->get('PasswordValidator');
         $this->nameValidator = $container->get('NameValidator');
         $this->passwordEqualValidator = $container->get('PasswordEqualValidator');
+        $this->container = $container;
     }
     
-	public function __invoke(Request $request, Response $response, $next)
+    public function __invoke(Request $request, Response $response, $next)
     {
         try {
             $profileData = $request->getParsedBody();
@@ -41,7 +43,7 @@ class ProfileValidateMiddleware extends AbstractMiddleware
         } catch (ValidateException $e) {
             $response = $this->sendErrorWithJson([
                 'regStatus' => 'faield',
-                'errorType' => 'invalid_registration_data',
+                'errorType' => 'invalid_new_profile_data',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
@@ -59,17 +61,17 @@ class ProfileValidateMiddleware extends AbstractMiddleware
             $this->nameValidator->validate($profileData['name']);
         }
 
-        if (array_key_exists('password', $profileData) XOR array_key_exists('passwordRepeat', $profileData)) {
-            throw new ValidateException("Password or password repeat not inputed");
-        } else {
+        if (array_key_exists('password', $profileData) && array_key_exists('passwordRepeat', $profileData)) {
             $this->passwordValidator->validate($profileData['password']);
             $this->passwordValidator->validate($profileData['passwordRepeat']);
-            $this->passswordEqualValidator->validate(
+            $this->passwordEqualValidator->validate(
                 array(
                     'password' => $profileData['password'],
                     'passwordRepeat' => $profileData['passwordRepeat']
                     )
                 );
+        } else if (array_key_exists('password', $profileData) XOR array_key_exists('passwordRepeat', $profileData)) {
+            throw new ValidateException("Password or password repeat not inputed");
         }
     }
 }

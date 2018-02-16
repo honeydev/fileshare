@@ -5,7 +5,7 @@
 
 namespace Fileshare\Services;
 
-use Fileshare\Models\UserInterface;
+use Fileshare\Models\UserInterface as UserInterface;
 
 class CreateUserService
 {
@@ -13,54 +13,39 @@ class CreateUserService
     private $user;
     /** @property \Fileshare\Db\models\User */
     private $dbUser;
-    /** @property \Fileshare\Models\SessionModel */
-    private $sessionModel;
+
     private $container;
+
+    private $sessionService;
 
     public function __construct($container)
     {
         $this->container = $container;
         $this->dbUser = $this->container->get('User');
-        $this->sessionModel = $this->container->get('SessionModel');
     }
 
-    /**
-     * @param null|array
-     * @return object
-     */
-    public function createUser($loginData = null): UserInterface
+    public function createGuest(): UserInterface
     {
-        $this->createConcretUser($loginData);
-        return $this->user;
+        return $this->container->get('GuestUserModel');
     }
-    /**
-     * @param {null|array}
-     * @throws \LogicException
-     */
-    private function createConcretUser($loginData = null)
+
+    public function createRegistredUser(array $loginData): UserInterface
     {
-        if ($userLoggedIn = !empty($loginData)) {
-            $userData = $this->dbUser->selectConcreteUserData($loginData['id']);
-            $this->createConcretUserAccordAccessLvl($userData);
-            $this->user->setUserVars($userData);
-        } elseif ($userObjectExistInSession = !empty($this->sessionModel->user)) {
-            $this->user = $this->sessionModel->user;
-            echo 'user in session';
-        } elseif ($guestFirstTimeLoadPage = !$this->sessionModel->authorizeStatus) {
-            $this->user = $this->container->get('GuestUserModel');
-        } else {
-            throw new \LogicException('None of the condition is not satisfied for create user in class ' . get_class());
-        }
+        $userData = $this->dbUser->selectConcreteUserData($loginData['id']);
+        $user = $this->createConcretUserAccordAccessLvl($userData['accessLvl']);
+        $user->setUserVars($userData);
+        return $user;
     }
-    /**@return void */
-    private function createConcretUserAccordAccessLvl($userData)
+
+    private function createConcretUserAccordAccessLvl(string $accessLvl): UserInterface
     {
-        if ($userData['accessLvl'] == 1) {
-            $this->user = $this->container->get('RegularUserModel', $userData);
-        } elseif ($userData['accessLvl'] == 2) {
-            $this->user = $this->container->get('AdminUserModel', $userData);
+        if ($accessLvl == 1) {
+            $user = $this->container->get('RegularUserModel');
+        } elseif ($accessLvl == 2) {
+            $user = $this->container->get('AdminUserModel');
         } else {
-            throw new \UnexpectedValueException("Incorrect accessLvl {$userData['accessLvl']} in class " . get_class());
+            throw new \UnexpectedValueException("Incorrect accessLvl {$accessLvl} in class " . get_class());
         }
+        return $user;
     }
 }

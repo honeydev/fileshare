@@ -27,6 +27,10 @@ class OwnerMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
+            var_dump($_COOKIE);
+            var_dump($_SESSION);
+            var_dump('session id', session_id());
+            var_dump($this->sessionModel);
             $this->id = $request->getParsedBody()['id'];
             $this->userCanChangeData();
             $response = $next($request, $response);
@@ -35,7 +39,7 @@ class OwnerMiddleware extends AbstractMiddleware
             $this->logger->noticeLog($this->prepareFailedProfileChange($e));
             return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
-                'errorType' => 'user_not_exist',
+                'errorType' => 'user_cant_change_this_profile',
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);

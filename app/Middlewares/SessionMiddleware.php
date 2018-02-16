@@ -17,7 +17,7 @@ class SessionMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         $sessionService = $this->container->get('SessionService');
-        $sessionService->runSession();
+        $sessionService->run();
         $response = $next($request, $response);
         return $response;
     }
