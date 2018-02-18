@@ -12,12 +12,11 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 class LoginMiddleware extends AbstractMiddleware
 {
     use \Fileshare\Helpers\AuthorizeLogFormatHelperTrait;
-
     private $emailValidator;
     private $passwordValidator;
-    /** @param string */
-    private $loginData;
     private $loginAuth;
+    /** @property array */
+    private $loginData;
 
     public function __construct($container)
     {
@@ -54,6 +53,13 @@ class LoginMiddleware extends AbstractMiddleware
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
+        }
+    }
+
+    protected function userAlreadyAuthorized()
+    {
+        if ($this->sessionModel->authorizeStatus) {
+            throw new FileshareException('User already authorized with session id ' . session_id());
         }
     }
 }

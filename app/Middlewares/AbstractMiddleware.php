@@ -12,7 +12,7 @@ abstract class AbstractMiddleware
     protected $prepareErrorHelper;
     /** @property \Fileshare\Components\Logger */
     protected $logger;
-    private $sessionModel;
+    protected $sessionModel;
 
     public function __construct($container)
     {
@@ -20,13 +20,6 @@ abstract class AbstractMiddleware
         $this->sessionModel = $container->get('SessionModel');
         $this->prepareErrorHelper = $container->get('PrepareErrorHelper');
         $this->logger = $container->get('Logger');
-    }
-
-    protected function userAlreadyAuthorized()
-    {
-        if ($this->sessionModel->authorizeStatus) {
-            throw new FileshareException('User already authorized');
-        }
     }
 
     protected function sendErrorWithJson($errorElements, $response)

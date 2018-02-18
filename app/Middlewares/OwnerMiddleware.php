@@ -13,24 +13,17 @@ use \Psr\Http\Message\ResponseInterface as Response;
 class OwnerMiddleware extends AbstractMiddleware
 {
     use \Fileshare\Helpers\OwnerMiddlewareLogHelperTrait;
-    /** @property \Fileshare\Models\SessionModel */
-    private $sessionModel; 
     /** @property string */
     private $id;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->sessionModel = $container->get('SessionModel');
     }
 
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            var_dump($_COOKIE);
-            var_dump($_SESSION);
-            var_dump('session id', session_id());
-            var_dump($this->sessionModel);
             $this->id = $request->getParsedBody()['id'];
             $this->userCanChangeData();
             $response = $next($request, $response);

@@ -9,13 +9,11 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class RegUserTypeMiddleware extends AbstractMiddleware
 {
-    private $sessionModel;
     private $userTypeValidator;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->sessionModel = $container->get('SessionModel');
         $this->userTypeValidator = $container->get('UserTypeValidator');
     }
 

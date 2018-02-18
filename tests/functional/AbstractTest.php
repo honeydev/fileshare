@@ -1,6 +1,6 @@
 <?php
 /**
- * @class BaseTest contain basic methods for my functional tests
+ * @class AbstractTest contain basic methods for my functional tests
  */
 declare(strict_types=1);
 
@@ -9,10 +9,10 @@ namespace FileshareTests\Functional;
 use \Codeception\Util;
 use \Codeception\Util\Debug as debug;
 
-abstract class BaseTest extends \Codeception\Module
+abstract class AbstractTest extends \Codeception\Module
 {
     use \FileshareTests\traits\CreateFakeUserTrait;
-    /** @object \FunctionalTester @class*/
+    /** @var \FunctionalTester */
     protected $tester;
     /** @param string */
     protected $testUserId;
@@ -24,7 +24,7 @@ abstract class BaseTest extends \Codeception\Module
 
     protected function setXhrRequestType()
     {
-        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->tester->haveHttpHeader('X-Requested-With', 'XMLHttpRequest');
     }
 
     protected function setUserIp(string $ip = '192.168.4.15')
@@ -32,7 +32,7 @@ abstract class BaseTest extends \Codeception\Module
         $_SERVER['REMOTE_ADDR'] = $ip;
     }
 
-    protected function setSessionId(string $id = 'el4ukv0kqbvoirg7nkp4dncpk3')
+    protected function setSession(string $id = 'el4ukv0kqbvoirg7nkp4dncpk3')
     {
         $this->tester->setCookie('PHPSESSID', $id);
         $this->tester->seeCookie('PHPSESSID');
@@ -50,7 +50,6 @@ abstract class BaseTest extends \Codeception\Module
 
     protected function loginTestUser(array $userData)
     {
-        //$_COOKIE['PHPSESSID'] = 'el4ukv0kqbvoirg7nkp4dncpk3';
         $this->tester->sendAjaxPostRequest('/login.form', array(
             'email' => $userData['email'], 'password' => $userData['password']
         ));

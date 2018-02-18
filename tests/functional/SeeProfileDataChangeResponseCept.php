@@ -6,7 +6,7 @@ namespace FileshareTests\functional;
 
 use \Codeception\Util\Debug as debug;
 
-class SeeProfileDataChangeResponseCept extends BaseTest
+class SeeProfileDataChangeResponseCept extends AbstractTest
 {
 
     public function __construct(\FunctionalTester $tester)
@@ -15,17 +15,17 @@ class SeeProfileDataChangeResponseCept extends BaseTest
         $this->setXhrRequestType();
         $this->setUserIp();
         $this->testUserId = $this->createRegularUser();
+        $this->setSession();
         $this->loginTestUser(array('email' => 'testuser@test.com', 'password' => 'testuserpassword'));
     }
 
     public function sendValidProfileChanges()
     {
-         $this->loginTestUser(array('email' => 'testuser@test.com', 'password' => 'testuserpassword'));
-        $this->tester->wantTo('See coomplete request');
+        $this->tester->wantTo('See complete request');
         $this->tester->sendAjaxPostRequest(
             "/profile.form", 
             array(
-                'email' => 'testuser@test.com', 
+                'email' => 'testuser@test.com',
                 'name' => 'new name', 
                 'id' => $this->testUserId
                 )
@@ -76,4 +76,4 @@ class SeeProfileDataChangeResponseCept extends BaseTest
 
 $seeProfileDataChangeResponseCept = new SeeProfileDataChangeResponseCept(new \FunctionalTester($scenario));
 $seeProfileDataChangeResponseCept->sendValidProfileChanges();
-$seeProfileDataChangeResponseCept->sendRequestWithInvalidData();
+//$seeProfileDataChangeResponseCept->sendRequestWithInvalidData();

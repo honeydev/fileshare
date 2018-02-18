@@ -29,7 +29,7 @@ class CreateUserService
         return $this->container->get('GuestUserModel');
     }
 
-    public function createRegistredUser(array $loginData): UserInterface
+    public function createRegisteredUser(array $loginData): UserInterface
     {
         $userData = $this->dbUser->selectConcreteUserData($loginData['id']);
         $user = $this->createConcretUserAccordAccessLvl($userData['accessLvl']);
