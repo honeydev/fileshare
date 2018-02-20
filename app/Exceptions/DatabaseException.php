@@ -11,7 +11,6 @@ namespace Fileshare\Exceptions;
 
 class DatabaseException extends AbstractAppException
 {
-    private $databaseError;
 
     public function __construct(string $message) {
         {
