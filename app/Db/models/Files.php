@@ -12,9 +12,7 @@ class Files
     /**
      * @const array
      */
-    const FILE_COLUMNS = array(
-        'name', 'size', 'author', 'publishDate', 'format', 'ownerId', 'id', 'uri'
-    );
+     private $FILE_COLUMNS = ['name', 'size', 'author', 'publishDate', 'format', 'ownerId', 'id', 'uri'];
     /** @property \Pdo */
     private $db;
 

@@ -56,11 +56,12 @@ Ajax.prototype.sendFile = function (requestSettings) {
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     let formData = new FormData();
     formData.append('file', requestSettings.file);
-
     $.ajax({
         url: URL,
-        type: 'POST',
+        method: "POST",
+        type: "POST",
         data: formData,
+        cache: false,
         processData: false,
         contentType: false,
         success: requestSettings.responseHandler,

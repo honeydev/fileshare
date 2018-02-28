@@ -16,8 +16,9 @@ ProfileUploader.prototype.upload = function (profileData) {
 
     if (profileData.hasOwnProperty('avatar')) {
         this._ajax.sendFile({
-            file: profileData.avatar, 
+            file: profileData.avatar,
             url: location.host + "/userAvatar.file",
+            method: "PUT",
             responseHandler: this._avatarHandler
         });
     }
@@ -26,7 +27,7 @@ ProfileUploader.prototype.upload = function (profileData) {
         console.log(profileData.userData);
         this._ajax.sendJSON({
             url: location.host + "/profile.form",
-            method: "POST",
+            method: "PUT",
             requestData: profileData.userData,
             responseHandler: this._userDataHandler
         });
