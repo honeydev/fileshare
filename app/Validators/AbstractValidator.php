@@ -19,6 +19,7 @@ abstract class AbstractValidator
     public abstract function validate($dataFromValidation);
 
     protected function dataIsMatchRegExp($pattern, string $validationData) {
+        \Codeception\Util\Debug::debug('abstract validator', $pattern, $validationData);
         if (preg_match($pattern, $validationData)) {
             return true;
         }

@@ -29,3 +29,6 @@ $container['PasswordEqualValidator'] = function () {
     return new Fileshare\Validators\PasswordsEqualValidator();
 };
 
+$container['ImageValidator'] = function () {
+    return new Fileshare\Validators\ImageValidator();
+};
