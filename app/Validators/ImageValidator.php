@@ -31,7 +31,6 @@ class ImageValidator extends FileValidator
      */
     public  function validate($image)
     {
-        debug::debug($image);
         $this->fileName = $image['name'];
         $this->fileExtension = $this->calculateExtension('1.jpeg');
         $this->checkExtension($image['name']);

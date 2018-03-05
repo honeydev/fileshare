@@ -25,14 +25,16 @@ class ImageValidatorTest extends \Codeception\Test\Unit
 
     protected function _after()
     {
+
     }
     // tests
     public function testSomeFeature()
     {
-        $this->sendCorrectImages();
+        $this->testValidImages();
+        $this->testInvalidImages();
     }
 
-    private function validateCoorectImages()
+    private function testValidImages()
     {
         $images = $this->createValidUploadedImages();
 
@@ -41,14 +43,15 @@ class ImageValidatorTest extends \Codeception\Test\Unit
         }
     }
 
-    private function validateImagesWithIncorrectExtension()
+    private function testInvalidImages()
     {
+        $images = $this->createInvalidUploadedImages();
 
-    }
-
-    private function validateNotImageWithImageExtension()
-    {
-
+        foreach ($images as $image) {
+            $this->tester->expectException('\Fileshare\Exceptions\ValidateException', function () use ($image) {
+                $this->imageValidator->validate($image);
+            });
+        }
     }
 }
 
