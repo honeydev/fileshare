@@ -25,8 +25,9 @@ class Routes
                 ->add(new \Fileshare\Middlewares\OwnerMiddleware($container))
                 ;
             $app->post('/userAvatar.file', function ($request, $response) {
-                var_dump($request->getUploadedFiles());
-            });
+                var_dump($request->getAttribute('fileType'));
+            })
+                ->add(new \Fileshare\Middlewares\FileTypeMiddleware($container));
             $app->get('/logout.action', 'LogoutController:logout');
             $app->get('/tests/{testName}', 'TestsController:testsPage');
         })->add(new \Fileshare\Middlewares\SessionMiddleware($container));

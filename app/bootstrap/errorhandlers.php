@@ -15,9 +15,5 @@ $container['errorHandler'] = function () use ($container) {
 };
 
 $container['phpErrorHandler'] = function () use ($container) {
-    if ($container->get('request')->isXhr()) {
-        return new Fileshare\Handlers\JsonPhpErrorHandler($container);
-    } else {
-        return new Fileshare\Handlers\PhpErrorHandler($container);
-    }
+    return new Fileshare\Handlers\PhpErrorHandler($container);
 };

@@ -39,6 +39,7 @@ import {AdminModel} from './models/adminModel';
 import {UrlHelper} from './helpers/urlHelper';
 import {ProfileFailedStatmentSetter} from './setters/profileFailedStatmentSetter';
 import {ProfileUploader} from './profileUploader';
+import {Debugger} from "./debugger";
 
 function commonBootstrap() {
     dic.add('CONFIG', function () {
@@ -61,6 +62,9 @@ function commonBootstrap() {
         return SessionModel.getInstance();
     });
     /** services */
+    dic.add('Debugger', function (...args) {
+        return new Debugger(...args);
+    });
     dic.add('ProfileUploader', function (...args) {
         return new ProfileUploader(...args);
     });

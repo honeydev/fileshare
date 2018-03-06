@@ -5,6 +5,7 @@ export {Ajax};
 function Ajax(dic) {
     this._logger = dic.get('Logger')(dic);
     this._urlHelper = dic.get('UrlHelper')(dic);
+    this._debugger = dic.get('Debugger')(dic);
 }
 
 Ajax.prototype.sendJSON = function (requestSettings) {
@@ -24,10 +25,12 @@ Ajax.prototype.sendJSON = function (requestSettings) {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));
                 this._logger.log('valid error json');
                 this._logger.log(qXHR.responseText);
+                this._debugger.openDebugger(qXHR.responseText);
             } catch (e) {
                 this._logger.log(e);
                 this._logger.log('invalid error json');
                 this._logger.log(qXHR.responseText);
+                this._debugger.openDebugger(qXHR.responseText);
             }
         }
     });
@@ -70,10 +73,12 @@ Ajax.prototype.sendFile = function (requestSettings) {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));
                 this._logger.log('valid error json');
                 this._logger.log(qXHR.responseText);
+                this._debugger.openDebugger(qXHR.responseText);
             } catch (e) {
                 this._logger.log(e);
                 this._logger.log('invalid error json');
                 this._logger.log(qXHR.responseText);
+                this._debugger.openDebugger(qXHR.responseText);
             }
         }
     });

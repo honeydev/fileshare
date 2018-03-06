@@ -44,6 +44,7 @@ ProfileUploader.prototype._avatarHandler = function (response) {
 }.bind(this);
 
 ProfileUploader.prototype._userDataHandler = function (response) {
+
     if (response.status === "success") {
 
     } else if (response.status === "failed") {
