@@ -12,7 +12,7 @@ LoginFormSetter.prototype.setFailedAuthorizeStatment = function (errorType) {
         this._setEmailError();
         this._setPasswordError();
     } else if (errorType === "user_not_exist") {
-        this._setErrorMessage('User not exist');
+        this._setErrorMessage('Users not exist');
         this._setEmailError();
     } else if (errorType === 'password_error') {
         this._setErrorMessage('Invalid password format');

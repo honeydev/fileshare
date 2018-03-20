@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class AdminUserModel extends RegularUserModel implements UserInterface
+class AdminUserModel extends RegularUserModel
 {
     protected $privileges = [
         'see_open_notes' => true,

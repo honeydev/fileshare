@@ -30,9 +30,9 @@ require ROOT . '/app/bootstrap/validators.php';
 require ROOT . '/app/bootstrap/errorhandlers.php';
 
 //по непонятной мне причине в файле /app/bootstrap/dbmodels.php
-// не добавляется в коннейнер модель базы User совсем никак
-$container['User'] = function ($container) {
-    return new \Fileshare\Db\models\User($container);
+// не добавляется в коннейнер модель базы Users совсем никак
+$container['Users'] = function ($container) {
+    return new \Fileshare\Db\models\Users($container);
 };
 
 Fixtures::add('app', $app);

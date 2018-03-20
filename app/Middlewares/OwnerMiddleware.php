@@ -44,7 +44,7 @@ class OwnerMiddleware extends AbstractMiddleware
     private function userCanChangeData()
     {
         if (!$this->userIsOwner() && !$this->userIsAdmin()) {
-            throw new \Fileshare\Exceptions\AccessException('User can\'t change this matherial');
+            throw new \Fileshare\Exceptions\AccessException('Users can\'t change this matherial');
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
 
-$container['User'] = function ($container) {
-    return new \Fileshare\Db\models\User($container);
+$container['Users'] = function ($container) {
+    return new \Fileshare\Db\models\Users($container);
 };

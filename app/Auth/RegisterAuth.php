@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: lebedev
+ * Users: lebedev
  * Date: 10/4/17
  * Time: 9:11 PM
  */
@@ -12,13 +12,13 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class RegisterAuth extends AbstractAuth
 {
-    /** @property \Fileshare\Db\models\User */
+    /** @property \Fileshare\Db\models\Users */
     private $dbUser;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->dbUser = $container->get('User');
+        $this->dbUser = $container->get('Users');
     }
 
     public function auth($regFormData)

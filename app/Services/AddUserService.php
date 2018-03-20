@@ -9,7 +9,7 @@ use Fileshare\Exceptions\FileshareException;
 
 class AddUserService
 {
-    /** @property \Fileshare\Db\models\User */
+    /** @property \Fileshare\Db\models\Users */
     private $dbUser;
 
     private $cryptoService;
@@ -17,7 +17,7 @@ class AddUserService
     public function __construct($container)
     {
         $this->db = $container->get('db');
-        $this->dbUser = $container->get('User');
+        $this->dbUser = $container->get('Users');
         $this->cryptoService = $container->get('CryptoService');
     }
 

@@ -59,7 +59,7 @@ class LoginMiddleware extends AbstractMiddleware
     protected function userAlreadyAuthorized()
     {
         if ($this->sessionModel->authorizeStatus) {
-            throw new FileshareException('User already authorized with session id ' . session_id());
+            throw new FileshareException('Users already authorized with session id ' . session_id());
         }
     }
 }

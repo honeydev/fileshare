@@ -19,7 +19,7 @@ RegisterFormSetter.prototype.setFailedRegStatment = function (errorType) {
         this._setPasswordError();
         this._setNameError();
 	} else if (errorType === 'user_already_exist') {
-        this._setErrorMessage('User with this email already registred');
+        this._setErrorMessage('Users with this email already registred');
         this._setEmailError();
 	} else if (errorType === 'email_error') {
         this._setErrorMessage('Invalid email');

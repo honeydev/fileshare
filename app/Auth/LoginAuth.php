@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: lebedev
+ * Users: lebedev
  * Date: 10/4/17
  * Time: 8:36 PM
  */
@@ -12,13 +12,13 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 class LoginAuth extends AbstractAuth
 {
     private $cryptoService;
-    /** @property \Fileshare\Db\models\User */
+    /** @property \Fileshare\Db\models\Users */
     private $dbUser;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->dbUser = $container->get('User');
+        $this->dbUser = $container->get('Users');
         $this->cryptoService = $container->get('CryptoService');
     }
 
@@ -49,6 +49,6 @@ class LoginAuth extends AbstractAuth
         if (!empty($targetUserData) && $targetUserData !== false) {
             return true;
         }
-        throw new AuthorizeException('User with this email not registred');
+        throw new AuthorizeException('Users with this email not registred');
     }
 }

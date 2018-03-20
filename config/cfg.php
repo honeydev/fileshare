@@ -6,10 +6,15 @@ return array(
     'logging' => true,
     'addContentLengthHeader' => false,
     'db' => array(
+        'driver' => 'mysql',
         'host' => 'localhost',
-        'user' => 'honey',
-        'pass' => 'd5d7',
-        'dbname' => 'fileshare'
+        'database' => 'fileshare',
+        'username' => 'honey',
+        'password' => 'd5d7',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+        'port' => '3306'
     ),
     'appInfo' => array(
        'title' => 'Filesare',

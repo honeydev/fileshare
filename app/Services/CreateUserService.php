@@ -11,7 +11,7 @@ class CreateUserService
 {
     /** @property \Fileshare\Models\UserInterface */
     private $user;
-    /** @property \Fileshare\Db\models\User */
+    /** @property \Fileshare\Db\models\Users */
     private $dbUser;
 
     private $container;
@@ -21,7 +21,7 @@ class CreateUserService
     public function __construct($container)
     {
         $this->container = $container;
-        $this->dbUser = $this->container->get('User');
+        $this->dbUser = $this->container->get('Users');
     }
 
     public function createGuest(): UserInterface

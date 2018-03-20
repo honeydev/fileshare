@@ -12,6 +12,12 @@ namespace Fileshare;
 
 $container = $app->getContainer();
 
+$container['db'] = function ($container) {
+    $eloquentProvider = new \Fileshare\Db\EloquentServiceProvider();
+    $capsule = $eloquentProvider->register($container);
+    return $capsule;
+};
+
 $container['ErrorLogger'] = function () {
     $logger = new \Monolog\Logger('errorLogger');
     $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/errors.log');
@@ -42,14 +48,6 @@ $container['AuthorizeLogger'] = function () {
 
 $container['Logger'] = function ($container) {
     return new \Fileshare\Components\Logger($container);
-};
-
-$container['db'] = function ($container) {
-    $db = $container['settings']['db'];
-    $pdo = new \PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'], $db['user'], $db['pass']);
-    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-    return $pdo;
 };
 
 $container['view'] = function ($container) {
