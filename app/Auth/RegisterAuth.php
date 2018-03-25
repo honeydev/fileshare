@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * Users: lebedev
- * Date: 10/4/17
- * Time: 9:11 PM
- */
 
 namespace Fileshare\Auth;
 
@@ -12,13 +6,15 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
 class RegisterAuth extends AbstractAuth
 {
-    /** @property \Fileshare\Db\models\Users */
-    private $dbUser;
+    /**
+     * @proerty \Fileshare\Db\ORM\Users
+     */
+    private $users;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->dbUser = $container->get('Users');
+        $this->users = $container->get('Users');
     }
 
     public function auth($regFormData)
@@ -26,12 +22,13 @@ class RegisterAuth extends AbstractAuth
         $this->emailIsFree($regFormData['email']);
         return true;
     }
-
-    private function emailIsFree($email)
+    /**
+     * @throws \Fileshare\Exceptions\AuthorizeExceptions
+     */
+    private function emailIsFree(string $email)
     {
-        if ($this->dbUser->findEqualUserEmail($email) === false) {
-            return true;
+        if (!is_null($this->users::where('email', $email))) {
+            throw new AuthorizeException("Another user registred with email ${email}");          
         }
-        throw new AuthorizeException("Another user registred with email ${email}");
     }
 }

@@ -19,7 +19,6 @@ register_shutdown_function(function() {
 
 require ROOT . '/vendor/autoload.php';
 require ROOT . '/app/bootstrap/app.php';
-require ROOT . '/app/bootstrap/dbmodels.php';
 require ROOT . '/app/bootstrap/components.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';
@@ -29,11 +28,6 @@ require ROOT . '/app/bootstrap/auths.php';
 require ROOT . '/app/bootstrap/validators.php';
 require ROOT . '/app/bootstrap/errorhandlers.php';
 
-//по непонятной мне причине в файле /app/bootstrap/dbmodels.php
-// не добавляется в коннейнер модель базы Users совсем никак
-$container['Users'] = function ($container) {
-    return new \Fileshare\Db\models\Users($container);
-};
 
 Fixtures::add('app', $app);
 Fixtures::add('container', $container);

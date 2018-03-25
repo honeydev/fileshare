@@ -1,16 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 18/11/17
- * Time: 14:33
- */
+
 declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class RegularUserModel extends \Fileshare\Models\AbstractUserModel
+class RegularUserModel extends AbstractUserModel implements UserInterface
 {
+    /** @property string */
+    protected $email;
+    /** @property string */
+    protected $name;
+    /** @property string */
+    protected $avatarUri;
+    /** @property string */
+    protected $id;
+    /** @property array */
     protected $privileges = [
         'see_open_notes' => true,
         'add_notes' => true,

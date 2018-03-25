@@ -12,11 +12,7 @@ namespace Fileshare;
 
 $container = $app->getContainer();
 
-$container['db'] = function ($container) {
-    $eloquentProvider = new \Fileshare\Db\EloquentServiceProvider();
-    $capsule = $eloquentProvider->register($container);
-    return $capsule;
-};
+$container->register(new \Fileshare\Db\EloquentServiceProvider());
 
 $container['ErrorLogger'] = function () {
     $logger = new \Monolog\Logger('errorLogger');

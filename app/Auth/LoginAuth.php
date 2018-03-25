@@ -12,13 +12,13 @@ use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 class LoginAuth extends AbstractAuth
 {
     private $cryptoService;
-    /** @property \Fileshare\Db\models\Users */
-    private $dbUser;
+    /** @property \Filehsare\Db\ORM\User */
+    private $user;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->dbUser = $container->get('Users');
+        $this->user = $container->get('Users');
         $this->cryptoService = $container->get('CryptoService');
     }
 
@@ -30,25 +30,20 @@ class LoginAuth extends AbstractAuth
 
     private function userCanBeAuthorized($loginFormData)
     {
-        $targetUserData = $this->dbUser->selectUserData(
-            [
-                'column' => 'email',
-                'value' => $loginFormData['email']
-            ]
-        );
-        $this->existUserWithThisEmail($targetUserData);
+        $this->checkEmailOnExist($loginFormData['email']);
         $this->cryptoService->passwordVerify(
-            $loginFormData['password'], 
+            $loginFormData['password'],
             $targetUserData['hash']
-            );
+        );
         return $targetUserData;
     }
-
-    private function existUserWithThisEmail($targetUserData)
+    /**
+     * @throws \Fileshare\Exceptions\AuthorizeException
+     */
+    private function checkEmailOnExist(string $email)
     {
-        if (!empty($targetUserData) && $targetUserData !== false) {
-            return true;
+        if (is_null($this->users::where('email', $email)->first())) {
+            throw new AuthorizeException('Users with this email not registred');
         }
-        throw new AuthorizeException('Users with this email not registred');
     }
 }

@@ -19,9 +19,6 @@ class EloquentServiceProvider implements ServiceProviderInterface
         $capsule->addConnection($container['settings']['db']);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
-
-        $container['db'] = function ($c) use ($capsule) {
-            return $capsule;
-        };
+        return $capsule;
     }
 }

@@ -21,7 +21,7 @@ class CreateUserService
     public function __construct($container)
     {
         $this->container = $container;
-        $this->dbUser = $this->container->get('Users');
+        $this->user = $this->container->get('User');
     }
 
     public function createGuest(): UserInterface
