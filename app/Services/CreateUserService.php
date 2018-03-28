@@ -6,22 +6,25 @@
 namespace Fileshare\Services;
 
 use Fileshare\Models\UserInterface as UserInterface;
+use \Fileshare\Transformers\CamelCaseKeyTransformer as CamelCaseKeyTransformer;
 
 class CreateUserService
 {
     /** @property \Fileshare\Models\UserInterface */
     private $user;
-    /** @property \Fileshare\Db\models\Users */
-    private $dbUser;
+    /** @property \Fileshare\Db\ORM\Users */
+    private $users;
 
     private $container;
 
     private $sessionService;
+    /** @propery \Fileshare\Transformers\CamelCaseKeyTransformer */
+    private $camelCaseKeyTransformer;
 
     public function __construct($container)
     {
         $this->container = $container;
-        $this->user = $this->container->get('User');
+        $this->users = $this->container->get('Users');
     }
 
     public function createGuest(): UserInterface
@@ -31,7 +34,9 @@ class CreateUserService
 
     public function createRegisteredUser(array $loginData): UserInterface
     {
-        $userData = $this->dbUser->selectConcreteUserData($loginData['id']);
+        $userDb = $this->users->find($loginData['id']);
+        $userData = \Fileshare\Db\Helpres\UsersHelper::getAllUserData();
+        $userData = CamelCaseKeyTransformer::transform($userData);
         $user = $this->createConcretUserAccordAccessLvl($userData['accessLvl']);
         $user->setUserVars($userData);
         return $user;

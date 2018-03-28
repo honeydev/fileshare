@@ -10,6 +10,7 @@ class Users extends Model
 {
     protected $table = 'users';
     protected $fillable = ['email', 'hash'];
+    protected $hidden = ['hash'];
     public $timestamps = false;
 
     public function usersInfo()
@@ -19,6 +20,6 @@ class Users extends Model
 
     public function usersSettings()
     {
-        return $this->hasOnde('Fileshare\Db\Orm\UsersSettings', 'user_id');
+        return $this->hasOne('Fileshare\Db\Orm\UsersSettings', 'user_id');
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-class RegularUserModel extends AbstractUserModel implements UserInterface
+class RegularUserModel extends AbstractModel implements UserInterface
 {
     /** @property string */
     protected $email;

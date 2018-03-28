@@ -4,10 +4,28 @@ declare(strict_types=1);
 
 namespace Fileshare\Models;
 
-use Illuminate\Database\Eloquent\Model as Model;
-
-abstract class AbstractUserModel extends Model
+abstract class AbstractUserModel extends AbstractModel implements UserInterface
 {
-    protected $table = 'users';
-    public $timestamps = false;
+    /** @property string */
+    protected $accessLvl;
+    /** @property array */
+    protected $privileges;
+    /** @return void */
+    public function __set($propertyName, $propertyValue)
+    {
+        if (property_exists($this, $propertyName)) {
+            $this->$propertyName = $propertyValue;
+            return null;
+        }
+        throw new \InvalidArgumentException("In class " . get_class($this) . " not exist property {$propertyName}");
+    }
+    /** @return void */
+    public function setUserVars(array $userData)
+    {
+        foreach ($userData as $propertyName => $value) {
+            if (property_exists($this, $propertyName)) {
+                $this->$propertyName = $userData[$propertyName];
+            }
+        }
+    }
 }

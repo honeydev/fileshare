@@ -1,6 +1,6 @@
 <?php
 
-namespace FileshareTests;
+namespace FileshareTests\unit\models;
 
 class SessionModelValidatorTest extends \Codeception\Test\Unit
 {
