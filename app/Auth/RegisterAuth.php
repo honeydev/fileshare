@@ -27,7 +27,7 @@ class RegisterAuth extends AbstractAuth
      */
     private function emailIsFree(string $email)
     {
-        if (!is_null($this->users::where('email', $email))) {
+        if (!empty($this->users::where('email', $email)->get()->all())) {
             throw new AuthorizeException("Another user registred with email ${email}");          
         }
     }

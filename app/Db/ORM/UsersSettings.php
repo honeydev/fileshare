@@ -11,5 +11,5 @@ class UsersSettings extends Model
     protected $table = 'users_settings';
     public $timestamps = false;
     protected $fillable = ['account_status', 'access_lvl', 'user_id'];
-    protected $hidden = ['user_id'];
+    protected $hidden = [];
 }

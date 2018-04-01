@@ -15,6 +15,7 @@ $container = new Container([
         $app = new App($container);
         $settings = $container->get('settings');
         $settings->replace(require ROOT . '/config/cfg.php');
+        $container->register(new \Fileshare\Db\EloquentServiceProvider());
         // routes and middlewares here
         $routes = new \Fileshare\Routes();
         $routes->startRoutes($app, $container);
@@ -54,14 +55,6 @@ $container['Logger'] = function ($container) {
     return new \Fileshare\Components\Logger($container);
 };
 
-$container['db'] = function ($container) {
-    $db = $container['settings']['db'];
-    $pdo = new \PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'], $db['user'], $db['pass']);
-    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-    return $pdo;
-};
-
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(ROOT . "/app/Views", [
         'cache' => false,
@@ -73,7 +66,6 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-require ROOT . '/app/bootstrap/dbmodels.php';
 require ROOT . '/app/bootstrap/errorhandlers.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';

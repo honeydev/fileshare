@@ -47,6 +47,7 @@ class AddUserService
         if (array_key_exists('name', $userData)) {
             $result['name'] = $userData['name'];
         }
+        
         $result['user_id'] = $id;
         return $result;
     }
