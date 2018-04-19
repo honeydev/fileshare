@@ -9,14 +9,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\FileshareException as FileshareException;
 use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
 
-class LoginMiddleware extends AbstractMiddleware
+class LoginAuthMiddleware extends AbstractMiddleware
 {
     use \Fileshare\Helpers\AuthorizeLogFormatHelperTrait;
+
     private $emailValidator;
     private $passwordValidator;
     private $loginAuth;
-    /** @property array */
-    private $loginData;
 
     public function __construct($container)
     {
@@ -29,13 +28,8 @@ class LoginMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            $this->loginData = $request->getParsedBody();
-            $this->emailValidator->validate($this->loginData['email']);
-            $this->passwordValidator->validate($this->loginData['password']);
-            $this->userAlreadyAuthorized();
-            $request = $request->withAttribute('loginData', $this->loginAuth->auth($this->loginData));
+            $this->loginAuth->auth($request->getAttribute('loginData'));
             $response = $next($request, $response);
-            $this->logger->authorizeLog($this->prepareSuccessAuthorizeLog());
             return $response;
         } catch (FileshareException $e) {
             $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
@@ -53,13 +47,6 @@ class LoginMiddleware extends AbstractMiddleware
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-        }
-    }
-
-    protected function userAlreadyAuthorized()
-    {
-        if ($this->sessionModel->authorizeStatus) {
-            throw new FileshareException('Users already authorized with session id ' . session_id());
         }
     }
 }

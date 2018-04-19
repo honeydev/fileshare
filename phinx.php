@@ -13,12 +13,19 @@ return [
         'seeds'      => 'app/Db/seeds',
     ],
     'migration_base_class' => 'BaseMigration',
-    'environments' => [2
+    'environments' => [
         'default_migration_table' => 'migrations',
         'default_database'        => 'development',
         'development'             => [
-            'name'       => $config['database'],
-            'connection' => $container->get('db')->getConnection()->getPdo(),
+            'adapter'   => $config['driver'],
+            'host'      => $config['host'],
+            'name'      => $config['database'],
+            'user'      => $config['username'],
+            'pass'      => $config['password'],
+            'port'      => $config['port'],
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
         ],
         'production'              => [
             'adapter'   => $config['driver'],
@@ -31,5 +38,16 @@ return [
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ],
+        'tests' => [
+                        'adapter'   => $config['driver'],
+            'host'      => $config['host'],
+            'name'      => $config['database'] . "_test",
+            'user'      => $config['username'],
+            'pass'      => $config['password'],
+            'port'      => $config['port'],
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ]
     ],
 ];

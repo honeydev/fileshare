@@ -76,4 +76,4 @@ class SeeProfileDataChangeResponseCept extends AbstractTest
 
 $seeProfileDataChangeResponseCept = new SeeProfileDataChangeResponseCept(new \FunctionalTester($scenario));
 $seeProfileDataChangeResponseCept->sendValidProfileChanges();
-//$seeProfileDataChangeResponseCept->sendRequestWithInvalidData();
+$seeProfileDataChangeResponseCept->sendRequestWithInvalidData();

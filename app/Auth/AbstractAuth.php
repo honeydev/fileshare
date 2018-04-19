@@ -1,11 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lebedev
- * Date: 10/4/17
- * Time: 8:33 PM
- */
+
+declare(strict_types=1);
+
 namespace Fileshare\Auth;
+
+use \Tokenly\TokenGenerator\TokenGenerator;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class AbstractAuth
 {
@@ -19,4 +19,25 @@ abstract class AbstractAuth
     }
 
     abstract public function auth($dataToCheck);
+
+    public function generateToken(int $length = 40, string $prefix = ''): string
+    {
+        return (new TokenGenerator())->generateToken($length, $prefix);
+    }
+
+    protected function userExist(string $email): bool
+    {
+        if (empty(EloquentModel::where('email', $email)->first())) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function passwordHashCorrect(EloquentModel $user, string $password): bool
+    {
+        if (!password_verify($password, $user->password)) {
+            return false;
+        }
+        return true;
+    }
 }

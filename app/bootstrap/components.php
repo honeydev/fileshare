@@ -14,6 +14,14 @@ $container = $app->getContainer();
 
 $container->register(new \Fileshare\Db\EloquentServiceProvider());
 
+$container['db'] = function ($container) {
+    $db = $container['settings']['db'];
+    $pdo = new \PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['database'], $db['username'], $db['password']);
+    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+    return $pdo;
+};
+
 $container['ErrorLogger'] = function () {
     $logger = new \Monolog\Logger('errorLogger');
     $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/errors.log');

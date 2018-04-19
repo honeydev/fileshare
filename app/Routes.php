@@ -13,17 +13,12 @@ class Routes
             $app->get('/', 'MainPageController:indexPage');
             $app->post('/upload.file', 'MainPageController:uploadFile');
             $app->post('/login.form', 'LoginController:login')
-                ->add(new \Fileshare\Middlewares\LoginMiddleware($container))
-                ;
-            $app->post('/register.form', 'RegisteredController:registered')
-                ->add(new \Fileshare\Middlewares\RegDbMiddleware($container))
-                ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
-                ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container))
-            ;
+                ->add(new \Fileshare\Middlewares\LoginValidateMiddleware($container))
+                ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container));
+            $app->post('/register.form', 'RegisteredController:registered');
             $app->post('/profile.form', 'ProfileController:changeProfile')
                 ->add(new \Fileshare\Middlewares\ProfileValidateMiddleware($container))
-                ->add(new \Fileshare\Middlewares\OwnerMiddleware($container))
-                ;
+                ->add(new \Fileshare\Middlewares\OwnerMiddleware($container));
             $app->post('/userAvatar.file', function ($request, $response) {
                 var_dump($request->getAttribute('fileType'));
             })

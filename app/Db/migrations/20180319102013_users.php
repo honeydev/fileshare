@@ -10,8 +10,10 @@ class Users extends \Fileshare\Db\migrations\BaseMigration
     {
         $this->schema->create('users', function (Blueprint $table) {
             $table->string('email')->unique();
-            $table->string('hash');
+            $table->string('password');
+            $table->string('token');
             $table->increments('id')->unsigned()->unique();
+            $table->timestamps();
         });
     }
 

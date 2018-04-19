@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fileshare\Db\ORM;
+namespace Fileshare\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
 
-class UsersSettings extends Model
+class UserSettings extends Model
 {
     protected $table = 'users_settings';
     public $timestamps = false;

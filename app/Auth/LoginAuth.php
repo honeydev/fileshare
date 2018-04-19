@@ -1,49 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * Users: lebedev
- * Date: 10/4/17
- * Time: 8:36 PM
- */
+
+declare(strict_types=1);
+
 namespace Fileshare\Auth;
 
 use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class LoginAuth extends AbstractAuth
 {
-    private $cryptoService;
-    /** @property \Filehsare\Db\ORM\User */
-    private $user;
-
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->user = $container->get('Users');
-        $this->cryptoService = $container->get('CryptoService');
-    }
-
-    public function auth($loginFormData)
-    {
-        $userData = $this->userCanBeAuthorized($loginFormData);
-        return $userData;
-    }
-
-    private function userCanBeAuthorized($loginFormData)
-    {
-        $this->checkEmailOnExist($loginFormData['email']);
-        $this->cryptoService->passwordVerify(
-            $loginFormData['password'],
-            $targetUserData['hash']
-        );
-        return $targetUserData;
     }
     /**
-     * @throws \Fileshare\Exceptions\AuthorizeException
+     * @throws AuthorizeException
      */
-    private function checkEmailOnExist(string $email)
+    public function auth($loginData)
     {
-        if (is_null($this->users::where('email', $email)->first())) {
-            throw new AuthorizeException('Users with this email not registred');
+        if (!$this->userExist($loginData['email'])) {
+            throw new AuthorizeException("User with email {$loginData['email']} not found");
+        }
+
+        $user = EloquentModel::where('email', $email)->first();
+
+        if (!$this->passwordHashCorrect($user, $loginData['password'])) {
+            throw new AuthorizeException("Invalid password {$loginData['password']}");
         }
     }
 }

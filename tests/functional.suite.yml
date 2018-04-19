@@ -14,7 +14,7 @@ modules:
         - REST:
             depends: \Herloct\Codeception\Module\Slim
         - Db:
-            dsn: 'mysql:host=localhost;dbname=fileshare'
+            dsn: 'mysql:host=localhost;dbname=fileshare_test'
             user: 'honey'
             password: 'd5d7'
             dump: 'tests/_data/dump.sql'

@@ -11,15 +11,15 @@ $container['SessionModel'] = function ($container) {
 };
 
 $container['Users'] = function () {
-    return new Fileshare\Db\ORM\Users();
+    return new Fileshare\Models\Users();
 };
 
 $container['UsersInfo'] = function () {
-    return new Fileshare\Db\ORM\UsersInfo();
+    return new Fileshare\Models\UsersInfo;
 };
 
 $container['UsersSettings'] = function () {
-    return new Fileshare\Db\ORM\UsersSettings();
+    return new Fileshare\Models\UsersSettings();
 };
 
 $container['RegularUserModel'] = function ($container) {
