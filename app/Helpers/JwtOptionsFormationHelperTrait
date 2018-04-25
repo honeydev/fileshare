@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Fileshare\Helpers;
+
+use Pimple\Container;
+
+trait JwtOptionsFormationHelperTrait
+{
+    public function jwtOptionsPrepare(Container $c)
+    {
+
+    }
+}

@@ -10,8 +10,8 @@ $container['SessionModel'] = function ($container) {
     return Fileshare\Models\SessionModel::createSessionModel($container);
 };
 
-$container['Users'] = function () {
-    return new Fileshare\Models\Users();
+$container['User'] = function () {
+    return new Fileshare\Models\User();
 };
 
 $container['UsersInfo'] = function () {

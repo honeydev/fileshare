@@ -24,15 +24,15 @@ class LoginUserCept extends AbstractTest
     public function sendRequestOnLogin()
     {
         $user = $this->userProvide();
-
-        $this->tester->seeResponseCodeIs(200);
+        $this->tester->wantTo('Login user');
+        //$this->tester->seeResponseCodeIs(200);
         $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => "12345"));
         $this->tester->seeResponseContainsJson(array("status" => "success", "data" => [
             "id" => $user->id,
             "email" => $user->email,
             "token" => $user->token,
             "name" => $user->userInfo->name,
-            "avatarUri" => $user->$user->userInfo->$avatarUri,
+            "avatarUri" => $user->userInfo->avatarUri,
             "accountStatus" => $user->userSettings->accountStatus,
             "accessLvl" => $user->userSettings->accessLvl
         ]));
@@ -40,7 +40,7 @@ class LoginUserCept extends AbstractTest
     /**
      * @return \Fileshare\Models\User;
      */
-    private function userProvide()
+    private function userProvide(): User
     {
         $user = User::create([
             "email" => "testusertest@test.com",
@@ -48,11 +48,7 @@ class LoginUserCept extends AbstractTest
         ]);
         $user->userInfo()->create(["name" => "testname", "user_id" => $user->id]);
         $user->userSettings()->create(["account_status" => 1, "access_lvl" => 1]);
-        $this->tester->wantTo('Login user');
-        $this->tester->sendAjaxRequest('POST', '/login.form', array(
-            "email" => "testusertest@test.com",
-            "password" => "12345"
-        ));
+        return $user;
     }
 }
 
