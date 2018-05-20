@@ -8,6 +8,10 @@ class UsersInfo extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
+        if ($this->schema->hasTable('users_info')) {
+            return null;
+        }
+
         $this->schema->create('users_info', function (Blueprint $table) {
             $table->string('name')->nullable(true);
             $table->string('avatar_uri')->nullable(true);

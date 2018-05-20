@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Fileshare\Services;
 
 use Fileshare\Exceptions\ValidateException as ValidateException;
-use Firebase\JWT\JWT;
+use \Firebase\JWT\JWT;
+use \Codeception\Util\Debug as debug;
 
 class CryptoService
 {
@@ -33,8 +34,9 @@ class CryptoService
 
     public function generateJwtToken(array $jwtOptions): string
     {
-        $now = new DateTime();
-        $tokenInvalidityTime = new DateTime("now + 12 hours");
+        debug::debug($jwtOptions);
+        $now = new \DateTime();
+        $tokenInvalidityTime = new \DateTime("now + 12 hours");
 
         $payload = [
             "iat" => $now->getTimeStamp(),
@@ -44,7 +46,7 @@ class CryptoService
             "sub" => $jwtOptions['identifier']
         ];
 
-        $token = JWT::encode($payload, $jwtOptions["secret"], "HS256");
+        $token = JWT::encode($payload, $jwtOptions["secretKey"], "HS256");
         return $token;
     }
 }

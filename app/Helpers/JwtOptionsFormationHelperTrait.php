@@ -8,11 +8,11 @@ namespace Fileshare\Helpers;
 
 trait JwtOptionsFormationHelperTrait
 {
-    public function jwtOptionsPrepare(string $identifier): array
+    public function jwtOptionsPrepare(string $identifier)
     {
         return [
             "identifier" => $identifier,
-
+            
         ];
     }
 }

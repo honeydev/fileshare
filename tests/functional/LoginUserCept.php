@@ -27,14 +27,14 @@ class LoginUserCept extends AbstractTest
         $this->tester->wantTo('Login user');
         //$this->tester->seeResponseCodeIs(200);
         $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => "12345"));
-        $this->tester->seeResponseContainsJson(array("status" => "success", "data" => [
-            "id" => $user->id,
-            "email" => $user->email,
-            "token" => $user->token,
-            "name" => $user->userInfo->name,
-            "avatarUri" => $user->userInfo->avatarUri,
-            "accountStatus" => $user->userSettings->accountStatus,
-            "accessLvl" => $user->userSettings->accessLvl
+        $this->tester->seeResponseContainsJson(array("status" => "success", "loginData" => [
+                "id" => $user->id,
+                "email" => $user->email,
+                "token" => $user->token,
+                "name" => $user->userInfo->name,
+                "avatarUri" => $user->userInfo->avatarUri,
+                "accountStatus" => $user->userSettings->accountStatus,
+                "accessLvl" => $user->userSettings->accessLvl
         ]));
     }
     /**

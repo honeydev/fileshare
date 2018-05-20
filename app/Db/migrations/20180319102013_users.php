@@ -8,6 +8,10 @@ class Users extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
+        if ($this->schema->hasTable('users')) {
+            return null;
+        }
+        
         $this->schema->create('users', function (Blueprint $table) {
             $table->string('email')->unique();
             $table->string('password');

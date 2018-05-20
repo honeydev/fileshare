@@ -10,3 +10,4 @@
 Vagrantfile
 puphpet/*
 /nbproject/private/
+.phpintel/*

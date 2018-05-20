@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 use Slim\Container;
+use FileshareTests\functional\ConfigProvider;
+use \Codeception\Util\Debug as debug;
 
 define('ROOT', dirname(dirname(__DIR__)));
 ini_set('date.timezone', "Asia/Vladivostok");
@@ -15,7 +17,8 @@ $container = new Container([
     App::class => function (ContainerInterface $container) {
         $app = new App($container);
         $settings = $container->get('settings');
-        $settings->replace(require ROOT . '/config/testcfg.php');
+        $newSettings = ConfigProvider::provide($settings);
+        $settings->replace($newSettings);
         $container->register(new \Fileshare\Db\EloquentServiceProvider());
         // routes and middlewares here
         $routes = new \Fileshare\Routes();

@@ -8,7 +8,7 @@ use Fileshare\Models\User;
 
 class UserTransformer implements TransformerInterface
 {
-    public static function transform(User $user): array
+    public static function transform($user): array
     {
         return self::transformUserObjectToData($user);
     }
@@ -20,7 +20,7 @@ class UserTransformer implements TransformerInterface
             "email" => $user->email,
             "token" => $user->token,
             "name" => $user->name,
-            "avatarUri" => $user->$avatarUri,
+            "avatarUri" => $user->avatarUri,
             "accountStatus" => $user->accountStatus,
             "accessLvl" => $user->accessLvl
         ];

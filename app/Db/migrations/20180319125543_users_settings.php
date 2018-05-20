@@ -8,6 +8,10 @@ class UsersSettings extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
+        if ($this->schema->hasTable('users_settings')) {
+            return null;
+        }
+
         $this->schema->create('users_settings', function (Blueprint $table) {
             $table->boolean('account_status')->nullable(false)->default(true);
             $table->integer('access_lvl')->nullable(false)->default(1);

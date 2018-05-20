@@ -18,7 +18,6 @@ class SessionService
     {
         $this->createSession();
         $this->container = $container;
-        $this->createUserService = $container->get('CreateUserService', $container);
     }
 
     public function run()
@@ -40,7 +39,6 @@ class SessionService
         $this->sessionModel = $_SESSION['sessionModel'] = $this->container->get('SessionModel');
         $this->sessionModel->authorizeStatus = false;
         $this->sessionModel->accessLvl = 0;
-        $this->sessionModel->user = $this->createUserService->createGuest();
         $this->sessionModel->ip = $this->container->get('request')->getServerParam('REMOTE_ADDR');
     }
 

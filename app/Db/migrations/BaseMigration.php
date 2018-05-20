@@ -20,21 +20,6 @@ class BaseMigration extends AbstractMigration
 
     protected function init()
     {
-        $capsule = new \Illuminate\Database\Capsule\Manager;
-        $capsule->addConnection(array(
-                'driver' => 'mysql',
-                'host' => 'localhost',
-                'database' => 'fileshare',
-                'username' => 'honey',
-                'password' => 'd5d7',
-                'charset'   => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix'    => '',
-            )
-        );
-
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
         $this->schema = (new Capsule)->schema();
     }
 }

@@ -13,8 +13,8 @@ class Routes
             $app->get('/', 'MainPageController:indexPage');
             $app->post('/upload.file', 'MainPageController:uploadFile');
             $app->post('/login.form', 'LoginController:login')
-                ->add(new \Fileshare\Middlewares\LoginValidateMiddleware($container))
-                ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container));
+                ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container))
+                ->add(new \Fileshare\Middlewares\LoginValidateMiddleware($container));
             $app->post('/register.form', 'RegisteredController:registered');
             $app->post('/profile.form', 'ProfileController:changeProfile')
                 ->add(new \Fileshare\Middlewares\ProfileValidateMiddleware($container))

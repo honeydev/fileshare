@@ -27,7 +27,7 @@ class LoginValidateMiddleware extends AbstractMiddleware
             $this->loginData = $request->getParsedBody();
             $this->emailValidator->validate($this->loginData['email']);
             $this->passwordValidator->validate($this->loginData['password']);
-            $request = $request->withAttribute('loginData', $registrationData);
+            $request = $request->withAttribute('loginData', $this->loginData);
             $response = $next($request, $response);
             return $response;
         } catch (ValidateException $e) {

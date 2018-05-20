@@ -14,7 +14,7 @@ class RegisterAuth extends AbstractAuth
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->users = $container->get('Users');
+        // $this->users = $container->get('Users');
     }
 
     public function auth($regFormData)

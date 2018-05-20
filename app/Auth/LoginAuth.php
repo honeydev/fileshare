@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Fileshare\Auth;
 
 use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Fileshare\Models\User;
+use \Codeception\Util\Debug as debug;
 
 class LoginAuth extends AbstractAuth
 {
@@ -21,8 +22,8 @@ class LoginAuth extends AbstractAuth
         if (!$this->userExist($loginData['email'])) {
             throw new AuthorizeException("User with email {$loginData['email']} not found");
         }
-
-        $user = EloquentModel::where('email', $email)->first();
+        $email = $loginData['email'];
+        $user = \Fileshare\Models\User::where('email', $email)->first();
 
         if (!$this->passwordHashCorrect($user, $loginData['password'])) {
             throw new AuthorizeException("Invalid password {$loginData['password']}");

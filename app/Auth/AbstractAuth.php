@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Fileshare\Auth;
 
 use \Tokenly\TokenGenerator\TokenGenerator;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Fileshare\Models\User;
 
 abstract class AbstractAuth
 {
@@ -27,13 +27,13 @@ abstract class AbstractAuth
 
     protected function userExist(string $email): bool
     {
-        if (empty(EloquentModel::where('email', $email)->first())) {
+        if (empty(User::where('email', $email)->first())) {
             return false;
         }
         return true;
     }
 
-    protected function passwordHashCorrect(EloquentModel $user, string $password): bool
+    protected function passwordHashCorrect(User $user, string $password): bool
     {
         if (!password_verify($password, $user->password)) {
             return false;
