@@ -13,10 +13,11 @@ class UsersSettings extends \Fileshare\Db\migrations\BaseMigration
         }
 
         $this->schema->create('users_settings', function (Blueprint $table) {
-            $table->boolean('account_status')->nullable(false)->default(true);
-            $table->integer('access_lvl')->nullable(false)->default(1);
-            $table->integer('user_id')->unsigned()->unique()->nullable(false);
-            $table->foreign('user_id')
+            $table->boolean('accountStatus')->nullable(false)->default(true);
+            $table->integer('accessLvl')->nullable(false)->default(1);
+            $table->integer('userId')->unsigned()->unique()->nullable(false);
+            $table->timestamps();
+            $table->foreign('userId')
                 ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

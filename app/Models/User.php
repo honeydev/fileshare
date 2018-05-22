@@ -11,7 +11,6 @@ class User extends Model
     protected $table = 'users';
     protected $fillable = ['email', 'password', 'token'];
     protected $hidden = [];
-    public $timestamps = true;
 
     public function userInfo()
     {

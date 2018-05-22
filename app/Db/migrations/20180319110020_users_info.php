@@ -14,12 +14,13 @@ class UsersInfo extends \Fileshare\Db\migrations\BaseMigration
 
         $this->schema->create('users_info', function (Blueprint $table) {
             $table->string('name')->nullable(true);
-            $table->string('avatar_uri')->nullable(true);
-            $table->integer('user_id')->unsigned()->unique()->nullable(false);
+            $table->string('avatarUri')->nullable(true);
+            $table->integer('userId')->unsigned()->unique()->nullable(false);
+            $table->timestamps();
         });
 
         $this->schema->table('users_info', function (Blueprint $table) {
-            $table->foreign('user_id')
+            $table->foreign('userId')
             ->references('id')
             ->on('users')
             ->onDelete('cascade')

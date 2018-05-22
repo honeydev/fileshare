@@ -19,10 +19,7 @@ class UserTransformer implements TransformerInterface
             "id" => (int) $user->id,
             "email" => $user->email,
             "token" => $user->token,
-            "name" => $user->name,
-            "avatarUri" => $user->avatarUri,
-            "accountStatus" => $user->accountStatus,
-            "accessLvl" => $user->accessLvl
+            "name" => "name"
         ];
     }
 }

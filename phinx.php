@@ -5,17 +5,24 @@ require_once './vendor/autoload.php';
 $app = new \Slim\App(['settings' => (require('./config/cfg.php'))]);
 $container = $app->getContainer();
 $container->register(new \Fileshare\Db\EloquentServiceProvider());
-$dbSettings = $container['settings']['db'];
-$pdo = new PDO(
-    "mysql:dbname={$dbSettings['database']};host={$dbSettings['host']}",
-    $dbSettings['username'],
-    $dbSettings['password']
-);
-$testsPdo = new PDO(
-    "mysql:dbname=fileshare_tests;host=172.17.0.2",
-    $dbSettings['username'],
-    $dbSettings['password']
-);
+
+if (in_array('-e', $_SERVER['argv']) && in_array('tests', $_SERVER['argv'])) {
+    $dbSettings = $container['settings']['db'];
+    $dbSettings['database'] = $dbSettings['tests_database'];
+    $pdo = new PDO(
+        "mysql:dbname={$dbSettings['tests_database']};host={$dbSettings['host']}",
+        $dbSettings['username'],
+        $dbSettings['password']
+    );
+} else {
+    $dbSettings = $container['settings']['db'];
+    $pdo = new PDO(
+        "mysql:dbname={$dbSettings['database']};host={$dbSettings['host']}",
+        $dbSettings['username'],
+        $dbSettings['password']
+    );
+}
+
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($dbSettings);
 $capsule->setAsGlobal();
@@ -38,8 +45,8 @@ return [
                 'name' => $dbSettings['database']
             ],
             'tests' => [
-                'connection' => $testsPdo,
-                'name' => $dbSettings['tests_database']
+                'connection' => $pdo,
+                'name' => $dbSettings['database']
             ],
         ]
 ];

@@ -18,11 +18,11 @@ class Files extends \Fileshare\Db\migrations\BaseMigration
             $table->string('size')->nullable(false);
             $table->string('mime')->nullable(false);
             $table->timestamp('added_on');
-            $table->integer('owner_id')->unsigned()->unique()->nullable(false);
+            $table->integer('ownerId')->unsigned()->unique()->nullable(false);
         });
 
         $this->schema->table('files', function (Blueprint $table) {
-            $table->foreign('owner_id')
+            $table->foreign('ownerId')
             ->references('id')
             ->on('users');
         });

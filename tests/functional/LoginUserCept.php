@@ -24,17 +24,18 @@ class LoginUserCept extends AbstractTest
     public function sendRequestOnLogin()
     {
         $user = $this->userProvide();
+        $userInfo = $user->userInfo();
         $this->tester->wantTo('Login user');
         //$this->tester->seeResponseCodeIs(200);
         $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => "12345"));
         $this->tester->seeResponseContainsJson(array("status" => "success", "loginData" => [
                 "id" => $user->id,
                 "email" => $user->email,
-                "token" => $user->token,
-                "name" => $user->userInfo->name,
-                "avatarUri" => $user->userInfo->avatarUri,
-                "accountStatus" => $user->userSettings->accountStatus,
-                "accessLvl" => $user->userSettings->accessLvl
+                // "token" => $user->token,
+                "name" => $userInfo->name,
+                // "avatarUri" => $user->userInfo->avatarUri,
+                // "accountStatus" => 1,
+                // "accessLvl" => $user->userSettings->accessLvl
         ]));
     }
     /**
@@ -46,9 +47,15 @@ class LoginUserCept extends AbstractTest
             "email" => "testusertest@test.com",
             "password" => password_hash('12345', PASSWORD_DEFAULT)
         ]);
-        $user->userInfo()->create(["name" => "testname", "user_id" => $user->id]);
-        $user->userSettings()->create(["account_status" => 1, "access_lvl" => 1]);
-        return $user;
+        $userInfo = new UserInfo();
+        $userInfo->name = "user name";
+        $userInfo->avatarUri = "uri";
+        $user->userInfo()->save($userInfo);
+
+        debug::debug("!!!!!!");
+        debug::debug($user->userInfo->name);
+        debug::debug($user->userInfo->avatarUri);
+        debug::debug($user->userInfo->userId);
     }
 }
 
