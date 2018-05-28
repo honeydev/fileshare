@@ -1,13 +1,13 @@
 -- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: fileshare
+-- Host: 172.17.0.2    Database: fileshare_tests
 -- ------------------------------------------------------
--- Server version	10.1.25-MariaDB-1~xenial
+-- Server version	5.5.60-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -28,27 +28,27 @@ CREATE TABLE `files` (
   `size` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `owner_id` int(10) unsigned NOT NULL,
-  UNIQUE KEY `files_owner_id_unique` (`owner_id`),
-  CONSTRAINT `files_owner_id_foreign` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`)
+  `ownerId` int(10) unsigned NOT NULL,
+  UNIQUE KEY `files_ownerid_unique` (`ownerId`),
+  CONSTRAINT `files_ownerid_foreign` FOREIGN KEY (`ownerId`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `migrations`
+-- Table structure for table `phinxlog`
 --
 
-DROP TABLE IF EXISTS `migrations`;
+DROP TABLE IF EXISTS `phinxlog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migrations` (
+CREATE TABLE `phinxlog` (
   `version` bigint(20) NOT NULL,
-  `migration_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `migration_name` varchar(100) DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `breakpoint` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `role` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -80,10 +80,12 @@ DROP TABLE IF EXISTS `users_info`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users_info` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar_uri` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  UNIQUE KEY `users_info_user_id_unique` (`user_id`),
-  CONSTRAINT `users_info_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `avatarUri` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `userId` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  UNIQUE KEY `users_info_userid_unique` (`userId`),
+  CONSTRAINT `users_info_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,11 +97,13 @@ DROP TABLE IF EXISTS `users_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users_settings` (
-  `account_status` tinyint(1) NOT NULL DEFAULT '1',
-  `access_lvl` int(11) NOT NULL DEFAULT '1',
-  `user_id` int(10) unsigned NOT NULL,
-  UNIQUE KEY `users_settings_user_id_unique` (`user_id`),
-  CONSTRAINT `users_settings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `accountStatus` tinyint(1) NOT NULL DEFAULT '1',
+  `accessLvl` int(11) NOT NULL DEFAULT '1',
+  `userId` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  UNIQUE KEY `users_settings_userid_unique` (`userId`),
+  CONSTRAINT `users_settings_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -112,4 +116,4 @@ CREATE TABLE `users_settings` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-11 22:55:14
+-- Dump completed on 2018-05-28 21:34:06

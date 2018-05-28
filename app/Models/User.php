@@ -14,11 +14,11 @@ class User extends Model
 
     public function userInfo()
     {
-        return $this->hasOne(\Fileshare\Models\UserInfo::class, 'user_id');
+        return $this->hasOne(\Fileshare\Models\UserInfo::class, 'userId');
     }
 
     public function userSettings()
     {
-        return $this->hasOne(\Fileshare\Models\UserSettings::class, 'user_id');
+        return $this->hasOne(\Fileshare\Models\UserSettings::class, 'userId');
     }
 }
