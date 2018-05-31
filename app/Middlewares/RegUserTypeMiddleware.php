@@ -21,10 +21,8 @@ class RegUserTypeMiddleware extends AbstractMiddleware
     {
         try {
             $regData = $request->getAttribute('regData');
-            $requestedUserType = $regData['userType'];
-            $this->userTypeValidator->validate($requestedUserType);
-            $this->checkUserType($requestedUserType);
-            $regData['accessLvl'] = $regData['userType'];
+            $this->userTypeValidator->validate($regData['accessLvl']);
+            $this->checkUserType($regData['accessLvl']);
             $request = $request->withAttribute('regData', $regData);
             $response = $next($request, $response);
             return $response;

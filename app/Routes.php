@@ -15,8 +15,11 @@ class Routes
             $app->post('/login.form', 'LoginController:login')
                 ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container))
                 ->add(new \Fileshare\Middlewares\LoginValidateMiddleware($container));
-            $app->post('/register.form', 'RegisteredController:registered');
+            $app->post('/register.form', 'RegisteredController:registered')
+                ->add(new \Fileshare\Middlewares\RegUserTypeMiddleware($container))
+                ->add(new \Fileshare\Middlewares\RegValidateMiddleware($container));
             $app->post('/profile.form', 'ProfileController:changeProfile')
+                ->add(new \Fileshare\Middlewares\RegDbMiddleware($container))
                 ->add(new \Fileshare\Middlewares\ProfileValidateMiddleware($container))
                 ->add(new \Fileshare\Middlewares\OwnerMiddleware($container));
             $app->post('/userAvatar.file', function ($request, $response) {

@@ -2,7 +2,6 @@
 /**
  * @class check login request
  */
-
 declare(strict_types=1);
 
 namespace FileshareTests\functional;
