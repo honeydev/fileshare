@@ -34,8 +34,7 @@ LoginFormTest.prototype._sendLoginForm = function () {
             $('#loginEmail').val('devseas@gmail.com');
                 console.log($('#loginEmail'), 'log email');
             $('#loginPassword').val('margera');
-                this._loginForm.sendLoginForm();
-                assert.isTrue(true);
+            this._loginForm.sendLoginForm();
 
         });
     });

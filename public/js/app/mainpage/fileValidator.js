@@ -11,7 +11,7 @@ function FileValidator() {
     this._allowExtensions = {
         image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         videos: ['mp4', 'avi', 'wmv', 'mov', 'mkv', '3gp', 'flw', 'swf'],
-        audio: ['mp3', 'wav', 'wave', 'aac', 'ogg'],
+        audio: ['mp3', 'wav', 'wave', 'acc', 'ogg'],
         archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', 'cbr']
     }
 }
@@ -19,6 +19,7 @@ function FileValidator() {
 FileValidator.prototype = Object.create(BaseValidator.prototype);
 
 FileValidator.prototype.validate = function (file) {
+    console.log(file.name)
     this._fileExtensionIsAllowed(file.name);
     return true;
 };

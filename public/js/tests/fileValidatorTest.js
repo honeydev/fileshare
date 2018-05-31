@@ -10,7 +10,7 @@ function FileValidatorTest() {
         image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         videos: ['mp4', 'avi', 'wmv', 'mov', 'mkv', '3gp', 'flw', 'swf'],
         audio: ['mp3', 'wav', 'wave', 'acc', 'ogg'],
-        archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', 'cbr']
+        // archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', 'cbr']
     };
     this._fileValidator = new FileValidator();
 }
@@ -37,7 +37,6 @@ FileValidatorTest.prototype._checkFileName = function () {
         it(`Try iterate array with incorrect names`, () => {
             const INCORRECT_FILES = this._generateIncorrectFiles();
             INCORRECT_FILES.forEach((file) => {
-                console.log(file);
                 assert.throws(() => {return this._fileValidator.validate(file)}, `Incorrect extension file ${file.name}`);
             });
         });

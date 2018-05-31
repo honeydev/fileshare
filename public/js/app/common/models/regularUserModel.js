@@ -10,6 +10,7 @@ function RegularUserModel() {
     this._name = null;
     this._avatarUri = null;
     this._id = null;
+    this._token = null;
 }
 
 

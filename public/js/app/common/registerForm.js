@@ -35,7 +35,7 @@ RegisterForm.prototype.sendRegisterForm = function() {
                 name: this._name,
                 password: this._password,
                 passwordRepeat: this._passwordRepeat,
-                userType: 1
+                accessLvl: 1
             },
             "responseHandler": this._registerFormHandler.bind(this),
             "method": "POST"

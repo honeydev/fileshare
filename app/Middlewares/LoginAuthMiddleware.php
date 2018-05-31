@@ -16,6 +16,7 @@ class LoginAuthMiddleware extends AbstractMiddleware
     private $emailValidator;
     private $passwordValidator;
     private $loginAuth;
+    private $loginData;
 
     public function __construct($container)
     {
@@ -28,7 +29,8 @@ class LoginAuthMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            $this->loginAuth->auth($request->getAttribute('loginData'));
+            $this->loginData = $request->getAttribute('loginData');
+            $this->loginAuth->auth($this->loginData);
             $response = $next($request, $response);
             return $response;
         } catch (FileshareException $e) {
