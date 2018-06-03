@@ -9,10 +9,6 @@ use \Fileshare\Models\UserSettings;
 
 class ACLTest extends \FileshareTests\unit\AbstractTest
 {
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
     protected $container;
     private $acl;
 
@@ -27,26 +23,9 @@ class ACLTest extends \FileshareTests\unit\AbstractTest
 
     public function testGetPermission()
     {
-        $user = $this->provideUser();
-        debug::debug($user);
-    }
+        $user = \Fileshare\Db\factories\UserFactory::generate();
 
-    private function provideUser(): User
-    {
-        $faker = \Faker\Factory::create();
-        $user = User::create([
-            "email" => $faker->email,
-            "password" => password_hash($faker->password, PASSWORD_DEFAULT)
-        ]);
-        
-        $userSettings = UserSettings::create([
-            "accessLvl" => 1,
-            "accountStatus" => 1,
-            "userId" => $user->id
-
-        ]);
-        $user->userSettings()->save($userSettings);
-        
-       return $user;
+        $this->tester->assertTrue($this->acl->userHavePermission($user, 'read_public_notes'));
+        $this->tester->assertFalse($this->acl->userHavePermission($user, 'edit_all_profile'));
     }
 }
