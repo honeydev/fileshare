@@ -2,9 +2,10 @@
 
 export {ProfileUploader};
 
-
 function ProfileUploader(dic) {
     this._ajax = dic.get('Ajax')(dic);
+    this._sessionModel = dic.get('SessionModel')();
+    console.log(this._sessionModel)
 }
 /**
  * @param {object} key-value object with keys "avatar" or "userData"
@@ -13,12 +14,13 @@ function ProfileUploader(dic) {
 ProfileUploader.prototype.upload = function (profileData) {
 
     console.log('praofile data', profileData);
+    profileData.userData['token'] = this._sessionModel.get('_user').get('_token');
 
     if (profileData.hasOwnProperty('avatar')) {
         this._ajax.sendFile({
             file: profileData.avatar,
             url: location.host + "/userAvatar.file",
-            method: "PUT",
+            method: "POST",
             responseHandler: this._avatarHandler
         });
     }
@@ -27,7 +29,7 @@ ProfileUploader.prototype.upload = function (profileData) {
         console.log(profileData.userData);
         this._ajax.sendJSON({
             url: location.host + "/profile.form",
-            method: "PUT",
+            method: "POST",
             requestData: profileData.userData,
             responseHandler: this._userDataHandler
         });

@@ -64,3 +64,8 @@ $container['view'] = function ($container) {
     $view->addExtension(new \Slim\Views\TwigExtension($container['router'], $basePath));
     return $view;
 };
+
+$container['ACL'] = function () {
+    return new \Fileshare\ACL();
+};
+
