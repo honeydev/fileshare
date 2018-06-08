@@ -70,6 +70,11 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+$container['ACL'] = function () {
+    return new \Fileshare\ACL();
+};
+
+
 require ROOT . '/app/bootstrap/errorhandlers.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';

@@ -8,7 +8,6 @@
  * - twig
  */
 
-namespace Fileshare;
 
 $container = $app->getContainer();
 

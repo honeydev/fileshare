@@ -46,7 +46,7 @@ class EmailValidatorTest extends \Codeception\Test\Unit
 
         for ($i = 0; $i < count(INVALID_EMAILS); $i++) {
             $invalidEmail = INVALID_EMAILS[$i];
-            $this->tester->expectException('Fileshare\Exceptions\FileshareException', function () use ($invalidEmail) {
+            $this->tester->expectException('Fileshare\Exceptions\ValidateException', function () use ($invalidEmail) {
                 $this->emailValidator->validate($invalidEmail);
             });
         }

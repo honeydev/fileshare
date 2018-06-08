@@ -9,30 +9,37 @@ use \Fileshare\Models\UserInfo;
 
 class UserFactory
 {
-    public static function generate()
+    private static $faker;
+
+    public static function createRegularUser(): User
     {
-
-        $faker = \Faker\Factory::create();
-
+        self::$faker = \Faker\Factory::create();
         $user = User::create([
-            "email" => $faker->email,
-            "password" => password_hash($faker->password, PASSWORD_DEFAULT)
+            "email" => self::$faker->email,
+            "password" => password_hash('password', PASSWORD_DEFAULT)
         ]);
+        self::addUserInfo($user);
+        self::addUserSettings($user);
+        return $user;
+    }
 
+    private static function addUserInfo($user)
+    {
         $userInfo = UserInfo::create([
-            'name' => $faker->name, 
-            'avatarUri' => '//images//image.jpg',
+            'name' => self::$faker->name,
+            'avatarUri' => self::$faker->url,
             'userId' => $user->id
         ]);
         $user->userInfo()->save($userInfo);
+    }
 
+    private static function addUserSettings($user, $params = ['accountStatus' => 1, 'accessLvl' => 1])
+    {
         $userSettings = UserSettings::create([
-            'accountStatus' => 1,
-            'accessLvl' => 1,
+            'accountStatus' => $params['accountStatus'],
+            'accessLvl' => $params['accessLvl'],
             'userId' => $user->id
         ]);
         $user->userSettings()->save($userSettings);
-
-        return $user;
     }
 }

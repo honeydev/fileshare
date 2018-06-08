@@ -47,7 +47,7 @@ class LoginValidatorTest extends \Codeception\Test\Unit
 
         for ($i = 0; $i < count(INVALID_LOGINS); $i++) {
             $invalidLogin = INVALID_LOGINS[$i];
-            $this->tester->expectException('Fileshare\Exceptions\FileshareException', function () use ($invalidLogin) {
+            $this->tester->expectException('Fileshare\Exceptions\ValidateException', function () use ($invalidLogin) {
                 $this->loginValidator->validate($invalidLogin);
             });
         }
