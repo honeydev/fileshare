@@ -28,6 +28,6 @@ class Routes
                 ->add(new \Fileshare\Middlewares\FileTypeMiddleware($container));
             $app->get('/logout.action', 'LogoutController:logout');
             $app->get('/tests/{testName}', 'TestsController:testsPage');
-        })->add(new \Fileshare\Middlewares\SessionMiddleware($container));
+        });
     }
 }

@@ -23,6 +23,7 @@ class AccessMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        debug::debug($requesty->getParsedBody());
+        debug::debug($request->getParsedBody());
+        return $response;
     }
 }

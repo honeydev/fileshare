@@ -33,6 +33,8 @@ class LoginController extends AbstractController
                 "secretKey" => $this->container->get("settings")['secretKey']
             ]
         );
+        $user->save();
+        debug::debug($user->token);
         $userData = UserTransformer::transform($user);
         return $response->withJson(['status' => 'success', 'loginData' => $userData], 200);
     }
