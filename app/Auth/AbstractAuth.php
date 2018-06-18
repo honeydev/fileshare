@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fileshare\Auth;
 
-use \Tokenly\TokenGenerator\TokenGenerator;
 use Fileshare\Models\User;
 
 abstract class AbstractAuth
@@ -19,11 +18,6 @@ abstract class AbstractAuth
     }
 
     abstract public function auth($dataToCheck);
-
-    public function generateToken(int $length = 40, string $prefix = ''): string
-    {
-        return (new TokenGenerator())->generateToken($length, $prefix);
-    }
 
     protected function userExist(string $email): bool
     {

@@ -45,7 +45,6 @@ class RegValidateMiddleware extends AbstractMiddleware
             $response = $next($request, $response);
             return $response;
         } catch (ValidateException $e) {
-            debug::debug('exception');
             $response = $this->sendErrorWithJson([
                 'regStatus' => 'faield',
                 'errorType' => 'invalid_registration_data',

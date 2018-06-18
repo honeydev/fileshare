@@ -49,6 +49,13 @@ $container['AuthorizeLogger'] = function () {
     return $logger;
 };
 
+$container['AccessLogger'] = function () {
+    $logger = new \Monolog\Logger('accessLogger');
+    $file_handler = new \Monolog\Handler\StreamHandler(ROOT . '/logs/access.log');
+    $logger->pushHandler($file_handler);
+    return $logger;
+};
+
 $container['Logger'] = function ($container) {
     return new \Fileshare\Components\Logger($container);
 };

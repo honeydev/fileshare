@@ -12,6 +12,8 @@ class Logger
     private $warningLogger;
     /** @property \Monolog\Logger */
     private $authorizeLogger;
+    /** @property \Monolog\Logger */
+    private $accessLogger;
     /** @propety bool */
     private $logging;
 
@@ -22,6 +24,7 @@ class Logger
         $this->noticeLogger = $container->get('NoticeLogger');
         $this->warningLogger = $container->get('WarningLogger');
         $this->authorizeLogger = $container->get('AuthorizeLogger');
+        $this->accessLogger = $container->get('AccessLogger');
     }
     /** @throw \InvalidArgumentException */
     public function __call($name, $arguments)
@@ -53,5 +56,10 @@ class Logger
     private function authorizeLog(string $message)
     {
         $this->authorizeLogger->notice($message);
+    }
+
+    private function accessLog(string $message)
+    {
+        $this->accessLogger->notice($message);
     }
 }

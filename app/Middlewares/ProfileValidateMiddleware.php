@@ -37,7 +37,6 @@ class ProfileValidateMiddleware extends AbstractMiddleware
         try {
             $profileData = $request->getParsedBody();
             $this->validate($profileData);
-            $request = $request->withAttribute('profileData', $profileData);
             $response = $next($request, $response);
             return $response;
         } catch (ValidateException $e) {

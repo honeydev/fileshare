@@ -35,9 +35,6 @@ class LoginUserCept extends AbstractTest
                 "accountStatus" => $user->userSettings->accountStatus,
                 "accessLvl" => $user->userSettings->accessLvl
         ]));
-
-        debug::debug("!!!!!!!");
-        debug::debug($user->token);
     }
     /**
      * @return \Fileshare\Models\User;

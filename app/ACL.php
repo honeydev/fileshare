@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fileshare;
 
 use \Ds\Set;
+use \Ds\Queue;
 use \Fileshare\Models\User;
 
 class ACL
@@ -22,14 +23,32 @@ class ACL
         ];
     }
 
-    public function userHavePermission(User $user, $permissionName): bool
+    public function userHasPermission(User $user, string $permissionName): bool
     {
         if (!array_key_exists($permissionName, $this->permissions)) {
             throw new \InvalidArgumentException("Not exist permission {$permissionName}");
         }
+
         $permission = $this->permissions[$permissionName];
         $accessLvl = $user->userSettings->accessLvl;
-
         return $permission->contains($accessLvl);
+    }
+
+    public function userHasAtLeastOnePermission(User $user, Queue $permissionsNames): bool
+    {
+        $accessLvl = $user->userSettings->accessLvl;
+        while (!$permissionsNames->isEmpty()) {
+            $permissionName = $permissionsNames->pop();
+
+            if (!array_key_exists($permissionName, $this->permissions)) {
+                throw new \InvalidArgumentException("Not exist permission {$permissionName}");
+            }
+
+            $permission = $this->permissions[$permissionName];
+            if ($permission->contains($accessLvl)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

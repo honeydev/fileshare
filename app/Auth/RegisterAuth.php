@@ -2,33 +2,22 @@
 
 namespace Fileshare\Auth;
 
-use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
+use Fileshare\Exceptions\AuthException;
 
 class RegisterAuth extends AbstractAuth
 {
-    /**
-     * @proerty \Fileshare\Db\ORM\Users
-     */
-    private $users;
-
-    public function __construct($container)
-    {
-        parent::__construct($container);
-        // $this->users = $container->get('Users');
-    }
-
     public function auth($regFormData)
     {
         $this->emailIsFree($regFormData['email']);
         return true;
     }
     /**
-     * @throws \Fileshare\Exceptions\AuthorizeExceptions
+     * @throws \Fileshare\Exceptions\AuthException
      */
     private function emailIsFree(string $email)
     {
         if (!empty($this->users::where('email', $email)->get()->all())) {
-            throw new AuthorizeException("Another user registred with email ${email}");        
+            throw new AuthException("Another user registred with email ${email}");        
         }
     }
 }

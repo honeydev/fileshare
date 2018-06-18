@@ -7,7 +7,7 @@ namespace Fileshare\Middlewares;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\FileshareException as FileshareException;
-use Fileshare\Exceptions\AuthorizeException as AuthorizeException;
+use Fileshare\Exceptions\AuthException as AuthException;
 
 class LoginAuthMiddleware extends AbstractMiddleware
 {
@@ -41,7 +41,7 @@ class LoginAuthMiddleware extends AbstractMiddleware
                 'exception' => $e,
                 'errorCode' => 401
             ], $response);
-        } catch (AuthorizeException $e) {
+        } catch (AuthException $e) {
             $this->logger->authorizeLog($this->prepareFailedAuthorizeLog($e));
             return $this->sendErrorWithJson([
                 'loginStatus' => 'failed',
