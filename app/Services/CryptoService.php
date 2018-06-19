@@ -34,7 +34,6 @@ class CryptoService
 
     public function generateJwtToken(array $jwtOptions): string
     {
-        debug::debug($jwtOptions);
         $now = new \DateTime();
         $tokenInvalidityTime = new \DateTime("now + 12 hours");
 

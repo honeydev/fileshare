@@ -6,28 +6,65 @@ namespace Fileshare\Transformers;
 
 use Fileshare\Models\User;
 use \Codeception\Util\Debug as debug;
+use Funct\Collection;
+use Ds\Pair;
 
 class NewProfileDataTransformer implements TransformerInterface
 {
-    public static function transform($newUserData): array
+    public static function transform($newUserData)
     {
         $newUserData = self::filterUnnecessaryKeys($newUserData);
+        $newUserData = self::fixKeyNames($newUserData);
+        $newUserData = self::sortNewUserDataByModelNames($newUserData);
+        debug::debug($newUserData);
+        exit();
     }
 
     private static function filterUnnecessaryKeys(array $newUserData): array
     {
-        $necessaryKeys = ["email", "newPassword", "name"];
+        $NECCESSARY_KEYS = ["email", "newPassword", "name", "accountStatus", "accessLvl"];
         $keys = array_keys($newUserData);
-        return array_reduce($keys, function ($acc, $currentKey) use ($newUserData, $necessaryKeys) {
-            if (in_array($currentKey, $necessaryKeys)) {
+        return array_reduce($keys, function ($acc, $currentKey) use ($newUserData, $NECCESSARY_KEYS) {
+            if (in_array($currentKey, $NECCESSARY_KEYS)) {
                 $acc[$currentKey] = $newUserData[$currentKey];
             }
             return $acc;
         }, []);
     }
 
-    private static function sortNewUserDataByCategories(array $newUserData)
+    private static function fixKeyNames(array $newUserData): array
     {
-        //implement sort
+        $keys = array_keys($newUserData);
+        $keysFixMap = [
+            "newPassword" => "password"
+        ];
+        debug::debug("!!!!!");
+        debug::debug($keys);
+        $newKeys = Collection\Invoke($keys, function ($key) use ($keysFixMap) {
+            if (array_key_exists($key, $keysFixMap)) {
+                return $keysFixMap[$key];
+            }
+            return $key;
+        });
+        return array_combine($newKeys, array_values($newUserData));
+    }
+
+    private static function sortNewUserDataByModelNames(array $newUserData): array
+    {
+        $tableFieldsMap = [
+            "email" => "user",
+            "password" => "user",
+            "name" => "userInfo",
+            "accountStatus" => "userSettings",
+            "accessLvl" => "userSettings"
+        ];
+        $sortedNewUserData = ["user" => [], "userInfo" => [], "userSettings" => []];
+
+        foreach ($newUserData as $fieldName => $fieldValue) {
+            $modelName = $tableFieldsMap[$fieldName];
+            $sortedNewUserData[$modelName][] = new Pair($fieldName, $fieldValue);
+        }
+
+        return $sortedNewUserData;
     }
 }

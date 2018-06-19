@@ -23,13 +23,18 @@ class ProfileController extends AbstractController
         $user = User::find($requestData['id']);
         $newProfileData = NewProfileDataTransformer::transform($requestData);
 
-        foreach ($newProfileData as $key => $value) {
-            $user->$key = $value;
-        }
+        // foreach ($newProfileData['users'] as $userPair) {
+        //     $user->$userPair->key = $userPair->value;
+        // }
 
-        $user->save();
+        // foreach ($newProfileData['usersInfo'] as $userInfoPair) {
+        //     $user->$userInfoPair->key = $userInfoValue;
+        // }
+    
+        // //implement user settings
 
-        $responseUserData = UserTransformer::transform($user);
+        // $user->save();
+        // $responseUserData = UserTransformer::transform($user);
         return $response->withJson(['status' => 'success', 'user' => $responseUserData], 200);
     }
 
