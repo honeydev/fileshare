@@ -37,12 +37,14 @@ class ProfileChangeCept extends AbstractTest
         $this->tester->seeResponseContainsJson(array("status" => "success", "user" => [
             "email" => $newProfileData["email"],
             "name" => $newProfileData["name"],
-            "password" => $cryptoService->getPasswordHash($newProfileData['newPassword']),
             "id" => $newProfileData["id"],
-            "targetProfileId" => $user->id,
             "token" => User::find($user->id)->token
          ]));
-    }
+        $user = User::find($user->id);
+        $this->assertEquals($newProfileData['email'], $user->email);
+        $this->assertEquals($newProfileData['name'], $user->userInfo->name);
+       
+     }
 
     public function testChangeProfileUserWithInvalidToken()
     {

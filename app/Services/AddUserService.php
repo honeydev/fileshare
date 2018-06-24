@@ -8,7 +8,6 @@ use \Codeception\Util\Debug as debug;
 
 class AddUserService
 {
-
     private $cryptoService;
 
     public function __construct($container)

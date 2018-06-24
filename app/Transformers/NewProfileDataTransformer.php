@@ -11,15 +11,17 @@ use Ds\Pair;
 
 class NewProfileDataTransformer implements TransformerInterface
 {
+    /**
+     * @param array
+     */
     public static function transform($newUserData)
     {
         $newUserData = self::filterUnnecessaryKeys($newUserData);
         $newUserData = self::fixKeyNames($newUserData);
         $newUserData = self::sortNewUserDataByModelNames($newUserData);
-        debug::debug($newUserData);
-        exit();
+        return $newUserData;
     }
-
+    
     private static function filterUnnecessaryKeys(array $newUserData): array
     {
         $NECCESSARY_KEYS = ["email", "newPassword", "name", "accountStatus", "accessLvl"];
@@ -38,8 +40,6 @@ class NewProfileDataTransformer implements TransformerInterface
         $keysFixMap = [
             "newPassword" => "password"
         ];
-        debug::debug("!!!!!");
-        debug::debug($keys);
         $newKeys = Collection\Invoke($keys, function ($key) use ($keysFixMap) {
             if (array_key_exists($key, $keysFixMap)) {
                 return $keysFixMap[$key];

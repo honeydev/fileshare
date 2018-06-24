@@ -14,12 +14,12 @@ function ProfileUploader(dic) {
 ProfileUploader.prototype.upload = function (profileData) {
 
     console.log('praofile data', profileData);
-    profileData.userData['token'] = this._sessionModel.get('_user').get('_token');
+    // profileData.userData['token'] = this._sessionModel.get('_user').get('_token');
 
     if (profileData.hasOwnProperty('avatar')) {
         this._ajax.sendFile({
             file: profileData.avatar,
-            url: location.host + "/userAvatar.file",
+            url: location.host + "/setavatar.file",
             method: "POST",
             responseHandler: this._avatarHandler
         });

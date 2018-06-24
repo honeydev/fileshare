@@ -23,9 +23,7 @@ class Routes
                 ->add(new \Fileshare\Middlewares\ProfileAccessMiddleware($container))
                 ->add(new \Fileshare\Middlewares\AuthMiddleware($container))
                 ;
-            $app->post('/userAvatar.file', function ($request, $response) {
-                var_dump($request->getAttribute('fileType'));
-            })
+            $app->post('/uploadavatar.file', 'ProfileController:uploadAvatar')
                 ->add(new \Fileshare\Middlewares\FileTypeMiddleware($container));
             $app->get('/logout.action', 'LogoutController:logout');
             $app->get('/tests/{testName}', 'TestsController:testsPage');

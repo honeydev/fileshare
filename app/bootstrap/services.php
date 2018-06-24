@@ -10,7 +10,7 @@ $container['SessionService'] = function () use ($container) {
     return new Fileshare\Services\SessionService($container);
 };
 
-$container['SessionDestroyer'] = function() use ($container) {
+$container['SessionDestroyer'] = function () use ($container) {
     return new \Fileshare\Services\SessionDestroyService($container);
 };
 
@@ -28,4 +28,8 @@ $container['AddUserService'] = function () use ($container) {
 
 $container['CryptoService'] = function () use ($container) {
     return new Fileshare\Services\CryptoService($container);
+};
+
+$container['UpdateUserService'] = function () use ($container) {
+    return new Fileshare\Services\UpdateUserService($container);
 };
