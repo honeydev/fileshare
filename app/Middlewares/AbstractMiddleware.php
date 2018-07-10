@@ -12,12 +12,10 @@ abstract class AbstractMiddleware
     protected $prepareErrorHelper;
     /** @property \Fileshare\Components\Logger */
     protected $logger;
-    protected $sessionModel;
 
     public function __construct($container)
     {
         $this->container = $container;
-        $this->sessionModel = $container->get('SessionModel');
         $this->prepareErrorHelper = $container->get('PrepareErrorHelper');
         $this->logger = $container->get('Logger');
     }

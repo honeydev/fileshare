@@ -11,7 +11,6 @@ use \Codeception\Util\Debug as debug;
 
 abstract class AbstractTest extends \Codeception\Module
 {
-    use \FileshareTests\traits\CreateFakeUserTrait;
     /** @var \FunctionalTester */
     protected $tester;
     /** @param string */
@@ -38,14 +37,10 @@ abstract class AbstractTest extends \Codeception\Module
         $this->tester->seeCookie('PHPSESSID');
     }
 
-    protected function createRegularUser(): string
+    protected function loginUser($user)
     {
-        $userId = $this->createUser(array(
-            'users' => ['email' => 'testuser@test.com', 'hash' => password_hash('testuserpassword', PASSWORD_DEFAULT)],
-            'usersInfo' => ['name' => 'testuser'],
-            'usersSettings' => ['accessLvl' => '1']
-        ));
-        return $userId;
+        $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => 'password'));
+        $this->tester->seeResponseCodeIs(200);
     }
 
     protected function loginTestUser(array $userData)

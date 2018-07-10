@@ -19,5 +19,5 @@ modules:
             password: 'd5d7'
             dump: 'tests/_data/dump.sql'
 
-            cleanup: true
+            cleanup: false
             reconnect: true

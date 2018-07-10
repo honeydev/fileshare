@@ -11,3 +11,5 @@ Vagrantfile
 puphpet/*
 /nbproject/private/
 .phpintel/*
+/storage/avatars/*
+!/storage/avatars/.gitkeep

@@ -33,3 +33,14 @@ $container['CryptoService'] = function () use ($container) {
 $container['UpdateUserService'] = function () use ($container) {
     return new Fileshare\Services\UpdateUserService($container);
 };
+
+$container['UploadsMovmentService'] = function () use ($container) {
+    return new Fileshare\Services\UploadsMovmentService($container);
+};
+
+$container['FileSaveService'] = function () use ($container) {
+    return new Fileshare\Services\FileSaveService($container);
+};
+
+
+

@@ -38,7 +38,7 @@ class Logger
         }
     }
     
-    private function errorlog(string $message)
+    private function errorLog(string $message)
     {
         $this->errorLogger->error($message);
     }

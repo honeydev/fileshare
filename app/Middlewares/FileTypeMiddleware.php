@@ -28,7 +28,7 @@ class FileTypeMiddleware extends AbstractMiddleware
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        $uploadedFile = $request->getUploadedFiles()['file'];
+        $uploadedFiles = $request->getUploadedFiles()['file']K;
         $request = $request->withAttribute('fileType', $this->detectFileType($uploadedFile));
         $response = $next($request, $response);
         return $response;

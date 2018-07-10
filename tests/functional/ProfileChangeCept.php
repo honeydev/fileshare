@@ -104,12 +104,6 @@ class ProfileChangeCept extends AbstractTest
         $this->tester->seeResponseContainsJson(["status" => "failed", "errorType" => "permission_denied"]);
         $this->tester->seeResponseCodeIs(403);
     }
-
-    private function loginUser($user)
-    {
-        $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => 'password'));
-        $this->tester->seeResponseCodeIs(200);
-    }
 }
 
 $profileChangeCept = new ProfileChangeCept(new \FunctionalTester($scenario));

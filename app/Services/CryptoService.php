@@ -42,10 +42,15 @@ class CryptoService
             "exp" => $tokenInvalidityTime->getTimeStamp(),
             "jti" => base64_encode(random_bytes(8)),
             "iss" => $jwtOptions['appHost'],
-            "sub" => $jwtOptions['identifier']
+            "sub" => $jwtOptions    ['identifier']
         ];
 
         $token = JWT::encode($payload, $jwtOptions["secretKey"], "HS256");
         return $token;
+    }
+
+    public function getUniqueMd5Token(): string 
+    {
+        return md5((String) mt_rand());
     }
 }

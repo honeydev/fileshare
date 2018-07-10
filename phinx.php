@@ -46,7 +46,7 @@ return [
             ],
             'tests' => [
                 'connection' => $pdo,
-                'name' => $dbSettings['database']
+                'name' => $dbSettings['tests_database']
             ],
         ]
 ];

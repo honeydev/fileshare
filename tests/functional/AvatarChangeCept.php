@@ -28,12 +28,46 @@ class AvatarChangeCept extends AbstractTest
 
     public function testSetUserAvatar()
     {
-        $this->tester->wantTo("Set user avatar");
+            $this->tester->wantTo("Set user avatar");
         $image = Image::image();
+        $imageShortName = $this->getImageShortName($image);
         $user = UserFactory::createRegularUser();
-        $response = $this->tester->sendPost('/uploadavatar.file', ["inline" => 0], ["file" => $image]);
+        $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
+        $this->tester->sendPost('/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
         $this->tester->seeResponseContainsJson(["status" => "success"]);
         $this->tester->seeResponseCodeIs(200);
+        $response = $this->tester->grabResponse();
+        $response = json_decode($response, true);
+        $this->assertArrayHasKey(
+            "avatarToken",
+            $response,
+            "
+            response must have token, this token identify
+            upload avatar image
+            "
+        );
+        $this->assertTrue(file_exists(
+            $this->avatarsFolder . "/{$imageShortName}"
+            )
+        );
+        $avatarToken = $response["avatarToken"];
+        $this->tester->grabResponse();
+        $this->tester->sendAjaxPostRequest("/confirmavatar.form", [
+            "userId" => $user->id,
+            "avatarToken" => $response["avatarToken"],
+            "token" => $user->token
+        ]);
+
+        $this->tester->seeResponseContainsJson([
+            "status" => "success",
+            // "avatarUri" => $user->userInfo->avatar->uri
+        ]);
+    }
+
+    private function getImageShortName(string $imageUri): string
+    {
+        $uri = explode('/', $imageUri);
+        return $uri[count($uri) - 1];
     }
 }
 

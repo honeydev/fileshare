@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Schema\Blueprint as Blueprint;
+
+class Avatars extends \Fileshare\Db\migrations\BaseMigration
+{
+    public function up()
+    {
+        $this->down();
+        $this->schema->create('avatars', function (Blueprint $table) {
+            $table->integer('parentId')->unsigned();
+            $table->primary('parentId');
+
+        });
+
+        $this->schema->table('avatars', function (Blueprint $table) {
+            $table->foreign('parentId')
+                ->references('id')
+                ->on('files')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+        });
+    }
+
+    public function down()
+    {
+        $this->schema->dropIfExists('avatars');
+    }
+}

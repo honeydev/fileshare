@@ -16,11 +16,28 @@ class ProfileController extends AbstractController
      * @property \Fileshare\Services\UpdateUserService
      */
     private $updateUserService;
+    /**
+     * @property \Fileshare\Services\FileSaveService
+     */
+     private $fileSaveService;
+    /**
+     * @property \Fileshare\Service\CryptoService
+     */
+    private $cryptoService;
+    /**
+     * @property \Fileshare\Helpers\PrepareErrorHelper
+     */
+    private $prepareErrorHelper;
+
+    private $logger;
 
     public function __construct($container)
     {
         parent::__construct($container);
         $this->updateUserService = $this->container->get("UpdateUserService");
+        $this->fileSaveService = $container->get('FileSaveService');
+        $this->prepareErrorHelper = $this->container->get("PrepareErrorHelper");
+        $this->logger = $container->get('Logger');
     }
 
     public function changeProfile(Request $request, Response $response)
@@ -31,14 +48,29 @@ class ProfileController extends AbstractController
             $user,
             $requestData
         );
+        $this->logger->accessLog("User {$user->id} change profile");
         $responseUserData = UserTransformer::transform($user);
         return $response->withJson(['status' => 'success', 'user' => $responseUserData], 200);
     }
 
     public function uploadAvatar(Request $request, Response $response)
     {
-        $token = md5((String) mt_rand());
-        return $response->withJson(["status" => "success", "token" => $token]);
+        $avatar = $request->getUploadedFiles()['avatar'];
+        try {
+            $avatarToken = $this->fileSaveService->save($avatar, ["category" => "/avatars"]);
+        } catch (\Fileshare\Exceptions\IOException $e) {
+            $this->logger->errorLog("IOException avatar upload, avatar token {$avatarToken}");
+            $error = array_merge(
+                [
+                    "status" => "failed",
+                    "errorType" => "io_error"
+                ],
+                $this->prepareErrorHelper->prepareErrorAsArray($e)
+            );
+            return $response->withJson($error, 500);
+        }
+        $this->logger->accessLog("Upload avatar, avatar token {$avatarToken}");
+        return $response->withJson(["status" => "success", "avatarToken" => $avatarToken]);
     }
 
     public function confirmAvatar(Request $request, Response $response)

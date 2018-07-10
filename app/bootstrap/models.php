@@ -6,10 +6,6 @@
  * Time: 9:21 PM
  */
 
-$container['SessionModel'] = function ($container) {
-    return Fileshare\Models\SessionModel::createSessionModel($container);
-};
-
 $container['User'] = function () {
     return new Fileshare\Models\User();
 };
