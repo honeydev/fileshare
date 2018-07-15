@@ -42,7 +42,7 @@ class CryptoService
             "exp" => $tokenInvalidityTime->getTimeStamp(),
             "jti" => base64_encode(random_bytes(8)),
             "iss" => $jwtOptions['appHost'],
-            "sub" => $jwtOptions    ['identifier']
+            "sub" => $jwtOptions['identifier']
         ];
 
         $token = JWT::encode($payload, $jwtOptions["secretKey"], "HS256");

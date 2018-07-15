@@ -8,6 +8,7 @@ use \Codeception\Util\Debug as debug;
 use \Fileshare\Db\factories\UserFactory;
 use \Fileshare\Models\User;
 use Codeception\Util\Fixtures;
+use Faker\Generator as Faker;
 
 class ProfileChangeCept extends AbstractTest
 {
@@ -19,76 +20,35 @@ class ProfileChangeCept extends AbstractTest
 
     public function testChangeProfileUserWithCorrectRequest()
     {
-        $cryptoService = $this->container->get("CryptoService");
+        $faker = \Faker\Factory::create();
         $this->tester->wantTo('Change user profile data');
-        $user = UserFactory::createRegularUser();
+        $user = UserFactory::createRegularUser($this->container);
+        $this->tester->haveHttpHeader("Authorization", "Bearer {$user->token}");
+        $this->tester->haveHttpHeader("Content-type", "application/json");
         $this->loginUser($user);
         $newProfileData = [
-            'email' => "newemail@email.com",
+            'email' => $faker->email,
             "name" => "new name",
             "currentPassword" => 'password',
             'newPassword' => "newpass",
-            'repeatNewPassword' => "repeatNewPassword",
-            'id' => $user->id,
-            "targetProfileId" => $user->id,
-            'token' => User::find($user->id)->token,
+            'repeatNewPassword' => "newpass",
+            "targetProfileId" => $user->id
         ];
         $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
         $this->tester->seeResponseContainsJson(array("status" => "success", "user" => [
             "email" => $newProfileData["email"],
             "name" => $newProfileData["name"],
-            "id" => $newProfileData["id"],
-            "token" => User::find($user->id)->token
+            "id" => $user->id
          ]));
         $user = User::find($user->id);
         $this->assertEquals($newProfileData['email'], $user->email);
         $this->assertEquals($newProfileData['name'], $user->userInfo->name);
-       
-     }
-
-    public function testChangeProfileUserWithInvalidToken()
-    {
-        $this->tester->wantTo('See 401 error, invalid token');
-        $user = UserFactory::createRegularUser();
-        $this->loginUser($user);
-        $newProfileData = [
-            'email' => "newemail@email.com",
-            "name" => "new name",
-            "currentPassword" => 'password',
-            'newPassword' => "newpass",
-            'repeatNewPassword' => "repeatNewPassword",
-            'id' => $user->id,
-            "targetProfileId" => $user->id,
-            'token' => 'invalid_token'
-        ];
-        $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
-        $this->tester->seeResponseContainsJson(["status" => "failed", "errorType" => "invalid_request_token"]);
-        $this->tester->seeResponseCodeIs(401);
-    }
-
-    public function testChangeProfileInvalidRequestWithoutUserId()
-    {
-        $this->tester->wantTo('See 401 error, request did\'t have "id" in request');
-        $user = UserFactory::createRegularUser();
-        $this->loginUser($user);
-        $newProfileData = [
-            'email' => "newemail@email.com",
-            "name" => "new name",
-            "currentPassword" => 'password',
-            'newPassword' => "newpass",
-            'repeatNewPassword' => "repeatNewPassword",
-            "targetProfileId" => $user->id,
-            'token' => User::find($user->id)->token
-        ];
-        $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
-        $this->tester->seeResponseContainsJson(["status" => "failed", "errorType" => "request_not_contain_auth_info"]);
-        $this->tester->seeResponseCodeIs(401);
     }
 
     public function testChangeProfileWithInvalidTargetProfileId()
     {
         $this->tester->wantTo('See 550 error, permission denied');
-        $user = UserFactory::createRegularUser();
+        $user = UserFactory::createRegularUser($this->container);
         $this->loginUser($user);
         $newProfileData = [
             'email' => "newemail@email.com",
@@ -98,7 +58,6 @@ class ProfileChangeCept extends AbstractTest
             'repeatNewPassword' => "repeatNewPassword",
             'id' => $user->id,
             "targetProfileId" => $notThisUserId = $user->id + 1,
-            'token' => User::find($user->id)->token
         ];
         $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
         $this->tester->seeResponseContainsJson(["status" => "failed", "errorType" => "permission_denied"]);
@@ -108,6 +67,4 @@ class ProfileChangeCept extends AbstractTest
 
 $profileChangeCept = new ProfileChangeCept(new \FunctionalTester($scenario));
 $profileChangeCept->testChangeProfileUserWithCorrectRequest();
-$profileChangeCept->testChangeProfileUserWithInvalidToken();
-$profileChangeCept->testChangeProfileInvalidRequestWithoutUserId();
 $profileChangeCept->testChangeProfileWithInvalidTargetProfileId();

@@ -28,7 +28,7 @@ class LoginController extends AbstractController
         $user = User::where('email', $loginData['email'])->first();
         $user->token =  $this->cryptoService->generateJwtToken(
             [
-                "identifier" => $loginData['email'],
+                "identifier" => $user->id,
                 "appHost" => $this->container->get("settings")['appInfo']['hostname'],
                 "secretKey" => $this->container->get("settings")['secretKey']
             ]

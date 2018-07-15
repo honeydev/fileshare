@@ -30,12 +30,15 @@ class ProfileAccessMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         $requestBody = $request->getParsedBody();
+        $jwt = $request->getAttribute("token");
+        $targetUserId = $requestBody["targetProfileId"];
+        $userRequester = User::getUserById($jwt->sub);
         try {
-            $user = User::find($requestBody['id']);
-            $this->profileAuth->auth(["user" => $user, 'targetProfileId' => $requestBody["targetProfileId"]]);
-            $this->logger->accessLog("User with id: {$user->id} successfull access to change profile id: {$requestBody["targetProfileId"]}");
+            $this->profileAuth->auth(["user" => $userRequester, 'targetProfileId' => $targetUserId]);
         } catch (AuthException $e) {
-            $this->logger->accessLog("User can\\'t access to profile change - profile id: {$requestBody["targetProfileId"]}");
+            $this->logger->accessLog("
+                User with {$userRequester->id} id can\\'t access to profile change - profile id: {$requestBody["targetProfileId"]}
+                ");
             return $this->sendErrorWithJson([
                 'status' => 'faield',
                 'errorType' => 'permission_denied',
@@ -43,6 +46,7 @@ class ProfileAccessMiddleware extends AbstractMiddleware
                 'errorCode' => 403
             ], $response);
         }
+        $request = $request->withAttribute("userRequester", $userRequester);
         $response = $next($request, $response);
         return $response;
     }

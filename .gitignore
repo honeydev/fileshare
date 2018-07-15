@@ -13,3 +13,5 @@ puphpet/*
 .phpintel/*
 /storage/avatars/*
 !/storage/avatars/.gitkeep
+/storage/uploads/*
+!/storage/uploads/.gitkeep 

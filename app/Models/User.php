@@ -21,4 +21,12 @@ class User extends Model
     {
         return $this->hasOne(\Fileshare\Models\UserSettings::class, 'userId');
     }
+
+    public static function getUserById(int $id): User
+    {
+        if (empty($user = User::find($id))) {
+            throw new \Fileshare\Exceptions\DatabaseException("User with id {$id} not found in database");
+        }
+        return $user;
+    }
 }

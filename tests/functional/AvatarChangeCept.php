@@ -18,6 +18,10 @@ class AvatarChangeCept extends AbstractTest
      */
     private $avatarsFolder;
 
+    private $container;
+
+    private $jwtToken;
+
     public function __construct($tester)
     {
         parent::__construct($tester);
@@ -26,42 +30,23 @@ class AvatarChangeCept extends AbstractTest
             "/storage/avatars";
     }
 
+
     public function testSetUserAvatar()
     {
-            $this->tester->wantTo("Set user avatar");
+        $this->tester->wantTo("Set user avatar");
         $image = Image::image();
         $imageShortName = $this->getImageShortName($image);
-        $user = UserFactory::createRegularUser();
+        $user = UserFactory::createRegularUser($this->container);
+        $this->tester->haveHttpHeader("Authorization", "Bearer {$user->token}");
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
         $this->tester->sendPost('/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
-        $this->tester->seeResponseContainsJson(["status" => "success"]);
-        $this->tester->seeResponseCodeIs(200);
-        $response = $this->tester->grabResponse();
-        $response = json_decode($response, true);
-        $this->assertArrayHasKey(
-            "avatarToken",
-            $response,
-            "
-            response must have token, this token identify
-            upload avatar image
-            "
-        );
-        $this->assertTrue(file_exists(
-            $this->avatarsFolder . "/{$imageShortName}"
-            )
-        );
-        $avatarToken = $response["avatarToken"];
-        $this->tester->grabResponse();
-        $this->tester->sendAjaxPostRequest("/confirmavatar.form", [
-            "userId" => $user->id,
-            "avatarToken" => $response["avatarToken"],
-            "token" => $user->token
+        $imageShortName = $this->getImageShortName($image);
+        $this->tester->seeResponseContainsJson(["status" => "success",
+            "avatar" => [
+                "name" => $imageShortName
+                ]
         ]);
-
-        $this->tester->seeResponseContainsJson([
-            "status" => "success",
-            // "avatarUri" => $user->userInfo->avatar->uri
-        ]);
+        $this->assertTrue(file_exists("{$this->avatarsFolder}/{$imageShortName}"));
     }
 
     private function getImageShortName(string $imageUri): string

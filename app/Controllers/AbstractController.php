@@ -10,6 +10,5 @@ abstract class AbstractController
     public function __construct($container)
     {
         $this->container = $container;
-        $this->sessionService = $container->get('SessionService');
     }
 }

@@ -19,7 +19,7 @@ ProfileUploader.prototype.upload = function (profileData) {
     if (profileData.hasOwnProperty('avatar')) {
         this._ajax.sendFile({
             file: profileData.avatar,
-            url: location.host + "/setavatar.file",
+            url: location.host + "/uploadavatar.file",
             method: "POST",
             responseHandler: this._avatarHandler
         });

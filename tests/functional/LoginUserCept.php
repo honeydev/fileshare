@@ -6,9 +6,8 @@ declare(strict_types=1);
 
 namespace FileshareTests\functional;
 
-use \Fileshare\Models\User;
-use \Fileshare\Models\UserInfo;
-use \Fileshare\Models\UserSettings;
+use \Fileshare\Db\factories\UserFactory;
+use Codeception\Util\Fixtures;
 use \Codeception\Util\Debug as debug;
 
 class LoginUserCept extends AbstractTest
@@ -23,10 +22,11 @@ class LoginUserCept extends AbstractTest
 
     public function sendRequestOnLogin()
     {
-        $user = $this->userProvide();
+        $user = UserFactory::createRegularUser(Fixtures::get("container"));
         $this->tester->wantTo('Login user');
-        $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => "12345"));
-        $this->tester->seeResponseCodeIs(200);
+        debug::debug($user->testPassword);
+        $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => $user->nCryptedPassword));
+        //$this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(array("status" => "success", "loginData" => [
                 "id" => $user->id,
                 "email" => $user->email,
@@ -35,28 +35,6 @@ class LoginUserCept extends AbstractTest
                 "accountStatus" => $user->userSettings->accountStatus,
                 "accessLvl" => $user->userSettings->accessLvl
         ]));
-    }
-    /**
-     * @return \Fileshare\Models\User;
-     */
-    private function userProvide(): User
-    {
-        $user = User::create([
-            "email" => "testusertest@test.com",
-            "password" => password_hash('12345', PASSWORD_DEFAULT)
-        ]);
-
-        $userInfo = new UserInfo();
-        $userInfo->name = "user name";
-        $userInfo->avatarUri = "uri";
-        $user->userInfo()->save($userInfo);
-
-        $userSettings = new UserSettings();
-        $userSettings->accountStatus = 1;
-        $userSettings->accessLvl = 1;
-        $user->userSettings()->save($userSettings);
-
-        return $user;
     }
 }
 

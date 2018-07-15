@@ -33,14 +33,20 @@ class RegisteredController extends AbstractController
         ]);
         $user->save();
 
-        $userInfo = new UserInfo(["name" => $userData["name"]]);
+        $userInfo = new UserInfo([
+            "name" => $userData["name"],
+        ]);
         $user->userInfo()->save($userInfo);
 
         $userSettings = new UserSettings(["accessLvl" => $userData["accessLvl"], "accountStatus" => 1]);
         $user->userSettings()->save($userSettings);
 
-        debug::debug("!!!!!!");
-        // debug::debug($user);
-        return $response->withJson(['status' => 'success'], 200);
+        return $response->withJson([
+            'status' => 'success',
+            "email" => $user->email,
+            "name" => $user->userInfo->name,
+            "accessLvl" => $user->userSettings->accessLvl,
+            "id" => $user->id
+        ], 200);
     }
 }

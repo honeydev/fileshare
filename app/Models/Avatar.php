@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model as Model;
 
 class Avatar extends Model
 {
+    protected $guarded = [""];
+    public $timestamps = false;
+
     public function file()
     {
-        return $this->hasOne(\Fileshare\Models\UserSettings::class, 'foreign_key');
+        return $this->hasOne(\Fileshare\Models\File::class, 'id', 'parentId');
     }
 }

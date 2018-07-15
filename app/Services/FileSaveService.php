@@ -30,24 +30,18 @@ class FileSaveService
         $this->storageDir = dirname(dirname(__DIR__)) . "/storage";
     }
 
-    public function save(UploadedFile $file, array $params): string
+    public function save(UploadedFile $file, array $params): File
     {
         $avatarToken = $this->cryptoService->getUniqueMd5Token();
         $fileAttributes = $this->uploadsMovmentService->movment($file, $params);
+        $fileAttributes['ownerId'] = $params['owner']->id;
         $file = new File($fileAttributes);
         $file->save();
-        $fileToken = FileToken::create(
-            [
-                "token" => $avatarToken, 
-                "fileId" => $file->id
-            ]
-        );
-        $fileToken->save();
-        return $avatarToken;
+        return $file;
     }
 
     public function confirmFile(string $token)
     {
-        retrun $response->withJson(["status" => "success"])
+        
     }
 }

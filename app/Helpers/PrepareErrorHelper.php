@@ -6,7 +6,7 @@ namespace Fileshare\Helpers;
 
 class PrepareErrorHelper
 {
-    public function prepareErrorAsArray($exception): array
+    public function prepareErrorAsArray($exception, $errorType = null): array
     {
         $errorMessage = [];
         $errorMessage['error'] = $exception->getMessage();
@@ -15,6 +15,8 @@ class PrepareErrorHelper
         $errorMessage['line'] = $exception->getLine();
         $errorMessage['stackString'] = $exception->getTraceAsString();
         $errorMessage['stackArray'] = explode('#', $errorMessage['stackString']);
+        $errorMessage["status"] = "failed";
+        $errprMessage["errorType"] = $errorType;
         return $errorMessage;
     }
 

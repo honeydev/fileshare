@@ -6,7 +6,8 @@ namespace Fileshare\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Fileshare\Models\User;
+use \Fileshare\Models\{User, Avatar};
+use \Fileshare\Exceptions\DatabaseException;
 use \Fileshare\Transformers\UserTransformer;
 use \Codeception\Util\Debug as debug;
 
@@ -43,38 +44,40 @@ class ProfileController extends AbstractController
     public function changeProfile(Request $request, Response $response)
     {
         $requestData = $request->getParsedBody();
-        $user = User::find($requestData['id']);
+        $userRequester = $request->getAttribute("userRequester");
+        $targetUserId = $requestData["targetProfileId"];
+        $targetUser = User::find($targetUserId);
         $this->updateUserService->update(
-            $user,
+            $targetUser,
             $requestData
         );
-        $this->logger->accessLog("User {$user->id} change profile");
-        $responseUserData = UserTransformer::transform($user);
+        $this->logger->accessLog("User {$userRequester->id} change profile with id {$targetUser->id}");
+        $responseUserData = UserTransformer::transform($targetUser);
         return $response->withJson(['status' => 'success', 'user' => $responseUserData], 200);
     }
 
     public function uploadAvatar(Request $request, Response $response)
     {
-        $avatar = $request->getUploadedFiles()['avatar'];
+        $avatar = $request->getUploadedFiles()["avatar"];
+        $jwt = $request->getAttribute("token");
+        $owner = User::getUserById($jwt->sub);
         try {
-            $avatarToken = $this->fileSaveService->save($avatar, ["category" => "/avatars"]);
-        } catch (\Fileshare\Exceptions\IOException $e) {
-            $this->logger->errorLog("IOException avatar upload, avatar token {$avatarToken}");
-            $error = array_merge(
-                [
-                    "status" => "failed",
-                    "errorType" => "io_error"
-                ],
-                $this->prepareErrorHelper->prepareErrorAsArray($e)
+            $file = $this->fileSaveService->save($avatar, [
+                "owner" => $owner,
+                "category" => "/avatars"
+                ]
             );
+            $avatar = Avatar::create(["parentId" => $file->id]);
+            $avatar->save();
+        } catch (\Fileshare\Exceptions\IOException $e) {
+            $this->logger->errorLog($e->getMessage());
+            $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "io_error");
             return $response->withJson($error, 500);
+        } catch (DatabaseException $e) {
+            $this->logger->errorLog($e->getMessage());
+            $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "db_error");
+            return $response->withJson($error, 401);
         }
-        $this->logger->accessLog("Upload avatar, avatar token {$avatarToken}");
-        return $response->withJson(["status" => "success", "avatarToken" => $avatarToken]);
-    }
-
-    public function confirmAvatar(Request $request, Response $response)
-    {
-
+        return $response->withJson(["status" => "success", "avatar" => $avatar->file->toArray()], 200);
     }
 }
