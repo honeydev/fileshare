@@ -67,8 +67,7 @@ class ProfileController extends AbstractController
                 "category" => "/avatars"
                 ]
             );
-            $avatar = Avatar::create(["parentId" => $file->id]);
-            $avatar->save();
+            $avatar = Avatar::createNewAvatar($file, $owner);
         } catch (\Fileshare\Exceptions\IOException $e) {
             $this->logger->errorLog($e->getMessage());
             $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "io_error");

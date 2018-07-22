@@ -20,6 +20,7 @@ Ajax.prototype.sendJSON = function (requestSettings) {
         dataType: 'json',
         data: requestJSON,
         success: requestSettings.responseHandler,
+        headers: requestSettings.headers,
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));
@@ -42,6 +43,7 @@ Ajax.prototype.doAction = function (requestSettings) {
         url: URL,
         type: "GET",
         success: requestSettings.responseHandler,
+        headers: requestSettings.headers,
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));
@@ -56,9 +58,10 @@ Ajax.prototype.doAction = function (requestSettings) {
 };
 
 Ajax.prototype.sendFile = function (requestSettings) {
+    console.log(requestSettings)
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     let formData = new FormData();
-    formData.append('file', requestSettings.file);
+    formData.append('avatar', requestSettings.data.avatar);
     $.ajax({
         url: URL,
         method: "POST",
@@ -68,6 +71,7 @@ Ajax.prototype.sendFile = function (requestSettings) {
         processData: false,
         contentType: false,
         success: requestSettings.responseHandler,
+        headers: requestSettings.headers,
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));

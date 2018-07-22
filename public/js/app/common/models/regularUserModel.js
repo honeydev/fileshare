@@ -7,6 +7,7 @@ import {BaseModel} from './baseModel';
 function RegularUserModel() {
     this._email = null;
     this._accessLvl = 1;
+    this._accountStatus = null;
     this._name = null;
     this._avatarUri = null;
     this._id = null;

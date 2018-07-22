@@ -11,8 +11,6 @@ class LogoutController extends AbstractController
 {
     public function logout(Request $request, Response $response)
     {
-        $sessionService = $this->container->get('SessionService');
-        $sessionService->destroySession();
         return $response->withJson(['status' => 'success']);
     }
 }

@@ -35,7 +35,7 @@ class CryptoService
     public function generateJwtToken(array $jwtOptions): string
     {
         $now = new \DateTime();
-        $tokenInvalidityTime = new \DateTime("now + 12 hours");
+        $tokenInvalidityTime = new \DateTime("now + 168 hour");
 
         $payload = [
             "iat" => $now->getTimeStamp(),

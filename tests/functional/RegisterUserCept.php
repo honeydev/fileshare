@@ -34,7 +34,7 @@ class RegisterUserCept extends AbstractTest
             "accessLvl" => 1
         );
         $this->tester->sendAjaxRequest('POST', '/register.form', $userData);
-        // $this->tester->seeResponseCodeIs(200);
+        $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(array(
             "status" => "success",
             "email" => $userData["email"],
@@ -42,13 +42,6 @@ class RegisterUserCept extends AbstractTest
             "accessLvl" => $userData["accessLvl"]
             )
         );
-        // $user = User::where("email", "testusertest@test.com")->get()->first();
-
-        // $this->assertEquals($user->email, "testusertest@test.com");
-        // $this->assertTrue(password_verify("12345", $user->password));
-        // $this->assertEquals($user->userInfo->name, "tester");
-        // $this->assertEquals($user->userSettings->accountStatus, 1);
-        // $this->assertEquals($user->userSettings->accessLvl, 1);
     }
 }
 

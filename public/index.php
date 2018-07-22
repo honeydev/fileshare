@@ -10,13 +10,6 @@ ini_set("display_errors", 1);
 ini_set('session.use_strict_mode', 1);
 ini_set('session.use_only_cookies = 1', 1);
 
-register_shutdown_function(function () {
-    $e = error_get_last();
-    if (!empty($e)) {
-        var_dump($e);
-    }
-});
-
 define('ROOT', dirname(__DIR__));
 
 require ROOT . '/vendor/autoload.php';

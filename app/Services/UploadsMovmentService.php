@@ -24,16 +24,20 @@ class UploadsMovmentService
      */
     public function movment(UploadedFile $file, array $params): array
     {
+        $ownerEmail = $params["owner"]->email;
+        $targetDir = "{$this->storageDir}{$params['category']}/{$ownerEmail}";
+        $this->createDir($targetDir);
+
         if ($file->getError() !== UPLOAD_ERR_OK) {
             throw new IOException("Has upload Error " . $file->getError());
         }
 
-        if (!is_writable($this->storageDir)) {
+        if (!is_writable($targetDir)) {
             throw new IOException("There is no write access to directory {$this->storageDir}");
         }
 
         $name = $file->getClientFilename();
-        $moveName = $this->storageDir . "{$params['category']}/{$name}";
+        $moveName = "{$targetDir}/{$name}";
         $file->moveTo($moveName);
         return [
             "name" => $name,
@@ -41,5 +45,14 @@ class UploadsMovmentService
             "size" => $file->getSize(),
             "mime" => $file->getClientMediaType()
         ];
+    }
+
+    private function createDir(string $directory)
+    {
+        if (!file_exists($directory)) {
+            if (!mkdir($directory, 777, true)) {
+                throw new IOException("Can't create directory {$directory}");
+            }
+        }
     }
 }

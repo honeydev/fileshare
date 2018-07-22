@@ -12,6 +12,7 @@ function ProfileFormSetter() {
  * @return {[type]}
  */
 ProfileFormSetter.prototype.switchToForm = function (userData) {
+    this.removeForm();
     const PROFILE_FORM = this._createProfileForm(userData);
     $('#userDataList').remove();
     $('.userProfileSection').append(PROFILE_FORM);
@@ -167,6 +168,7 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
 
 /** @return {void} */
 ProfileFormSetter.prototype.removeForm = function () {
+    console.log("PROFILE FORM", $('#profileForm'));
     $('#profileForm').remove();
 };  
 

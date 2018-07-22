@@ -42,5 +42,9 @@ $container['FileSaveService'] = function () use ($container) {
     return new Fileshare\Services\FileSaveService($container);
 };
 
+$container['DeleteFileService'] = function () use ($container) {
+    return new Fileshare\Services\DeleteFileService($container);
+};
+
 
 
