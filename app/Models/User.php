@@ -22,6 +22,11 @@ class User extends Model
         return $this->hasOne(\Fileshare\Models\UserSettings::class, 'userId');
     }
 
+    public function avatar()
+    {
+        //todo implement 
+    }
+
     public static function getUserById(int $id): User
     {
         if (empty($user = User::find($id))) {

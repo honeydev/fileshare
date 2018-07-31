@@ -11,13 +11,22 @@ use \Codeception\Util\Debug as debug;
 class DeleteFileService
 {
     /**
+     * @property string
+     */
+    private $appFoldeer;
+
+    public function __construct($container)
+    {
+        $this->appFolder = $container->get('settings')['appFolder'];
+    }
+    /**
      * @throws IOException
      */
     public function delete(File $file)
     {
-        $fileUri = $file->uri;
+        $fileUri = "{$this->appFolder}/{$file->uri}";
         if (!unlink($fileUri)) {
-            throw new IOException("Cant't remove {$fileUri} from disk");
+            throw new IOException("Cant't remove file {$fileUri} from disk");
         }
     }
 }

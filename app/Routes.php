@@ -12,6 +12,7 @@ class Routes
         $accessLogger = $container->get("AccessLogger");
         $secret = $container->get("settings")["secretKey"];
         $app->add(new \Slim\Middleware\JwtAuthentication([
+            "secure" => false,
             "path" => [
                 "/uploadavatar.file", 
                 "/profile.form", 

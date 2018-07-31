@@ -46,5 +46,7 @@ $container['DeleteFileService'] = function () use ($container) {
     return new Fileshare\Services\DeleteFileService($container);
 };
 
-
+$container['AddAvatarService'] = function () use ($container) {
+    return new Fileshare\Services\AddAvatarService($container);
+};
 

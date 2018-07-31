@@ -46,7 +46,8 @@ class AvatarChangeCept extends AbstractTest
                 "name" => $imageShortName
                 ]
         ]);
-        $this->assertTrue(file_exists("{$this->avatarsFolder}/{$imageShortName}"));
+
+        $this->assertTrue(file_exists("{$this->avatarsFolder}/{$user->email}/{$imageShortName}"));
     }
 
     private function getImageShortName(string $imageUri): string

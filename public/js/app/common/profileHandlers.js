@@ -34,6 +34,7 @@ ProfileHandlers.prototype._setAvatarHandlers = function () {
     $('#uploadAvatarAInProfile, #uploadAvatarAInForm').click(function (e) {
         console.log('click on avatar');
         e.stopPropagation();
+        e.preventDefault();
         $('#avatarUploadInput').trigger('click');
     });
     $('#avatarUploadInput').change({profile: this._profile}, function (e) {

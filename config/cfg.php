@@ -7,7 +7,7 @@ return array(
     'addContentLengthHeader' => false,
     'db' => array(
         'driver' => 'mysql',
-        'host' => '172.17.0.2',
+        'host' => 'fshare_db',
         'database' => 'fileshare',
         'tests_database' => 'fileshare_tests',
         'username' => 'honey',
@@ -21,5 +21,6 @@ return array(
        'title' => 'Fileshare',
        'hostname' => 'fileshare.loc'
     ),
-    'secretKey' => '8ryR.h6vc58wEk3GxQpJS.gSaTnuDHFEkITfb4//4OTHUGW5UPkgS'
+    'secretKey' => '8ryR.h6vc58wEk3GxQpJS.gSaTnuDHFEkITfb4//4OTHUGW5UPkgS',
+    'appFolder' => dirname(__DIR__)
 );

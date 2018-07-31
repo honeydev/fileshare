@@ -29,6 +29,10 @@ class ProfileController extends AbstractController
      * @property \Fileshare\Helpers\PrepareErrorHelper
      */
     private $prepareErrorHelper;
+    /**
+     * @property \Fileshare\Services\AddAvatarService
+     */
+    private $addAvatarService;
 
     private $logger;
 
@@ -39,6 +43,7 @@ class ProfileController extends AbstractController
         $this->fileSaveService = $container->get('FileSaveService');
         $this->prepareErrorHelper = $this->container->get("PrepareErrorHelper");
         $this->logger = $container->get('Logger');
+        $this->addAvatarService = $this->container->get("AddAvatarService");
     }
 
     public function changeProfile(Request $request, Response $response)
@@ -58,16 +63,16 @@ class ProfileController extends AbstractController
 
     public function uploadAvatar(Request $request, Response $response)
     {
-        $avatar = $request->getUploadedFiles()["avatar"];
+        $avatarFile = $request->getUploadedFiles()["avatar"];
         $jwt = $request->getAttribute("token");
         $owner = User::getUserById($jwt->sub);
         try {
-            $file = $this->fileSaveService->save($avatar, [
+            $file = $this->fileSaveService->save($avatarFile, [
                 "owner" => $owner,
                 "category" => "/avatars"
                 ]
             );
-            $avatar = Avatar::createNewAvatar($file, $owner);
+            $avatar = $this->addAvatarService->add($file, $owner);
         } catch (\Fileshare\Exceptions\IOException $e) {
             $this->logger->errorLog($e->getMessage());
             $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "io_error");

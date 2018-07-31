@@ -107,6 +107,7 @@ Profile.prototype._getUserData = function () {
     let userModel = sessionModel.get('_user');
     let userData = userModel.getAllProperties();
     userData = this._propertyHelper.correctPropertyList(userData);
+    console.log('USER DATA', userData);
     return userData;
 };
 /**

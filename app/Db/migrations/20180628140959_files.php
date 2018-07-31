@@ -14,8 +14,8 @@ class Files extends \Fileshare\Db\migrations\BaseMigration
             $table->string('uri')->nullable(false);
             $table->string('size')->nullable(false);
             $table->string('mime')->nullable(false);
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->integer('ownerId')
                 ->unsigned()
                 ->nullable(false);

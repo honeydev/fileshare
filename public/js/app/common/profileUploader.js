@@ -23,7 +23,7 @@ ProfileUploader.prototype.upload = function (profileData) {
         this._ajax.sendFile({
             data: {avatar: AVATAR},
             url: location.host + "/uploadavatar.file",
-            responseHandler: this._avatarHandler,
+            responseHandler: this._avatarHandler.bind(this),
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -47,24 +47,28 @@ ProfileUploader.prototype.upload = function (profileData) {
 };
 
 ProfileUploader.prototype._avatarHandler = function (response) {
+    let user = this._sessionModel.get("_user");
+    let session = this._dic.get("Session")(dic);
     if (response.status === "success") {
-        console.log(response);
+        user.set("_avatarUri", response.avatar.uri);
+        session.setAuthorizedUserSession(user);
+        let profile = this._dic.get("Profile")(this._dic);
+        profile.switchToProfile();
+        console.log(this._sessionModel.get("_user"))
     } else if (response.status === "failed") {
         console.log(response);
     }
-}.bind(this);
+};
 
 ProfileUploader.prototype._userDataHandler = function (response) {
     console.log(this);
     let profile = this._dic.get("Profile")(this._dic);
     let user = this._dic.get("User")(this._dic);
-    let sessionModel = this._dic.get("SessionModel")();
+    let session = this._dic.get("Session");
     if (response.status === "success") {
         user.initNewUser(response.user);
+        session.setAuthorizedUserSession(user);
         profile.switchToProfile();
-
-        console.log(sessionModel);
-        //profile.applySuccessChanges(response.user);
     } else if (response.status === "failed") {
 
     } else {
