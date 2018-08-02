@@ -2,6 +2,9 @@
 
 export {ProfileUploader};
 
+import {InvalidServerResponseError} from './errors/InvalidServerResponseError';
+
+
 function ProfileUploader(dic) {
     this._dic = dic;
     this._ajax = dic.get('Ajax')(dic);
@@ -22,7 +25,7 @@ ProfileUploader.prototype.upload = function (profileData) {
 
         this._ajax.sendFile({
             data: {avatar: AVATAR},
-            url: location.host + "/uploadavatar.file",
+            url: location.host + "/api/uploadavatar.file",
             responseHandler: this._avatarHandler.bind(this),
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -34,7 +37,7 @@ ProfileUploader.prototype.upload = function (profileData) {
         profileData.userData.targetProfileId = this._sessionModel.get('_user').get('_id');
         console.log(profileData.userData);
         this._ajax.sendJSON({
-            url: location.host + "/profile.form",
+            url: location.host + "/api/profile.form",
             method: "POST",
             requestData: profileData.userData,
             responseHandler: this._userDataHandler.bind(this),
@@ -51,7 +54,7 @@ ProfileUploader.prototype._avatarHandler = function (response) {
     let session = this._dic.get("Session")(dic);
     if (response.status === "success") {
         user.set("_avatarUri", response.avatar.uri);
-        session.setAuthorizedUserSession(user);
+        // session.setAuthorizedUserSession(user);
         let profile = this._dic.get("Profile")(this._dic);
         profile.switchToProfile();
         console.log(this._sessionModel.get("_user"))
@@ -64,10 +67,8 @@ ProfileUploader.prototype._userDataHandler = function (response) {
     console.log(this);
     let profile = this._dic.get("Profile")(this._dic);
     let user = this._dic.get("User")(this._dic);
-    let session = this._dic.get("Session");
     if (response.status === "success") {
         user.initNewUser(response.user);
-        session.setAuthorizedUserSession(user);
         profile.switchToProfile();
     } else if (response.status === "failed") {
 

@@ -29,7 +29,7 @@ RegisterForm.prototype.sendRegisterForm = function() {
     this._validate();
     this._ajax.sendJSON(
         {
-            "url": location.host + "/register.form",
+            "url": location.host + "/api/register.form",
             "requestData": {
                 email: this._email,
                 name: this._name,

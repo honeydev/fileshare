@@ -2,55 +2,43 @@
 /**
  * @class FileValidator
  */
-
 declare(strict_types=1);
 
 namespace Fileshare\Validators;
 
 use \Codeception\Util\Debug as debug;
 use Fileshare\Exceptions\ValidateException;
+use \Slim\Http\UploadedFile;
 
 abstract class FileValidator extends AbstractValidator
 {
-    /** @var array */
+    /**
+     * @property {array}
+     */
     protected $allowedMimeTypes;
-    /** @var array */
+    /**
+     * @property {array}
+     */
     protected $allowedExtensions;
     /**
-     * @var string
-     */
-    protected $fileExtension;
-    /**
-    * @var string
-    */
-    protected $fileName;
-
-    protected abstract function checkFile(string $pathToFile);
-
-    /**
      * @throws ValidateException
      */
-    protected function checkExtension(string $fileName)
+    protected function checkExtension(UploadedFile $file)
     {
-        $extensionMatchExist = false;
+        $extension = $this->calculateExtension($file->getClientFilename());
 
-        foreach ($this->allowedExtensions as $allowExtension) {
-            $extensionMatchExist = $this->dataIsMatchRegExp("/.{$allowExtension}$/", $fileName);
-            if ($extensionMatchExist) return null;
-        }
-
-        if (!$extensionMatchExist) {
-            throw new ValidateException("File $fileName has incorrect extension");
+        if (!in_array($extension, $this->allowedExtensions)) {
+            throw new ValidateException("File " . $this->getClientFilename() . "has invalid extension {$extension}");
         }
     }
-
     /**
      * @throws ValidateException
      */
-    protected function checkMimeType(string $type)
+    protected function checkMimeType(UploadedFile $file)
     {
-        if ($this->allowedMimeTypes[$this->fileExtension] !== $type) {
-            throw new ValidateException("File {$this->fileName} have invalid mime type {$type}");
+        if (!in_array($file->getClientMediaType(), $this->allowedMimeTypes)) {
+            throw new ValidateException("File " . $file->getClientFilename() . " has invalid mime type " 
+                . $file->getClientFilename());
         }
     }
 
@@ -58,5 +46,17 @@ abstract class FileValidator extends AbstractValidator
     {
         $dotPosition = strrpos($fileName, ".");
         return rtrim(substr($fileName, $dotPosition + 1, strlen($fileName)));
+    }
+
+    protected function checkFileSize(UploadedFile $file, $maxSize)
+    {
+        $fileSize = $file->getSize();
+        if ($fileSize === null) {
+            throw new ValidateException("Invalid uploaded file");
+        }
+
+        if ($fileSize > $maxSize) {
+            throw new ValidateException("Invalid uploaded file size {$fileSize}");
+        }
     }
 }

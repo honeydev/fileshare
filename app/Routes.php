@@ -14,8 +14,8 @@ class Routes
         $app->add(new \Slim\Middleware\JwtAuthentication([
             "secure" => false,
             "path" => [
-                "/uploadavatar.file", 
-                "/profile.form", 
+                "/api/uploadavatar.file", 
+                "/api/profile.form", 
                 "/api/service/checkjwt"
             ],
             "logger" => $accessLogger,
@@ -26,8 +26,8 @@ class Routes
                 return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
             }
         ]));
-        $app->group('', function () use ($app, $container) {
-            $app->get('/', 'MainPageController:indexPage');
+        $app->get('/', 'MainPageController:indexPage');
+        $app->group('/api', function () use ($app, $container) {
             $app->post('/upload.file', 'MainPageController:uploadFile');
             $app->post('/login.form', 'LoginController:login')
                 ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container))
@@ -38,9 +38,10 @@ class Routes
             $app->post('/profile.form', 'ProfileController:changeProfile')
                 ->add(new \Fileshare\Middlewares\ProfileValidateMiddleware($container))
                 ->add(new \Fileshare\Middlewares\ProfileAccessMiddleware($container));
-            $app->post('/uploadavatar.file', 'ProfileController:uploadAvatar');
+            $app->post('/uploadavatar.file', 'ProfileController:uploadAvatar')
+                ->add(new \Fileshare\Middlewares\AvatarValidateMiddleware($container));
 
-            $app->get('/api/service/checkjwt', 'ServiceController:checkJwt');
+            $app->get('/service/checkjwt', 'ServiceController:checkJwt');
 
             $app->get('/logout.action', 'LogoutController:logout');
             $app->get('/tests/{testName}', 'TestsController:testsPage');

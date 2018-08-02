@@ -12,7 +12,7 @@ function Logout(dic) {
 
 Logout.prototype.logout = function () {
     this._ajax.doAction({
-        url: location.host + '/logout.action',
+        url: location.host + '/api/logout.action',
         responseHandler: this._handler.bind(this)
     });
 };

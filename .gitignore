@@ -1,11 +1,11 @@
 /vendor/
+/config/cfg.php
 /logs/*
 !/logs/README.md
 /.idea/
 /cache/
 /public/node_modules/
 /public/js/public/
-/config/*
 .vagrant/*
 Vagrantfile
 puphpet/*

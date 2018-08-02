@@ -26,7 +26,7 @@ LoginForm.prototype.sendLoginForm = function () {
     console.log('emailpass', this._email, this._password);
     this._validate();
     this._ajax.sendJSON({
-        "url": location.host + "/login.form",
+        "url": location.host + "/api/login.form",
         "requestData": {
             email: this._email,
             password: this._password

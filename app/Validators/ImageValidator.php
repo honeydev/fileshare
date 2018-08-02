@@ -9,6 +9,7 @@ namespace Fileshare\Validators;
 
 use \Codeception\Util\Debug as debug;
 use Fileshare\Exceptions\ValidateException;
+use \Slim\Http\UploadedFile;
 
 class ImageValidator extends FileValidator
 {
@@ -16,35 +17,23 @@ class ImageValidator extends FileValidator
     {
         $this->allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
         $this->allowedMimeTypes =  array(
-            'jpg' => 'image/jpeg',
-            'jpeg' => 'image/jpeg',
-            'png' => 'image/png',
-            'gif' => 'image/gif',
-            'bmp' => 'image/bmp',
-            'ico' => 'image/vnd.microsoft.icon/'
+            'image/jpeg', 
+            'image/jpeg', 
+            'image/png',
+            'image/gif',
+            'image/bmp',
+            'image/vnd.microsoft.icon/'
         );
     }
 
     /**
-     * @param $image array
+     * @param  \Slim\Http\UploadedFile;
      * @throws ValidateException
      */
     public  function validate($image)
     {
-        $this->fileName = $image['name'];
-        $this->fileExtension = $this->calculateExtension('1.jpeg');
-        $this->checkExtension($image['name']);
-        $this->checkMimeType($image['type']);
-        $this->checkFile($image['file']);
-    }
-
-    /**
-     * @throws ValidateException
-     */
-    protected function checkFile(string $pathToFile)
-    {
-        if (!getimagesize($pathToFile)) {
-            throw new ValidateException("File {$this->fileName} it's not image");
-        }
+        $this->checkExtension($image);
+        $this->checkMimeType($image);
+        $this->checkFileSize($image, 8000000);
     }
 }
