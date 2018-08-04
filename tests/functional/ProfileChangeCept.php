@@ -34,7 +34,7 @@ class ProfileChangeCept extends AbstractTest
             'repeatNewPassword' => "newpass",
             "targetProfileId" => $user->id
         ];
-        $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
+        $this->tester->sendAjaxPostRequest('/api/profile.form', $newProfileData);
         $this->tester->seeResponseContainsJson(array("status" => "success", "user" => [
             "email" => $newProfileData["email"],
             "name" => $newProfileData["name"],
@@ -59,7 +59,7 @@ class ProfileChangeCept extends AbstractTest
             'id' => $user->id,
             "targetProfileId" => $notThisUserId = $user->id + 1,
         ];
-        $this->tester->sendAjaxPostRequest('/profile.form', $newProfileData);
+        $this->tester->sendAjaxPostRequest('/api/profile.form', $newProfileData);
         $this->tester->seeResponseContainsJson(["status" => "failed", "errorType" => "permission_denied"]);
         $this->tester->seeResponseCodeIs(403);
     }

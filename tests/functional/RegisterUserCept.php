@@ -33,7 +33,7 @@ class RegisterUserCept extends AbstractTest
             "name" => "tester",
             "accessLvl" => 1
         );
-        $this->tester->sendAjaxRequest('POST', '/register.form', $userData);
+        $this->tester->sendAjaxRequest('POST', '/api/register.form', $userData);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(array(
             "status" => "success",

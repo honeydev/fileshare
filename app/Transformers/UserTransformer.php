@@ -18,7 +18,7 @@ class UserTransformer implements TransformerInterface
         return [
             "id" => (int) $user->id,
             "email" => $user->email,
-            "avatarUri" => $user->userInfo->avatarUri,
+            "avatarUri" => $user->avatar->file->uri,
             "token" => $user->token,
             "name" => $user->userInfo->name,
             "accountStatus" => $user->userSettings->accountStatus,

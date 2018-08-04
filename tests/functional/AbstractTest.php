@@ -39,13 +39,13 @@ abstract class AbstractTest extends \Codeception\Module
 
     protected function loginUser($user)
     {
-        $this->tester->sendAjaxRequest('POST', '/login.form', array("email" => $user->email, "password" => 'password'));
+        $this->tester->sendAjaxRequest('POST', '/api/login.form', array("email" => $user->email, "password" => 'password'));
         $this->tester->seeResponseCodeIs(200);
     }
 
     protected function loginTestUser(array $userData)
     {
-        $this->tester->sendAjaxPostRequest('/login.form', array(
+        $this->tester->sendAjaxPostRequest('/api/login.form', array(
             'email' => $userData['email'], 'password' => $userData['password']
         ));
         $this->tester->seeResponseCodeIs(200);

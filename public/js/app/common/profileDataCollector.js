@@ -19,32 +19,23 @@ function ProfileDataCollector(dic) {
  */
 ProfileDataCollector.prototype.collect = function (userData) {
     try {
-        console.log(userData);
         let profileInputs = this._selectInputsFromForm();
         let changedInputs = this._calculateUserDataDiff(userData, profileInputs);
-        console.log('selected inputs', profileInputs);
         if (this._userWantChangePass(profileInputs)) {
-            console.log('yeah user try change pass');
             changedInputs = this._selectPassword(profileInputs, changedInputs);
         }
         changedInputs = this._categorizeChangedInputs(changedInputs);
         this._validateInputs(changedInputs);
         const NEW_USER_DATA = this._prepareUserData(changedInputs);
-        console.log('new user data', NEW_USER_DATA);
         return NEW_USER_DATA;
     } catch (Error) {
-        console.log('error', Error);
         if (Error instanceof EmailValidError) {
-            console.log('email error');
             this._profileFailedStatmentSetter.setFailedStatment('invalid_email');
         } else if (Error instanceof NameValidError) {
-            console.log('name error');
             this._profileFailedStatmentSetter.setFailedStatment('invalid_name');
         } else if (Error instanceof PasswordValidError) {
-            console.log('password error');
             this._profileFailedStatmentSetter.setFailedStatment('invalid_passwords');
         } else if (Error instanceof PasswordsNotEqualError) {
-            console.log('password not equal');
             this._profileFailedStatmentSetter.setFailedStatment('passwords_not_equal');
         }
     }
@@ -121,7 +112,6 @@ ProfileDataCollector.prototype._userWantChangePass = function (profileInputs) {
  * @return {object}
  */
 ProfileDataCollector.prototype._categorizeChangedInputs = function (changedInputs) {
-    console.log('inputs pre categorize', changedInputs);
     const PASSWORDS_INPUTS_ID = [
         'profileCurrentPasswordInput', 
         'profileNewPasswordInput',
@@ -130,7 +120,6 @@ ProfileDataCollector.prototype._categorizeChangedInputs = function (changedInput
     let categorizedChangedInputs = {'userData': {}, 'userPasswords': {}};
 
     for (let inputId in changedInputs) {
-        console.log('sort item', inputId);
         if (PASSWORDS_INPUTS_ID.indexOf(inputId) !== -1) {
             categorizedChangedInputs['userPasswords'][inputId] = changedInputs[inputId];
         } else {
@@ -141,7 +130,6 @@ ProfileDataCollector.prototype._categorizeChangedInputs = function (changedInput
 };
 
 ProfileDataCollector.prototype._validateInputs = function (profileInputs) {
-    console.log('inputs to validate', profileInputs);
     const VALIDATORS_MAP = {
         'profileEmailInput': 'emailValidator',
         'profileNameInput': 'nameValidator',
@@ -150,7 +138,6 @@ ProfileDataCollector.prototype._validateInputs = function (profileInputs) {
         'profileNewPasswordRepeatInput': 'passwordValidator'
     };
     const validate = (elementList) => {
-        console.log('element list', elementList);
         let validatorName, validator, valueToValidate;
 
         if (elementList.hasOwnProperty('profileNewPasswordInput')) {
@@ -164,18 +151,15 @@ ProfileDataCollector.prototype._validateInputs = function (profileInputs) {
             validatorName = '_' + VALIDATORS_MAP[input];
             validator = this[validatorName];
             valueToValidate = $(elementList[input]).val();
-            console.log('input', input, 'validator name', validatorName, 'validator', validator, 'value to validate', valueToValidate);
             this[validatorName].validate(valueToValidate);
         }
     };
 
     validate(profileInputs['userData']);
     validate(profileInputs['userPasswords']);
-    console.log('validate end');
 };
 
 ProfileDataCollector.prototype._prepareUserData = function (inputs) {
-    console.log('inputs in prepare user data', inputs);
     const USER_DATA_KEYS_MAP = {
         'profileEmailInput': 'email',
         'profileNameInput': 'name',

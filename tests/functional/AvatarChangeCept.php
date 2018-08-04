@@ -30,7 +30,6 @@ class AvatarChangeCept extends AbstractTest
             "/storage/avatars";
     }
 
-
     public function testSetUserAvatar()
     {
         $this->tester->wantTo("Set user avatar");
@@ -39,15 +38,24 @@ class AvatarChangeCept extends AbstractTest
         $user = UserFactory::createRegularUser($this->container);
         $this->tester->haveHttpHeader("Authorization", "Bearer {$user->token}");
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
-        $this->tester->sendPost('/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
+        $this->tester->sendPost('/api/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
         $imageShortName = $this->getImageShortName($image);
-        $this->tester->seeResponseContainsJson(["status" => "success",
-            "avatar" => [
-                "name" => $imageShortName
-                ]
-        ]);
+        $this->tester->seeResponseContainsJson(["status" => "success"]);
+        $response = json_decode($this->tester->grabResponse(), true);
+        $this->assertTrue(file_exists("{$this->avatarsFolder}/{$user->email}/{$response['avatar']['name']}"));
+    }
 
-        $this->assertTrue(file_exists("{$this->avatarsFolder}/{$user->email}/{$imageShortName}"));
+    public function testUserAvatarRelation()
+    {
+        $this->tester->wantTo("User has correct avatar relation");
+        $image = Image::image();
+        $imageShortName = $this->getImageShortName($image);
+        $user = UserFactory::createRegularUser($this->container);
+        $this->tester->haveHttpHeader("Authorization", "Bearer {$user->token}");
+        $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
+        $this->tester->sendPost('/api/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
+        $response = json_decode($this->tester->grabResponse(), true);
+        $this->assertEquals($user->avatar->file->uri, $response['avatar']['uri']);
     }
 
     private function getImageShortName(string $imageUri): string
@@ -59,3 +67,4 @@ class AvatarChangeCept extends AbstractTest
 
 $avatarChangeCept = new AvatarChangeCept(new \FunctionalTester($scenario));
 $avatarChangeCept->testSetUserAvatar();
+$avatarChangeCept->testUserAvatarRelation();

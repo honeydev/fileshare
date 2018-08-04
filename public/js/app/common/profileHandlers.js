@@ -8,7 +8,6 @@ function ProfileHandlers(dic) {
 }
 
 ProfileHandlers.prototype.setHandlers = function () {
-    console.log('set profile handlers');
     this.setEditDataIcons();
     this._setAvatarHandlers();
     this._closeProfile();
@@ -32,7 +31,6 @@ ProfileHandlers.prototype.setEditDataIcons = function () {
 
 ProfileHandlers.prototype._setAvatarHandlers = function () {
     $('#uploadAvatarAInProfile, #uploadAvatarAInForm').click(function (e) {
-        console.log('click on avatar');
         e.stopPropagation();
         e.preventDefault();
         $('#avatarUploadInput').trigger('click');
@@ -44,27 +42,24 @@ ProfileHandlers.prototype._setAvatarHandlers = function () {
 
 ProfileHandlers.prototype._closeProfile = function () {
     $('#profileClose').click(function (e) {
-        console.log('close modal');
+        //empty handler
     });
 };
 
 ProfileHandlers.prototype._cancelProfile = function () {
     $('#cancelPorfileButton').click({profile: this._profile}, function (e) {
-        console.log('switch to Profile');
         e.data.profile.switchToProfile();
     });
 };
 
 ProfileHandlers.prototype._changeProfile = function () {
     $('#changeProfileButton').click({profile: this._profile}, function (e) {
-        console.log('switch to form');
         e.data.profile.switchToForm();
     });
 };
 
 ProfileHandlers.prototype._applyProfile = function () {
     $('#applyProfileButton').click({profile: this._profile}, function (e) {
-        console.log('apply changes');
         e.data.profile.applyChanges();
     });
 };

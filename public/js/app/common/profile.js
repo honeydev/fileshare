@@ -3,6 +3,7 @@
 export {Profile};
 
 import {ImageTypeError} from './errors/imageTypeError';
+import {InvalidServerResponseError} from './errors/InvalidServerResponseError';
 
 function Profile(dic) {
     this._dic = dic;
@@ -37,8 +38,7 @@ Profile.prototype.removeProfile = function () {
     }
 };
 /**
- * @param {object} image File API object
- * @return {void}
+ * @throws ImageTypeError
  */
 Profile.prototype.setAvatarPreview = function (image) {
     try {
@@ -59,17 +59,13 @@ Profile.prototype.setAvatarPreview = function (image) {
         }
     }
 };
-/**
- * @return {void}
- */
+
 Profile.prototype.switchToForm = function () {
     let userData = this._filtrateUserDataForProfile(this._getUserData());
     this._profileFormSetter.switchToForm(userData);
     this._profileButtonSetters.haveChanges();
 }
-/**
- * @return {void}
- */
+
 Profile.prototype.switchToProfile = function () {
     let userData = this._getUserData();
     let profileHandlers = dic.get('ProfileHandlers')(dic);
@@ -79,7 +75,7 @@ Profile.prototype.switchToProfile = function () {
     this._profileButtonSetters.dontHaveChanges();
 };
 /**
- * @return {void}
+ * @throws InvalidServerResponseError
  */
 Profile.prototype.applyChanges = function () {
 
@@ -96,8 +92,15 @@ Profile.prototype.applyChanges = function () {
         changedProfileDataReadyToSend.userData = this._profileDataCollector.collect(CURRENT_USER_DATA);
     }
 
-    console.log('changed profile data ready to send', changedProfileDataReadyToSend);
-    this._profileUploader.upload(changedProfileDataReadyToSend);
+    try {
+        this._profileUploader.upload(changedProfileDataReadyToSend);
+    } catch (Error) {
+        if (Error instanceof InvalidServerResponseError) {
+            this._profileErrorSetter.setError(`Server error`);
+        } else {
+            throw new Error("Unknow error");
+        }
+    }
 };
 /**
  * @return {object} [userData]
@@ -107,7 +110,6 @@ Profile.prototype._getUserData = function () {
     let userModel = sessionModel.get('_user');
     let userData = userModel.getAllProperties();
     userData = this._propertyHelper.correctPropertyList(userData);
-    console.log('USER DATA', userData);
     return userData;
 };
 /**

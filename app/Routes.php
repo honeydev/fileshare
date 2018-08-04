@@ -26,6 +26,7 @@ class Routes
                 return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
             }
         ]));
+
         $app->get('/', 'MainPageController:indexPage');
         $app->group('/api', function () use ($app, $container) {
             $app->post('/upload.file', 'MainPageController:uploadFile');
@@ -42,9 +43,8 @@ class Routes
                 ->add(new \Fileshare\Middlewares\AvatarValidateMiddleware($container));
 
             $app->get('/service/checkjwt', 'ServiceController:checkJwt');
-
             $app->get('/logout.action', 'LogoutController:logout');
-            $app->get('/tests/{testName}', 'TestsController:testsPage');
         });
+        $app->get('/tests/{testName}', 'TestsController:testsPage');
     }
 }

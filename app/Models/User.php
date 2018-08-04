@@ -24,7 +24,7 @@ class User extends Model
 
     public function avatar()
     {
-        //todo implement 
+        return $this->hasOne(\Fileshare\Models\Avatar::class, 'ownerId', 'id');
     }
 
     public static function getUserById(int $id): User

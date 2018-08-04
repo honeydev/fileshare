@@ -29,9 +29,9 @@ class AvatarValidateMiddleware extends AbstractMiddleware
         try {
             $avatarFile = $request->getUploadedFiles()["avatar"];
             $this->imageValidator->validate($avatarFile);
-            $next($request, $response);
-            return $response;
+            $response = $next($request, $response);
         } catch (ValidateException $e) {
+            exit("error");
             $response = $this->sendErrorWithJson([
                 'status' => 'faield',
                 'errorType' => 'invalid_file',
@@ -40,5 +40,6 @@ class AvatarValidateMiddleware extends AbstractMiddleware
             ], $response);
             return $response;
         }
+        return $response;
     }
 }

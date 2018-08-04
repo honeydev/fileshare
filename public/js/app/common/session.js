@@ -44,7 +44,7 @@ Session.prototype.setAuthorizedUserSession = function (user) {
     this._sessionModel.set('_authorizeStatus', true);
     this._sessionModel.set('_accessLvl', user.get('_accessLvl'));
     this._sessionModel.set('_user', user);
-    this._localStorage.setItem('SessionModel', this._sessionModel);
+    this.saveSession(this._sessionModel);
 };
 /** 
  * @param  {object} sessionData 
@@ -88,6 +88,11 @@ Session.prototype._checkTokenOnExpire = function () {
         }
     };
     this._ajax.doAction(REQUEST_DATA);
+};
+
+
+Session.prototype.saveSession = function () {
+    this._localStorage.setItem("SessionModel", this._sessionModel);
 };
 
 Session.prototype.destroySession = function () {

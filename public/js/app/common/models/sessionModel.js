@@ -23,7 +23,7 @@ function SessionModel() {
     /** @property {object} instance of SessionModel */
     SessionModel._sessionModel = null;
 }
-/** realise patter singletone */
+/** realise pattern singletone */
 SessionModel.getInstance = function () {
     if (SessionModel._sessionModel === null || SessionModel._sessionModel === undefined) {
         SessionModel._sessionModel = new SessionModel();

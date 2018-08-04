@@ -4,25 +4,19 @@ export {ProfileUploader};
 
 import {InvalidServerResponseError} from './errors/InvalidServerResponseError';
 
-
 function ProfileUploader(dic) {
     this._dic = dic;
     this._ajax = dic.get('Ajax')(dic);
     this._sessionModel = dic.get('SessionModel')();
-    // console.log("session model", this._sessionModel);
 }
 /**
  * @param {object} key-value object with keys "avatar" or "userData"
- * @return {void}
  */
 ProfileUploader.prototype.upload = function (profileData) {
-
-    console.log('praofile data', profileData);
     const token = this._sessionModel.get('_user').get('_token');
 
     if (profileData.hasOwnProperty('avatar')) {
         const AVATAR = profileData.avatar;
-
         this._ajax.sendFile({
             data: {avatar: AVATAR},
             url: location.host + "/api/uploadavatar.file",
@@ -35,7 +29,6 @@ ProfileUploader.prototype.upload = function (profileData) {
 
     if (profileData.hasOwnProperty('userData')) {
         profileData.userData.targetProfileId = this._sessionModel.get('_user').get('_id');
-        console.log(profileData.userData);
         this._ajax.sendJSON({
             url: location.host + "/api/profile.form",
             method: "POST",
@@ -52,27 +45,28 @@ ProfileUploader.prototype.upload = function (profileData) {
 ProfileUploader.prototype._avatarHandler = function (response) {
     let user = this._sessionModel.get("_user");
     let session = this._dic.get("Session")(dic);
+    let profile = this._dic.get("Profile")(this._dic);
     if (response.status === "success") {
         user.set("_avatarUri", response.avatar.uri);
-        // session.setAuthorizedUserSession(user);
-        let profile = this._dic.get("Profile")(this._dic);
+        this._sessionModel.set("_user", user);
+        session.saveSession();
         profile.switchToProfile();
-        console.log(this._sessionModel.get("_user"))
     } else if (response.status === "failed") {
-        console.log(response);
+        throw new InvalidServerResponseError("Serever Error");
+    } else {
+        throw new InvalidServerResponseError("Server Error");
     }
 };
 
 ProfileUploader.prototype._userDataHandler = function (response) {
-    console.log(this);
     let profile = this._dic.get("Profile")(this._dic);
     let user = this._dic.get("User")(this._dic);
     if (response.status === "success") {
         user.initNewUser(response.user);
         profile.switchToProfile();
     } else if (response.status === "failed") {
-
+        throw new InvalidServerResponseError("Server Error");
     } else {
-        throw new Error(`Invalid response status ${response.status}`);
+        throw new InvalidServerResponseError("Server Error");
     }
 };
