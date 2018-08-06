@@ -15,14 +15,21 @@ class UserTransformer implements TransformerInterface
 
     private static function transformUserObjectToData(User $user): array
     {
-        return [
+        $userData = [
             "id" => (int) $user->id,
             "email" => $user->email,
-            "avatarUri" => $user->avatar->file->uri,
             "token" => $user->token,
             "name" => $user->userInfo->name,
             "accountStatus" => $user->userSettings->accountStatus,
             "accessLvl" => $user->userSettings->accessLvl
         ];
+
+        if (empty($user->avatar)) {
+            $userData['avatarUri'] = null;
+        } else {
+            $userData['avatarUri'] = $user->avatar->file->uri;
+        }
+
+        return $userData;
     }
 }

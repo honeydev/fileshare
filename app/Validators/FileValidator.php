@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Fileshare\Validators;
 
 use \Codeception\Util\Debug as debug;
-use Fileshare\Exceptions\ValidateException;
+use Fileshare\Exceptions\{ValidateException, FileTypeException};
 use \Slim\Http\UploadedFile;
 
 abstract class FileValidator extends AbstractValidator
@@ -20,6 +20,29 @@ abstract class FileValidator extends AbstractValidator
      * @property {array}
      */
     protected $allowedExtensions;
+    /**
+     * @property int
+     */
+    protected $maxFileSize;
+
+    public function __construct(int $maxFileSize)
+    {
+        $this->maxFileSize = $maxFileSize;
+    }
+
+    public static function validateAccordType(UploadedFile $file, string $fileType, int $maxFileSize): string
+    {
+        if ($fileType === "image") {
+            $validator = new ImageValidator($maxFileSize);
+        } else {
+            $validator = new UnknownFileValidator($maxFileSize);
+            $fileType = 'unknown';
+        }
+
+        $validator->validate($file);
+        return $fileType;
+    }
+
     /**
      * @throws ValidateException
      */
@@ -37,7 +60,7 @@ abstract class FileValidator extends AbstractValidator
     protected function checkMimeType(UploadedFile $file)
     {
         if (!in_array($file->getClientMediaType(), $this->allowedMimeTypes)) {
-            throw new ValidateException("File " . $file->getClientFilename() . " has invalid mime type " 
+            throw new FileTypeException("File " . $file->getClientFilename() . " has invalid mime type " 
                 . $file->getClientFilename());
         }
     }
@@ -48,8 +71,12 @@ abstract class FileValidator extends AbstractValidator
         return rtrim(substr($fileName, $dotPosition + 1, strlen($fileName)));
     }
 
-    protected function checkFileSize(UploadedFile $file, $maxSize)
+    protected function checkFileSize(UploadedFile $file, $maxSize = null)
     {
+        if (empty($maxSize)) {
+            $maxSize = $this->maxFileSize;
+        }
+
         $fileSize = $file->getSize();
         if ($fileSize === null) {
             throw new ValidateException("Invalid uploaded file");

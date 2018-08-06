@@ -13,8 +13,9 @@ use \Slim\Http\UploadedFile;
 
 class ImageValidator extends FileValidator
 {
-    public function __construct()
+    public function __construct(int $maxFileSize)
     {
+        parent::__construct($maxFileSize);
         $this->allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
         $this->allowedMimeTypes =  array(
             'image/jpeg', 
@@ -25,7 +26,6 @@ class ImageValidator extends FileValidator
             'image/vnd.microsoft.icon/'
         );
     }
-
     /**
      * @param  \Slim\Http\UploadedFile;
      * @throws ValidateException
@@ -34,6 +34,6 @@ class ImageValidator extends FileValidator
     {
         $this->checkExtension($image);
         $this->checkMimeType($image);
-        $this->checkFileSize($image, 8000000);
+        $this->checkFileSize($image);
     }
 }

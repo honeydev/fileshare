@@ -34,4 +34,12 @@ class User extends Model
         }
         return $user;
     }
+
+    public static function getUserByEmail(string $email): User
+    {
+        if (empty($user = User::where("email", $email)->first())) {
+            throw new \Fileshare\Exceptions\DatabaseException("User with email {$email} not found in database");
+        }
+        return $user;
+    }
 }

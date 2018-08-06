@@ -29,6 +29,6 @@ $container['PasswordEqualValidator'] = function () {
     return new Fileshare\Validators\PasswordsEqualValidator();
 };
 
-$container['ImageValidator'] = function () {
-    return new Fileshare\Validators\ImageValidator();
+$container['ImageValidator'] = function () use ($container) {
+    return new Fileshare\Validators\ImageValidator($container->get("settings")["maxFileSize"]);
 };

@@ -16,20 +16,24 @@ class Routes
             "path" => [
                 "/api/uploadavatar.file", 
                 "/api/profile.form", 
-                "/api/service/checkjwt"
+                "/api/service/checkjwt",
+                "/api/uploadfile/registred.file"
             ],
             "logger" => $accessLogger,
             "secret" => $secret,
             "algorithm" => ["HS256"],
             "error" => function ($request, $response, $args) {
-
                 return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
             }
         ]));
 
         $app->get('/', 'MainPageController:indexPage');
+        $app->get('/getfile/{fileName}', 'FilePageController:getFile');
         $app->group('/api', function () use ($app, $container) {
-            $app->post('/upload.file', 'MainPageController:uploadFile');
+            $app->post('/uploadfile/annonym.file', 'MainPageController:uploadFileAnnonym')
+                ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));
+            $app->post('/uploadfile/registred.file', 'MainPageController:uploadFileRegistred')
+                ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));
             $app->post('/login.form', 'LoginController:login')
                 ->add(new \Fileshare\Middlewares\LoginAuthMiddleware($container))
                 ->add(new \Fileshare\Middlewares\LoginValidateMiddleware($container));

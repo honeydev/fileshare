@@ -40,6 +40,7 @@ class AvatarChangeCept extends AbstractTest
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
         $this->tester->sendPost('/api/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
         $imageShortName = $this->getImageShortName($image);
+        $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(["status" => "success"]);
         $response = json_decode($this->tester->grabResponse(), true);
         $this->assertTrue(file_exists("{$this->avatarsFolder}/{$user->email}/{$response['avatar']['name']}"));
@@ -49,19 +50,14 @@ class AvatarChangeCept extends AbstractTest
     {
         $this->tester->wantTo("User has correct avatar relation");
         $image = Image::image();
-        $imageShortName = $this->getImageShortName($image);
+        $imageShortName = $this->getFileShortName($image);
         $user = UserFactory::createRegularUser($this->container);
         $this->tester->haveHttpHeader("Authorization", "Bearer {$user->token}");
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
         $this->tester->sendPost('/api/uploadavatar.file', ["inline" => 0], ["avatar" => $image]);
+        $this->tester->seeResponseCodeIs(200);
         $response = json_decode($this->tester->grabResponse(), true);
         $this->assertEquals($user->avatar->file->uri, $response['avatar']['uri']);
-    }
-
-    private function getImageShortName(string $imageUri): string
-    {
-        $uri = explode('/', $imageUri);
-        return $uri[count($uri) - 1];
     }
 }
 

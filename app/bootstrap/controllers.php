@@ -31,3 +31,6 @@ $container['ServiceController'] = function () use ($container) {
     return new Fileshare\Controllers\ServiceController($container);
 };
 
+$container['FilePageController'] = function () use ($container) {
+    return new Fileshare\Controllers\FilePageController($container);
+};

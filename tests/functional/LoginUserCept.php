@@ -26,7 +26,7 @@ class LoginUserCept extends AbstractTest
         $this->tester->wantTo('Login user');
         debug::debug($user->testPassword);
         $this->tester->sendAjaxRequest('POST', '/api/login.form', array("email" => $user->email, "password" => $user->nCryptedPassword));
-        //$this->tester->seeResponseCodeIs(200);
+        $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(array("status" => "success", "loginData" => [
                 "id" => $user->id,
                 "email" => $user->email,

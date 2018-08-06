@@ -22,5 +22,9 @@ return array(
        'hostname' => 'fileshare.loc'
     ),
     'secretKey' => '8ryR.h6vc58wEk3GxQpJS.gSaTnuDHFEkITfb4//4OTHUGW5UPkgS',
-    'appFolder' => dirname(__DIR__)
+    'appFolder' => dirname(__DIR__),
+    /*
+     * Max allow uploaded file size in bytes
+     */
+    'maxFileSize' => 104857600
 );

@@ -29,22 +29,15 @@ class UploadsMovmentService
      */
     public function movment(UploadedFile $file, array $params): array
     {
-        $ownerEmail = $params["owner"]->email;
-        $targetDir = "{$this->storageDir}{$params['category']}/{$ownerEmail}";
+        $ownerFolder = $params["owner"]->email;
+        $targetDir = "{$this->storageDir}{$params['category']}/{$ownerFolder}";
 
         $this->createDir($targetDir);
-
-        if ($file->getError() !== UPLOAD_ERR_OK) {
-            throw new IOException("Has upload Error " . $file->getError());
-        }
-
-        if (!is_writable($targetDir)) {
-            throw new IOException("There is no write access to directory {$this->storageDir}");
-        }
+        $this->checkMovmentAvailability($file, $targetDir);
 
         $name = $this->cryptoService->getUniqueMd5Token() . "_" . $file->getClientFilename();
         $moveName = "{$targetDir}/{$name}";
-        $shortUri = "/storage{$params['category']}/{$ownerEmail}/{$name}";
+        $shortUri = "/storage{$params['category']}/{$ownerFolder}/{$name}";
         $file->moveTo($moveName);
         return [
             "name" => $name,
@@ -52,6 +45,17 @@ class UploadsMovmentService
             "size" => $file->getSize(),
             "mime" => $file->getClientMediaType()
         ];
+    }
+
+    private function checkMovmentAvailability($file, $targetDir)
+    {
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new IOException("Has upload Error " . $file->getError());
+        }
+
+        if (!is_writable($targetDir)) {
+            throw new IOException("There is no write access to directory {$this->storageDir}");
+        }
     }
 
     private function createDir(string $directory)

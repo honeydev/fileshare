@@ -42,7 +42,6 @@ class UserFactory
     {
         $userInfo = UserInfo::create([
             'name' => self::$faker->name,
-            'avatarUri' => self::$faker->url,
             'userId' => $user->id
         ]);
         $user->userInfo()->save($userInfo);
