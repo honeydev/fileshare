@@ -48,7 +48,7 @@ class MainPageController extends AbstractController
             "type" => $fileType
             ]
         );
-        return $response->withJson(["status" => "success", "fileUrl" => "/getfile/{$file->name}"], 200);
+        return $response->withJson(["status" => "success", "fileUrl" => "/file/{$file->name}"], 200);
     }
 
     public function uploadFileRegistred(Request $request, Response $response)
@@ -62,6 +62,6 @@ class MainPageController extends AbstractController
             "category" => "/uploads",
             "type" => $fileType
         ]);
-        return $response->withJson(["status" => "success", "fileUrl" => "/getfile/{$file->name}"], 200);
+        return $response->withJson(["status" => "success", "fileUrl" => "/file/{$file->name}"], 200);
     }
 }

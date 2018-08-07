@@ -28,7 +28,8 @@ class Routes
         ]));
 
         $app->get('/', 'MainPageController:indexPage');
-        $app->get('/getfile/{fileName}', 'FilePageController:getFile');
+        $app->get('/file/{fileName}', 'FilePageController:filePage');
+        $app->get('/file/get/{fileName}', 'FilePageController:getFile');
         $app->group('/api', function () use ($app, $container) {
             $app->post('/uploadfile/annonym.file', 'MainPageController:uploadFileAnnonym')
                 ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));
