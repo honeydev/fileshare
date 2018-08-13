@@ -58,10 +58,10 @@ Ajax.prototype.doAction = function (requestSettings) {
 };
 
 Ajax.prototype.sendFile = function (requestSettings) {
-    console.log(requestSettings)
+    console.log("Send file");
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     let formData = new FormData();
-    formData.append('avatar', requestSettings.data.avatar);
+    formData.append('file', requestSettings.data.file);
     $.ajax({
         url: URL,
         method: "POST",

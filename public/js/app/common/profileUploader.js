@@ -13,16 +13,16 @@ function ProfileUploader(dic) {
  * @param {object} key-value object with keys "avatar" or "userData"
  */
 ProfileUploader.prototype.upload = function (profileData) {
-    const token = this._sessionModel.get('_user').get('_token');
+    const TOKEN = this._sessionModel.get('_user').get('_token');
 
     if (profileData.hasOwnProperty('avatar')) {
         const AVATAR = profileData.avatar;
         this._ajax.sendFile({
-            data: {avatar: AVATAR},
+            data: {file: AVATAR},
             url: location.host + "/api/uploadavatar.file",
             responseHandler: this._avatarHandler.bind(this),
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${TOKEN}`
             }
         });
     }

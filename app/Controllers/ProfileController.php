@@ -63,7 +63,7 @@ class ProfileController extends AbstractController
 
     public function uploadAvatar(Request $request, Response $response)
     {
-        $avatarFile = $request->getUploadedFiles()["avatar"];
+        $avatarFile = $request->getUploadedFiles()["file"];
         $jwt = $request->getAttribute("token");
         $owner = User::getUserById($jwt->sub);
         try {

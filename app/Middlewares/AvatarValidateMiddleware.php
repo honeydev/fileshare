@@ -27,7 +27,7 @@ class AvatarValidateMiddleware extends AbstractMiddleware
     public function __invoke(Request $request, Response $response, $next)
     {
         try {
-            $avatarFile = $request->getUploadedFiles()["avatar"];
+            $avatarFile = $request->getUploadedFiles()["file"];
             $this->imageValidator->validate($avatarFile);
             $response = $next($request, $response);
         } catch (ValidateException $e) {

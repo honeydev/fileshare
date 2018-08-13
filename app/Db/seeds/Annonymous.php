@@ -23,6 +23,7 @@ class Annonymous extends AbstractSeed
      */
     public function run()
     {
+        $this->schema = (new Capsule)->schema();
         DB::table('users')->insert([
             'email' => str_random(10).'@gmail.com',
             'password' => bcrypt('secret'),
