@@ -4,7 +4,7 @@ export {MainPageHandlers};
 
 function MainPageHandlers(dic) {
     this._dic = dic;
-    this._fileUploader = dic.get('FileUploader')(dic);
+    this._fileForm = dic.get("FileForm")(dic);
     this._uploadSectionSetter = dic.get('UploadSectionSetter')(dic);
     console.log('uploadSetter', this._uploadSectionSetter);
 }
@@ -19,7 +19,7 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
     $("#dndWrap").bind('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this._fileUploader.uploadFile(e.originalEvent.dataTransfer.files[0]);
+        this._fileForm.send(e.originalEvent.dataTransfer.files[0]);
         this._uploadSectionSetter.unsetDragNDropStyles();
         console.log('drop');
     });
@@ -43,6 +43,6 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
 MainPageHandlers.prototype._setUploadFileHandler = function() {
 
     $('#inputFile').bind('change', (e) => {
-        this._fileUploader.uploadFile($('#inputFile').prop('files')[0]);
+        this._fileForm.send($('#inputFile').prop('files')[0]);
     });
 };

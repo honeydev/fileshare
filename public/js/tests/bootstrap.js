@@ -17,6 +17,7 @@ import {RegisterFormTest} from './registerFormTest';
 import {RegisterFormSetterTest} from './setters/registerFormSetterTest';
 import {ProfileDataCollectorTest} from './profileDataCollectorTest';
 import {ProfileFailedStatmentSetterTest} from './setters/profileFailedStatmentSetterTest';
+import {AjaxTest} from './ajaxTest';
 import {dic} from 'dic';
 
 let tests = {};
@@ -32,6 +33,7 @@ tests['loginFormSetterTest'] = new LoginFormSetterTest(dic);
 tests['registerFormSetterTest'] = new RegisterFormSetterTest(dic);
 tests['profileDataCollectorTest'] = new ProfileDataCollectorTest(dic);
 tests['profileFailedStatmentSetterTest'] = new ProfileFailedStatmentSetterTest(dic);
+tests['ajaxTest'] = new AjaxTest(dic);
 
 console.log(TEST_NAME, tests['profileUploaderTest']);
 

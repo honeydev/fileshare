@@ -98,7 +98,7 @@ Profile.prototype.applyChanges = function () {
         if (Error instanceof InvalidServerResponseError) {
             this._profileErrorSetter.setError(`Server error`);
         } else {
-            throw new Error("Unknow error");
+            throw Error;
         }
     }
 };

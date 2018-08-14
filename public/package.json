@@ -13,6 +13,7 @@
     "bootstrap-webpack": "0.0.6",
     "chai": "^4.1.2",
     "dic": "0.0.1",
+    "faker": "^4.1.0",
     "fs": "0.0.1-security",
     "jquery": "^3.2.1",
     "less": "^3.0.0-alpha.3",

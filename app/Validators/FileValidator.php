@@ -51,7 +51,7 @@ abstract class FileValidator extends AbstractValidator
         $extension = $this->calculateExtension($file->getClientFilename());
 
         if (!in_array($extension, $this->allowedExtensions)) {
-            throw new ValidateException("File " . $this->getClientFilename() . "has invalid extension {$extension}");
+            throw new ValidateException("File " . $file->getClientFilename() . "has invalid extension {$extension}");
         }
     }
     /**

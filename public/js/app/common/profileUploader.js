@@ -35,7 +35,7 @@ ProfileUploader.prototype.upload = function (profileData) {
             requestData: profileData.userData,
             responseHandler: this._userDataHandler.bind(this),
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${TOKEN}`,
                 "Content-type": "application/json"
             }
         });

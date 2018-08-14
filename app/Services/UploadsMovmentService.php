@@ -54,7 +54,11 @@ class UploadsMovmentService
         }
 
         if (!is_writable($targetDir)) {
-            throw new IOException("There is no write access to directory {$this->storageDir}");
+            chmod($targetDir, 0777);
+        }
+
+        if (!is_writable($targetDir)) {
+            throw new IOException("There is no write access to directory {$targetDir}");
         }
     }
 
