@@ -11,10 +11,10 @@ use \Codeception\Util\Debug as debug;
 use Fileshare\Exceptions\ValidateException;
 use \Slim\Http\UploadedFile;
 
-class ImageValidator extends FileValidator
+class UnknownFileValidator extends FileValidator
 {
     public  function validate($image)
     {
-        $this->checkFileSize($image, 8000000);
+        $this->checkFileSize($image);
     }
 }

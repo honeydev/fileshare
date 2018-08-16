@@ -12,7 +12,11 @@ ProgressBar.prototype.activate = function () {
     $("#fileForm").empty();
     $("#fileForm").html(bar);
 };
-
-ProgressBar.prototype.setProgress = function () {
-
+/**
+ * @param {int} progress
+ */
+ProgressBar.prototype.setProgress = function (progress) {
+    $("#progressBar").attr("aria-valuenow", progress);
+    $("#progressBar").css("width", `${progress}%`);
+    $("#progressBar").text(`${progress}%`);
 };

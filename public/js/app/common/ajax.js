@@ -72,6 +72,7 @@ Ajax.prototype.sendFile = function (requestSettings) {
         contentType: false,
         success: requestSettings.responseHandler,
         headers: requestSettings.headers,
+        xhr: requestSettings.xhr,
         error: (qXHR, textStatus, errorThrown) => {
             try {
                 requestSettings.responseHandler(JSON.parse(qXHR.responseText));
