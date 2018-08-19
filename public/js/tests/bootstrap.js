@@ -2,7 +2,9 @@
 
 export {bootstrap};
 
+import 'dic';
 import {commonBootstrap} from '../app/common/commonBootstrap';
+import {mainPageBootstrap} from '../app/mainpage/mainPageBootstrap';
 import {mocha} from 'mocha';
 import {assert} from 'chai';
 import url from 'mocha/mocha.css';
@@ -17,12 +19,14 @@ import {RegisterFormTest} from './registerFormTest';
 import {RegisterFormSetterTest} from './setters/registerFormSetterTest';
 import {ProfileDataCollectorTest} from './profileDataCollectorTest';
 import {ProfileFailedStatmentSetterTest} from './setters/profileFailedStatmentSetterTest';
+import {ProgressBarTest} from './ProgressBarTest';
 import {AjaxTest} from './ajaxTest';
 import {dic} from 'dic';
 
 let tests = {};
 mocha.setup('bdd');
 commonBootstrap();
+mainPageBootstrap();
 
 tests['fileValidatorTest'] = new FileValidatorTest(dic);
 tests['sessionModelTest'] = new SessionModelTest(dic);
@@ -33,6 +37,7 @@ tests['loginFormSetterTest'] = new LoginFormSetterTest(dic);
 tests['registerFormSetterTest'] = new RegisterFormSetterTest(dic);
 tests['profileDataCollectorTest'] = new ProfileDataCollectorTest(dic);
 tests['profileFailedStatmentSetterTest'] = new ProfileFailedStatmentSetterTest(dic);
+tests['progressBarTest'] = new ProgressBarTest(dic);
 tests['ajaxTest'] = new AjaxTest(dic);
 
 console.log(TEST_NAME, tests['profileUploaderTest']);

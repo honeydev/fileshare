@@ -5,10 +5,9 @@ import {mainPageBootstrap} from './mainPageBootstrap';
 import {MainPageHandlers} from './mainPageHandlers';
 
 function mainPage() {
-	mainPageBootstrap(dic);
-	let mainPageHandlers = new MainPageHandlers(dic);
-	console.log(mainPageHandlers._dragNDropUploader);
-	mainPageHandlers.setHandlers();
+    mainPageBootstrap();
+    let mainPageHandlers = new MainPageHandlers(dic);
+    mainPageHandlers.setHandlers();
 }
 
 common();

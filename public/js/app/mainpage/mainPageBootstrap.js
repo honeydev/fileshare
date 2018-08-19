@@ -2,14 +2,16 @@
 
 export {mainPageBootstrap};
 
+import {dic} from 'dic';
 import {FileUploader} from './fileUploader';
 import {FileValidator} from './fileValidator';
 import {UploadSectionSetter} from './uploadSectionSetter';
 import {FileForm} from './fileForm';
 import {FileFormSetter} from './setters/fileFormSetter';
 import {ProgressBar} from "./progressBar";
+import {FileUploadHandler} from "./responseHandlers/fileUploadHandler";
 
-function mainPageBootstrap(dic) {	
+function mainPageBootstrap() {	
     dic.add('FileUploader', function (...args) {
         return new FileUploader(...args);
     });
@@ -27,5 +29,8 @@ function mainPageBootstrap(dic) {
     });
     dic.add("ProgressBar", function (...args) {
         return new ProgressBar(...args);
+    });
+    dic.add("FileUploadHandler", function (...args) {
+        return new FileUploadHandler(...args);
     });
 }
