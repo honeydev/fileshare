@@ -11,7 +11,6 @@ function BaseTest() {
  * @param {function} mocha test framework function for async code
  */
 BaseTest.prototype._createDomEnv = function (url, element, done) {
-    console.log(url)
     if (!this._hasHttpInUrl(url)) {
         url = 'http://'+url;
     }

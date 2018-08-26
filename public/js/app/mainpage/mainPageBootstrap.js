@@ -10,6 +10,7 @@ import {FileForm} from './fileForm';
 import {FileFormSetter} from './setters/fileFormSetter';
 import {ProgressBar} from "./progressBar";
 import {FileUploadHandler} from "./responseHandlers/fileUploadHandler";
+import {UploadErrorHandler} from './errorHandlers/uploadErrorHandler';
 
 function mainPageBootstrap() {	
     dic.add('FileUploader', function (...args) {
@@ -33,4 +34,7 @@ function mainPageBootstrap() {
     dic.add("FileUploadHandler", function (...args) {
         return new FileUploadHandler(...args);
     });
+    dic.add('UploadErrorHandler', function (...args) {
+        return new UploadErrorHandler(...args);
+    })
 }

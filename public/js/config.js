@@ -1,5 +1,7 @@
 export {CONFIG};
 
 const CONFIG = {
-    "debug": true
+    "debug": true,
+    "maxFileSize": 104857600,
+    "maxFileNameLen": 100
 };

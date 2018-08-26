@@ -10,5 +10,4 @@ function mainPage() {
     mainPageHandlers.setHandlers();
 }
 
-common();
 mainPage();

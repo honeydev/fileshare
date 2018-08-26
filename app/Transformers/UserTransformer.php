@@ -19,15 +19,21 @@ class UserTransformer implements TransformerInterface
             "id" => (int) $user->id,
             "email" => $user->email,
             "token" => $user->token,
-            "name" => $user->userInfo->name,
-            "accountStatus" => $user->userSettings->accountStatus,
-            "accessLvl" => $user->userSettings->accessLvl
         ];
 
         if (empty($user->avatar)) {
             $userData['avatarUri'] = null;
         } else {
             $userData['avatarUri'] = $user->avatar->file->uri;
+        }
+
+        if (!empty($user->userInfo)) {
+            $userData['name'] = $user->userInfo->name;
+        } 
+
+        if (!empty($user->userSettings)) {
+            $userData['accountStatus'] = $user->userSettings->accountStatus;
+            $userData['accessLvl'] = $user->userSettings->accessLvl;
         }
 
         return $userData;

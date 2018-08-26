@@ -21,19 +21,18 @@ class FilePageController extends AbstractController
 
     public function filePage(Request $request, Response $response, array $args)
     {
+
         $fileName = $args['fileName'];
         $file = File::getFileByName($fileName);
         $owner = UserTransformer::transform($file->owner);
-        exit();
+        $this->viewData['title'] = "{$this->viewData['title']} - {$file->name}";
+        $this->viewData['page'] = "file";
+        $this->viewData['owner'] = $owner;
+        $this->viewData['file'] = $file->toArray();
         return $this->container->view->render(
             $response,
             "index.twig",
-            [
-                'title' => "Fileshare {$file->name}", 
-                "page" => "file", 
-                "file" => $file->toArray(),
-                "owner" => $owner
-            ]
+            $this->viewData
             );
     }
 

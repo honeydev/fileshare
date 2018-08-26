@@ -6,6 +6,7 @@ const webpack = require('webpack');
 module.exports = {
     context: __dirname + '/js/app/',
     entry: {
+        common: './common/common',
         main: './mainpage/main',
         tests: '../tests/bootstrap'
     },

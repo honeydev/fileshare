@@ -19,3 +19,5 @@ let common = function () {
     let commonHandlers = new CommonHandlers(dic);
     commonHandlers.setHandlers();
 };
+
+common();

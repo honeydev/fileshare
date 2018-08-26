@@ -40,9 +40,7 @@ FileUploader.prototype.uploadAuthorized = function (file) {
         });
     } catch (Error) {
         if (Error instanceof InvalidFileTypeError) {
-    		console.log('Invalid file format');
-    		console.log(this._uploadSectionSetter);
-    		console.log(this._uploadSectionSetter.setInvalidFileFormatModal());
+            
     	} else {
             throw Error;
         }

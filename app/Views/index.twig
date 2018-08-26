@@ -17,7 +17,6 @@
     {% include 'flash_message.html' %}
 </header>
 <main>
-
     {% if page == 'main_page' %}
         {% include 'upload_section.twig' %}
     {% elseif page == 'file_browse' %}
@@ -27,8 +26,11 @@
     {% elseif page == 'file' %}
         {% include 'file.twig' %}
     {% endif %}
-
 </main>
-    <script src="js/public/main.js"></script>
+    {% if page == 'main_page' %}
+        <script src="http://{{hostname}}/js/public/main.js"></script>
+    {% elseif page == 'file' %}
+        <script src="http://{{hostname}}/js/public/common.js"></script>
+    {% endif %}
 </body>
 </html>

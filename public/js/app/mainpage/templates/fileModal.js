@@ -1,0 +1,5 @@
+const fileModalTemplate = `
+
+`;
+
+export {fileModalTemplate};

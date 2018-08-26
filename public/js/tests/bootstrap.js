@@ -20,6 +20,8 @@ import {RegisterFormSetterTest} from './setters/registerFormSetterTest';
 import {ProfileDataCollectorTest} from './profileDataCollectorTest';
 import {ProfileFailedStatmentSetterTest} from './setters/profileFailedStatmentSetterTest';
 import {ProgressBarTest} from './ProgressBarTest';
+import {AlertQueueTest} from './alertQueueTest';
+import {AlertTest} from './alertTest';
 import {AjaxTest} from './ajaxTest';
 import {dic} from 'dic';
 
@@ -28,7 +30,7 @@ mocha.setup('bdd');
 commonBootstrap();
 mainPageBootstrap();
 
-tests['fileValidatorTest'] = new FileValidatorTest(dic);
+// tests['fileValidatorTest'] = new FileValidatorTest(dic);
 tests['sessionModelTest'] = new SessionModelTest(dic);
 tests['userFactoryTest'] = new UserFactoryTest(dic);
 tests['loginFormTest'] = new LoginFormTest(dic);
@@ -39,15 +41,17 @@ tests['profileDataCollectorTest'] = new ProfileDataCollectorTest(dic);
 tests['profileFailedStatmentSetterTest'] = new ProfileFailedStatmentSetterTest(dic);
 tests['progressBarTest'] = new ProgressBarTest(dic);
 tests['ajaxTest'] = new AjaxTest(dic);
-
-console.log(TEST_NAME, tests['profileUploaderTest']);
+tests['alertTest'] = new AlertTest(dic);
+tests['alertQueueTest'] = new AlertQueueTest(dic);
 
 if (TEST_NAME === 'all') {
     for (let test in tests) {
         tests[test].test();
     }
-} else {
+} else if (tests.hasOwnProperty(TEST_NAME)) {
     tests[TEST_NAME].test();
+} else {
+    alert(`Test ${TEST_NAME} not found`);
 }
 
 mocha.run();

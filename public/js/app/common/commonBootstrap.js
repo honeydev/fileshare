@@ -39,6 +39,8 @@ import {AdminModel} from './models/adminModel';
 import {UrlHelper} from './helpers/urlHelper';
 import {ProfileFailedStatmentSetter} from './setters/profileFailedStatmentSetter';
 import {ProfileUploader} from './profileUploader';
+import {Alert} from './alert.js';
+import {AlertQueue} from './alertQueue';
 import {Debugger} from "./debugger";
 
 function commonBootstrap() {
@@ -153,5 +155,11 @@ function commonBootstrap() {
     });
     dic.add('UrlHelper', function (...args) {
         return new UrlHelper(...args);
+    });
+    dic.add('Alert', function (...args) {
+        return new Alert(...args);
+    });
+    dic.add('AlertQueue', function (...args) {
+        return new AlertQueue(...args);
     });
 }

@@ -1,38 +1,38 @@
 @import url('profile.css');
 
 #logOutA {
-	display: none;
+    display: none;
 }
 
 #profileA {
-	display: none;
+    display: none;
 }
 
 .navbar {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .navbar-collapse {
-	overflow:  hidden;
+    overflow:  hidden;
 }
 
 .caption a {
-	padding-left: 5px;
+    padding-left: 5px;
 }
 
 .caption  .downloadsCounter, .caption  .upHand, .caption  .downHand {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 
 .grid {
-	border: 1px solid #ddd;
-	border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .mainSpace {
-	padding-top: 200px;
-	margin: 0;
-	height: 92vh;
+    padding-top: 200px;
+    margin: 0;
+    height: 92vh;
 }
 
 .dndWrap {
@@ -55,21 +55,64 @@
 }
 
 .dndMessage {
-	position: absolute;
-	top: 45%;
-	width: 100%;
-	text-align: center;
-	font-size: 60px;
-	color: #337ab7;
-	z-index: 5;
-	opacity: 1;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    font-size: 60px;
+    color: #337ab7;
+    z-index: 5;
+    opacity: 1;
 }
 
 .thumbnail .preview {
-	padding-top: 5%;
-	padding-bottom: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 div {
-	word-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.alertsQueue {
+    position: absolute;
+    bottom: 0%;
+    right: 3%;
+    width: 20%;
+}
+
+.fileSpace {
+    min-height: 200px;
+    border: 1px solid black;
+    padding-top: 30px;
+}
+
+.fileSpace h4 .userAvatarFile {
+    height: 35px;
+    width: 35px;
+}
+
+.fileSpace .fileImage {
+    height: 100px;
+    width: 100px;
+}
+
+.fileSpace .fileInfoList {
+    padding-top: 20px;
+}
+
+.fileSpace .buttonsFilePage {
+    padding-top: 10px;
+}
+
+@media screen and (min-width: 769px) {
+    
+}
+
+@media screen and (min-width: 960px) {
+    
+}
+
+@media only screen and (min-width:1440px){
+    /* styles for browsers larger than 1440px; */
 }

@@ -4,11 +4,14 @@ namespace Fileshare\Controllers;
 
 abstract class AbstractController
 {
-    /** @property object */
-    protected $sessionModel;
+    /**
+     *@property {array} viewData
+     */
+    protected $viewData = [];
 
     public function __construct($container)
     {
         $this->container = $container;
+        $this->viewData = array_merge($this->viewData, $container->get('settings')['appInfo']);
     }
 }

@@ -22,7 +22,7 @@ class FilePageCept extends AbstractTest
         $this->appFolder = dirname(dirname(__DIR__));
     }
 
-    public function testFilePageView()
+    public function testAnonnymFilePageView()
     {
         $this->tester->wantTo("Upload valid file annonym and get file page with correct data");
         $image = Image::image();
@@ -61,5 +61,5 @@ class FilePageCept extends AbstractTest
 }
 
 $filePageCept = new FilePageCept(new \FunctionalTester($scenario));
-$filePageCept->testFilePageView();
+$filePageCept->testAnonnymFilePageView();
 //$filePageCept->testRequestCorrectFile();

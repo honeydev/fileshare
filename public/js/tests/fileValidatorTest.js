@@ -5,14 +5,14 @@ export {FileValidatorTest};
 import {assert} from 'chai';
 import {FileValidator} from '../app/mainpage/fileValidator.js';
 
-function FileValidatorTest() {
+function FileValidatorTest(dic) {
     this._allowExtensions = {
         image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico'],
         videos: ['mp4', 'avi', 'wmv', 'mov', 'mkv', '3gp', 'flw', 'swf'],
         audio: ['mp3', 'wav', 'wave', 'acc', 'ogg'],
         // archive: ['7z', 'gz', 'rar', 'tar', 'tar-gz', 'tar.gz', 'zip', 'cbr']
     };
-    this._fileValidator = new FileValidator();
+    this._fileValidator = new FileValidator(dic);
 }
 
 FileValidatorTest.prototype.test = function () {
