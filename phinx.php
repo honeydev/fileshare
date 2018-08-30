@@ -6,6 +6,9 @@ $app = new \Slim\App(['settings' => (require('./config/cfg.php'))]);
 $container = $app->getContainer();
 $container->register(new \Fileshare\Db\EloquentServiceProvider());
 
+\Fileshare\Facades\AppFacade::add($app);
+
+
 if (in_array('-e', $_SERVER['argv']) && in_array('tests', $_SERVER['argv'])) {
     $dbSettings = $container['settings']['db'];
     $dbSettings['database'] = $dbSettings['tests_database'];
@@ -22,11 +25,6 @@ if (in_array('-e', $_SERVER['argv']) && in_array('tests', $_SERVER['argv'])) {
         $dbSettings['password']
     );
 }
-
-$capsule = new \Illuminate\Database\Capsule\Manager;
-$capsule->addConnection($dbSettings);
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
 
 return [
     'paths'                => [

@@ -9,26 +9,33 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Fileshare\Models\User;
 use \Fileshare\Models\File;
 use \Fileshare\Transformers\UserTransformer;
+use \Fileshare\Transformers\FileTransformer;
 use \GuzzleHttp\Psr7\LazyOpenStream;
 
 class FilePageController extends AbstractController
 {
+    /**
+     * @property \Fileshare\Services\FileAvatarService
+     */
+    private $fileAvatarService;
 
     public function __construct($container)
     {
         parent::__construct($container);
+        $this->fileAvatarService = $container->get("FileAvatarService");
     }
 
     public function filePage(Request $request, Response $response, array $args)
     {
-
         $fileName = $args['fileName'];
         $file = File::getFileByName($fileName);
-        $owner = UserTransformer::transform($file->owner);
-        $this->viewData['title'] = "{$this->viewData['title']} - {$file->name}";
+        $fileArray = FileTransformer::transform($file);
+        $fileArray['fileAvatarUrl'] = $this->fileAvatarService->getFileTypeImageUriByMime($file);
+        $ownerArray = UserTransformer::transform($file->owner);
+        $this->viewData['file'] = $fileArray;
+        $this->viewData['title'] = "{$this->viewData['appName']} - {$file->name}";
         $this->viewData['page'] = "file";
-        $this->viewData['owner'] = $owner;
-        $this->viewData['file'] = $file->toArray();
+        $this->viewData['owner'] = $ownerArray;
         return $this->container->view->render(
             $response,
             "index.twig",
@@ -43,6 +50,8 @@ class FilePageController extends AbstractController
        $appFolder = $this->container->get('settings')['appFolder'];
        $pathToFile = $appFolder . $file->uri;
        $newStream = new LazyOpenStream($pathToFile, 'r');
-       return $response->withBody($newStream);
+       return $response->withBody($newStream)
+            ->withHeader('Content-Type', 'application/download')
+            ->withHeader('Content-Length', $newStream->getSize());
     }
 }

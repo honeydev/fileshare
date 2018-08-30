@@ -17,10 +17,15 @@ class RegisteredController extends AbstractController
     * @property \Fileshare\Service\CryptoService
     */
     private $cryptoService;
+    /**
+     * @property string
+     */
+    private $hostUrl;
 
     public function __construct($container)
     {
         $this->cryptoService = $container->get('CryptoService');
+        $this->hostUrl = $container->get('settings')['appInfo']['hostname'];
     }
 
     public function registered(Request $request, Response $response)
@@ -35,6 +40,7 @@ class RegisteredController extends AbstractController
 
         $userInfo = new UserInfo([
             "name" => $userData["name"],
+            'avatarUri' => "/img/user.png"
         ]);
         $user->userInfo()->save($userInfo);
 

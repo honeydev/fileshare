@@ -81,10 +81,21 @@ div {
     width: 20%;
 }
 
+.filePage {
+    height: calc(100vh - 52px);
+    background-color: #eee;
+}
+
 .fileSpace {
     min-height: 200px;
-    border: 1px solid black;
-    padding-top: 30px;
+    border: 1px solid #d3e0e9;
+    border-radius: 4px 4px;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 20px;
+    background-color: #f8f8f8;
 }
 
 .fileSpace h4 .userAvatarFile {
@@ -93,26 +104,85 @@ div {
 }
 
 .fileSpace .fileImage {
-    height: 100px;
-    width: 100px;
+    height: 85px;
+    width: 85px;
 }
 
 .fileSpace .fileInfoList {
     padding-top: 20px;
+    margin-left: 1px;
+    margin-top: 5px;
+}
+
+.fileSpace .fileInfoList li {
+    border: 1px solid #d3e0e9;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5% 5%;
 }
 
 .fileSpace .buttonsFilePage {
+    margin-top: 25px;
     padding-top: 10px;
+    width: 100px;
+}
+
+.fileSpace .buttonsFilePage button {
+    border: 1px solid #d3e0e9;
+    margin: -20px;
 }
 
 @media screen and (min-width: 769px) {
-    
+
+    .fileSpace h4 {
+        font-size: large;
+    }
+
+    .fileSpace .fileImage {
+        height: 135px;
+        width: 135px;
+    }
+
+    .fileSpace {
+        border: 1px solid #d3e0e9;
+        padding-top: 15px;
+        /*font-size: large;*/
+    }
+
+    .fileSpace .fileInfoList {
+        padding-top: 35px;
+    }
+
+    .fileSpace .buttonsFilePage {
+        /*font-size: large;*/
+    }
 }
 
 @media screen and (min-width: 960px) {
-    
+/*    .fileSpace h4 {
+        font-size: x-large;
+    }
+
+    .fileSpace {
+        font-size: x-large;
+    }
+
+    .fileSpace .buttonsFilePage {
+        font-size: x-large;
+    }*/
 }
 
 @media only screen and (min-width:1440px){
     /* styles for browsers larger than 1440px; */
+    .fileSpace h4 {
+        font-size: smaller;
+    }
+
+    .fileSpace {
+        font-size: small;
+    }
+
+    .fileSpace .buttonsFilePage {
+        font-size: small;
+    }
 }

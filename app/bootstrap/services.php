@@ -50,3 +50,6 @@ $container['AddAvatarService'] = function () use ($container) {
     return new Fileshare\Services\AddAvatarService($container);
 };
 
+$container['FileAvatarService'] = function () use ($container) {
+    return new Fileshare\Services\FileAvatarService($container);
+};

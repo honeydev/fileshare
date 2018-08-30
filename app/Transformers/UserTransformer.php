@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fileshare\Transformers;
 
 use Fileshare\Models\User;
+use Fileshare\Facades\AppFacade;
 
 class UserTransformer implements TransformerInterface
 {
@@ -15,20 +16,17 @@ class UserTransformer implements TransformerInterface
 
     private static function transformUserObjectToData(User $user): array
     {
+        $container = (AppFacade::get())->getContainer();
+        $hostUrl = $container->get('settings')['appInfo']['hostname'];
         $userData = [
             "id" => (int) $user->id,
             "email" => $user->email,
             "token" => $user->token,
         ];
 
-        if (empty($user->avatar)) {
-            $userData['avatarUri'] = null;
-        } else {
-            $userData['avatarUri'] = $user->avatar->file->uri;
-        }
-
         if (!empty($user->userInfo)) {
             $userData['name'] = $user->userInfo->name;
+            $userData['avatarUri'] = $hostUrl . $user->userInfo->avatarUri;
         } 
 
         if (!empty($user->userSettings)) {

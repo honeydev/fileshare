@@ -33,6 +33,7 @@ class FilePageCept extends AbstractTest
         $response = json_decode($this->tester->grabResponse(), true);
         $fileShortName = $this->getFileNameByUrl($response["fileUrl"]);
         $file = FileModel::getFileByName($fileShortName);
+
         $this->tester->sendGET($response["fileUrl"]);
         $this->tester->seeResponseContains($file->name);
     }

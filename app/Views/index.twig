@@ -13,7 +13,7 @@
     </div>
 </div>
 <header>
-    {% include 'navigation_panel.html' %}
+    {% include 'navigation_panel.twig' %}
     {% include 'flash_message.html' %}
 </header>
 <main>
@@ -28,9 +28,9 @@
     {% endif %}
 </main>
     {% if page == 'main_page' %}
-        <script src="http://{{hostname}}/js/public/main.js"></script>
+        <script src="{{hostname}}/js/public/main.js"></script>
     {% elseif page == 'file' %}
-        <script src="http://{{hostname}}/js/public/common.js"></script>
+        <script src="{{hostname}}/js/public/common.js"></script>
     {% endif %}
 </body>
 </html>

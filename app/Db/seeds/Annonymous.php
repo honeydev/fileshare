@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Phinx\Seed\AbstractSeed;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Fileshare\Models\User;
+use Fileshare\Models\UserInfo;
+use Fileshare\Models\UserSettings;
 
 class Annonymous extends AbstractSeed
 {
@@ -23,10 +26,17 @@ class Annonymous extends AbstractSeed
      */
     public function run()
     {
-        $this->schema = (new Capsule)->schema();
-        DB::table('users')->insert([
-            'email' => str_random(10).'@gmail.com',
-            'password' => bcrypt('secret'),
+        $user = new User(['email' => 'annonymous@fileshare', 'password' => uniqid()]);
+        $user->save();
+        $userInfo = new UserInfo([
+            'name' => 'annonym',
+            'avatarUri' => '/img/user.png'
         ]);
+        $user->userInfo()->save($userInfo);
+        $userSettings = new UserSettings([
+            'accountStatus' => 1,
+            'accessLvl' => 1
+        ]);
+        $user->userSettings()->save($userSettings);
     }
 }

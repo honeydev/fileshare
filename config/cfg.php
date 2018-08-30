@@ -1,5 +1,7 @@
 <?php
 
+use Fileshare\Helpers\ConfigHelper;
+
 return array(
     'development' => true,
     'displayErrorDetails' => true,
@@ -18,8 +20,8 @@ return array(
         'port' => '3306',
     ),
     'appInfo' => array(
-       'title' => 'Fileshare',
-       'hostname' => 'fileshare.loc'
+       'appName' => 'Fileshare',
+       'hostname' => ConfigHelper::getAppHost()
     ),
     'secretKey' => '8ryR.h6vc58wEk3GxQpJS.gSaTnuDHFEkITfb4//4OTHUGW5UPkgS',
     'appFolder' => dirname(__DIR__),

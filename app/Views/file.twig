@@ -1,23 +1,28 @@
+<div class="filePage">
 <div class="container">
     <div class="row">
-        <section class="fileSpace col-xs-10 col-xs-offset-1">
-            <h4><img src="{{ appInfo.hostname }}/img/user.png" alt="Author avatar" class="img-rounded userAvatarFile">Author:</h3>
+        <section class="fileSpace col-xs-10 col-xs-offset-1 col-lg-8 col-lg-offset-2">
+            <h4><img src="{{ owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatarFile"> {{ owner.email }}</h4>
             <img 
                 class="img-responsive center-block fileImage"
                 src="
-                {{ appInfo.hostname }}/img/file.png
+                {{ file.fileAvatarUrl }}
                 " 
                 alt="File type pic"
                 >
-            <ul class="fileInfoList list-group list-inline">
-                <li class="list-group-item">Uploaded: </li>
-                <li class="list-group-item">Size: </li>
-            </ul>
-            <div class="buttonsFilePage col-xs-6 col-xs-offset-2">
-                <button type="button" class="btn btn-default btn-lg">
-                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Download
-                </button>
+            <div class="buttonsFilePage center-block">
+                <a href="{{ file.url }}">
+                    <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Download
+                    </button>
+                </a>
             </div>
+            <ul class="fileInfoList list-inline">
+                <li>Uploaded: {{ file.created }}</li>
+                <li>Size: {{ file.size }} Mb</li>
+            </ul>
         </section>
     </div>
+</div>
+</div>
 </div>
