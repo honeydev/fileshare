@@ -28,6 +28,8 @@ class AddAvatarService
 
         $avatar = Avatar::create(["parentId" => $file->id, "ownerId" => $owner->id]);
         $avatar->save();
+        $owner->userInfo->avatarUri = $file->uri;
+        $owner->userInfo->save();
         return $avatar;
     }
 }

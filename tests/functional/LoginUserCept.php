@@ -31,7 +31,6 @@ class LoginUserCept extends AbstractTest
                 "id" => $user->id,
                 "email" => $user->email,
                 "name" => $user->userInfo->name,
-                "avatarUri" => $user->userInfo->avatarUri,
                 "accountStatus" => $user->userSettings->accountStatus,
                 "accessLvl" => $user->userSettings->accessLvl
         ]));

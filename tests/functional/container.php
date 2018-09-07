@@ -16,6 +16,7 @@ ini_set('date.timezone', "Asia/Vladivostok");
 $container = new Container([
     App::class => function (ContainerInterface $container) {
         $app = new App($container);
+        \Fileshare\Facades\AppFacade::add($app);
         $settings = $container->get('settings');
         $newSettings = ConfigProvider::provide($settings);
         $settings->replace($newSettings);
