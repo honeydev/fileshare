@@ -26,12 +26,11 @@ class Routes
                 return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
             }
         ]));
-
         $app->get('/', 'MainPageController:indexPage');
         $app->get('/file/{fileName}', 'FilePageController:filePage');
         $app->get('/file/get/{fileName}', 'FilePageController:getFile');
+        $app->get('/browse[/{sortType}[/{cursor}]]', 'BrowseFileController:browse');
         $app->group('/api', function () use ($app, $container) {
-            $app->get('/browse/{sortType}/{cursor}', 'BrowseFileController:browse');
             $app->post('/uploadfile/annonym.file', 'MainPageController:uploadFileAnnonym')
                 ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));
             $app->post('/uploadfile/registred.file', 'MainPageController:uploadFileRegistred')

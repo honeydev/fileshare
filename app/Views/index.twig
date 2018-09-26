@@ -19,18 +19,18 @@
 <main>
     {% if page == 'main_page' %}
         {% include 'upload_section.twig' %}
-    {% elseif page == 'file_browse' %}
-        {% include 'file_browse.twig' %}
+    {% elseif page == 'browse' %}
+        {% include 'browse.twig' %}
     {% elseif page == '500' %}
         {% include '500.twig' %}
     {% elseif page == 'file' %}
         {% include 'file.twig' %}
     {% endif %}
 </main>
-    {% if page == 'main_page' %}
-        <script src="{{hostname}}/js/public/main.js"></script>
-    {% elseif page == 'file' %}
+    {% if page == 'file' %}
         <script src="{{hostname}}/js/public/common.js"></script>
+    {% else %}
+        <script src="{{hostname}}/js/public/main.js"></script>
     {% endif %}
 </body>
 </html>

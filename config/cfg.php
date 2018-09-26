@@ -28,5 +28,12 @@ return array(
     /*
      * Max allow uploaded file size in bytes
      */
-    'maxFileSize' => 104857600
+    'maxFileSize' => 104857600,
+    'filesOnPage' => 5,
+    'previews' => [
+        'default' => [
+            'unknown' => 'img/file.png',
+        ],
+        'supported' => ['image/jpeg'],
+    ]
 );

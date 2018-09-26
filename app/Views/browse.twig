@@ -1,0 +1,8 @@
+<!--files review -->
+<!-- Comment modal window -->
+{% for file in files %}
+    {{ file.name }}<br>
+    {{ file.avatarUri}}<br>
+    {{ file.created_at}}<br>
+    <hr>
+{% endfor %}

@@ -16,7 +16,7 @@ class BrowseFilesPageCept extends AbstractTest
     /**
      * @const {int} how much create fake files
      */
-    const TEST_FILES_COUNT = 30;
+    const TEST_FILES_COUNT = 5;
 
     public function __construct($tester)
     {
@@ -29,12 +29,12 @@ class BrowseFilesPageCept extends AbstractTest
     {
         $this->tester->wantTo("See json with file data accord selector");
         $files = $this->createFiles();
-        $this->tester->sendGET("/api/browse/early_to_late/0");
+        $this->tester->sendGET("/browse/late_to_early");
         $this->tester->seeResponseCodeIs(200);
-        $this->tester->seeResponseContainsJson([
-            "status" => "success",
-            "files" => $files
-        ]);
+
+        foreach ($files as $file) {
+            $this->tester->seeResponseContains($file['name']);
+        }
     }
 
     private function createFiles($sortType = null): array

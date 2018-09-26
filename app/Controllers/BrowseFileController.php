@@ -11,9 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class BrowseFileController extends AbstractController
 {
+    /**
+     * @property \Fileshare\Services\SelectFilesService
+     */
+    private $selectFilesService;
+
     public function __construct($container)
     {
         parent::__construct($container);
+        $this->selectFilesService = $container->get('SelectFilesService');
     }
 
     public function index(Request $request, Response $response, array $args): Response
@@ -30,10 +36,15 @@ class BrowseFileController extends AbstractController
 
     public function browse(Request $request, Response $response, array $args)
     {
-        $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars) LIMIT 2')->get();
-        // var_dump($files);
-        // $files = File::simplePaginate(1);
-        // var_dump($files->toArray()['data']);
-        return $response->withJson(["status" => "success", "files" => $files], 200);
+        $sortType = empty($args['sortType']) ? 'late_to_early' : $args['sortType'];
+        $page = empty($args['cursor']) ? 1 : $args['cursor'];
+        $this->viewData['page'] = 'browse';
+        $this->viewData['files'] = $this->selectFilesService->select($sortType, $page);
+        var_dump($this->viewData['files'][0]);
+        return $this->container->view->render(
+            $response,
+            "index.twig",
+            $this->viewData
+        );
     }
 }
