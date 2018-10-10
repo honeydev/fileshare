@@ -8,6 +8,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Fileshare\Models\File;
 use Illuminate\Support\Facades\DB;
+use \Fileshare\Helpers\SortLinksHelper;
 
 class BrowseFileController extends AbstractController
 {
@@ -37,10 +38,13 @@ class BrowseFileController extends AbstractController
     public function browse(Request $request, Response $response, array $args)
     {
         $sortType = empty($args['sortType']) ? 'late_to_early' : $args['sortType'];
-        $page = empty($args['cursor']) ? 1 : $args['cursor'];
+        $cursor = empty($args['cursor']) ? 1 : (int) $args['cursor'];
         $this->viewData['page'] = 'browse';
-        $this->viewData['files'] = $this->selectFilesService->select($sortType, $page);
-        var_dump($this->viewData['files'][0]);
+        $this->viewData['fileArticles'] = $this->selectFilesService->select($sortType, $cursor);
+        $this->viewData['sortType'] = $sortType;
+        $this->viewData['sortLinks'] = SortLinksHelper::getLinks($cursor);
+        $this->viewData['cursor'] = $cursor;
+        var_dump($this->viewData['fileArticles']);
         return $this->container->view->render(
             $response,
             "index.twig",

@@ -31,7 +31,7 @@ class Routes
         $app->get('/file/get/{fileName}', 'FilePageController:getFile');
         $app->get('/browse[/{sortType}[/{cursor}]]', 'BrowseFileController:browse');
         $app->group('/api', function () use ($app, $container) {
-            $app->post('/uploadfile/annonym.file', 'MainPageController:uploadFileAnnonym')
+            $app->post('/uploadfile/anonym.file', 'MainPageController:uploadFileAnonym')
                 ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));
             $app->post('/uploadfile/registred.file', 'MainPageController:uploadFileRegistred')
                 ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));

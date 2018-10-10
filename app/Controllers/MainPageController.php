@@ -34,11 +34,11 @@ class MainPageController extends AbstractController
         return $response;
     }
 
-    public function uploadFileAnnonym(Request $request, Response $response)
+    public function uploadFileAnonym(Request $request, Response $response)
     {
         $file = $request->getUploadedFiles()['file'];
         $fileType = $request->getAttribute("fileType");
-        $owner = User::getUserByEmail("annonymous@fileshare");
+        $owner = User::getUserByEmail("anonymous@fileshare");
         $file = $this->fileSaveService->save($file, [
             "owner" => $owner,
             "category" => "/uploads",

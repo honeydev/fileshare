@@ -8,7 +8,7 @@ use Fileshare\Models\User;
 use Fileshare\Models\UserInfo;
 use Fileshare\Models\UserSettings;
 
-class Annonymous extends AbstractSeed
+class Anonymous extends AbstractSeed
 {
     /**
      * @var \Illuminate\Database\Schema\MySqlBuilder
@@ -26,10 +26,10 @@ class Annonymous extends AbstractSeed
      */
     public function run()
     {
-        $user = new User(['email' => 'annonymous@fileshare', 'password' => uniqid()]);
+        $user = new User(['email' => 'anonymous@fileshare', 'password' => uniqid()]);
         $user->save();
         $userInfo = new UserInfo([
-            'name' => 'annonym',
+            'name' => 'anonym',
             'avatarUri' => '/img/user.png'
         ]);
         $user->userInfo()->save($userInfo);

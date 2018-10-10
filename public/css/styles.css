@@ -103,10 +103,15 @@ div {
     width: 35px;
 }
 
-.fileSpace .fileImage {
-    height: 85px;
-    width: 85px;
+.fileSpace .fileImageDefault {
+    height: 160px;
+    width: 160px;
 }
+
+.fileSpace .fileImageSupported {
+    /* styles for native preview */
+}
+
 
 .fileSpace .fileInfoList {
     padding-top: 20px;
@@ -130,6 +135,21 @@ div {
 .fileSpace .buttonsFilePage button {
     border: 1px solid #d3e0e9;
     margin: -20px;
+}
+
+/* browse files section */
+
+.settingsMenu {
+    padding-top: 10px;
+}
+
+.file h4 .userAvatar {
+    font-size: 16px;
+}
+
+.file h4 .userAvatar {
+    height: 30px;
+    width: 30px;
 }
 
 @media screen and (min-width: 769px) {
@@ -157,6 +177,7 @@ div {
         /*font-size: large;*/
     }
 }
+
 
 @media screen and (min-width: 960px) {
 /*    .fileSpace h4 {

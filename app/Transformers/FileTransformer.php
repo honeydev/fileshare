@@ -20,6 +20,7 @@ class FileTransformer implements TransformerInterface
     {
         $container = (AppFacade::get())->getContainer();
         $hostUrl = $container->get('settings')['appInfo']['hostname'];
+        $fileAvatarService = $container->get("FileAvatarService");
         $fileArray = [];
         if (!empty($file->size)) {
             $fileArray['size'] = FileSizeFormatHelper::bytesToMbytes((int) $file->size);
@@ -31,10 +32,12 @@ class FileTransformer implements TransformerInterface
 
         if (!empty($file->uri)) {
             $fileArray['url'] = "{$hostUrl}/file/get/{$file->name}";
+            $fileArray['filePageUrl'] = "{$hostUrl}/file/{$file->name}";
         }
 
         if (!empty($file->mime)) {
             $fileArray['mime'] = $file->mime;
+            $fileArray['fileAvatar'] = $fileAvatarService->getAvatar($file);
         }
 
         if (!empty($file->created_at)) {

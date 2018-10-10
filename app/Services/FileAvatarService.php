@@ -11,19 +11,44 @@ class FileAvatarService
     /**
      * @property {string} host url
      */
-    private $host;
+    private $hostName;
+    /**
+     * @property [array]
+     */
+    private $previewsSupportMap;
 
     public function __construct($container)
     {
-        $this->host = $container->get('settings')['appInfo']['hostname'];
+        $this->hostName = $container->get('settings')['appInfo']['hostname'];
+        $this->previewsSupportMap = $container->get('settings')['previewsMap'];
     }
 
-    public function getFileTypeImageUriByMime(File $file): string
+    public function getAvatar(File $file): array
     {
-        if (false) {
-            //todo implement 
+        if ($this->filePreviewIsSupported($file->mime)) {
+            return [
+                'type' => 'supported', 
+                'url' => $this->hostName . "/file/get/{$file->name}"
+            ];
         } else {
-            return "{$this->host}/img/file.svg";
+            return [
+                'type' => 'default', 
+                'url' => $this->getDefaultPreview($file->mime)
+            ];
+        }
+    }
+
+    private function filePreviewIsSupported(string $mime): bool
+    {
+        return in_array($mime, $this->previewsSupportMap['supported']);
+    }
+
+    private function getDefaultPreview(string $mime): string
+    {
+        if (array_key_exists($mime, $this->previewsSupportMap['default'])) {
+            return $this->hostName . $this->previewsSupportMap['default'][$mime];
+        } else {
+            return $this->hostName . $this->previewsSupportMap['default']['unknown'];
         }
     }
 }

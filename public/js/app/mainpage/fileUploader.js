@@ -17,7 +17,7 @@ function FileUploader(dic) {
  */
 FileUploader.prototype.uploadAnnonymous = function (file) {
     this._ajax.sendFile({
-        url: location.host + "/api/uploadfile/annonym.file",
+        url: location.host + "/api/uploadfile/anonym.file",
         data: { file: file },
         xhr: this._progressHandler.bind(this),
         responseHandler: this._fileUploadHandler.getHandler()

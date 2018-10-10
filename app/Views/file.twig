@@ -4,9 +4,16 @@
         <section class="fileSpace col-xs-10 col-xs-offset-1 col-lg-8 col-lg-offset-2">
             <h4><img src="{{ owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatarFile"> {{ owner.email }}</h4>
             <img 
-                class="img-responsive center-block fileImage"
+                class="
+                img-responsive center-block
+                {% if file.fileAvatar.type == 'default' %} 
+                    fileImageDefault
+                {% elseif file.fileAvatar.type == 'supported' %}
+                    fileImageSupported
+                {% endif %}
+                "
                 src="
-                {{ file.fileAvatarUrl }}
+                {{ file.fileAvatar.url }}
                 " 
                 alt="File type pic"
                 >

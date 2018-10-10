@@ -17,6 +17,6 @@ modules:
             dsn: 'mysql:host=fshare_db;dbname=fileshare_tests'
             user: 'honey'
             password: 'd5d7'
-
-            cleanup: false
+            dump: 'tests/_data/fileshare.sql'
+            cleanup: true
             reconnect: true

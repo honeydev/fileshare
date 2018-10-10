@@ -30,9 +30,9 @@ return array(
      */
     'maxFileSize' => 104857600,
     'filesOnPage' => 5,
-    'previews' => [
+    'previewsMap' => [
         'default' => [
-            'unknown' => 'img/file.png',
+            'unknown' => '/img/file.svg',
         ],
         'supported' => ['image/jpeg'],
     ]

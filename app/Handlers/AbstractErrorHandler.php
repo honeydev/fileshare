@@ -45,6 +45,7 @@ class AbstractErrorHandler
             $response,
             "index.twig",
             [
+                'status' => 'failed',
                 'page' => '500',
                 'debug' => $this->debug,
                 'errorInfo' => $this->errorMessage,
@@ -57,6 +58,7 @@ class AbstractErrorHandler
     protected function showWithJson(Response $response)
     {
         return $response->withJson([
+            'status' => 'failed',
             'page' => '500',
             'debug' => $this->debug,
             'errorInfo' => $this->errorMessage,

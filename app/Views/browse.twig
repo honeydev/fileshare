@@ -1,8 +1,65 @@
 <!--files review -->
 <!-- Comment modal window -->
-{% for file in files %}
-    {{ file.name }}<br>
-    {{ file.avatarUri}}<br>
-    {{ file.created_at}}<br>
-    <hr>
-{% endfor %}
+
+<div class="container">
+    <div class="row">
+        <aside class="settingsMenu col-xs-offset-2 col-xs-8">
+            <div class="btn-group">
+                <a href="/browse/late_to_early">
+                    <button type="button" class="
+                        btn btn-default
+                        {% if sortType == 'late_to_early' %}
+                            active
+                        {% endif %}
+                        ">Late to early
+                    </button>
+                </a>
+                <a href="/browse/late_to_early">
+                    <button type="button" class="
+                    btn btn-default
+                    {% if sortType == 'early_to_late' %}
+                        active
+                    {% endif %}
+                    ">Early to late
+                    </button>
+                </a>
+            </div>
+        </aside>
+        <section class="files col-xs-10">
+            {% for fileArticle in fileArticles %}
+                <article class="file">
+                    <h4><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
+                        {{ fileArticle.owner.email }}
+                    </h4>
+                    <h4>Filename</h4>
+
+                    <img 
+                    class="
+                    img-responsive center-block
+                    {% if fileArticle.file.fileAvatar.type == 'default' %} 
+                        fileImageDefault
+                    {% elseif fileArticle.file.fileAvatar.type == 'supported' %}
+                        fileImageSupported
+                    {% endif %}
+                    "
+                    src="
+                    {{ fileArticle.file.fileAvatar.url }}
+                    " 
+                    alt="File type pic"
+                    >
+                    <ul class="fileInfoList list-inline">
+                        <li>Uploaded: {{ fileArticle.file.created }}</li>
+                        <li>Size: {{ fileArticle.file.size }} Mb</li>
+                    </ul>
+                </article>
+            {% endfor %}
+        </section>
+        <nav class="fileBrowsePagination">
+            <ul class="pagination">
+              <li><a href="#">&laquo;</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">&raquo;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

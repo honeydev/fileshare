@@ -6,7 +6,8 @@ namespace Fileshare\Services;
 
 use \Codeception\Util\Debug as debug;
 use \Fileshare\Models\{File, User, Avatar};
-use function Funct\Collection\first;
+use \Fileshare\Transformers\UserTransformer;
+use \Fileshare\Transformers\FileTransformer;
 
 class SelectFilesService
 {
@@ -20,27 +21,32 @@ class SelectFilesService
         $this->filesOnPage = $container->get('settings')['filesOnPage'];
     }
 
-    public function select($sortType, $page)
+    public function select(string $sortType, int $cursor): array
+    {
+        $filesWithOnwers = [];
+        $files = $this->selectFiles($sortType, $cursor);
+        foreach ($files as $file) {
+            $filesWithOnwers[] = [
+                'file' => FileTransformer::transform($file),
+                'owner' => UserTransformer::transform($file->owner)
+            ];
+        }
+        return $filesWithOnwers;
+    }
+
+    private function selectFiles(string $sortType, int $cursor)
     {
         $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
             ->orderBy(...$this->getOrderParams($sortType))
-            ->leftJoin('users', 'users.id', '=', 'files.ownerId')
-            ->leftJoin('users_info', 'users.id', '=', 'users_info.userId')
-            ->select(
-                'users.email as ownerEmail',
-                'users_info.name as ownerName',
-                'users_info.avatarUri as ownerAvatar',
-                'files.*'
-            )
             ->limit($this->filesOnPage)
-            ->offset($this->getOffset($page))
+            ->offset($this->getOffset($cursor))
             ->get();
-        return $files->toArray();
+        return $files;
     }
 
-    private function getOffset(int $page): int
+    private function getOffset(int $cursor): int
     {
-        $start = $page - 1;
+        $start = $cursor - 1;
         return $start * $this->filesOnPage;
     }
 
