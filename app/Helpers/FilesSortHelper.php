@@ -4,18 +4,28 @@ declare(strict_types=1);
 
 namespace Fileshare\Helpers;
 
+use Fileshare\Models\File;
+
 class FilesSortHelper
 {
     public static function earlyToLateSort(array $files): array
     {
-        uasort($files, function ($file1, $file2) {
-            $file1Created = $file1['created_at']->timestamp;
-            $file2Created = $file2['created_at']->timestamp;
-            if ($file1Created === $file2Created) {
-                return 0;
-            }
-            return ($file1Created > $file2Created) ? -1 : 1;
+        return self::sort($files, function (File $file1, File $file2) {
+            return $file1->created_at->timestamp <=> $file2->created_at->timestamp;
         });
-        return $files;
+    }
+
+    public static function lateToEarlySort(array $files): array
+    {
+        return self::sort($files, function (File $file1, File $file2) {
+            return $file2->created_at->timestamp <=> $file1->created_at->timestamp;
+        });
+    }
+
+    private static function sort(array $files, callable $sortFunction): array
+    {
+        $filesForSort = $files;
+        usort($filesForSort, $sortFunction);
+        return $filesForSort;
     }
 }

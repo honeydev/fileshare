@@ -28,10 +28,11 @@
         <section class="files col-xs-10">
             {% for fileArticle in fileArticles %}
                 <article class="file">
+                    <a href="{{ fileArticle.file.filePageUrl }}">
                     <h4><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
                         {{ fileArticle.owner.email }}
                     </h4>
-                    <h4>Filename</h4>
+                    <h4>Filename {{ fileArticle.file.name }}</h4>
 
                     <img 
                     class="
@@ -51,6 +52,7 @@
                         <li>Uploaded: {{ fileArticle.file.created }}</li>
                         <li>Size: {{ fileArticle.file.size }} Mb</li>
                     </ul>
+                    </a>
                 </article>
             {% endfor %}
         </section>

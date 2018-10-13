@@ -9,10 +9,10 @@ return array(
     'addContentLengthHeader' => false,
     'db' => array(
         'driver' => 'mysql',
-        'host' => '172.17.0.2',
+        'host' => '172.18.0.2',
         'database' => 'fileshare',
         'tests_database' => 'fileshare_tests',
-        'username' => 'honey',
+        'username' => 'root',
         'password' => 'd5d7',
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',

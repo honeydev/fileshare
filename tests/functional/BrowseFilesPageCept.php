@@ -9,6 +9,7 @@ use Codeception\Util\Fixtures;
 use \Fileshare\Db\factories\FileFactory;
 use \Fileshare\Models\User;
 use Fileshare\Helpers\FilesSortHelper;
+use Fileshare\Transformers\FileTransformer;
 use function \Funct\Collection\invoke;
 
 class BrowseFilesPageCept extends AbstractTest
@@ -16,47 +17,87 @@ class BrowseFilesPageCept extends AbstractTest
     /**
      * @const {int} how much create fake files
      */
-    const TEST_FILES_COUNT = 5;
+    const TEST_FILES_COUNT = 20;
+    /**
+     * @var int
+     */
+    private $filesPerPage;
+    /**
+     * @var array contain \Fileshare\Models\File
+     */
+    private $files;
 
     public function __construct($tester)
     {
         parent::__construct($tester);
         $this->container = Fixtures::get("container");
         $this->appFolder = dirname(dirname(__DIR__));
+        $this->filesPerPage = $this->container->get('settings')['filesOnPage'];
+        $this->files = $this->createFiles();
     }
 
-    public function testLastFilesView()
-    {
-        $this->tester->wantTo("See json with file data accord selector");
-        $files = $this->createFiles();
-        $this->tester->sendGET("/browse/late_to_early");
-        $this->tester->seeResponseCodeIs(200);
-
-        foreach ($files as $file) {
-            $this->tester->seeResponseContains($file['name']);
-        }
-    }
-
-    private function createFiles($sortType = null): array
+    private function createFiles(): array
     {
         $files = [];
 
         for ($i = 0; $i < self::TEST_FILES_COUNT; $i++) {
-            $file = FileFactory::createFile(User::getUserByEmail('annonymous@fileshare'));
+            $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
             $files[] = $file;
+            /* delay insert for correct timestamps different in db notes */
+            usleep(1000000);
         }
 
-        if ($sortType === 'early_to_late') {
-            $files = FilesSortHelper::earlyToLateSort($files);
-        }
+        return $files;
+    }
 
-        $filesAsArrays = invoke($files, function ($file) {
-            return $file->toArray();
+    public function testLastUploadedFilesSelect()
+    {
+        $this->tester->wantTo("See last uploaded files");
+        $this->tester->sendGET("/browse/late_to_early");
+        $this->tester->seeResponseCodeIs(200);
+        $files = FilesSortHelper::lateToEarlySort($this->files);
+        $files = self::filesAsArraysForView($files);
+        for ($i = 0; $i < $this->filesPerPage ; $i++) {
+            $this->seeResponseContainsFileProperties($files[$i]);
+        }
+    }
+
+    public function testFirstUploadedFilesSelect()
+    {
+        $this->tester->wantTo("See first uploaded files");
+        $this->tester->sendGET("/browse/early_to_late");
+        $this->tester->seeResponseCodeIs(200);
+        $files = FilesSortHelper::earlyToLateSort($this->files);
+        $files = self::filesAsArraysForView($files);
+        debug::debug($files);
+        for ($i = 0; $i < $this->filesPerPage ; $i++) {
+            $this->seeResponseContainsFileProperties($files[$i]);
+        }
+    }
+
+    public function testFilesSelectAccordCursor()
+    {
+        //todo implement
+    }
+    /**
+     * transform file objects to array, it's equal file statment in browse file view
+     */
+    private function filesAsArraysForView(array $files): array
+    {
+        return invoke($files, function ($file) {
+            return FileTransformer::transform($file);
         });
+    }
 
-        return $filesAsArrays;
+    private function seeResponseContainsFileProperties(array $file)
+    {
+        $this->tester->seeResponseContains($file['name']);
+        $this->tester->SeeResponseContains((string) $file['size']);
+        $this->tester->SeeResponseContains($file['created']);
+        $this->tester->SeeResponseContains($file['filePageUrl']);
     }
 }
 
 $browseFilesPageCept = new BrowseFilesPageCept(new \FunctionalTester($scenario));
-$browseFilesPageCept->testLastFilesView();
+$browseFilesPageCept->testLastUploadedFilesSelect();
+$browseFilesPageCept->testFirstUploadedFilesSelect();

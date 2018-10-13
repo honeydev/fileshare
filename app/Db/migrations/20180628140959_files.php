@@ -8,7 +8,9 @@ class Files extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
-        $this->down();
+        if ($this->schema->hasTable('files')) {
+            return null;
+        }
         $this->schema->create('files', function (Blueprint $table) {
             $table->string('name')->nullable(false);
             $table->string('uri')->nullable(false);

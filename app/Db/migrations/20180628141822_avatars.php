@@ -8,7 +8,10 @@ class Avatars extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
-        $this->down();
+        if ($this->schema->hasTable('files')) {
+            return null;
+        }
+
         $this->schema->create('avatars', function (Blueprint $table) {
             $table->string('ownerId');
             $table->integer('parentId')->unsigned()->primary();

@@ -15,7 +15,7 @@ modules:
             depends: \Herloct\Codeception\Module\Slim
         - Db:
             dsn: 'mysql:host=fshare_db;dbname=fileshare_tests'
-            user: 'honey'
+            user: 'root'
             password: 'd5d7'
             dump: 'tests/_data/fileshare.sql'
             cleanup: true

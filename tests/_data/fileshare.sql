@@ -64,17 +64,7 @@ CREATE TABLE `files` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `files`
---
 
-LOCK TABLES `files` WRITE;
-/*!40000 ALTER TABLE `files` DISABLE KEYS */;
-INSERT INTO `files` VALUES ('0b0888b0410e7a5cec2de0da39155c37_813vJp+g.bin','/storage/uploads/anonymous@fileshare/0b0888b0410e7a5cec2de0da39155c37_813vJp+g.bin','1005','application/octet-stream',0,0,'2018-09-29 07:35:16','2018-09-29 07:35:16',1,1),('8ab91b37182620c10e8aa144f82a14d2_main.php','/storage/uploads/anonymous@fileshare/8ab91b37182620c10e8aa144f82a14d2_main.php','1201','application/x-php',0,0,'2018-09-29 07:37:12','2018-09-29 07:37:12',1,2),('6e741565d64995b1159b05e6060ac41b_theme-1115.xml','/storage/uploads/anonymous@fileshare/6e741565d64995b1159b05e6060ac41b_theme-1115.xml','1933','text/xml',0,0,'2018-09-29 07:37:30','2018-09-29 07:37:30',1,3),('e1d5d8bd05935e454bb34846ad08b148_bookmarks_8_31_18.html','/storage/uploads/anonymous@fileshare/e1d5d8bd05935e454bb34846ad08b148_bookmarks_8_31_18.html','189677','text/html',0,0,'2018-09-29 07:38:08','2018-09-29 07:38:08',1,4);
-/*!40000 ALTER TABLE `files` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `phinxlog`
 --
 

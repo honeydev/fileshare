@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Fileshare\Transformers;
 
-use Fileshare\Models\User;
 use Fileshare\Facades\AppFacade;
 use \Fileshare\Helpers\{FileSizeFormatHelper, FileNameHelper};
+use Fileshare\Models\File;
+use \Codeception\Util\Debug as debug;
+
 /**
  * @class FileTransformer transform file model for view
  */

@@ -8,8 +8,9 @@ class FileSizeFormatHelper
 {
     public static function bytesToMbytes(int $bytes)
     {
-        if (is_float($megabytes = $bytes / 1000000)) {
-            return round($megabytes, 2);
+        var_dump($bytes);
+        if (is_float($megabytes = $bytes * 0.000001)) {
+            return round($megabytes, 3);
         } else {
             return $megabytes;
         }

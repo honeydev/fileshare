@@ -44,7 +44,6 @@ class BrowseFileController extends AbstractController
         $this->viewData['sortType'] = $sortType;
         $this->viewData['sortLinks'] = SortLinksHelper::getLinks($cursor);
         $this->viewData['cursor'] = $cursor;
-        var_dump($this->viewData['fileArticles']);
         return $this->container->view->render(
             $response,
             "index.twig",

@@ -11,4 +11,10 @@ class FileNameHelper
         $fileNameWithoutCode = array_slice(explode('_', $name), 1);
         return implode('', $fileNameWithoutCode);
     }
+
+    public static function getFileNameByUri(string $uri): string
+    {
+        $uriAsArraay = explode(DIRECTORY_SEPARATOR, $uri);
+        return $uriAsArraay[count($uriAsArraay) - 1];
+    }
 }
