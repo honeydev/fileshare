@@ -1,14 +1,14 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "Fileshare",
+    "description": "Classic fileshare",
+    "keywords": ["fileshare"],
+    "homepage": "http://github.com/honeydev/fileshare",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Lebedev Alexey",
+            "email": "lebedev.alexey@protonmail.com",
+            "homepage": "https://www.github.com/honeydev"
         }
     ],
     "require": {

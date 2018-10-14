@@ -3,18 +3,17 @@
 
 <div class="container">
     <div class="row">
-        <aside class="settingsMenu col-xs-offset-2 col-xs-8">
+        <aside class="settingsMenu col-xs-offset-2 col-xs-10 col-sm-offset-4">
             <div class="btn-group">
                 <a href="/browse/late_to_early">
-                    <button type="button" class="
-                        btn btn-default
+                    <button type="button " class="btn btn-default lateToEarlyButton
                         {% if sortType == 'late_to_early' %}
                             active
                         {% endif %}
                         ">Late to early
                     </button>
                 </a>
-                <a href="/browse/late_to_early">
+                <a href="/browse/early_to_late">
                     <button type="button" class="
                     btn btn-default
                     {% if sortType == 'early_to_late' %}
@@ -25,6 +24,7 @@
                 </a>
             </div>
         </aside>
+
         <section class="files col-xs-10">
             {% for fileArticle in fileArticles %}
                 <article class="file">
@@ -56,12 +56,6 @@
                 </article>
             {% endfor %}
         </section>
-        <nav class="fileBrowsePagination">
-            <ul class="pagination">
-              <li><a href="#">&laquo;</a></li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
-        </nav>
+        {% include 'file_navigation.twig' %}
     </div>
 </div>

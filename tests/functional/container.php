@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 use Slim\Container;
-use FileshareTests\functional\ConfigProvider;
+use FileshareTests\ConfigProvider;
 use \Codeception\Util\Debug as debug;
 
 define('ROOT', dirname(dirname(__DIR__)));

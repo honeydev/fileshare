@@ -1,4 +1,6 @@
 @import url('profile.css');
+@import url('404.css');
+@import url('browse_files.css');
 
 #logOutA {
     display: none;
@@ -137,22 +139,7 @@ div {
     margin: -20px;
 }
 
-/* browse files section */
 
-.settingsMenu {
-    padding-top: 10px;
-}
-
-.file h4 .userAvatar {
-    font-size: 16px;
-    height: 30px;
-    width: 30px;
-}
-
-.file a:link, .file. a:visited, .file a:hover, .file a:active {
-    text-decoration: none;
-    color: black;
-}
 
 @media screen and (min-width: 769px) {
 

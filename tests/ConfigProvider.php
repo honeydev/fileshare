@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FileshareTests\functional;
+namespace FileshareTests;
 
 use \Codeception\Util\Debug as debug;
 
@@ -12,7 +12,6 @@ class ConfigProvider
     {
         $newSettings = require ROOT . '/config/cfg.php';
         $newSettings['db']['database'] = $newSettings['db']['tests_database'];
-        debug::debug($newSettings);
         return $newSettings;
     }
 }

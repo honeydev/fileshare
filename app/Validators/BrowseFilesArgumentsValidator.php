@@ -45,8 +45,17 @@ class BrowseFilesArgumentsValidator extends AbstractValidator
      */
     private function checkCursor(int $cursor)
     {
+        if ($this->firstPageNotFulled($cursor)) {
+            return true;
+        }
+
         if ($cursor > $this->maxAllowCursorValue || $cursor < 1) {
             throw new InvalidRequestArgumentException("Cursor '{$cursor}' more then allow cursor value '{$this->maxAllowCursorValue}'");
         }
+    }
+
+    private function firstPageNotFulled(int $cursor): bool
+    {
+        return $this->maxAllowCursorValue === 0 && $cursor === 1;
     }
 }

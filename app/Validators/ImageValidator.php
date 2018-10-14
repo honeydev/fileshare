@@ -16,14 +16,15 @@ class ImageValidator extends FileValidator
     public function __construct(int $maxFileSize)
     {
         parent::__construct($maxFileSize);
-        $this->allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico');
+        $this->allowedExtensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'ico', 'svg');
         $this->allowedMimeTypes =  array(
-            'image/jpeg', 
+            'image/jpg',
             'image/jpeg', 
             'image/png',
             'image/gif',
             'image/bmp',
-            'image/vnd.microsoft.icon/'
+            'image/vnd.microsoft.icon',
+            'image/svg+xml'
         );
     }
     /**

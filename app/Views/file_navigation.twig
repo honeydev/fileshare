@@ -1,0 +1,11 @@
+        <nav class="fileBrowsePagination">
+
+            <ul class="pagination">
+                {% if pagination.leftArrow is not empty %}
+                    <li><a href="/browse/{{ sortType }}/{{ pagination.leftArrow.page }}">{{ pagination.leftArrow.symbol }}</a></li>
+                {% endif %}
+                {% if pagination.rightArrow is not empty %}
+                    <li><a href="/browse/{{ sortType }}/{{ pagination.rightArrow.page }}">{{ pagination.rightArrow.symbol }}</a></li>
+                {% endif %}
+            </ul>
+        </nav>

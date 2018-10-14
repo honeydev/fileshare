@@ -24,10 +24,10 @@ class FileUploadCept extends AbstractTest
 
     public function testValidFileUploadAnnonym()
     {
-        $this->tester->wantTo("Upload valid file annonym and see response with link on file");
+        $this->tester->wantTo("Upload valid file anonym and see response with link on file");
         $image = Image::image();
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
-        $this->tester->sendPost('/api/uploadfile/annonym.file', ["inline" => 0], ["file" => $image]);
+        $this->tester->sendPost('/api/uploadfile/anonym.file', ["inline" => 0], ["file" => $image]);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(["status" => "success"]);
         $response = json_decode($this->tester->grabResponse(), true);
@@ -44,15 +44,8 @@ class FileUploadCept extends AbstractTest
         $this->tester->sendPost('/api/uploadfile/registred.file', ["inline" => 0], ["file" => $image]);
         $this->tester->seeResponseCodeIs(200);
     }
-
-    public function testInvalidFileUploadSize()
-    {
-        $this->tester->wantTo("Upload invalid file");
-        //todo implement
-    }
 }
 
 $fileUploadCept = new FileUploadCept(new \FunctionalTester($scenario));
 $fileUploadCept->testValidFileUploadAnnonym();
 $fileUploadCept->testValidFileUploadRegistred();
-$fileUploadCept->testInvalidFileUploadSize();

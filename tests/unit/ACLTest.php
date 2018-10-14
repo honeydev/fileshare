@@ -8,13 +8,14 @@ use \Fileshare\Models\User;
 use \Fileshare\Models\UserSettings;
 use \Ds\Queue;
 
-class ACLTest extends \FileshareTests\unit\AbstractTest
+class ACLTest extends \Codeception\Test\Unit
 {
     protected $container;
     private $acl;
 
     protected function _before()
     {
+        $this->container = Fixtures::get('container');
         $this->acl = $this->container->get('ACL');
     }
 
@@ -24,7 +25,7 @@ class ACLTest extends \FileshareTests\unit\AbstractTest
 
     public function testGetPermission()
     {
-        $user = \Fileshare\Db\factories\UserFactory::createRegularUser();
+        $user = \Fileshare\Db\factories\UserFactory::createRegularUser($this->container);
 
         $this->tester->assertTrue($this->acl->userHasPermission($user, 'read_public_notes'));
         $this->tester->assertFalse($this->acl->userHasPermission($user, 'edit_all_profile'));
@@ -32,7 +33,7 @@ class ACLTest extends \FileshareTests\unit\AbstractTest
 
     public function testUserHasAtLeastOnePermission()
     {
-        $user = \Fileshare\Db\factories\UserFactory::createRegularUser();
+        $user = \Fileshare\Db\factories\UserFactory::createRegularUser($this->container);
         $this->tester->assertTrue($this->acl->userHasAtLeastOnePermission($user, new Queue([
             'edit_all_profile', 'write_self_notes'
         ])));

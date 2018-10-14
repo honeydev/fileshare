@@ -25,12 +25,14 @@
         {% include '500.twig' %}
     {% elseif page == 'file' %}
         {% include 'file.twig' %}
+    {% elseif page == '404' %}
+        {% include '404.html' %}
     {% endif %}
 </main>
-    {% if page == 'file' %}
-        <script src="{{hostname}}/js/public/common.js"></script>
-    {% else %}
+    {% if page == 'main_page' %}
         <script src="{{hostname}}/js/public/main.js"></script>
+    {% else %}
+        <script src="{{hostname}}/js/public/common.js"></script>
     {% endif %}
 </body>
 </html>

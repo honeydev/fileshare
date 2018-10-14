@@ -24,10 +24,10 @@ class FilePageCept extends AbstractTest
 
     public function testAnonnymFilePageView()
     {
-        $this->tester->wantTo("Upload valid file annonym and get file page with correct data");
+        $this->tester->wantTo("Upload valid file anonym and get file page with correct data");
         $image = Image::image();
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
-        $this->tester->sendPost('/api/uploadfile/annonym.file', ["inline" => 0], ["file" => $image]);
+        $this->tester->sendPost('/api/uploadfile/anonym.file', ["inline" => 0], ["file" => $image]);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(["status" => "success"]);
         $response = json_decode($this->tester->grabResponse(), true);
@@ -40,10 +40,10 @@ class FilePageCept extends AbstractTest
 
     public function testRequestCorrectFile()
     {
-        $this->tester->wantTo("Upload valid file annonym and get file");
+        $this->tester->wantTo("Upload valid file anonym and get file");
         $image = Image::image();
         $this->tester->haveHttpHeader('Content-Type', 'multipart/form-data');
-        $this->tester->sendPost('/api/uploadfile/annonym.file', ["inline" => 0], ["file" => $image]);
+        $this->tester->sendPost('/api/uploadfile/anonym.file', ["inline" => 0], ["file" => $image]);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContainsJson(["status" => "success"]);
         $response = json_decode($this->tester->grabResponse(), true);
@@ -63,4 +63,4 @@ class FilePageCept extends AbstractTest
 
 $filePageCept = new FilePageCept(new \FunctionalTester($scenario));
 $filePageCept->testAnonnymFilePageView();
-//$filePageCept->testRequestCorrectFile();
+$filePageCept->testRequestCorrectFile();

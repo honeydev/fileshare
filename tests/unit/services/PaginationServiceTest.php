@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 14.10.18
- * Time: 15:43
- */
 
 use \Fileshare\Models\User;
 use \Fileshare\Db\factories\FileFactory;
@@ -15,7 +9,7 @@ class PaginationServiceTest extends \Codeception\Test\Unit
     const TEST_FILES_COUNT = 30;
     private $filesOnPage;
     private $paginationService;
-    private $pagesCount;
+    private $allowCursorValueCalculateService;
 
     protected function _before()
     {
@@ -23,18 +17,47 @@ class PaginationServiceTest extends \Codeception\Test\Unit
         $this->filesOnPage = $container->get('settings')['filesOnPage'];
         $allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
         $this->paginationService = $container->get('PaginationService');
+        $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
         $this->createFiles();
-        $this->pagesCount = $allowCursorValueCalculateService->calculate();
     }
 
     public function testFirstPagePagination()
     {
-        $result = $this->paginationService->preparePagination(1);
+        $pagesCount = $this->allowCursorValueCalculateService->calculate();
+        $currentPage = 1;
+        $pagination = $this->paginationService->preparePagination($pagesCount, $currentPage);
         $this->assertEquals([
-            'leftArrow' => '&laquo;',
-            'rightArrow' => '&raquo;',
-            'pages' => range(1, $this->pagesCount)
+            'leftArrow' => [],
+            'rightArrow' => ['page' => 2, 'symbol' => '»'],
+            'currentPage' => $currentPage,
+            'pages' => range(1, $pagesCount)
+        ], $pagination);
+    }
+
+    public function testLastPagePagination()
+    {
+        $pagesCount = $this->allowCursorValueCalculateService->calculate();
+        $currentPage = $pagesCount;
+        $result = $this->paginationService->preparePagination($pagesCount, $currentPage);
+        $this->assertEquals([
+            'leftArrow' => ['page' => $currentPage - 1, 'symbol' => '«'],
+            'rightArrow' => [],
+            'currentPage' => $currentPage,
+            'pages' => range(1, $pagesCount)
         ], $result);
+    }
+
+    public function testMediumPagePagination()
+    {
+        $pagesCount = $this->allowCursorValueCalculateService->calculate();
+        $currentPage = round($pagesCount / 2);
+        $result = $this->paginationService->preparePagination($pagesCount, $currentPage);
+        $this->assertEquals([
+            'leftArrow' => ['page' => $currentPage - 1, 'symbol' => '«'],
+            'rightArrow' => ['page' => $currentPage + 1, 'symbol' => '»'],
+            'currentPage' => $currentPage,
+            'pages' => range(1, $pagesCount)
+        ], $result);        
     }
 
     private function createFiles()

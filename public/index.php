@@ -9,8 +9,6 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1); 
 ini_set('session.use_strict_mode', 1);
 ini_set('session.use_only_cookies = 1', 1);
-ini_set("upload_max_filesize", "99M");
-ini_set("post_max_size", "99M");
 
 define('ROOT', dirname(__DIR__));
 
@@ -24,6 +22,7 @@ require ROOT . '/app/bootstrap/models.php';
 require ROOT . '/app/bootstrap/services.php';
 require ROOT . '/app/bootstrap/auths.php';
 require ROOT . '/app/bootstrap/validators.php';
+require ROOT . '/app/bootstrap/handlers.php';
 require ROOT . '/app/Routes.php';
 
 $routes = new Routes();
