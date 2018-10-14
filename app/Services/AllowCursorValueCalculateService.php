@@ -13,21 +13,20 @@ class AllowCursorValueCalculateService
      * @var int
      */
     private $filesOnPage;
+    /**
+     * @var Fileshare\Services\SelectFilesCountService
+     */
+    private $selectFilesCountService;
 
     public function __construct($container)
     {
         $this->filesOnPage = $container->get('settings')['filesOnPage'];
+        $this->selectFilesCountService = $container->get('SelectFilesCountService');
     }
 
     public function calculate(): int
     {
-        $filesCount = $this->selectCountFilesNotes();
+        $filesCount = $this->selectFilesCountService->select();
         return  intval($filesCount / $this->filesOnPage);
-    }
-
-    private function selectCountFilesNotes(): int
-    {
-        $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')->get();
-        return count($files);
     }
 }

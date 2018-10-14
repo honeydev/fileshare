@@ -56,8 +56,7 @@ class SelectFilesService
             return ["files.created_at", "DESC"];
         } elseif ($sortType === 'early_to_late') {
             return ["files.created_at", "ASC"];
-        } else {
-            throw new \InvalidArgumentException("Unknown files browse order type {$sortType}");
         }
+        throw new \InvalidArgumentException("Unknown files browse order type {$sortType}");
     }
 }

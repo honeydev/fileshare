@@ -13,10 +13,9 @@ modules:
         - \Helper\Acceptance
         - \Helper\Functional
         - Db:
-            dsn: 'mysql:host=172.17.0.2;dbname=fileshare_tests'
-            user: 'honey'
-            password: 'd5d7'
-            dump: 'tests/_data/dump.sql'
-
-            cleanup: true
-            reconnect: true
+                dsn: 'mysql:host=fshare_db;dbname=fileshare_tests'
+                user: 'root'
+                password: 'd5d7'
+                dump: 'tests/_data/fileshare.sql'
+                cleanup: true
+                reconnect: true

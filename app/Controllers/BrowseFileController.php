@@ -37,8 +37,8 @@ class BrowseFileController extends AbstractController
 
     public function browse(Request $request, Response $response, array $args)
     {
-        $sortType = empty($args['sortType']) ? 'late_to_early' : $args['sortType'];
-        $cursor = empty($args['cursor']) ? 1 : (int) $args['cursor'];
+        $sortType = $request->getAttribute('sortType');
+        $cursor = $request->getAttribute('cursor');
         $this->viewData['page'] = 'browse';
         $this->viewData['fileArticles'] = $this->selectFilesService->select($sortType, $cursor);
         $this->viewData['sortType'] = $sortType;

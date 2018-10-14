@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lebedev
- * Date: 9/11/17
- * Time: 9:21 PM
- */
 
 $container['SessionService'] = function () use ($container) {
     return new Fileshare\Services\SessionService($container);
@@ -60,4 +54,12 @@ $container['SelectFilesService'] = function () use ($container) {
 
 $container['AllowCursorValueCalculateService'] = function () use ($container) {
     return new Fileshare\Services\AllowCursorValueCalculateService($container);
+};
+
+$container['SelectFilesCountService'] = function () use ($container) {
+    return new Fileshare\Services\SelectFilesCountService();
+};
+
+$container['PaginationService'] = function () use ($container) {
+    return new Fileshare\Services\PaginationService($container);
 };

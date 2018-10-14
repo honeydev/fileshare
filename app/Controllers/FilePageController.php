@@ -30,7 +30,6 @@ class FilePageController extends AbstractController
         $fileName = $args['fileName'];
         $file = File::getFileByName($fileName);
         $fileArray = FileTransformer::transform($file);
-        // $fileArray['fileAvatar'] = $this->fileAvatarService->getFileAvatar($file);
         $ownerArray = UserTransformer::transform($file->owner);
         $this->viewData['file'] = $fileArray;
         $this->viewData['title'] = "{$this->viewData['appName']} - {$file->name}";
