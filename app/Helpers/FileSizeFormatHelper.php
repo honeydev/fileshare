@@ -6,13 +6,13 @@ namespace Fileshare\Helpers;
 
 class FileSizeFormatHelper
 {
-    public static function bytesToMbytes(int $bytes)
+    public static function bytesToMbytes(int $bytes): string
     {
-        var_dump($bytes);
         if (is_float($megabytes = $bytes * 0.000001)) {
-            return round($megabytes, 3);
+            $megabytes = round($megabytes, 3);
         } else {
-            return $megabytes;
+            $megabytes = $megabytes;
         }
+        return (string) $megabytes;
     }
 }

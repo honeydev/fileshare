@@ -32,3 +32,9 @@ $container['PasswordEqualValidator'] = function () {
 $container['ImageValidator'] = function () use ($container) {
     return new Fileshare\Validators\ImageValidator($container->get("settings")["maxFileSize"]);
 };
+
+$container['BrowseFilesArgumentsValidator'] = function () use ($container) {
+    $allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
+    $maxAllowCursorValue = $allowCursorValueCalculateService->calculate();
+    return new Fileshare\Validators\BrowseFilesArgumentsValidator($maxAllowCursorValue);
+};

@@ -69,7 +69,6 @@ class BrowseFilesPageCept extends AbstractTest
         $this->tester->seeResponseCodeIs(200);
         $files = FilesSortHelper::earlyToLateSort($this->files);
         $files = self::filesAsArraysForView($files);
-        debug::debug($files);
         for ($i = 0; $i < $this->filesPerPage ; $i++) {
             $this->seeResponseContainsFileProperties($files[$i]);
         }
@@ -77,7 +76,25 @@ class BrowseFilesPageCept extends AbstractTest
 
     public function testFilesSelectAccordCursor()
     {
-        //todo implement
+        $this->tester->wantTo("See files select accord cursor");
+        $cursor = 2;
+        $this->tester->sendGET("/browse/late_to_early/{$cursor}");
+        $this->tester->seeResponseCodeIs(200);
+        $files = FilesSortHelper::lateToEarlySort($this->files);
+        $files = $this->filesAsArraysForView($files);
+        $firstFileIndex = $this->filesPerPage * ($cursor - 1);
+        $lastFileIndex = $firstFileIndex + $this->filesPerPage;
+        for ($i = $firstFileIndex; $i < $lastFileIndex; $i++) {
+            $this->seeResponseContainsFileProperties($files[$i]);
+        }
+    }
+
+    public function testRedirectIfCursorIsIncorrect()
+    {
+        $this->tester->wantTo("See first uploaded files");
+        $incorrectCursor = 0;
+        $this->tester->sendGET("/browse/early_to_late/{$incorrectCursor}");
+        $this->tester->seeResponseCodeIs(404);
     }
     /**
      * transform file objects to array, it's equal file statment in browse file view
@@ -92,12 +109,14 @@ class BrowseFilesPageCept extends AbstractTest
     private function seeResponseContainsFileProperties(array $file)
     {
         $this->tester->seeResponseContains($file['name']);
-        $this->tester->SeeResponseContains((string) $file['size']);
+        $this->tester->SeeResponseContains($file['size']);
         $this->tester->SeeResponseContains($file['created']);
         $this->tester->SeeResponseContains($file['filePageUrl']);
     }
 }
 
 $browseFilesPageCept = new BrowseFilesPageCept(new \FunctionalTester($scenario));
-$browseFilesPageCept->testLastUploadedFilesSelect();
-$browseFilesPageCept->testFirstUploadedFilesSelect();
+//$browseFilesPageCept->testLastUploadedFilesSelect();
+//$browseFilesPageCept->testFirstUploadedFilesSelect();
+//$browseFilesPageCept->testFilesSelectAccordCursor();
+$browseFilesPageCept->testRedirectIfCursorIsIncorrect();

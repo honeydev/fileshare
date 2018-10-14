@@ -57,3 +57,7 @@ $container['FileAvatarService'] = function () use ($container) {
 $container['SelectFilesService'] = function () use ($container) {
     return new Fileshare\Services\SelectFilesService($container);
 };
+
+$container['AllowCursorValueCalculateService'] = function () use ($container) {
+    return new Fileshare\Services\AllowCursorValueCalculateService($container);
+};
