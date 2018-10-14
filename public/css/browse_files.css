@@ -8,15 +8,17 @@
    
 }
 
-.file h4 .userAvatar {
+.file {
+    padding-top: 30px;
+}
+
+.file h5 .userAvatar {
     font-size: 16px;
     height: 30px;
     width: 30px;
 }
 
-
-
-.file a:link, .file. a:visited, .file a:hover, .file a:active {
+.fileLink, .fileLink:link, .fileLink:visited, .fileLink:hover, .fileLink:active {
     text-decoration: none;
     color: black;
     margin:0;
@@ -24,4 +26,14 @@
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+}
+
+.file .fileAvatar {
+    height: 160px;
+    width: 160px;
+}
+
+.files hr {
+    border: 1.5px solid #d3e0e9;
+    border-radius: 5px;
 }

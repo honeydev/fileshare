@@ -1,6 +1,8 @@
 <!--files review -->
 <!-- Comment modal window -->
 
+
+
 <div class="container">
     <div class="row">
         <aside class="settingsMenu col-xs-offset-2 col-xs-10 col-sm-offset-4">
@@ -25,35 +27,27 @@
             </div>
         </aside>
 
-        <section class="files col-xs-10">
+        <section class="files col-xs-10 col-xs-offset-1">
             {% for fileArticle in fileArticles %}
                 <article class="file">
-                    <a href="{{ fileArticle.file.filePageUrl }}">
-                    <h4><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
+                    <a class="fileLink" href="{{ fileArticle.file.filePageUrl }}">
+                    <h5><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
                         {{ fileArticle.owner.email }}
-                    </h4>
+                    </h5>
                     <h4>Filename {{ fileArticle.file.name }}</h4>
-
-                    <img 
-                    class="
-                    img-responsive center-block
-                    {% if fileArticle.file.fileAvatar.type == 'default' %} 
-                        fileImageDefault
+                    {% if fileArticle.file.fileAvatar.type == 'default' %}
+                        {% set fileAvatarClass = "fileImageDefault" %}
                     {% elseif fileArticle.file.fileAvatar.type == 'supported' %}
-                        fileImageSupported
+                        {% set fileAvatarClass = "fileImageSupported" %}
                     {% endif %}
-                    "
-                    src="
-                    {{ fileArticle.file.fileAvatar.url }}
-                    " 
-                    alt="File type pic"
-                    >
+                    <img class="img-responsive center-block fileAvatar {{ fileAvatarClass }}" src=" {{ fileArticle.file.fileAvatar.url }}" alt="File type pic">
                     <ul class="fileInfoList list-inline">
                         <li>Uploaded: {{ fileArticle.file.created }}</li>
                         <li>Size: {{ fileArticle.file.size }} Mb</li>
                     </ul>
                     </a>
                 </article>
+                <hr>
             {% endfor %}
         </section>
         {% include 'file_navigation.twig' %}
