@@ -27,6 +27,13 @@ class AllowCursorValueCalculateService
     public function calculate(): int
     {
         $filesCount = $this->selectFilesCountService->select();
-        return  intval($filesCount / $this->filesOnPage);
+        if ($filesCount <= $this->filesOnPage) {
+            $allowPages = 1;
+            echo 'allow pages = 1';
+        } else {
+            $allowPages = ceil($filesCount / $this->filesOnPage);
+        }
+        // var_dump($allowPages, $filesCount);
+        return (int) $allowPages;
     }
 }

@@ -29,18 +29,17 @@
 
         <section class="files col-xs-10 col-xs-offset-1">
             {% for fileArticle in fileArticles %}
+                   
+
                 <article class="file">
                     <a class="fileLink" href="{{ fileArticle.file.filePageUrl }}">
                     <h5><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
                         {{ fileArticle.owner.email }}
                     </h5>
-                    <h4>Filename {{ fileArticle.file.name }}</h4>
-                    {% if fileArticle.file.fileAvatar.type == 'default' %}
-                        {% set fileAvatarClass = "fileImageDefault" %}
-                    {% elseif fileArticle.file.fileAvatar.type == 'supported' %}
-                        {% set fileAvatarClass = "fileImageSupported" %}
-                    {% endif %}
-                    <img class="img-responsive center-block fileAvatar {{ fileAvatarClass }}" src=" {{ fileArticle.file.fileAvatar.url }}" alt="File type pic">
+                    <h4 class="fileName">Filename {{ fileArticle.file.name }}</h4>
+                    <div class="img-responsive center-block">
+                        {{ fileArticle.file.fileAvatar.html | raw }}
+                    </div>
                     <ul class="fileInfoList list-inline">
                         <li>Uploaded: {{ fileArticle.file.created }}</li>
                         <li>Size: {{ fileArticle.file.size }} Mb</li>

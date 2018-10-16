@@ -105,23 +105,31 @@ div {
     width: 35px;
 }
 
-.fileSpace .fileImageDefault {
+.fileSpace .fileImageDefault, .file .fileImageDefault {
     height: 160px;
     width: 160px;
+}
+
+.fileSpace .fileImageSupported, .file .fileImageSupported {
+    width: 98%;
+    height: 70%;
 }
 
 .fileSpace .fileImageSupported {
     /* styles for native preview */
 }
 
+.fileSpace .fileName, .file .fileName {
+    padding-left: 5px;
+}
 
-.fileSpace .fileInfoList {
+.fileSpace .fileInfoList, .file .fileInfoList {
     padding-top: 20px;
     margin-left: 1px;
     margin-top: 5px;
 }
 
-.fileSpace .fileInfoList li {
+.fileSpace .fileInfoList li, .file .fileInfoList li {
     border: 1px solid #d3e0e9;
     padding: 10px;
     margin-top: 5px;

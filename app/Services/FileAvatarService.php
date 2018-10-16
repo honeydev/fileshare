@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fileshare\Services;
 
 use Fileshare\Models\File;
+use Fileshare\TemplateFormaters\ImagePreviewTemplateFormater as ImagePvFormater;
 
 class FileAvatarService
 {
@@ -26,14 +27,28 @@ class FileAvatarService
     public function getAvatar(File $file): array
     {
         if ($this->filePreviewIsSupported($file->mime)) {
+            $url = $this->hostName . "/file/get/{$file->name}";
             return [
                 'type' => 'supported', 
-                'url' => $this->hostName . "/file/get/{$file->name}"
+                'url' => $url,
+                'html' => ImagePvFormater::format(
+                    [
+                        'src' => $url,
+                        'class' => 'fileImageSupported'
+                    ]
+                )
             ];
         } else {
+            $url = $this->prepareDefaultPreview($file->mime);
             return [
                 'type' => 'default', 
-                'url' => $this->getDefaultPreview($file->mime)
+                'url' => $url,
+                'html' => ImagePvFormater::format(
+                    [
+                        'src' => $url,
+                        'class' => 'fileImageDefault'
+                    ]
+                )
             ];
         }
     }
@@ -43,7 +58,8 @@ class FileAvatarService
         return in_array($mime, $this->previewsSupportMap['supported']);
     }
 
-    private function getDefaultPreview(string $mime): string
+
+    private function prepareDefaultPreview(string $mime): string
     {
         if (array_key_exists($mime, $this->previewsSupportMap['default'])) {
             return $this->hostName . $this->previewsSupportMap['default'][$mime];
