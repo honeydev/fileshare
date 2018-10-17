@@ -5,10 +5,23 @@ declare(strict_types=1);
 namespace Fileshare\Services;
 
 use Fileshare\Models\File;
-use Fileshare\TemplateFormaters\ImagePreviewTemplateFormater as ImagePvFormater;
+use Fileshare\TagFormaters\AbstractTagFormater;
+use Fileshare\Helpers\StringFormatHelper;
 
 class FileAvatarService
 {
+    /**
+     * @property string
+     */
+    private $type;
+    /**
+     * @property string
+     */
+    private $group;
+    /**
+     * @property string
+     */
+    private $url;
     /**
      * @property {string} host url
      */
@@ -26,31 +39,25 @@ class FileAvatarService
 
     public function getAvatar(File $file): array
     {
+        $this->defineAvatarProperties($file);
+        return [
+            'type' => $this->type,
+            'group' => $this->group,
+            'url' => $this->url,
+            'tag' => $this->prepareTagData($file->mime, ["src" => $this->url])
+        ];
+    }
+
+    private function defineAvatarProperties(File $file)
+    {
         if ($this->filePreviewIsSupported($file->mime)) {
-            $url = $this->hostName . "/file/get/{$file->name}";
-            return [
-                'type' => 'supported', 
-                'url' => $url,
-                'html' => ImagePvFormater::format(
-                    [
-                        'src' => $url,
-                        'class' => 'fileImageSupported'
-                    ]
-                )
-            ];
+            $this->group = 'supported';
+            $this->url = $this->prepareSupportedAvatarUrl($file->name);
         } else {
-            $url = $this->prepareDefaultPreview($file->mime);
-            return [
-                'type' => 'default', 
-                'url' => $url,
-                'html' => ImagePvFormater::format(
-                    [
-                        'src' => $url,
-                        'class' => 'fileImageDefault'
-                    ]
-                )
-            ];
+            $this->group = 'default';
+            $this->url = $this->prepareDefaultAvatarUrl($file->mime);
         }
+        $this->type = StringFormatHelper::transformMimeToFileType($file->mime);
     }
 
     private function filePreviewIsSupported(string $mime): bool
@@ -58,13 +65,22 @@ class FileAvatarService
         return in_array($mime, $this->previewsSupportMap['supported']);
     }
 
+    private function prepareSupportedAvatarUrl(string $fileName): string
+    {
+        return $this->hostName . "/file/get/{$fileName}";
+    }
 
-    private function prepareDefaultPreview(string $mime): string
+    private function prepareDefaultAvatarUrl(string $mime): string
     {
         if (array_key_exists($mime, $this->previewsSupportMap['default'])) {
             return $this->hostName . $this->previewsSupportMap['default'][$mime];
-        } else {
-            return $this->hostName . $this->previewsSupportMap['default']['unknown'];
         }
+        return $this->hostName . $this->previewsSupportMap['default']['unknown'];
+    }
+
+    private function prepareTagData(string $mime, array $attributes): array
+    {
+        $tagFormater = AbstractTagFormater::create($mime);
+        return $tagFormater->format($attributes);
     }
 }

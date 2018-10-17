@@ -14,4 +14,6 @@ puphpet/*
 /storage/avatars/*
 !/storage/avatars/.gitkeep
 /storage/uploads/*
-!/storage/uploads/.gitkeep 
+!/storage/uploads/.gitkeep
+/public/avatars
+/public/uploads
