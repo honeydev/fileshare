@@ -10,7 +10,6 @@
 
 
 $container = $app->getContainer();
-
 $container->register(new \Fileshare\Db\EloquentServiceProvider());
 
 $container['db'] = function ($container) {

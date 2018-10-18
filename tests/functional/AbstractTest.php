@@ -8,6 +8,8 @@ namespace FileshareTests\Functional;
 
 use \Codeception\Util;
 use \Codeception\Util\Debug as debug;
+use \Fileshare\Db\factories\FileFactory;
+use \Fileshare\Models\User;
 
 abstract class AbstractTest extends \Codeception\Module
 {
@@ -56,5 +58,19 @@ abstract class AbstractTest extends \Codeception\Module
     {
         $uri = explode('/', $imageUri);
         return $uri[count($uri) - 1];
+    }
+
+    protected function createFiles($testsFilesCount): array
+    {
+        $files = [];
+
+        for ($i = 0; $i < $testsFilesCount; $i++) {
+            $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
+            $files[] = $file;
+            /* delay insert for correct timestamps different in db notes */
+            usleep(1000000);
+        }
+
+        return $files;
     }
 }

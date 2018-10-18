@@ -14,9 +14,9 @@ modules:
         - REST:
             depends: \Herloct\Codeception\Module\Slim
         - Db:
-            dsn: 'mysql:host=fshare_db;dbname=fileshare_tests'
+            dsn: 'mysql:host=localhost;dbname=fileshare_tests'
             user: 'root'
-            password: 'd5d7'
+            password: ''
             dump: 'tests/_data/fileshare.sql'
             cleanup: true
             reconnect: true
