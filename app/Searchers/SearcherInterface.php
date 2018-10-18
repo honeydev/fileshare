@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface SearcherInterface
 {
-    public function search(string $keyString, string $table): Collection;
+    public function search(string $keyString): array;
 }

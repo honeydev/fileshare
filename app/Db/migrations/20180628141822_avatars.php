@@ -8,7 +8,7 @@ class Avatars extends \Fileshare\Db\migrations\BaseMigration
 {
     public function up()
     {
-        if ($this->schema->hasTable('files')) {
+        if ($this->schema->hasTable('avatars')) {
             return null;
         }
 

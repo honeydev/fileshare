@@ -25,7 +25,7 @@ class SearchPageCept extends AbstractTest
         $this->tester->wantTo("See requirement file first in search result");
         $this->createFiles(20);
         $file = $this->selectRandomFile();
-        $this->tester->sendGET("/search/{$file->name}");
+        $this->tester->sendPost("/search", ["searchRequest" => $file->name]);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContains($file->name);
     }

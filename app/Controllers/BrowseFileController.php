@@ -31,18 +31,6 @@ class BrowseFileController extends AbstractController
         $this->paginationService = $container->get('PaginationService');
     }
 
-    public function index(Request $request, Response $response, array $args): Response
-    {
-        $this->viewData['page'] = 'browse';
-
-        $response = $this->container->view->render(
-            $response, 
-            "index.twig", 
-            $this->viewData
-            );
-        return $response;
-    }
-
     public function browse(Request $request, Response $response, array $args)
     {
         $sortType = $request->getAttribute('sortType');
