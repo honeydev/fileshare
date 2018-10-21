@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ hostname }}">{{ appName }}</a>
+                <a class="navbar-brand appName" href="{{ hostname }}" >{{ appName }}</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,14 +20,14 @@
                     <li>
                         <form action="/search" method="post" class="navbar-form navbar-left" role="search">
                             <div class="input-group">
-                                <input name="searchRequest"type="text" class="form-control" placeholder="Find file">
+                                <input value="{{ searchRequest }}" name="searchRequest"type="text" class="form-control" placeholder="Find file">
                                 <span class="input-group-btn">
 										<button class="btn btn-default" type="submit">Search</button>
 								</span>
                             </div>
                         </form>
                     </li>
-                    <li><a href="{{ hostname }}/browse">Browse Files</a></li>
+                    <li><a href="{{ hostname }}/browse" class="btn navButton">Browse Files</a></li>
                     <li>
                         <a href="#" data-toggle="modal" data-target="#profileModal" id="profileA">Profile</a>
                     </li>

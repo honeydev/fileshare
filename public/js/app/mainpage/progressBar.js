@@ -9,8 +9,8 @@ function ProgressBar(dic) {
 }
 
 ProgressBar.prototype.activate = function () {
-    $("#fileForm").empty();
-    $("#fileForm").html(bar);
+    $("#uploadButtonWrap").empty();
+    $("#uploadButtonWrap").html(bar);
 };
 /**
  * @param {int} progress

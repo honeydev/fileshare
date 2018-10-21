@@ -1,8 +1,6 @@
-<!--files review -->
-<!-- Comment modal window -->
 <div class="container">
     <div class="row">
-        <aside class="settingsMenu col-xs-offset-2 col-xs-10 col-sm-offset-4">
+        <aside class="settingsMenu center-block text-center">
             <div class="btn-group">
                 <a href="/browse/late_to_early">
                     <button type="button " class="btn btn-default lateToEarlyButton
@@ -23,9 +21,12 @@
                 </a>
             </div>
         </aside>
-        <div class="col-xs-1 text-right">
-            <a href="/browse/{{ sortType }}/{{ pagination.leftArrow.page }}">{{ pagination.leftArrow.symbol }}</a>
-        </div>
+
+            <div class="col-xs-1 text-right">
+                {% if pagination.leftArrow is not empty %}
+                    <a class="btn btn-default arrowButton" href="/browse/{{ sortType }}/{{ pagination.leftArrow.page }}">{{ pagination.leftArrow.symbol }}</a>
+                {% endif %}
+            </div>
         <section class="files col-xs-10">
             {% for fileArticle in fileArticles %}
                 {% set fileAvatar = fileArticle.file.fileAvatar %}
@@ -52,11 +53,12 @@
                     </ul>
                     </a>
                 </article>
-                <hr>
             {% endfor %}
         </section>
-        <div class="col-xs-1">
-            <a href="/browse/{{ sortType }}/{{ pagination.rightArrow.page }}">{{ pagination.rightArrow.symbol }}</a>
-        </div>
+            <div class="col-xs-1">
+                {% if pagination.rightArrow is not empty %}
+                    <a class="btn btn-default arrowButton" href="/browse/{{ sortType }}/{{ pagination.rightArrow.page }}">{{ pagination.rightArrow.symbol }}</a>
+                {% endif %}
+            </div>
     </div>
 </div>

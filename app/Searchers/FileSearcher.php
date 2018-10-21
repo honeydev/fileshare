@@ -6,6 +6,7 @@ namespace Fileshare\Searchers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Fileshare\Models\{File, Avatar};
+use Fileshare\Packers\FilePacker;
 
 class FileSearcher implements SearcherInterface
 {
@@ -15,7 +16,8 @@ class FileSearcher implements SearcherInterface
             ->limit(100)
             ->get();
         $avatarsId = Avatar::select('parentId')->get()->toArray();
-        return $this->filtrateAvatars($files, $avatarsId);
+        $filtredFiles = $this->filtrateAvatars($files, $avatarsId);
+        return FilePacker::pack($filtredFiles);
     }
 
     private function filtrateAvatars(Collection $files, array $avatarsId): array

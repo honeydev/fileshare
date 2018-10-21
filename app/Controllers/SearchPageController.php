@@ -26,9 +26,11 @@ class SearchPageController extends AbstractController
 
     public function search(Request $request, Response $response, $args)
     {
-        $this->page['page'] = 'search';
+
         $requestFileName = $request->getParsedBody()['searchRequest'];
-        $this->viewData['searchResult'] = $this->fileSearcher->search($requestFileName);
+        $this->viewData['page'] = 'search';
+        $this->viewData['fileArticles'] = $this->fileSearcher->search($requestFileName);
+        $this->viewData['searchRequest'] = $requestFileName;
         return $this->container->view->render(
             $response,
             "index.twig",

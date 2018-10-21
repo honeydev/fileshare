@@ -1,20 +1,19 @@
 {% include 'invalid_format_modal.html' %}
 <div id="uploadSection" class="jumbotron mainSpace">
 <!-- title section -->
-<div class="container">
     <h1 class="text-center">Save your files!</h1>
-</div>
 <!-- upload section -->
 <div class="container">
     <div class="row">
-        <div id="fileForm" class="col-xs-offset-2 col-sm-offset-4 col-md-4">
-            <form class="form-horizontal">
-                <div class="control-group">
-                    <div class="controls">
-                        <input type="file" id="inputFile" placeholder="File">
+        <div id="fileForm">
+                <div class="control-group col-xs-8 col-xs-offset-2">
+                    <div class="controls" id="uploadButtonWrap">
+                        <input class="fileInput" type="file" id="inputFile" placeholder="File">
+                        <div class="center-block text-center">
+                            <button id="uploadButton" class="btn uploadButton">Upload</button>
+                        </div>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 </div>

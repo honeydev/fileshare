@@ -4,12 +4,35 @@
     padding-top: 10px;
 }
 
-.lateToEarlyButton {
-   
+.settingsMenu button, .settingsMenu button.active {
+    background-color: #CDC3E2;
+    color: #FFF4D8;
+}
+
+.settingsMenu button.active, .settingsMenu button:hover {
+    background-color: #39216c;
+}
+
+
+.arrowButton {
+    background-color: #39216c;
+    color: #FFF4D8;
 }
 
 .file {
-    padding-top: 30px;
+    padding: 10px 30px 20px 20px;
+    border-radius: 4px;
+    background-color: #578797;
+    margin-top: 15px;
+    color: #FFF4D8;
+}
+
+.file:last-child {
+    margin-bottom: 15px;
+}
+
+.file h5, .file h4 {
+    color: #FFF4D8;
 }
 
 .file h5 .userAvatar {

@@ -2,8 +2,19 @@
 @import url('404.css');
 @import url('browse_files.css');
 
+@font-face {
+    font-family: Tavolgafree;
+    src: url('../fonts/Tavolgafree.woff2');
+}
+
+@font-face {
+    font-family: 'Sigmar One';
+    src: url('../fonts/SigmarOne-Regular.ttf');
+}
+
 main {
-    background-color: #eee;
+    background-color: #F2D388;
+    min-height: calc(100vh - 52px);
 }
 
 #logOutA {
@@ -16,10 +27,38 @@ main {
 
 .navbar {
     margin-bottom: 0;
+    background-color: #578797;
+    border-radius: 0;
+    border: none;
 }
 
 .navbar-collapse {
     overflow:  hidden;
+}
+
+.appName {
+    font-family: 'Sigmar One', cursive;
+    font-size: 30px;
+    color: #f9e7bd !important;
+}
+
+.navbar-nav .navButton {
+    background-color: #f9e7bd !important;
+    color: #39216c !important;
+    padding: 10px;
+    min-width: 90px;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar-nav li a {
+    color: #f9e7bd !important;
+}
+
+.navbar-nav .navButton, .navbar-nav li a {
+    font-family: 'Muli', sans-serif;
+    font-size: 16px;
 }
 
 .caption a {
@@ -39,7 +78,26 @@ main {
     padding-top: 200px;
     margin: 0;
     height: 92vh;
+    background-color: #F2D388;
 }
+
+.mainSpace h1 {
+    font-family: Tavolgafree;
+}
+
+.fileInput {
+    display: none !important;
+}
+
+.uploadButton {
+    font-family: Tavolgafree;
+    width: 250px;
+    height: 75px;
+    background-color: #7a64a5;
+    color: white;
+    font-size: 30px;
+}
+
 
 .dndWrap {
     display: none;
@@ -115,8 +173,7 @@ div {
 }
 
 .fileSpace .fileImageSupported, .file .fileImageSupported {
-    width: 60%;
-    height: 60%;
+    width: 100%;
 }
 
 .fileSpace .fileImageSupported {
@@ -128,6 +185,7 @@ div {
 }
 
 .fileSpace .fileInfoList, .file .fileInfoList {
+    color: #FFF4D8;
     padding-top: 20px;
     margin-left: 1px;
     margin-top: 5px;
