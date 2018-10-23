@@ -21,7 +21,8 @@
                 </a>
             </div>
         </aside>
-
+    </div>
+    <div class="row">
             <div class="col-xs-2 text-right">
                 {% if pagination.leftArrow is not empty %}
                     <a class="btn btn-default arrowButton" href="/browse/{{ sortType }}/{{ pagination.leftArrow.page }}">{{ pagination.leftArrow.symbol }}</a>
@@ -60,5 +61,6 @@
                     <a class="btn btn-default arrowButton" href="/browse/{{ sortType }}/{{ pagination.rightArrow.page }}">{{ pagination.rightArrow.symbol }}</a>
                 {% endif %}
             </div>
+    </div>
     </div>
 </div>
