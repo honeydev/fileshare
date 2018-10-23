@@ -1,8 +1,10 @@
-# Fileshare 
+# Fileshare
+*It simple classic CRUD application, provide features for sharing files*
 
 ## Env requirements
 
-linux, node, php >= 7.0, npm, composer,  mysql/mariadb
++ linux, node, php >= 7.0, npm, composer
++ mysql/mariadb, need create database "fileshare". You must also create "fileshare_tests" database for usage with automatic tests.
 
 ## Install the Application
 + Install php dependencies
@@ -29,7 +31,6 @@ npm i
 ```bash
   npm webpack.js
 ```
-
 
 ## Run tests
 
