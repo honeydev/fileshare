@@ -26,7 +26,6 @@ class SearchPageController extends AbstractController
 
     public function search(Request $request, Response $response, $args)
     {
-
         $requestFileName = $request->getParsedBody()['searchRequest'];
         $this->viewData['page'] = 'search';
         $this->viewData['fileArticles'] = $this->fileSearcher->search($requestFileName);

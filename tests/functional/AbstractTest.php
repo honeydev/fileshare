@@ -42,7 +42,7 @@ abstract class AbstractTest extends \Codeception\Module
     protected function loginUser($user)
     {
         $this->tester->sendAjaxRequest('POST', '/api/login.form', array("email" => $user->email, "password" => 'password'));
-        // $this->tester->seeResponseCodeIs(200);
+        $this->tester->seeResponseCodeIs(200);
     }
 
     protected function loginTestUser(array $userData)
@@ -67,8 +67,6 @@ abstract class AbstractTest extends \Codeception\Module
         for ($i = 0; $i < $testsFilesCount; $i++) {
             $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
             $files[] = $file;
-            /* delay insert for correct timestamps different in db notes */
-            usleep(1000000);
         }
 
         return $files;

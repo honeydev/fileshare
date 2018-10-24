@@ -21,14 +21,14 @@ class BrowseFileController extends AbstractController
      */
     private $allowCursorValueCalculateService;
 
-    private $paginationService;
+    private $browsePaginator;
 
     public function __construct($container)
     {
         parent::__construct($container);
         $this->selectFilesService = $container->get('SelectFilesService');
         $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
-        $this->paginationService = $container->get('PaginationService');
+        $this->browsePaginator = $container->get('BrowsePaginator');
     }
 
     public function browse(Request $request, Response $response, array $args)
@@ -41,7 +41,7 @@ class BrowseFileController extends AbstractController
         $this->viewData['sortType'] = $sortType;
         $this->viewData['sortLinks'] = SortLinksHelper::getLinks($cursor);
         $this->viewData['cursor'] = $cursor;
-        $this->viewData['pagination'] = $this->paginationService->preparePagination($pagesCount, $cursor);
+        $this->viewData['pagination'] = $this->browsePaginator->paginate($cursor, $pagesCount, ['sortType' => $sortType]);
         return $this->container->view->render(
             $response,
             "index.twig",

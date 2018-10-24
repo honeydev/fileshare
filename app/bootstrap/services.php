@@ -59,7 +59,3 @@ $container['AllowCursorValueCalculateService'] = function () use ($container) {
 $container['SelectFilesCountService'] = function () use ($container) {
     return new Fileshare\Services\SelectFilesCountService();
 };
-
-$container['PaginationService'] = function () use ($container) {
-    return new Fileshare\Services\PaginationService($container);
-};

@@ -33,22 +33,9 @@ class BrowseFilesPageCept extends AbstractTest
         $this->container = Fixtures::get("container");
         $this->appFolder = dirname(dirname(__DIR__));
         $this->filesPerPage = $this->container->get('settings')['filesOnPage'];
-        $this->files = $this->createFiles();
+        $this->files = $this->createFiles(self::TEST_FILES_COUNT);
     }
 
-    private function createFiles(): array
-    {
-        $files = [];
-
-        for ($i = 0; $i < self::TEST_FILES_COUNT; $i++) {
-            $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
-            $files[] = $file;
-            /* delay insert for correct timestamps different in db notes */
-            usleep(1000000);
-        }
-
-        return $files;
-    }
 
     public function testLastUploadedFilesSelect()
     {
