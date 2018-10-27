@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace Fileshare\Paginators;
 
-class BrowsePaginator extends AbstractPaginator implements PaginatorInterface
+class SearchPaginator extends AbstractPaginator implements PaginatorInterface
 {
-    /**
-     * @property string
-     */
-    private $sortType;
-
     public function paginate(int $currentPage, int $pagesCount, array $params = []): array
     {
         $this->currentPage = $currentPage;
         $this->pagesCount = $pagesCount;
-        $this->sortType = $params['sortType'];
         $pagination = [];
         $pagination['leftArrow'] = $this->prepareLeftArrow();
         $pagination['rightArrow'] = $this->prepareRightArrow();
@@ -24,10 +18,11 @@ class BrowsePaginator extends AbstractPaginator implements PaginatorInterface
 
     protected function prepareLeftArrow(): array
     {
-        if (empty($leftArrow = parent::prepareLeftArrow())) {
+        $leftArrow = parent::prepareLeftArrow();
+        if (empty($leftArrow)) {
             return $leftArrow;
         }
-        $leftArrow['link'] = $this->formatLink([$this->sortType, $leftArrow['page']]);
+        $leftArrow['link'] = $this->formatLink([$leftArrow['page']]);
         return $leftArrow;
     }
 
@@ -36,7 +31,7 @@ class BrowsePaginator extends AbstractPaginator implements PaginatorInterface
         if (empty($rightArrow = parent::prepareRightArrow())) {
             return $rightArrow;
         }
-        $rightArrow['link'] = $this->formatLink([$this->sortType, $rightArrow['page']]);
+        $rightArrow['link'] = $this->formatLink([$rightArrow['page']]);
         return $rightArrow;
     }
 }

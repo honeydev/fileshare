@@ -59,16 +59,4 @@ abstract class AbstractTest extends \Codeception\Module
         $uri = explode('/', $imageUri);
         return $uri[count($uri) - 1];
     }
-
-    protected function createFiles($testsFilesCount): array
-    {
-        $files = [];
-
-        for ($i = 0; $i < $testsFilesCount; $i++) {
-            $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
-            $files[] = $file;
-        }
-
-        return $files;
-    }
 }

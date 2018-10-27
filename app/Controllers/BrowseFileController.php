@@ -20,8 +20,14 @@ class BrowseFileController extends AbstractController
      * @property \Fileshare\Services\AllowCursorValueCalculateService
      */
     private $allowCursorValueCalculateService;
-
+    /**
+     * @property \Fileshare\Paginators\BrowsePaginator
+     */
     private $browsePaginator;
+    /**
+     * @property \Fileshare\Services\SelectFilesCountService
+     */
+    private $selectFilesCountService;
 
     public function __construct($container)
     {
@@ -29,13 +35,14 @@ class BrowseFileController extends AbstractController
         $this->selectFilesService = $container->get('SelectFilesService');
         $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
         $this->browsePaginator = $container->get('BrowsePaginator');
+        $this->selectFilesCountService = $container->get('SelectFilesCountService');
     }
 
     public function browse(Request $request, Response $response, array $args)
     {
         $sortType = $request->getAttribute('sortType');
-        $cursor = intval($request->getAttribute('cursor'));
-        $pagesCount = $this->allowCursorValueCalculateService->calculate();
+        $cursor = (int) $request->getAttribute('cursor');
+        $pagesCount = $this->allowCursorValueCalculateService->calculate($this->selectFilesCountService->select());
         $this->viewData['page'] = 'browse';
         $this->viewData['fileArticles'] = $this->selectFilesService->select($sortType, $cursor);
         $this->viewData['sortType'] = $sortType;

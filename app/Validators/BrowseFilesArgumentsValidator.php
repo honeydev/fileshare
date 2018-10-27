@@ -19,7 +19,6 @@ class BrowseFilesArgumentsValidator extends AbstractValidator
     public function __construct(int $maxAllowCursorValue)
     {
         $this->maxAllowCursorValue = $maxAllowCursorValue;
-        // var_dump($this->maxAllowCursorValue);
     }
     /**
      * @param $browseFilesArguments array

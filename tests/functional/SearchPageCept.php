@@ -14,6 +14,8 @@ use function \Funct\Collection\invoke;
 
 class SearchPageCept extends AbstractTest
 {
+    use \FileshareTests\traits\CreateFilesTrait;
+
     public function __construct($tester)
     {
         parent::__construct($tester);
@@ -23,7 +25,7 @@ class SearchPageCept extends AbstractTest
     public function testSearchByFullFileNameCoincidence()
     {
         $this->tester->wantTo("See requirement file first in search result");
-        $this->createFiles(20);
+        $this->createFilesAnonymous(20);
         $file = $this->selectRandomFile();
         $this->tester->sendPost("/search", ["searchRequest" => $file->name]);
         $this->tester->seeResponseCodeIs(200);

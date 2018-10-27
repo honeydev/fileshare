@@ -5,27 +5,36 @@ use Codeception\Util\Fixtures;
 class BrowsePaginatorTest extends \Codeception\Test\Unit
 {
     use \FileshareTests\traits\CreateFilesTrait;
-
+    /**
+     * @var int
+     */
     private $filesOnPage;
-    private $paginationService;
-    private $allowCursorValueCalculateService;
+    /**
+     * @var int
+     */
+    private $pagesCount;
+    /**
+     * @var Fileshare\Paginators\BrowsePaginator
+     */
+    private $browsePaginator;
 
     protected function _before()
     {
         $container = Fixtures::get('container');
         $this->filesOnPage = $container->get('settings')['filesOnPage'];
         $this->browsePaginator = $container->get('BrowsePaginator');
-        $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
+        $allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
+        $selectFilesCountService = $container->get("SelectFilesCountService");
         $this->createFilesAnonymous(30);
+        $this->pagesCount = $allowCursorValueCalculateService->calculate($selectFilesCountService->select());
     }
 
     public function testFirstPagePagination()
     {
-        $pagesCount = $this->allowCursorValueCalculateService->calculate();
         $currentPage = 1;
-        $pagination = $this->browsePaginator->paginate($currentPage, $pagesCount, ['sortType' => 'late_to_early']);
+        $pagination = $this->browsePaginator->paginate($currentPage, $this->pagesCount, ['sortType' => 'late_to_early']);
         $this->assertEquals([
-            'leftArrow' => null,
+            'leftArrow' => [],
             'rightArrow' => [
                 'page' => 2,
                 'link' => 'late_to_early/2'
@@ -35,30 +44,28 @@ class BrowsePaginatorTest extends \Codeception\Test\Unit
 
     public function testLastPagePagination()
     {
-        $pagesCount = $this->allowCursorValueCalculateService->calculate();
-        $currentPage = $pagesCount;
-        $pagination = $this->browsePaginator->paginate($currentPage, $pagesCount, ['sortType' => 'late_to_early']);
+        $currentPage = $this->pagesCount;
+        $pagination = $this->browsePaginator->paginate($currentPage, $this->pagesCount, ['sortType' => 'late_to_early']);
         $pagePreviousLast = $currentPage - 1;
         $this->assertEquals([
             'leftArrow' => [
                 'page' => $pagePreviousLast,
                 'link' => "late_to_early/{$pagePreviousLast}"
             ],
-            'rightArrow' => null
+            'rightArrow' => []
         ], $pagination);
     }
 
     public function testMediumPagePagination()
     {
-        $pagesCount = $this->allowCursorValueCalculateService->calculate();
-        $currentPage = round($pagesCount / 2);
-        $pagination = $this->browsePaginator->paginate($currentPage, $pagesCount, ['sortType' => 'late_to_early']);
-        $previusPage = $currentPage - 1;
+        $currentPage = round($this->pagesCount / 2);
+        $pagination = $this->browsePaginator->paginate($currentPage, $this->pagesCount, ['sortType' => 'late_to_early']);
+        $previousPage = $currentPage - 1;
         $nextPage = $currentPage + 1;
         $this->assertEquals([
             'leftArrow' => [
-                'page' => $previusPage,
-                'link' => "late_to_early/{$previusPage}"
+                'page' => $previousPage,
+                'link' => "late_to_early/{$previousPage}"
             ],
             'rightArrow' => [
                 'page' => $nextPage,
