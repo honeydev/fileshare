@@ -2,6 +2,7 @@
 @import url('404.css');
 @import url('browse_files.css');
 @import url('upload_section.css');
+@import url('file_preview.css');
 
 @font-face {
     font-family: Tavolgafree;
@@ -210,9 +211,19 @@ div {
     margin: -20px;
 }
 
+/* navigation arrow */
 
+.arrowButton, .arrowButton:hover {
+    background-color: #39216c !important;
+    color: #FFF4D8;
+}
 
-@media screen and (min-width: 769px) {
+.sideArrow {
+    display: none;
+    margin-top: 25px;
+}
+
+@media screen and (min-width: 768px) {
 
     .fileSpace h4 {
         font-size: large;
@@ -235,6 +246,14 @@ div {
 
     .fileSpace .buttonsFilePage {
         /*font-size: large;*/
+    }
+
+    .sideArrow {
+        display: block;
+    }
+
+    .bottomArrows {
+        display: none;
     }
 }
 

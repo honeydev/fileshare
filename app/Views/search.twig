@@ -1,47 +1,23 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-2 text-right">
-        {% if pagination.leftArrow is not empty %}
-            <a class="btn btn-default arrowButton" href="/search?{{ pagination.leftArrow.link }}">«</a>
-        {% endif %}
-    </div>
-    <section class="files col-xs-8">
-        {% for fileArticle in fileArticles %}
-            {% set fileAvatar = fileArticle.file.fileAvatar %}
-            {% if fileAvatar.group == 'default' %}
-                {% set fileAvatarClass = 'img-responsive center-block fileImageDefault' %}
-            {% elseif fileAvatar.group == 'supported' %}
-                {% if fileAvatar.type == 'image' %}
-                    {% set fileAvatarClass = 'img-responsive center-block fileImageSupported' %}
-                {% endif %}
-            {% endif %}
-            {% set fileAvatarTag %}
-                {{ fileAvatar.tag.openTag | raw }} {{ fileAvatar.tag.attributes | raw }} class="{{ fileAvatarClass }}" {{ fileAvatar.tag.closeOpenTag | raw }}
-            {% endset %}
-            <article class="file">
-                <a class="fileLink" href="{{ fileArticle.file.filePageUrl }}">
-                    <h5><img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
-                        {{ fileArticle.owner.email }}
-                    </h5>
-                    <h4 class="fileName">Filename {{ fileArticle.file.name }}</h4>
-                    {{ fileAvatarTag | raw}}
-                    <ul class="fileInfoList list-inline">
-                        <li>Uploaded: {{ fileArticle.file.created }}</li>
-                        <li>Size: {{ fileArticle.file.size }} Mb</li>
-                    </ul>
-                </a>
-            </article>
-            <hr>
-        {% endfor %}
+        <div class="sideArrow col-sm-2 text-right">
+            {% include 'left_arrow.twig' %}
+        </div>
+    <section class="files col-xs-12 col-sm-8">
+        {% include 'file_articles.twig' %}
 
         {% if fileArticles is empty %}
-            <p>No match found</p>
+            <p>No matchs found</p>
         {% endif %}
     </section>
-    <div class="col-xs-2">
-        {% if pagination.rightArrow is not empty %}
-            <a class="btn btn-default arrowButton" href="/search?{{ pagination.rightArrow.link }}">»</a>
-        {% endif %}
+    <div class="sideArrow col-sm-2">
+        {% include 'right_arrow.twig' %}
     </div>
 </div>
+    <div class="row">
+        <div class="bottomArrows center-block text-center">
+            {% include 'left_arrow.twig' %}
+            {% include 'right_arrow.twig' %}
+        </div>
+    </div>
 </div>

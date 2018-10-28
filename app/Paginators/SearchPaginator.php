@@ -40,6 +40,6 @@ class SearchPaginator extends AbstractPaginator implements PaginatorInterface
 
     private function formatLink(int $page): string
     {
-        return "searchRequest={$this->searchRequest}&page={$page}";
+        return "?searchRequest={$this->searchRequest}&page={$page}";
     }
 }
