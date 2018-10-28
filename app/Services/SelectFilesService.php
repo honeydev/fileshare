@@ -7,6 +7,7 @@ namespace Fileshare\Services;
 use \Codeception\Util\Debug as debug;
 use \Fileshare\Models\{File, User, Avatar};
 use Fileshare\Packers\FilePacker;
+use Fileshare\Helpers\SelectHelper;
 
 class SelectFilesService
 {
@@ -32,7 +33,7 @@ class SelectFilesService
         $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
             ->orderBy(...$this->getOrderParams($sortType))
             ->limit($this->filesOnPage)
-            ->offset($this->getOffset($cursor))
+            ->offset(SelectHelper::getOffset($cursor, $this->filesOnPage))
             ->get();
         return $files;
     }

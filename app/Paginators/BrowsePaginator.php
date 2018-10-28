@@ -39,4 +39,9 @@ class BrowsePaginator extends AbstractPaginator implements PaginatorInterface
         $rightArrow['link'] = $this->formatLink([$this->sortType, $rightArrow['page']]);
         return $rightArrow;
     }
+
+    protected function formatLink(array $parts): string
+    {
+        return implode("/", $parts);
+    }
 }

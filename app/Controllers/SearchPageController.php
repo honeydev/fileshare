@@ -9,6 +9,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Fileshare\Models\{File, Avatar};
 use Illuminate\Support\Facades\DB;
 use \Fileshare\Helpers\SortLinksHelper;
+use Fileshare\Packers\FilePacker;
 
 class SearchPageController extends AbstractController
 {
@@ -24,6 +25,7 @@ class SearchPageController extends AbstractController
 
     private $searchPaginator;
 
+    private $sliceFilesQueryService;
 
     public function __construct($container)
     {
@@ -32,17 +34,20 @@ class SearchPageController extends AbstractController
         $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
         $this->selectFilesCountService = $container->get('SelectFilesCountService');
         $this->searchPaginator = $container->get('SearchPaginator');
+        $this->sliceFilesQueryService = $container->get('SliceFilesQueryService');
     }
 
     public function search(Request $request, Response $response, $args)
     {
-        $cursor = (int) $request->getAttribute('cursor');
-        $requestFileName = $request->getParsedBody()['searchRequest'];
         $this->viewData['page'] = 'search';
-        $this->viewData['fileArticles'] = $this->fileSearcher->search($requestFileName);
-        $pagesCount = $this->allowCursorValueCalculateService->calculate(count($this->viewData['fileArticles']));
-        $this->viewData['pagination'] = $this->searchPaginator->paginate($pagesCount, $cursor);
-        $this->viewData['searchRequest'] = $requestFileName;
+        $cursor = (int) $request->getAttribute('cursor');
+        $searchRequest = $request->getAttribute('searchRequest');
+        $searchQuery = $this->fileSearcher->search($searchRequest, $cursor);
+        $pagesCount = $this->allowCursorValueCalculateService->calculate($searchQuery->count());
+        $searchQuery = $this->sliceFilesQueryService->slice($searchQuery, $cursor);
+        $this->viewData['fileArticles'] = FilePacker::pack($searchQuery->get());
+        $this->viewData['pagination'] = $this->searchPaginator->paginate($cursor, $pagesCount, ['searchRequest' => $searchRequest]);
+        $this->viewData['searchRequest'] = $searchRequest;
         return $this->container->view->render(
             $response,
             "index.twig",

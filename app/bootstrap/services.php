@@ -57,5 +57,9 @@ $container['AllowCursorValueCalculateService'] = function () use ($container) {
 };
 
 $container['SelectFilesCountService'] = function () use ($container) {
-    return new Fileshare\Services\SelectFilesCountService();
+    return new Fileshare\Services\SelectFilesCountService($container);
+};
+
+$container['SliceFilesQueryService'] = function () use ($container) {
+    return new Fileshare\Services\SliceFilesQueryService($container);
 };

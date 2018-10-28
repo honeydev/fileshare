@@ -43,9 +43,4 @@ abstract class AbstractPaginator implements PaginatorInterface
         $rightArrow['page'] = $this->currentPage + 1;
         return $rightArrow;
     }
-
-    protected function formatLink(array $parts): string
-    {
-        return implode("/", $parts);
-    }
 }
