@@ -6,15 +6,11 @@ namespace Fileshare\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Fileshare\Models\{File, Avatar};
-use Illuminate\Support\Facades\DB;
-use \Fileshare\Helpers\SortLinksHelper;
 use Fileshare\Packers\FilePacker;
 
 class SearchPageController extends AbstractController
 {
     /**
-     * [$fileSearcher description]
      * @property \Fileshare\Searchers\FileSearcher
      */
     private $fileSearcher;
@@ -22,9 +18,13 @@ class SearchPageController extends AbstractController
      * @property \Fileshare\Services\AllowCursorValueCalculateService
      */
     private $allowCursorValueCalculateService;
-
+    /**
+     * @property \Fileshare\Paginators\SearchPaginator
+     */
     private $searchPaginator;
-
+    /**
+     * @property \Fileshare\Services\SliceFilesQueryService
+     */
     private $sliceFilesQueryService;
 
     public function __construct($container)

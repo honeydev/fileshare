@@ -6,11 +6,7 @@ namespace FileshareTests\functional;
 
 use \Codeception\Util\Debug as debug;
 use Codeception\Util\Fixtures;
-use \Fileshare\Db\factories\FileFactory;
 use \Fileshare\Models\{User, File};
-use Fileshare\Helpers\FilesSortHelper;
-use Fileshare\Transformers\FileTransformer;
-use function \Funct\Collection\invoke;
 
 class SearchPageCept extends AbstractTest
 {
@@ -27,7 +23,7 @@ class SearchPageCept extends AbstractTest
         $this->tester->wantTo("See requirement file first in search result");
         $this->createFilesAnonymous(20);
         $file = $this->selectRandomFile();
-        $this->tester->sendPost("/search", ["searchRequest" => $file->name]);
+        $this->tester->sendGET("/search", ["searchRequest" => $file->name]);
         $this->tester->seeResponseCodeIs(200);
         $this->tester->seeResponseContains($file->name);
     }
@@ -40,7 +36,22 @@ class SearchPageCept extends AbstractTest
             ->get()[0];
         return $file;
     }
+
+    public function testErrorOnEmptyRequest()
+    {
+        $this->tester->wantTo("See error about empty request");
+        $this->tester->sendGET('/search', ["searchRequest" => "\n"]);
+        $this->tester->seeResponseCodeIs(400);
+        $this->tester->seeResponseContains("Empty search request");
+    }
+
+    public function testErrorRequestInvalidLength()
+    {
+        //todo implement
+        $this->tester->seeResponseContains("Search request length can't be more than 200 symbols");
+    }
 }
 
 $test = new SearchPageCept(new \FunctionalTester($scenario));
 $test->testSearchByFullFileNameCoincidence();
+$test->testErrorOnEmptyRequest();

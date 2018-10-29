@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <title>{{ title }}</title>
 </head>
 <body>
@@ -30,6 +29,8 @@
         {% include 'search.twig' %}
     {% elseif page == '404' %}
         {% include '404.html' %}
+    {% elseif page == 'user_error' %}
+        {% include 'user_error.twig' %}
     {% endif %}
 </main>
     {% if page == 'main_page' %}

@@ -48,5 +48,9 @@ $container['CursorValidator'] = function () use ($container) {
 };
 
 $container['SortTypeValidator'] = function () use ($container) {
-    return new Fileshare\Validators\SortTypeValidator();
+    return new Fileshare\Validators\SortTypeValidator($container);
+};
+
+$container['SearchRequestValidator'] = function () use ($container) {
+    return new Fileshare\Validators\SearchRequestValidator($container);
 };
