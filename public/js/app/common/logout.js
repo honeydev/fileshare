@@ -2,6 +2,8 @@
 
 export {Logout};
 
+import Cookies from 'js-cookie';
+
 function Logout(dic) {
     this._logger = dic.get('Logger')(dic);
     this._ajax = dic.get('Ajax')(dic);
@@ -18,9 +20,9 @@ Logout.prototype.logout = function () {
 };
 
 Logout.prototype._handler = function (response) {
-    console.log(response);
     if (response.status === "success") {
         this._session.destroySession();
+        Cookies.remove('token');
         this._unauthorizedStatmentSetter.setUnatuhorized();
         this._profile.removeProfile();
     } else if (resposne.status === "failed") {
