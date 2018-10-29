@@ -100,7 +100,6 @@ main {
     font-size: 30px;
 }
 
-
 .dndWrap {
     display: none;
     position: absolute;
@@ -221,6 +220,10 @@ div {
 .sideArrow {
     display: none;
     margin-top: 25px;
+}
+
+.userError {
+    font-size: 34px;
 }
 
 @media screen and (min-width: 768px) {

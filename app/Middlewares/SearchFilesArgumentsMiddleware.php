@@ -39,14 +39,13 @@ class SearchFilesArgumentsMiddleware extends AbstractMiddleware
             $response = $next($request, $response);
             return $response;
         }  catch (ValidateException $e) {
-            $this->logger->errorLog($e->getMessage());
+            $this->logger->noticeLog($e->getMessage());
+            $this->viewData['page'] = 'user_error';
+            $this->viewData['errorMessage'] = $e->getMessage();
             return $this->container->view->render(
                 $response,
                 "index.twig",
-                [
-                    'page' => 'user_error',
-                    'errorMessage' => $e->getMessage()
-                ]
+                $this->viewData
             )->withStatus(400);
         }
     }

@@ -28,15 +28,6 @@ class SearchPageCept extends AbstractTest
         $this->tester->seeResponseContains($file->name);
     }
 
-    private function selectRandomFile(): File
-    {
-        $file = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
-            ->inRandomOrder()
-            ->limit(1)
-            ->get()[0];
-        return $file;
-    }
-
     public function testErrorOnEmptyRequest()
     {
         $this->tester->wantTo("See error about empty request");
@@ -47,11 +38,23 @@ class SearchPageCept extends AbstractTest
 
     public function testErrorRequestInvalidLength()
     {
-        //todo implement
-        $this->tester->seeResponseContains("Search request length can't be more than 200 symbols");
+        $this->tester->wantTo("See error about invalid request length");
+        $randomString = (string) implode('', range(0, 200));
+        $this->tester->sendGET('/search', ["searchRequest" => $randomString]);
+        $this->tester->seeResponseContains("Search request length cant be more than 200 symbols");
+    }
+
+    private function selectRandomFile(): File
+    {
+        $file = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
+            ->inRandomOrder()
+            ->limit(1)
+            ->get()[0];
+        return $file;
     }
 }
 
 $test = new SearchPageCept(new \FunctionalTester($scenario));
-$test->testSearchByFullFileNameCoincidence();
-$test->testErrorOnEmptyRequest();
+// $test->testSearchByFullFileNameCoincidence();
+// $test->testErrorOnEmptyRequest();
+$test->testErrorRequestInvalidLength();
