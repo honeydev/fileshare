@@ -42,6 +42,6 @@ class BrowsePaginator extends AbstractPaginator implements PaginatorInterface
 
     protected function formatLink(array $parts): string
     {
-        return DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $parts);
+        return "/" . implode("/", $parts);
     }
 }
