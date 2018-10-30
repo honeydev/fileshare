@@ -13,7 +13,6 @@ function FileValidator(dic) {
 FileValidator.prototype = Object.create(BaseValidator.prototype);
 
 FileValidator.prototype.validate = function (file) {
-    console.log('validate', file);
     if (file.size > this._maxFileSize) {
         throw new InvalidFileError(`
             File ${file.name} size ${file.size} largest than max allow file size ${this._maxFileSize}

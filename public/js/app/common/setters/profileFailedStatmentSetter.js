@@ -8,6 +8,9 @@ function ProfileFailedStatmentSetter(dic) {
 	this._profileErrorSetter = dic.get('ProfileErrorSetter')();
 }
 
+/**
+ * @param {string} errorType
+ */
 ProfileFailedStatmentSetter.prototype.setFailedStatment = function (errorType) {
     if (errorType === "invalid_avatar") {
         this._profileErrorSetter.setError('Invalid avatar image');

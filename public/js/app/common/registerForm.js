@@ -1,7 +1,3 @@
-/**
- * Created by honey on 29/10/17.
- */
- 
 'use strict';
 
 export {RegisterForm};
@@ -9,7 +5,7 @@ export {RegisterForm};
 import {EmailValidError} from './errors/emailValidError.js';
 import {PasswordValidError} from './errors/passwordValidError.js';
 import {NameValidError} from './errors/nameValidError.js';
-
+import {InvalidServerResponseError} from './errors/InvalidServerResponseError';
 
 function RegisterForm(dic) {
     this._ajax = dic.get('Ajax')(dic);
@@ -74,12 +70,11 @@ RegisterForm.prototype._setRegisterFormValues = function() {
 };
 
 RegisterForm.prototype._registerFormHandler = function (response) {
-    console.log(response);
     if (response.status === 'success') {
         this._registerFormSetter.successRegistrationStatment();
     } else if (response.status === 'failed') {
         this._registerFormSetter.setFailedRegStatment(response.errorType);
     } else {
-        throw new Error(`Invalid response status ${response.status}`);
+        throw new InvalidServerResponseError(`Invalid response status ${response.status}`);
     }
 };

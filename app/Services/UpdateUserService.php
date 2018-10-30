@@ -26,7 +26,7 @@ class UpdateUserService
     {
         if (array_key_exists('newPassword', $newUserData)) {
             $newUserData['newPassword'] = $this->cryptoService->getPasswordHash(
-                $newUserData['currentPassword']
+                $newUserData['newPassword']
             );
         }
         $newUserData = NewProfileDataTransformer::transform($newUserData);
@@ -37,6 +37,7 @@ class UpdateUserService
      */
     private function saveNewUserDataByModelName(User $user, array $newUserData)
     {
+        debug::debug($newUserData);
         foreach ($newUserData as $modelName => $newModelValues) {
             $this->addNewUserDataToModels($user, $newModelValues, $modelName);
         }
@@ -54,10 +55,12 @@ class UpdateUserService
                 $relationModel->$key = $value;
                 $relationModel->save();
             } else {
+                debug::debug($value);
                 $user->$key = $value;
                 $user->save();
             }
         }
+//        debug::debug($user);
     }
 
     private function modelNameIsRelationModel(User $user, string $modelName): bool

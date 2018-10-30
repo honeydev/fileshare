@@ -2,6 +2,8 @@
 
 export {FileUploadHandler};
 
+import {InvalidServerResponseError} from '../../common/errors/InvalidServerResponseError';
+
 function FileUploadHandler(dic) {
     this._alertQueue = dic.get('AlertQueue')(dic);
     this._alertQueue.activate();
@@ -16,7 +18,7 @@ FileUploadHandler.prototype.getHandler = function () {
         } else if (response.status === "failed") {
             this._alertQueue.add("Unknown server error", {type: 'danger'});
         } else {
-            throw Error('Invalid server response');
+            throw InvalidServerResponseError('Invalid server response');
         }
-    };
-}
+    }
+};

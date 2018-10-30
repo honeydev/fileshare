@@ -6,7 +6,6 @@ function MainPageHandlers(dic) {
     this._dic = dic;
     this._fileForm = dic.get("FileForm")(dic);
     this._uploadSectionSetter = dic.get('UploadSectionSetter')(dic);
-    console.log('uploadSetter', this._uploadSectionSetter);
 }
 
 MainPageHandlers.prototype.setHandlers = function () {
@@ -22,12 +21,10 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
         e.stopPropagation();
         this._fileForm.send(e.originalEvent.dataTransfer.files[0]);
         this._uploadSectionSetter.unsetDragNDropStyles();
-        console.log('drop');
     });
 
     $("header, main").bind('dragover', (e) => {
         e.preventDefault();
-        console.log('dragover');
         this._uploadSectionSetter.setDragNDropStyles();
         $("#dndWrap").bind('dragover', (e) => {
             e.preventDefault();

@@ -26,7 +26,7 @@ LoginFormSetterTest.prototype._failedAuthorizationStatment = function () {
             this._removeDomEnv('#loginModal');
         });
 
-        it('Set failed', () => this._loginFormSetter.setFailedAuthorizeStatment('invalid_data'));
+        it('Set failed', () => this._loginFormSetter.setFailedAuthorizeStatment('invalid_login_data'));
  
         it('Must be error message', () => { 
             const ELEMENT_EXIST = Boolean($('#loginFormAlert').length);
@@ -54,7 +54,7 @@ LoginFormSetterTest.prototype._clearAuthorizeFailedStatment = function () {
             this._removeDomEnv('#loginModal');
         });
         it('Set authorize failed and clear', ()=> {
-            this._loginFormSetter.setFailedAuthorizeStatment('invalid_data');
+            this._loginFormSetter.setFailedAuthorizeStatment('invalid_login_data');
             this._loginFormSetter.clearAuthorizeFailedStatment();
         });
         it('Drop Error message', () => {

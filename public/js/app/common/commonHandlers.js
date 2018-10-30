@@ -1,7 +1,3 @@
-/**
- * Created by honey on 28/10/17.
- */
-
 'use strict';
 
 export {CommonHandlers};
@@ -25,17 +21,15 @@ CommonHandlers.prototype.setHandlers = function() {
         this._loginFormSetter.deleteErrorsClass();
     });
     $('#registerButton').click(() => {
-        console.log('register button');
         this._registerForm.sendRegisterForm();
     });
     $('#registerCancelButton').click(() => {
-        console.log('register cancel button');
+        //not implemented
     });
     $('#profileA').click(() => {
-        console.log('username click');
+        //not implemented
     });
     $('#logOutA').click(() => {
-        console.log('logout handler');
         this._logout.logout();
     });
 };

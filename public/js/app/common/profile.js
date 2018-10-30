@@ -125,6 +125,6 @@ Profile.prototype._filtrateUserDataForProfile = function (userData) {
     return sorted;
 };
 
-Profile.prototype.applySuccessChanges = function (userData) {
+Profile.prototype.applySuccessChanges = function () {
     this._profileFormSetter.removeForm();
 };

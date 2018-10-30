@@ -16,7 +16,6 @@ LocalStorage.prototype.setItem = function (itemName, itemValue) {
 /** @return {mixed} */
 LocalStorage.prototype.getItem = function (itemName) {
     let requiredItem = JSON.parse(localStorage.getItem(itemName));
-    console.log('required item', requiredItem);
     return requiredItem;
 };
 

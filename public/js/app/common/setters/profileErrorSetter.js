@@ -7,7 +7,7 @@ function ProfileErrorSetter() {
 }
 
 ProfileErrorSetter.prototype.setError = function (message) {
-    let errorElement = this._renderMessage(message);
+    this._renderMessage(message);
 };
 
 ProfileErrorSetter.prototype._renderMessage = function (message) {
@@ -16,7 +16,6 @@ ProfileErrorSetter.prototype._renderMessage = function (message) {
         'id': 'profileErrorMessage'
     }).text(message);
     $("#profileModalBody").prepend(error);
-    return error;
 };
 
 ProfileErrorSetter.prototype.removeMessage = function (errorElement = "#profileErrorMessage", timeout = null) {

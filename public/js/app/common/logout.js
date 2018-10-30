@@ -3,6 +3,7 @@
 export {Logout};
 
 import Cookies from 'js-cookie';
+import {InvalidServerResponseError} from './errors/InvalidServerResponseError';
 
 function Logout(dic) {
     this._logger = dic.get('Logger')(dic);
@@ -29,6 +30,6 @@ Logout.prototype._handler = function (response) {
         this._logger.log('Failed log out');
         this._logger.log(response);
     } else {
-        throw new Error(`Invalid response status ${response.status}`);
+        throw new InvalidServerResponseError(`Invalid response status ${response.status}`);
     }
 };

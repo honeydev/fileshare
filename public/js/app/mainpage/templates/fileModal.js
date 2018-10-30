@@ -1,5 +1,0 @@
-const fileModalTemplate = `
-
-`;
-
-export {fileModalTemplate};

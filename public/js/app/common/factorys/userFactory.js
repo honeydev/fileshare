@@ -7,6 +7,11 @@ function UserFactory(dic) {
     this._user;
 }
 
+/**
+ * @param {int} accessLvl
+ * @param {object} userData
+ * @returns {user model}
+ */
 UserFactory.prototype.create = function (accessLvl, userData) {
     if (accessLvl == 0) {
         this._user = dic.get('GuestModel')();
@@ -20,11 +25,12 @@ UserFactory.prototype.create = function (accessLvl, userData) {
     this._setProperties(userData);
     return this._user;
 };
-
+/**
+ * @param {object} userData
+ * @private
+ */
 UserFactory.prototype._setProperties = function (userData) {
-    console.log(userData);
     for (let property in userData) {
-        console.log(property);
         if (property.slice(0, 1) === "_") {
             this._user.set(property, userData[property]);
         } else {

@@ -2,8 +2,6 @@
 
 export {FileForm};
 
-import {GuestModel} from '../common/models/guestModel';
-
 function FileForm(dic) {
     this._fileUploader = dic.get('FileUploader')(dic);
     this._progressBar = dic.get("ProgressBar")(dic);
@@ -29,10 +27,8 @@ FileForm.prototype.send = function (file) {
 FileForm.prototype._sendFile = function(file) {
     try {
         if (this._sessionModel._authorizeStatus) {
-            console.log('upload auth')
             this._fileUploader.uploadAuthorized(file);
         } else {
-            console.log('upload annon')
             this._fileUploader.uploadAnnonymous(file);
         }     
     } catch (Error) {
