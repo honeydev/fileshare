@@ -24,7 +24,6 @@ class MainPageController extends AbstractController
     public function indexPage(Request $request, Response $response)
     {
         $this->viewData['page'] = 'main_page';
-
         $response = $this->container->view->render(
             $response, 
             "index.twig", 

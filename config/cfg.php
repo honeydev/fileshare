@@ -30,6 +30,10 @@ return array(
      * Max allow uploaded file size in bytes
      */
     'maxFileSize' => 104857600,
+    /*
+     * file live cycle in hours
+     */
+    'storageTime' => 120,
     /* Count files on search page, browse page */
     'filesOnPage' => 5,
     'previewsMap' => [
@@ -39,5 +43,15 @@ return array(
         ],
         /* support file preview */
         'supported' => ['image/jpeg'],
+    ],
+    /* 
+     * favicon path
+     */
+    'favicon' => '/img/favicon.ico',
+    /*
+     * tasks class running from cli
+     */
+    'tasks' => [
+        'cleanFiles' => \Fileshare\Tasks\CleanOldFilesTask::class
     ]
 );
