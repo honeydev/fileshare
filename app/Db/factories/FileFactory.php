@@ -16,9 +16,10 @@ class FileFactory
         $app = AppFacade::get();
         $container = $app->getContainer();
         $appFolder = $container->get('settings')['appFolder'];
-        $tempFolder = sys_get_temp_dir();
         $separator = DIRECTORY_SEPARATOR;
-        $uri = FileProvider::file("{$appFolder}{$separator}{$separator}tests{$separator}_data{$separator}images", $tempFolder, true);
+        $sourceDir = "{$appFolder}{$separator}tests{$separator}_data{$separator}images";
+        $targetDir = "storage{$separator}uploads/{$owner->email}";
+        $uri = FileProvider::file($sourceDir, $targetDir, true);
         $file = File::create([
             'name' => md5((String) mt_rand()) . "_" . FileNameHelper::getFileNameByUri($uri),
             'uri' => $uri,
