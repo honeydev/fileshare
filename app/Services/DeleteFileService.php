@@ -13,7 +13,7 @@ class DeleteFileService
     /**
      * @property string
      */
-    private $appFoldeer;
+    private $appFolder;
 
     public function __construct($container)
     {

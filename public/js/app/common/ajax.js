@@ -8,8 +8,10 @@ function Ajax(dic) {
     this._debugger = dic.get('Debugger')(dic);
 }
 
+/**
+ * @param {object} requestSettings
+ */
 Ajax.prototype.sendJSON = function (requestSettings) {
-    console.log('request settings', requestSettings);
     const requestJSON = JSON.stringify(requestSettings.requestData);
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     this._logger.log('sended json', requestJSON);
@@ -36,7 +38,9 @@ Ajax.prototype.sendJSON = function (requestSettings) {
         }
     });
 };
-
+/**
+ * @param {object} requestSettings
+ */
 Ajax.prototype.doAction = function (requestSettings) {
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     $.ajax({
@@ -56,9 +60,10 @@ Ajax.prototype.doAction = function (requestSettings) {
         }
     });
 };
-
+/**
+ * @param {object} requestSettings
+ */
 Ajax.prototype.sendFile = function (requestSettings) {
-    console.log("Send file");
     const URL = this._urlHelper.correctUrl(requestSettings.url);
     let formData = new FormData();
     formData.append('file', requestSettings.data.file);

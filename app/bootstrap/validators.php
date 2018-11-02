@@ -1,5 +1,5 @@
 <?php
-/** add validators */
+/* add validators */
 
 $container['SessionModelValidator'] = function () {
 	return new Fileshare\Validators\SessionModelValidator();
@@ -35,6 +35,22 @@ $container['ImageValidator'] = function () use ($container) {
 
 $container['BrowseFilesArgumentsValidator'] = function () use ($container) {
     $allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
-    $maxAllowCursorValue = $allowCursorValueCalculateService->calculate();
+    $selectFilesCountService = $container->get('SelectFilesCountService');
+    $maxAllowCursorValue = $allowCursorValueCalculateService->calculate($selectFilesCountService->select());
     return new Fileshare\Validators\BrowseFilesArgumentsValidator($maxAllowCursorValue);
+};
+
+$container['CursorValidator'] = function () use ($container) {
+    $allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
+    $selectFilesCountService = $container->get('SelectFilesCountService');
+    $maxAllowCursorValue = $allowCursorValueCalculateService->calculate($selectFilesCountService->select());
+    return new Fileshare\Validators\CursorValidator($maxAllowCursorValue);
+};
+
+$container['SortTypeValidator'] = function () use ($container) {
+    return new Fileshare\Validators\SortTypeValidator($container);
+};
+
+$container['SearchRequestValidator'] = function () use ($container) {
+    return new Fileshare\Validators\SearchRequestValidator($container);
 };

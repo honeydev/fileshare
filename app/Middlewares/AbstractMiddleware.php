@@ -12,12 +12,17 @@ abstract class AbstractMiddleware
     protected $prepareErrorHelper;
     /** @property \Fileshare\Components\Logger */
     protected $logger;
+    /**
+     * @property array
+     */
+    protected $viewData = [];
 
     public function __construct($container)
     {
         $this->container = $container;
         $this->prepareErrorHelper = $container->get('PrepareErrorHelper');
         $this->logger = $container->get('Logger');
+        $this->viewData = $this->viewData = array_merge($this->viewData, $container->get('settings')['appInfo']);
     }
 
     protected function sendErrorWithJson($errorElements, $response)

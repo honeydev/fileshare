@@ -6,12 +6,12 @@ function MainPageHandlers(dic) {
     this._dic = dic;
     this._fileForm = dic.get("FileForm")(dic);
     this._uploadSectionSetter = dic.get('UploadSectionSetter')(dic);
-    console.log('uploadSetter', this._uploadSectionSetter);
 }
 
 MainPageHandlers.prototype.setHandlers = function () {
     this._setDragNDropHandlers();
     this._setUploadFileHandler();
+    this._setUploadButtonHandler();
 };
 
 MainPageHandlers.prototype._setDragNDropHandlers = function () {
@@ -21,12 +21,10 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
         e.stopPropagation();
         this._fileForm.send(e.originalEvent.dataTransfer.files[0]);
         this._uploadSectionSetter.unsetDragNDropStyles();
-        console.log('drop');
     });
 
     $("header, main").bind('dragover', (e) => {
         e.preventDefault();
-        console.log('dragover');
         this._uploadSectionSetter.setDragNDropStyles();
         $("#dndWrap").bind('dragover', (e) => {
             e.preventDefault();
@@ -35,7 +33,6 @@ MainPageHandlers.prototype._setDragNDropHandlers = function () {
 
     $('#dndWrap').bind('dragleave', (e) => {
         e.preventDefault();
-        console.log('dragleave');
         this._uploadSectionSetter.unsetDragNDropStyles();
     });
 };
@@ -44,5 +41,13 @@ MainPageHandlers.prototype._setUploadFileHandler = function() {
 
     $('#inputFile').bind('change', (e) => {
         this._fileForm.send($('#inputFile').prop('files')[0]);
+    });
+};
+
+MainPageHandlers.prototype._setUploadButtonHandler = function() {
+    $('#uploadButton').click((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        $("#inputFile").trigger('click');
     });
 };

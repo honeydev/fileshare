@@ -1,8 +1,7 @@
 <?php
-/**
+/*
  * Add all app controllers
  */
-
 $container['MainPageController'] = function () use ($container) {
     return new Fileshare\Controllers\MainPageController($container);
 };
@@ -37,4 +36,8 @@ $container['FilePageController'] = function () use ($container) {
 
 $container['BrowseFileController'] = function () use ($container) {
     return new Fileshare\Controllers\BrowseFileController($container);
+};
+
+$container['SearchPageController'] = function () use ($container) {
+    return new Fileshare\Controllers\SearchPageController($container);
 };

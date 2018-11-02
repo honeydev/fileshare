@@ -16,6 +16,7 @@ class ProfileChangeCept extends AbstractTest
     {
         parent::__construct($tester);
         $this->container = Fixtures::get("container");
+        $this->cryptoService = $this->container->get('CryptoService');
     }
 
     public function testChangeProfileUserWithCorrectRequest()
@@ -43,6 +44,7 @@ class ProfileChangeCept extends AbstractTest
         $user = User::find($user->id);
         $this->assertEquals($newProfileData['email'], $user->email);
         $this->assertEquals($newProfileData['name'], $user->userInfo->name);
+        $this->assertTrue($this->cryptoService->passwordVerify('newpass', $user->password));
     }
 
     public function testChangeProfileWithInvalidTargetProfileId()

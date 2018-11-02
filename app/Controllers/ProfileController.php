@@ -33,7 +33,9 @@ class ProfileController extends AbstractController
      * @property \Fileshare\Services\AddAvatarService
      */
     private $addAvatarService;
-
+    /**
+     * @property \Fileshare\Components\Logger
+     */
     private $logger;
 
     public function __construct($container)

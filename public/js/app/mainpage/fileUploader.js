@@ -2,8 +2,6 @@
 
 export {FileUploader};
 
-import {InvalidFileTypeError} from './errors/invalidFileTypeError';
-
 function FileUploader(dic) {
     this._sessionModel = dic.get("SessionModel")();
     this._ajax = dic.get('Ajax')(dic);
@@ -27,28 +25,20 @@ FileUploader.prototype.uploadAnnonymous = function (file) {
  * @param {file} File
  */
 FileUploader.prototype.uploadAuthorized = function (file) {
-    try {
-        const TOKEN = this._sessionModel.get("_user").get("_token");
-        this._ajax.sendFile({
-            url: location.host + "/api/uploadfile/registred.file",
-            data: { file: file },
-            xhr: this._progressHandler.bind(this),
-            headers: {
-                "Authorization": `Bearer ${TOKEN}`
-            },
-            responseHandler: this._fileUploadHandler.getHandler()
-        });
-    } catch (Error) {
-        if (Error instanceof InvalidFileTypeError) {
-            
-    	} else {
-            throw Error;
-        }
-    }
+    const TOKEN = this._sessionModel.get("_user").get("_token");
+    this._ajax.sendFile({
+        url: location.host + "/api/uploadfile/registred.file",
+        data: { file: file },
+        xhr: this._progressHandler.bind(this),
+        headers: {
+            "Authorization": `Bearer ${TOKEN}`
+        },
+        responseHandler: this._fileUploadHandler.getHandler()
+    });
 };
 
 FileUploader.prototype._handler = function (response) {
-    console.log(response);
+
 };
 /**
  * @return XMLHttpRequest
@@ -56,7 +46,6 @@ FileUploader.prototype._handler = function (response) {
 FileUploader.prototype._progressHandler = function () {
     let xhr = new window.XMLHttpRequest();
     xhr.upload.addEventListener("progress", (progressEvent) => {
-        console.log("progress")
         if (progressEvent.lengthComputable) {
             let percentCompleteDecimal = progressEvent.loaded / progressEvent.total;
             let percentComplete = Math.round(percentCompleteDecimal * 100);

@@ -1,0 +1,80 @@
+
+.mainSpace {
+    padding-top: 200px;
+    margin: 0;
+    height: 92vh;
+    background-color: #F2D388;
+}
+
+.mainSpace h1 {
+    font-family: Tavolgafree;
+}
+
+.fileInput {
+    display: none !important;
+}
+
+.uploadButton, .uploadButton:hover {
+    font-family: Tavolgafree;
+    width: 250px;
+    height: 75px;
+    background-color: #7a64a5;
+    color: #f9e7bd !important;
+    font-size: 30px;
+}
+
+.uploadTips {
+    margin-top: 25px;
+    font-size: 18px;
+    font-family: Tavolgafree;
+}
+
+.uploadTips span.glyphicon-alert {
+    margin-right: 10px;
+    color: #578797;
+}
+
+.dndWrap {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 10px solid #337ab7a6;
+    z-index: 5;
+}
+
+.dndSpace {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1;
+    opacity: 0.6;
+    z-index: 4;
+}
+
+.dndMessage {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    font-size: 60px;
+    color: #337ab7;
+    z-index: 5;
+    opacity: 1;
+}
+
+@media screen and (min-width: 769px) {
+
+}
+
+@media screen and (orientation:landscape) and (max-height: 500px) {
+    .mainSpace {
+        padding-top: 40px !important;
+    }
+}
+
+
+@media screen and (min-width: 960px) {
+
+}

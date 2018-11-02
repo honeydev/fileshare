@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class Routes
 {
-    public function startRoutes($app, $container)
+    public function start($app, $container)
     {
         $accessLogger = $container->get("AccessLogger");
         $secret = $container->get("settings")["secretKey"];
@@ -31,6 +31,8 @@ class Routes
         $app->get('/file/get/{fileName}', 'FilePageController:getFile');
         $app->get('/browse[/{sortType}[/{cursor}]]', 'BrowseFileController:browse')
             ->add(new \Fileshare\Middlewares\BrowseFilesArgumentsMiddleware($container));
+        $app->get('/search', 'SearchPageController:search')
+            ->add(new \Fileshare\Middlewares\SearchFilesArgumentsMiddleware($container));
         $app->group('/api', function () use ($app, $container) {
             $app->post('/uploadfile/anonym.file', 'MainPageController:uploadFileAnonym')
                 ->add(new \Fileshare\Middlewares\FileValidationMiddleware($container));

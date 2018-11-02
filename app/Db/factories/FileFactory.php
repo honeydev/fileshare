@@ -6,13 +6,20 @@ use Faker\Generator as Faker;
 use \Fileshare\Models\{User, File};
 use Fileshare\Helpers\FileNameHelper;
 use \Faker\Provider\File as FileProvider;
+use Fileshare\Facades\AppFacade;
 
 
 class FileFactory
 {
     public static function createFile(User $owner): File
     {
-        $uri = FileProvider::file('/var/www/fileshare/tests/_data/images', '/tmp', true);
+        $app = AppFacade::get();
+        $container = $app->getContainer();
+        $appFolder = $container->get('settings')['appFolder'];
+        $separator = DIRECTORY_SEPARATOR;
+        $sourceDir = "{$appFolder}{$separator}tests{$separator}_data{$separator}images";
+        $targetDir = "storage{$separator}uploads/{$owner->email}";
+        $uri = FileProvider::file($sourceDir, $targetDir, true);
         $file = File::create([
             'name' => md5((String) mt_rand()) . "_" . FileNameHelper::getFileNameByUri($uri),
             'uri' => $uri,

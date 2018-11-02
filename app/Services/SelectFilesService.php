@@ -6,8 +6,8 @@ namespace Fileshare\Services;
 
 use \Codeception\Util\Debug as debug;
 use \Fileshare\Models\{File, User, Avatar};
-use \Fileshare\Transformers\UserTransformer;
-use \Fileshare\Transformers\FileTransformer;
+use Fileshare\Packers\FilePacker;
+use Fileshare\Helpers\SelectHelper;
 
 class SelectFilesService
 {
@@ -23,15 +23,9 @@ class SelectFilesService
 
     public function select(string $sortType, int $cursor): array
     {
-        $filesWithOnwers = [];
         $files = $this->selectFiles($sortType, $cursor);
-        foreach ($files as $file) {
-            $filesWithOnwers[] = [
-                'file' => FileTransformer::transform($file),
-                'owner' => UserTransformer::transform($file->owner)
-            ];
-        }
-        return $filesWithOnwers;
+        $filesWithOwners = FilePacker::pack($files);
+        return $filesWithOwners;
     }
 
     private function selectFiles(string $sortType, int $cursor)
@@ -39,7 +33,7 @@ class SelectFilesService
         $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
             ->orderBy(...$this->getOrderParams($sortType))
             ->limit($this->filesOnPage)
-            ->offset($this->getOffset($cursor))
+            ->offset(SelectHelper::getOffset($cursor, $this->filesOnPage))
             ->get();
         return $files;
     }

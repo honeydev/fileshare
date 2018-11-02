@@ -7,7 +7,7 @@ function LoginFormSetter(dic) {
 }
 
 LoginFormSetter.prototype.setFailedAuthorizeStatment = function (errorType) {
-    if (errorType === "invalid_data") {
+    if (errorType === "invalid_login_data") {
         this._setErrorMessage('Invalid email or password');
         this._setEmailError();
         this._setPasswordError();
@@ -29,7 +29,6 @@ LoginFormSetter.prototype.clearAuthorizeFailedStatment = function () {
     this._clearErrorMessage();
     this._clearEmailError();
     this._clearPasswordError();
-    //this._clearInputs();
 };
 
 LoginFormSetter.prototype._setErrorMessage = function (errorMessage) {
@@ -40,7 +39,6 @@ LoginFormSetter.prototype._setErrorMessage = function (errorMessage) {
 
 LoginFormSetter.prototype._clearErrorMessage = function () {
     $("#loginFormAlert").remove();
-
 };
 
 LoginFormSetter.prototype._setEmailError = function () {

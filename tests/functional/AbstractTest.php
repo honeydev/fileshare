@@ -8,6 +8,8 @@ namespace FileshareTests\Functional;
 
 use \Codeception\Util;
 use \Codeception\Util\Debug as debug;
+use \Fileshare\Db\factories\FileFactory;
+use \Fileshare\Models\User;
 
 abstract class AbstractTest extends \Codeception\Module
 {
@@ -40,7 +42,7 @@ abstract class AbstractTest extends \Codeception\Module
     protected function loginUser($user)
     {
         $this->tester->sendAjaxRequest('POST', '/api/login.form', array("email" => $user->email, "password" => 'password'));
-        // $this->tester->seeResponseCodeIs(200);
+        $this->tester->seeResponseCodeIs(200);
     }
 
     protected function loginTestUser(array $userData)

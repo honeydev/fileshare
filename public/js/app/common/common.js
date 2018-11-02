@@ -1,7 +1,3 @@
-/**
- * Created by honey on 26/10/17.
- */
-
 export {common};
 
 import 'bootstrap';

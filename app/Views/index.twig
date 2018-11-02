@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ faviconLink }}">
 </head>
 <body>
 <div class="dndWrap" id="dndWrap">
@@ -25,8 +26,12 @@
         {% include '500.twig' %}
     {% elseif page == 'file' %}
         {% include 'file.twig' %}
+    {% elseif page == 'search' %}
+        {% include 'search.twig' %}
     {% elseif page == '404' %}
         {% include '404.html' %}
+    {% elseif page == 'user_error' %}
+        {% include 'user_error.twig' %}
     {% endif %}
 </main>
     {% if page == 'main_page' %}

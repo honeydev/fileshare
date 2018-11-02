@@ -12,7 +12,7 @@ class TestsController extends AbstractController
     public function testsPage(Request $request, Response $response, $args)
     {
         if ($this->container->get('settings')['development']) {
-            $this->dataFromView = [
+            $this->viewData = [
                 'title' => 'Frontend tests',
                 'showTests' => true,
                 'testName' => $args['testName']
@@ -20,11 +20,11 @@ class TestsController extends AbstractController
             $response = $this->container->view->render(
                 $response, 
                 "tests.twig", 
-                $this->dataFromView
+                $this->viewData
             );
         } else {
             define('HOST_URL', $request->getUri()->getHost());
-            $this->dataFromView = [
+            $this->viewData = [
                 'title' => 'Frontend tests not available in production mode',
                 'hostUrl' => HOST_URL,
                 'showTests' => false
@@ -33,7 +33,7 @@ class TestsController extends AbstractController
             $response = $this->container->view->render(
                 $response, 
                 "tests.twig", 
-                $this->dataFromView
+                $this->viewData
             );
         }
         return $response;

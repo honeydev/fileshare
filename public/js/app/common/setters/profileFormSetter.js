@@ -168,7 +168,6 @@ ProfileFormSetter.prototype._setProfileFormStyles = function () {
 
 /** @return {void} */
 ProfileFormSetter.prototype.removeForm = function () {
-    console.log("PROFILE FORM", $('#profileForm'));
     $('#profileForm').remove();
 };  
 

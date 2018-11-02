@@ -1,7 +1,3 @@
-/**
- * Created by honey on 02/11/17.
- */
-
 'use strict';
 
 export {RegisterFormSetter};
@@ -41,7 +37,6 @@ RegisterFormSetter.prototype.successRegistrationStatment = function () {
 };
 
 RegisterFormSetter.prototype.clearFailedRegStatment = function () {
-    console.log('clear failed reg statment');
     this._clearErrorMessage();
     this._clearEmailError();
     this._clearPasswordError();

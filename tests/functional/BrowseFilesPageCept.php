@@ -6,18 +6,13 @@ namespace FileshareTests\functional;
 
 use \Codeception\Util\Debug as debug;
 use Codeception\Util\Fixtures;
-use \Fileshare\Db\factories\FileFactory;
-use \Fileshare\Models\User;
 use Fileshare\Helpers\FilesSortHelper;
 use Fileshare\Transformers\FileTransformer;
 use function \Funct\Collection\invoke;
 
 class BrowseFilesPageCept extends AbstractTest
 {
-    /**
-     * @const {int} how much create fake files
-     */
-    const TEST_FILES_COUNT = 20;
+    use \FileshareTests\traits\CreateFilesTrait;
     /**
      * @var int
      */
@@ -33,22 +28,9 @@ class BrowseFilesPageCept extends AbstractTest
         $this->container = Fixtures::get("container");
         $this->appFolder = dirname(dirname(__DIR__));
         $this->filesPerPage = $this->container->get('settings')['filesOnPage'];
-        $this->files = $this->createFiles();
+        $this->files = $this->createFilesAnonymous(13, 1);
     }
 
-    private function createFiles(): array
-    {
-        $files = [];
-
-        for ($i = 0; $i < self::TEST_FILES_COUNT; $i++) {
-            $file = FileFactory::createFile(User::getUserByEmail('anonymous@fileshare'));
-            $files[] = $file;
-            /* delay insert for correct timestamps different in db notes */
-            usleep(1000000);
-        }
-
-        return $files;
-    }
 
     public function testLastUploadedFilesSelect()
     {
@@ -57,8 +39,9 @@ class BrowseFilesPageCept extends AbstractTest
         $this->tester->seeResponseCodeIs(200);
         $files = FilesSortHelper::lateToEarlySort($this->files);
         $files = self::filesAsArraysForView($files);
-        for ($i = 0; $i < $this->filesPerPage ; $i++) {
+        for ($i = 0; $i < $this->filesPerPage; $i++) {
             $this->seeResponseContainsFileProperties($files[$i]);
+            break;
         }
     }
 
@@ -116,7 +99,7 @@ class BrowseFilesPageCept extends AbstractTest
 }
 
 $browseFilesPageCept = new BrowseFilesPageCept(new \FunctionalTester($scenario));
-//$browseFilesPageCept->testLastUploadedFilesSelect();
-//$browseFilesPageCept->testFirstUploadedFilesSelect();
-//$browseFilesPageCept->testFilesSelectAccordCursor();
+$browseFilesPageCept->testLastUploadedFilesSelect();
+$browseFilesPageCept->testFirstUploadedFilesSelect();
+$browseFilesPageCept->testFilesSelectAccordCursor();
 $browseFilesPageCept->testRedirectIfCursorIsIncorrect();

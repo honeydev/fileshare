@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Add components in project:
  * - monolog
  * - pdo
@@ -8,9 +8,7 @@
  * - twig
  */
 
-
 $container = $app->getContainer();
-
 $container->register(new \Fileshare\Db\EloquentServiceProvider());
 
 $container['db'] = function ($container) {
@@ -61,7 +59,7 @@ $container['Logger'] = function ($container) {
 };
 
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(dirname(dirname(__FILE__)) . "/Views", [
+    $view = new \Slim\Views\Twig(ROOT . "/app/Views", [
         'cache' => false,
         'debug' => true
     ]);

@@ -7,7 +7,6 @@ function ProfileProgressBarSetter() {
 }
 
 ProfileProgressBarSetter.prototype.set = function () {
-    /* NOT TESTED */
     let wrap = $('<div>')
         .attr('class', 'progress progress-striped active')
         .css({

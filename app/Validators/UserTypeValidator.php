@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: honey
- * Date: 19/11/17
- * Time: 16:19
- */
 
 namespace Fileshare\Validators;
 

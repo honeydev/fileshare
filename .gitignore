@@ -1,5 +1,4 @@
 /vendor/
-/config/cfg.php
 /logs/*
 !/logs/README.md
 /.idea/
@@ -17,3 +16,4 @@ puphpet/*
 !/storage/uploads/.gitkeep
 /public/avatars
 /public/uploads
+config/cfg.php

@@ -6,6 +6,7 @@ namespace Fileshare\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Fileshare\Helpers\FileSizeFormatHelper;
 use \Fileshare\Models\User;
 
 class MainPageController extends AbstractController
@@ -24,14 +25,12 @@ class MainPageController extends AbstractController
     public function indexPage(Request $request, Response $response)
     {
         $this->viewData['page'] = 'main_page';
-
-        $response = $this->container->view->render(
+        $this->viewData['title'] = "{$this->viewData['title']} - main";
+        return $this->container->view->render(
             $response, 
             "index.twig", 
             $this->viewData
             );
-
-        return $response;
     }
 
     public function uploadFileAnonym(Request $request, Response $response)

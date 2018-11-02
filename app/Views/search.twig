@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="sideArrow col-sm-2 text-right">
+            {% include 'left_arrow.twig' %}
+        </div>
+    <section class="files col-xs-12 col-sm-8">
+        {% include 'file_articles.twig' %}
+
+        {% if fileArticles is empty %}
+            <h3 class="text-center">No matchs found</h3>
+        {% endif %}
+    </section>
+    <div class="sideArrow col-sm-2">
+        {% include 'right_arrow.twig' %}
+    </div>
+</div>
+    <div class="row">
+        <div class="bottomArrows center-block text-center">
+            {% include 'left_arrow.twig' %}
+            {% include 'right_arrow.twig' %}
+        </div>
+    </div>
+</div>

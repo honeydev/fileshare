@@ -34,8 +34,5 @@ PropertyHelper.prototype._correctPrivatePropertyName = function (propertyName) {
  * @return {bool}
  */
 PropertyHelper.prototype._propertyIsPrivate = function (propertyName) {
-    if (propertyName.slice(0, 1) == '_') {
-        return true;
-    }
-    return false;
+    return propertyName.slice(0, 1) === '_';
 };

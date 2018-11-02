@@ -1,6 +1,6 @@
 'use strict';
 
-export {PasswordValidError};
+export {ServerResponseError};
 
 function ServerResponseError(message) {
     Error.call(this, message);

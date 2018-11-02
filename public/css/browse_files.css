@@ -4,35 +4,12 @@
     padding-top: 10px;
 }
 
-.lateToEarlyButton {
-   
+.settingsMenu button, .settingsMenu button.active {
+    background-color: #CDC3E2;
+    color: #FFF4D8;
 }
 
-.file {
-    padding-top: 30px;
+.settingsMenu button.active, .settingsMenu button:hover {
+    background-color: #39216c;
 }
 
-.file h5 .userAvatar {
-    font-size: 16px;
-    height: 30px;
-    width: 30px;
-}
-
-.fileLink, .fileLink:link, .fileLink:visited, .fileLink:hover, .fileLink:active {
-    text-decoration: none;
-    color: black;
-    margin:0;
-    padding:0;
-    font-size:100%;
-    vertical-align:baseline;
-    background:transparent;
-}
-
-.file .fileAvatar {
-    margin-top: 20px;
-}
-
-.files hr {
-    border: 1.5px solid #d3e0e9;
-    border-radius: 5px;
-}

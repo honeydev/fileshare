@@ -24,7 +24,6 @@ ProfileHandlers.prototype.setEditDataIcons = function () {
         e.data.profileSetter.hideUserDataEditIcon(this)
     });
     $('.userDataEditIcon').click({profile: this._profile}, function (e) {
-        console.log(e);
         e.data.profile.switchToForm();
     });
 };

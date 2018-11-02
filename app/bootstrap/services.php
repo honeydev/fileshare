@@ -1,5 +1,6 @@
 <?php
 
+/* add services */
 $container['SessionService'] = function () use ($container) {
     return new Fileshare\Services\SessionService($container);
 };
@@ -57,9 +58,9 @@ $container['AllowCursorValueCalculateService'] = function () use ($container) {
 };
 
 $container['SelectFilesCountService'] = function () use ($container) {
-    return new Fileshare\Services\SelectFilesCountService();
+    return new Fileshare\Services\SelectFilesCountService($container);
 };
 
-$container['PaginationService'] = function () use ($container) {
-    return new Fileshare\Services\PaginationService($container);
+$container['SliceFilesQueryService'] = function () use ($container) {
+    return new Fileshare\Services\SliceFilesQueryService($container);
 };

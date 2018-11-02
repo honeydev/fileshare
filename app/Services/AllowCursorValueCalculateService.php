@@ -13,20 +13,15 @@ class AllowCursorValueCalculateService
      * @var int
      */
     private $filesOnPage;
-    /**
-     * @var Fileshare\Services\SelectFilesCountService
-     */
-    private $selectFilesCountService;
+
 
     public function __construct($container)
     {
         $this->filesOnPage = $container->get('settings')['filesOnPage'];
-        $this->selectFilesCountService = $container->get('SelectFilesCountService');
     }
 
-    public function calculate(): int
+    public function calculate(int $filesCount): int
     {
-        $filesCount = $this->selectFilesCountService->select();
         if ($filesCount <= $this->filesOnPage) {
             $allowPages = 1;
         } else {

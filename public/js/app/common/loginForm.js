@@ -1,7 +1,3 @@
-/**
- * Created by honey on 28/10/17.
- */
-
 'use strict';
 
 export {LoginForm};
@@ -23,7 +19,6 @@ function LoginForm(dic) {
 LoginForm.prototype.sendLoginForm = function () {
     this._loginFormSetter.clearAuthorizeFailedStatment();
     this._setLoginFormValues();
-    console.log('emailpass', this._email, this._password);
     this._validate();
     this._ajax.sendJSON({
         "url": location.host + "/api/login.form",
@@ -62,7 +57,6 @@ LoginForm.prototype._setLoginFormValues = function () {
 };
 
 LoginForm.prototype._loginFormResponseHandler = function (response) {
-    console.log(response);
     if (response.status === 'success') {
         this._user.initNewUser(response.loginData);
         this._loginFormSetter.setAuthorizedStatment();

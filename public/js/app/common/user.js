@@ -2,6 +2,8 @@
 
 export {User};
 
+import Cookies from 'js-cookie';
+
 function User(dic) {
     this._userModel;
     this._session = dic.get('Session')(dic);
@@ -16,13 +18,12 @@ User.prototype.initNewUser = function (userData) {
     this._setUserVars(userData);
     this._session.setAuthorizedUserSession(this._userModel);
     this._profile.setUserData();
-    console.log('created user', this._userModel);
 };
 /** @return void */
 User.prototype._createUser = function (userData) {
+    Cookies.set('token', userData.token);
     if (userData['accessLvl'] == 1) {
         this._userModel = this._dic.get('RegularUserModel')();
-        console.log('create regular user', this._userModel);
     } else if (userData['accessLvl'] == 2) {
         this._userModel = this._dic.get('AdminUserModel')();
     } else {

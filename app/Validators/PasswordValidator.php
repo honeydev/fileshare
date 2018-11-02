@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lebedev
- * Date: 10/6/17
- * Time: 1:38 AM
- */
+
+declare(strict_types=1);
 
 namespace Fileshare\Validators;
 

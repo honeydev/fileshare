@@ -1,7 +1,3 @@
-/**
- * Created by honey on 30/10/17.
- */
-
 'use strict';
 
 export {PasswordValidator};

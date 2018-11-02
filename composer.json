@@ -25,7 +25,8 @@
         "tuupola/slim-jwt-auth": "^2.4",
         "php-ds/php-ds": "^1.2",
         "funct/funct": "^1.4",
-        "illuminate/pagination": "^5.5"
+        "illuminate/pagination": "^5.5",
+        "nesbot/carbon": "1.34.0"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.8 < 6.0",
