@@ -35,6 +35,7 @@ class SearchPageController extends AbstractController
         $this->selectFilesCountService = $container->get('SelectFilesCountService');
         $this->searchPaginator = $container->get('SearchPaginator');
         $this->sliceFilesQueryService = $container->get('SliceFilesQueryService');
+        $this->viewData['title'] = "{$this->viewData['title']} - searchs";
     }
 
     public function search(Request $request, Response $response, $args)

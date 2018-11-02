@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fileshare\Services;
 
-use Fileshare\Exceptions\ValidateException as ValidateException;
 use \Firebase\JWT\JWT;
 use \Codeception\Util\Debug as debug;
 
@@ -19,7 +18,7 @@ class CryptoService
         if ($hash !== false) {
             return $hash;
         }
-        throw new ValidateException("Password {$password} hash generate failed");
+        throw new \RuntimeException("Password {$password} hash generate failed");
     }
     /**
      * @throws ValidateException
@@ -29,7 +28,7 @@ class CryptoService
         if (password_verify($inputPassword, $targetHash)) {
             return true;
         }
-        throw new ValidateException("Invalid password {$inputPassword}");
+        throw new \RuntimeException("Invalid password {$inputPassword}");
     }
 
     public function generateJwtToken(array $jwtOptions): string

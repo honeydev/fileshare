@@ -36,6 +36,7 @@ class BrowseFileController extends AbstractController
         $this->allowCursorValueCalculateService = $container->get('AllowCursorValueCalculateService');
         $this->browsePaginator = $container->get('BrowsePaginator');
         $this->selectFilesCountService = $container->get('SelectFilesCountService');
+        $this->viewData['title'] = "{$this->viewData['title']} - browse";
     }
 
     public function browse(Request $request, Response $response, array $args)

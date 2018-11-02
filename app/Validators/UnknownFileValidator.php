@@ -1,7 +1,4 @@
 <?php
-/**
- * @class ImageValidator
- */
 
 declare(strict_types=1);
 

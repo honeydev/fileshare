@@ -9,11 +9,11 @@ return array(
     'addContentLengthHeader' => false,
     'db' => array(
         'driver' => 'mysql',
-        'host' => '172.18.0.2',
+        'host' => 'localhost',
         'database' => 'fileshare',
         'tests_database' => 'fileshare_tests',
         'username' => 'root',
-        'password' => 'd5d7',
+        'password' => '',
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',
@@ -42,7 +42,7 @@ return array(
             'unknown' => '/img/file.svg',
         ],
         /* support file preview */
-        'supported' => ['image/jpeg'],
+        'supported' => ['image/jpeg', 'image/png'],
     ],
     /* 
      * favicon path

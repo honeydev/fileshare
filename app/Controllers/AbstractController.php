@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fileshare\Controllers;
 
 abstract class AbstractController
 {
     /**
-     *@property {array} viewData
+     * @property {array} viewData
      */
     protected $viewData = [];
 
@@ -14,5 +16,6 @@ abstract class AbstractController
         $this->container = $container;
         $this->viewData = array_merge($this->viewData, $container->get('settings')['appInfo']);
         $this->viewData['faviconLink'] = $container->get('settings')['favicon'];
+        $this->viewData['title'] = $this->viewData['appName'];
     }
 }

@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class Routes
 {
-    public function startRoutes($app, $container)
+    public function start($app, $container)
     {
         $accessLogger = $container->get("AccessLogger");
         $secret = $container->get("settings")["secretKey"];

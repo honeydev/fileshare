@@ -1,8 +1,7 @@
 <?php
-/**
+/*
  * Add all app controllers
  */
-
 $container['MainPageController'] = function () use ($container) {
     return new Fileshare\Controllers\MainPageController($container);
 };

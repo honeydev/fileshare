@@ -29,6 +29,6 @@ require ROOT . '/app/bootstrap/handlers.php';
 require ROOT . '/app/Routes.php';
 
 $routes = new Routes();
-$routes->startRoutes($app, $container);
+$routes->start($app, $container);
 
 $app->run();

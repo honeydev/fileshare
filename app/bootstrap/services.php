@@ -1,5 +1,6 @@
 <?php
 
+/* add services */
 $container['SessionService'] = function () use ($container) {
     return new Fileshare\Services\SessionService($container);
 };
