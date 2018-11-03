@@ -17,3 +17,4 @@ puphpet/*
 /public/avatars
 /public/uploads
 config/cfg.php
+cron_backup
