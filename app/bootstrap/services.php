@@ -29,8 +29,8 @@ $container['UpdateUserService'] = function () use ($container) {
     return new Fileshare\Services\UpdateUserService($container);
 };
 
-$container['UploadsMovmentService'] = function () use ($container) {
-    return new Fileshare\Services\UploadsMovmentService($container);
+$container['UploadsMovementService'] = function () use ($container) {
+    return new Fileshare\Services\UploadsMovementService($container);
 };
 
 $container['FileSaveService'] = function () use ($container) {
@@ -39,10 +39,6 @@ $container['FileSaveService'] = function () use ($container) {
 
 $container['DeleteFileService'] = function () use ($container) {
     return new Fileshare\Services\DeleteFileService($container);
-};
-
-$container['AddAvatarService'] = function () use ($container) {
-    return new Fileshare\Services\AddAvatarService($container);
 };
 
 $container['FileAvatarService'] = function () use ($container) {

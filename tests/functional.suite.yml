@@ -17,6 +17,6 @@ modules:
             dsn: 'mysql:host=172.18.0.2;dbname=fileshare_tests'
             user: 'root'
             password: 'd5d7'
-            dump: 'tests/_data/fileshare.sql'
+            dump: 'tests/_data/dump2.sql'
             cleanup: true
             reconnect: true

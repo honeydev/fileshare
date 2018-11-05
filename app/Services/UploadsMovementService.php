@@ -8,7 +8,7 @@ use \Codeception\Util\Debug as debug;
 use \Fileshare\Exceptions\IOException;
 use \Slim\Http\UploadedFile;
 
-class UploadsMovmentService
+class UploadsMovementService
 {
     /**
      * @property string
@@ -30,14 +30,14 @@ class UploadsMovmentService
     public function movment(UploadedFile $file, array $params): array
     {
         $ownerFolder = $params["owner"]->email;
-        $targetDir = "{$this->storageDir}{$params['category']}/{$ownerFolder}";
+        $targetDir = "{$this->storageDir}/{$params['category']}/{$ownerFolder}";
 
         $this->createDir($targetDir);
         $this->checkMovmentAvailability($file, $targetDir);
 
         $name = $this->cryptoService->getUniqueMd5Token() . "_" . $file->getClientFilename();
         $moveName = "{$targetDir}/{$name}";
-        $shortUri = "/storage{$params['category']}/{$ownerFolder}/{$name}";
+        $shortUri = "/storage/{$params['category']}/{$ownerFolder}/{$name}";
         $file->moveTo($moveName);
         return [
             "name" => $name,

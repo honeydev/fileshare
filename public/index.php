@@ -15,6 +15,7 @@ require ROOT . '/app/bootstrap/helpers.php';
 require ROOT . '/app/bootstrap/controllers.php';
 require ROOT . '/app/bootstrap/models.php';
 require ROOT . '/app/bootstrap/services.php';
+require ROOT . '/app/bootstrap/savers.php';
 require ROOT . '/app/bootstrap/tasks.php';
 require ROOT . '/app/bootstrap/paginators.php';
 require ROOT . '/app/bootstrap/searchers.php';

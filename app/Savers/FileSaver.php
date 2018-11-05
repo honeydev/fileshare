@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Fileshare\Services;
+namespace Fileshare\Savers;
 
-use \Codeception\Util\Debug as debug;
-use \Fileshare\Exceptions\IOException;
+use Fileshare\Models\FileInterface;
+use Fileshare\Exceptions\IOException;
 use \Slim\Http\UploadedFile;
 use \Fileshare\Models\File;
-use \Fileshare\Models\Avatar;
 use \Fileshare\Models\FileToken;
 
-class FileSaveService
+class FileSaver implements SaversInterface
 {
     /**
      * @property string
@@ -27,8 +26,13 @@ class FileSaveService
         $this->uploadsMovementService = $container->get('UploadsMovementService');
         $this->storageDir = $container->get('settings')['appFolder'] . "/storage";
     }
-
-    public function save(UploadedFile $file, array $params): File
+    /**
+     * @param UploadedFile $file
+     * @param array $params
+     * @throws IOException
+     * @return File
+     */
+    public function save(UploadedFile $file, array $params): FileInterface
     {
         $fileAttributes = $this->uploadsMovementService->movment($file, $params);
         $fileAttributes['ownerId'] = $params['owner']->id;

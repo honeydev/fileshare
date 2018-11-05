@@ -11,18 +11,25 @@ class Avatars extends \Fileshare\Db\migrations\BaseMigration
         if ($this->schema->hasTable('avatars')) {
             return null;
         }
-
         $this->schema->create('avatars', function (Blueprint $table) {
-            $table->string('ownerId');
-            $table->integer('parentId')->unsigned()->primary();
+            $table->string('name')->nullable(false);
+            $table->string('uri')->nullable(false);
+            $table->string('size')->nullable(true);
+            $table->string('mime')->nullable(true);
+            $table->integer('likes')->default(0);
+            $table->integer('views')->default(0);
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->integer('ownerId')
+                ->unsigned()
+                ->nullable(false);
+            $table->increments('id')->unsigned()->unique();
         });
 
         $this->schema->table('avatars', function (Blueprint $table) {
-            $table->foreign('parentId')
+            $table->foreign('ownerId')
                 ->references('id')
-                ->on('files')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+                ->on('users');
         });
     }
 

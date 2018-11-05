@@ -4,9 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Phinx\Seed\AbstractSeed;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Fileshare\Models\User;
-use Fileshare\Models\UserInfo;
-use Fileshare\Models\UserSettings;
+use Fileshare\Models\{User, UserInfo, UserSettings, Avatar};
 
 class Anonymous extends AbstractSeed
 {
@@ -29,8 +27,7 @@ class Anonymous extends AbstractSeed
         $user = new User(['email' => 'anonymous@fileshare', 'password' => uniqid()]);
         $user->save();
         $userInfo = new UserInfo([
-            'name' => 'anonym',
-            'avatarUri' => '/img/user.png'
+            'name' => 'anonym'
         ]);
         $user->userInfo()->save($userInfo);
         $userSettings = new UserSettings([
@@ -38,5 +35,11 @@ class Anonymous extends AbstractSeed
             'accessLvl' => 1
         ]);
         $user->userSettings()->save($userSettings);
+        $avatar = Avatar::create([
+            'uri' => '/img/user.png',
+            'ownerId' => $user->id,
+            'name' => 'user.png',
+        ]);
+        $avatar->save();
     }
 }

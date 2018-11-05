@@ -30,7 +30,7 @@ class SelectFilesService
 
     private function selectFiles(string $sortType, int $cursor)
     {
-        $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')
+        $files = File::selectAllWithoutAvatars()
             ->orderBy(...$this->getOrderParams($sortType))
             ->limit($this->filesOnPage)
             ->offset(SelectHelper::getOffset($cursor, $this->filesOnPage))

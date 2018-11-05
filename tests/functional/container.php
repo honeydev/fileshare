@@ -23,7 +23,7 @@ $container = new Container([
         $container->register(new \Fileshare\Db\EloquentServiceProvider());
         // routes and middlewares here
         $routes = new \Fileshare\Routes();
-        $routes->startRoutes($app, $container);
+        $routes->start($app, $container);
         return $app;
     }
 ]);
@@ -92,6 +92,7 @@ require ROOT . '/app/bootstrap/tasks.php';
 require ROOT . '/app/bootstrap/searchers.php';
 require ROOT . '/app/bootstrap/helpers.php';
 require ROOT . '/app/bootstrap/auths.php';
+require ROOT . '/app/bootstrap/savers.php';
 require ROOT . '/app/bootstrap/validators.php';
 
 \Codeception\Util\Fixtures::add('container', $container);

@@ -14,7 +14,6 @@ class UsersInfo extends \Fileshare\Db\migrations\BaseMigration
 
         $this->schema->create('users_info', function (Blueprint $table) {
             $table->string('name')->nullable(true);
-            $table->string('avatarUri')->nullable(true);
             $table->integer('userId')->unsigned()->unique()->nullable(false);
             $table->timestamps();
         });

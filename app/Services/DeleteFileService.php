@@ -20,9 +20,10 @@ class DeleteFileService
         $this->appFolder = $container->get('settings')['appFolder'];
     }
     /**
+     * @param {mixed} User|File
      * @throws IOException
      */
-    public function delete(File $file)
+    public function delete($file)
     {
         $fileUri = "{$this->appFolder}/{$file->uri}";
         if (!unlink($fileUri)) {

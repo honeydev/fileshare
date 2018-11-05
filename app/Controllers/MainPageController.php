@@ -12,14 +12,14 @@ use \Fileshare\Models\User;
 class MainPageController extends AbstractController
 {
     /**
-     * @property \Fileshare\Services\FileSaveService
+     * @property \Fileshare\Savers\FileSaver
      */
-    private $fileSaveService;
+    private $fileSaver;
 
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->fileSaveService = $container->get("FileSaveService");
+        $this->fileSaver = $container->get("FileSaver");
     }
 
     public function indexPage(Request $request, Response $response)
@@ -38,7 +38,7 @@ class MainPageController extends AbstractController
         $file = $request->getUploadedFiles()['file'];
         $fileType = $request->getAttribute("fileType");
         $owner = User::getUserByEmail("anonymous@fileshare");
-        $file = $this->fileSaveService->save($file, [
+        $file = $this->fileSaver->save($file, [
             "owner" => $owner,
             "category" => "/uploads",
             "type" => $fileType
@@ -53,9 +53,9 @@ class MainPageController extends AbstractController
         $file = $request->getUploadedFiles()['file'];
         $fileType = $request->getAttribute("fileType");
         $owner = User::getUserById($jwt->sub);
-        $file = $this->fileSaveService->save($file, [
+        $file = $this->fileSaver->save($file, [
             "owner" => $owner,
-            "category" => "/uploads",
+            "category" => "uploads",
             "type" => $fileType
         ]);
         return $response->withJson(["status" => "success", "fileUrl" => "/file/{$file->name}"], 200);

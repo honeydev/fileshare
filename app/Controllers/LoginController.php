@@ -34,7 +34,6 @@ class LoginController extends AbstractController
             ]
         );
         $user->save();
-        debug::debug($user->token);
         $userData = UserTransformer::transform($user);
         return $response->withJson(['status' => 'success', 'loginData' => $userData], 200);
     }

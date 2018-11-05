@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Fileshare\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Builder;
 
-class File extends Model
+class File extends Model implements FileInterface
 {
     protected $guarded = [];
 
@@ -22,5 +23,10 @@ class File extends Model
         }
 
         return $file;
+    }
+
+    public static function selectAllWithoutAvatars(): Builder
+    {
+        return File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)');
     }
 }

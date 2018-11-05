@@ -44,7 +44,7 @@ class CleanOldFilesTask
      */
     private function cleanFiles()
     {
-        $files = File::all();
+        $files = File::selectAllWithoutAvatars();
         foreach ($files as $file) {
             $currentTime = Carbon::now();
             $fileCreateTime = $file->created_at;

@@ -26,8 +26,8 @@ class UserTransformer implements TransformerInterface
 
         if (!empty($user->userInfo)) {
             $userData['name'] = $user->userInfo->name;
-            $userData['avatarUri'] = $hostUrl . $user->userInfo->avatarUri;
-        } 
+            $userData['avatarUri'] = $hostUrl . $user->avatar()->uri;
+        }
 
         if (!empty($user->userSettings)) {
             $userData['accountStatus'] = $user->userSettings->accountStatus;

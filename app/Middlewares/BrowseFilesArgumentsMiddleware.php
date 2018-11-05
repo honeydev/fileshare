@@ -30,7 +30,7 @@ class BrowseFilesArgumentsMiddleware extends AbstractMiddleware
             $response = $next($request, $response);
             return $response;
         }  catch (ValidateException $e) {
-            return $response->withRedirect('/404', 301);
+            return $response->withRedirect('/404', 404);
         }
     }
 }

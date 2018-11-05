@@ -39,9 +39,9 @@ class RegisteredController extends AbstractController
         $user->save();
 
         $userInfo = new UserInfo([
-            "name" => $userData["name"],
-            'avatarUri' => "/img/user.png"
+            "name" => $userData["name"]
         ]);
+
         $user->userInfo()->save($userInfo);
 
         $userSettings = new UserSettings(["accessLvl" => $userData["accessLvl"], "accountStatus" => 1]);

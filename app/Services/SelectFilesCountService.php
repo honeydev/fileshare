@@ -14,7 +14,7 @@ class SelectFilesCountService
 {
     public function select(): int
     {
-        $files = File::raw('SELECT * FROM files WHERE id NOT IN (SELECT parentId FROM avatars)')->get();
+        $files = File::selectAllWithoutAvatars()->get();
         return count($files);
     }
 }

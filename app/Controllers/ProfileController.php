@@ -22,20 +22,17 @@ class ProfileController extends AbstractController
      */
      private $fileSaveService;
     /**
-     * @property \Fileshare\Service\CryptoService
-     */
-    private $cryptoService;
-    /**
      * @property \Fileshare\Helpers\PrepareErrorHelper
      */
     private $prepareErrorHelper;
     /**
-     * @property \Fileshare\Services\AddAvatarService
+     * @property \Fileshare\Savers\AvatarSaver
      */
-    private $addAvatarService;
+    private $avatarSaver;
     /**
      * @property \Fileshare\Components\Logger
      */
+
     private $logger;
 
     public function __construct($container)
@@ -45,7 +42,7 @@ class ProfileController extends AbstractController
         $this->fileSaveService = $container->get('FileSaveService');
         $this->prepareErrorHelper = $this->container->get("PrepareErrorHelper");
         $this->logger = $container->get('Logger');
-        $this->addAvatarService = $this->container->get("AddAvatarService");
+        $this->avatarSaver = $this->container->get('AvatarSaver');
     }
 
     public function changeProfile(Request $request, Response $response)
@@ -69,12 +66,10 @@ class ProfileController extends AbstractController
         $jwt = $request->getAttribute("token");
         $owner = User::getUserById($jwt->sub);
         try {
-            $file = $this->fileSaveService->save($avatarFile, [
-                "owner" => $owner,
-                "category" => "/avatars"
-                ]
-            );
-            $avatar = $this->addAvatarService->add($file, $owner);
+            $avatar = $this->avatarSaver->save($avatarFile, [
+                'owner' => $owner,
+                'category' => 'avatars'
+            ]);
         } catch (\Fileshare\Exceptions\IOException $e) {
             $this->logger->errorLog($e->getMessage());
             $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "io_error");
@@ -84,6 +79,6 @@ class ProfileController extends AbstractController
             $error = $this->prepareErrorHelper->prepareErrorAsArray($e, "db_error");
             return $response->withJson($error, 401);
         }
-        return $response->withJson(["status" => "success", "avatar" => $avatar->file->toArray()], 200);
+        return $response->withJson(["status" => "success", "avatar" => $avatar->toArray()], 200);
     }
 }
