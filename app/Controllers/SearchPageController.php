@@ -26,6 +26,10 @@ class SearchPageController extends AbstractController
      * @property \Fileshare\Services\SliceFilesQueryService
      */
     private $sliceFilesQueryService;
+    /**
+     * @property \Fileshare\Services\FilesCountService
+     */
+    private $selectFilesCountService;
 
     public function __construct($container)
     {

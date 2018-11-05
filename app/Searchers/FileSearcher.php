@@ -14,8 +14,6 @@ class FileSearcher implements SearcherInterface
 {
     public function search(string $keyString): Builder
     {
-        return File::where('name', 'like', "%{$keyString}%")
-            ->whereNotIn('files.id', Avatar::select('parentId')->get())
-            ->limit(100);
+        return File::where('name', 'like', "%{$keyString}%")->limit(100);
     }
 }

@@ -10,7 +10,6 @@ use \Slim\Http\UploadedFile;
 
 class AvatarSaver implements SaversInterface
 {
-
     private $uploadsMovementService;
 
     private $deleteFileService;
