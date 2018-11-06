@@ -16,7 +16,7 @@
                 <img src="{{ fileArticle.owner.avatarUri }}" alt="Author avatar" class="img-rounded userAvatar">
                                 {{ fileArticle.owner.email }}
             </h5>
-            <h4 class="fileName">Filename {{ fileArticle.file.name }}</h4>
+            <h4 class="fileName">{{ fileArticle.file.name }}</h4>
                             {{ fileAvatarTag | raw }}
             <ul class="fileInfoList list-inline">
                 <li>Uploaded: {{ fileArticle.file.created }}</li>

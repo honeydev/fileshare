@@ -1,0 +1,73 @@
+
+.filePage {
+    min-height: calc(100vh - 52px);
+    font-family: 'Muli', sans-serif;
+}
+
+.fileSpace {
+    min-height: 200px;
+    border: 1px solid #d3e0e9;
+    border-radius: 4px 4px;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 20px;
+    background-color: #fff;
+}
+
+.fileSpace h4 {
+    font-size: 16px !important;
+}
+
+.fileSpace h3 {
+    text-align: center;
+    font-size: 24px !important;
+}
+
+.fileSpace h4 .userAvatarFile {
+    height: 35px;
+    width: 35px;
+}
+
+.fileSpace .fileImageDefault, .file .fileImageDefault {
+    height: 160px;
+    width: 160px;
+}
+
+.fileSpace .fileImageSupported, .file .fileImageSupported {
+    /* styles for supported preview */
+}
+
+.fileSpace .fileImageSupported {
+    /* styles for native preview */
+}
+
+.fileSpace .fileName, .file .fileName {
+    padding-left: 5px;
+}
+
+.fileSpace .fileInfoList, .file .fileInfoList {
+    color: black;
+    padding-top: 20px;
+    margin-left: 1px;
+    margin-top: 5px;
+}
+
+.fileSpace .fileInfoList li, .file .fileInfoList li {
+    border: 1px solid #d3e0e9;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5% 5%;
+}
+
+.fileSpace .buttonsFilePage {
+    margin-top: 25px;
+    padding-top: 10px;
+    width: 100px;
+}
+
+.fileSpace .buttonsFilePage button {
+    border: 1px solid #d3e0e9;
+    margin: -20px;
+}

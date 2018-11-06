@@ -3,6 +3,7 @@
 @import url('browse_files.css');
 @import url('upload_section.css');
 @import url('file_preview.css');
+@import url('file.css');
 
 @font-face {
     font-family: Tavolgafree;
@@ -16,6 +17,7 @@
 
 main {
     background-color: #F2D388;
+    font-family: 'Muli', sans-serif;
     min-height: calc(100vh - 52px);
 }
 
@@ -92,7 +94,6 @@ main {
 }
 
 .uploadButton {
-    font-family: Tavolgafree;
     width: 250px;
     height: 75px;
     background-color: #7a64a5;
@@ -144,70 +145,6 @@ div {
     bottom: 0%;
     right: 3%;
     width: 20%;
-}
-
-.filePage {
-    min-height: calc(100vh - 52px);
-    background-color: #eee;
-}
-
-.fileSpace {
-    min-height: 200px;
-    border: 1px solid #d3e0e9;
-    border-radius: 4px 4px;
-    margin-top: 15px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 30px;
-    padding-right: 20px;
-    background-color: #f8f8f8;
-}
-
-.fileSpace h4 .userAvatarFile {
-    height: 35px;
-    width: 35px;
-}
-
-.fileSpace .fileImageDefault, .file .fileImageDefault {
-    height: 160px;
-    width: 160px;
-}
-
-.fileSpace .fileImageSupported, .file .fileImageSupported {
-    width: 100%;
-}
-
-.fileSpace .fileImageSupported {
-    /* styles for native preview */
-}
-
-.fileSpace .fileName, .file .fileName {
-    padding-left: 5px;
-}
-
-.fileSpace .fileInfoList, .file .fileInfoList {
-    color: black;
-    padding-top: 20px;
-    margin-left: 1px;
-    margin-top: 5px;
-}
-
-.fileSpace .fileInfoList li, .file .fileInfoList li {
-    border: 1px solid #d3e0e9;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5% 5%;
-}
-
-.fileSpace .buttonsFilePage {
-    margin-top: 25px;
-    padding-top: 10px;
-    width: 100px;
-}
-
-.fileSpace .buttonsFilePage button {
-    border: 1px solid #d3e0e9;
-    margin: -20px;
 }
 
 /* navigation arrow */
@@ -262,17 +199,7 @@ div {
 
 
 @media screen and (min-width: 960px) {
-/*    .fileSpace h4 {
-        font-size: x-large;
-    }
 
-    .fileSpace {
-        font-size: x-large;
-    }
-
-    .fileSpace .buttonsFilePage {
-        font-size: x-large;
-    }*/
 }
 
 @media only screen and (min-width:1440px){
