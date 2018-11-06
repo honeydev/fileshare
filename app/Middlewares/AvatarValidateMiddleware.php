@@ -19,7 +19,7 @@ class AvatarValidateMiddleware extends AbstractMiddleware
     /**
      * @property int
      */
-    private $maxFileSize;
+    private $maxAvatarSize;
 
     public function __construct($container)
     {
@@ -32,7 +32,7 @@ class AvatarValidateMiddleware extends AbstractMiddleware
         try {
             $avatarFile = $request->getUploadedFiles()["file"];
             $fileType = StringFormatHelper::transformMimeToFileType($avatarFile->getClientMediaType());
-            FileValidator::validateAccordType($avatarFile, $fileType, $this->maxAvatarSize);    
+            FileValidator::validateAccordType($avatarFile, $fileType, $this->maxAvatarSize);
             $response = $next($request, $response);
         } catch (ValidateException $e) {
             $response = $this->sendErrorWithJson([

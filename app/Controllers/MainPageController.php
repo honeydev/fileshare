@@ -26,6 +26,7 @@ class MainPageController extends AbstractController
     {
         $this->viewData['page'] = 'main_page';
         $this->viewData['title'] = "{$this->viewData['title']} - main";
+        $this->viewData['maxFileSize'] = $this->container->get('settings')['maxFileSize'];
         return $this->container->view->render(
             $response, 
             "index.twig", 

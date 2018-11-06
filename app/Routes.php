@@ -14,16 +14,21 @@ class Routes
         $app->add(new \Slim\Middleware\JwtAuthentication([
             "secure" => false,
             "path" => [
+                '/file/delete/',
                 "/api/uploadavatar.file", 
                 "/api/profile.form", 
                 "/api/service/checkjwt",
-                "/api/uploadfile/registred.file"
+                "/api/uploadfile/registred.file",
             ],
             "logger" => $accessLogger,
             "secret" => $secret,
             "algorithm" => ["HS256"],
             "error" => function ($request, $response, $args) {
-                return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
+                if ($request->isXhr()) {
+                    return $response->withJson(["status" => "failed", "error" => $args["message"]], 500);
+                } else {
+                    return $response->withRedirect('/404', 301);
+                }
             }
         ]));
         $app->get('/', 'MainPageController:indexPage');
@@ -54,5 +59,6 @@ class Routes
             $app->get('/logout.action', 'LogoutController:logout');
         });
         $app->get('/tests/{testName}', 'TestsController:testsPage');
+        $app->get('/401', 'ServiceController:unauthorized');
     }
 }

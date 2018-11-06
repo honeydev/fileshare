@@ -9,12 +9,12 @@ use \Fileshare\Db\factories\UserFactory;
 use \Fileshare\Models\User;
 use \Fileshare\Models\File as FileModel;
 use Codeception\Util\Fixtures;
-use Faker\Generator as Faker;
 use Faker\Provider\Image;
-use Faker\Provider\File;
 
 class FilePageCept extends AbstractTest
 {
+    use \FileshareTests\traits\CreateFilesTrait;
+
     public function __construct($tester)
     {
         parent::__construct($tester);
@@ -54,6 +54,21 @@ class FilePageCept extends AbstractTest
         $this->tester->seeBinaryResponseEquals(md5($fileStream));
     }
 
+    public function testDeleteFileFeature()
+    {
+        $this->tester->wantTo("Delete file by owner");
+        $owner = UserFactory::createRegularUser($this->container);
+        $this->loginTestUser(['email' => $owner->email, 'password' => UserFactory::PASSWORD]);
+        $loginResponse = json_decode($this->tester->grabResponse(), true);
+        $this->tester->setCookie('token', $loginResponse['loginData']['token']);
+        $file = $this->createFilesByUser($owner, 1)[0];
+        $this->tester->sendGET("/file/delete/{$file->name}");
+        $this->tester->seeResponseCodeIsRedirection();
+        $this->tester->amOnPage('/browse');
+//        $this->tester->sendGET("/file/{$file->uri}");
+//        $this->tester->amOnPage('/404');
+    }
+
     private function getFileNameByUrl($fileUrl)
     {
         $urlAsArray = explode("/", $fileUrl);
@@ -62,5 +77,6 @@ class FilePageCept extends AbstractTest
 }
 
 $filePageCept = new FilePageCept(new \FunctionalTester($scenario));
-$filePageCept->testAnonnymFilePageView();
-$filePageCept->testRequestCorrectFile();
+//$filePageCept->testAnonnymFilePageView();
+//$filePageCept->testRequestCorrectFile();
+$filePageCept->testDeleteFileFeature();

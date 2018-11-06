@@ -11,3 +11,7 @@ $container['RegisterAuth'] = function ($container) {
 $container['ProfileAuth'] = function ($container) {
     return new Fileshare\Auth\ProfileAuth($container);
 };
+
+$container['FileAuth'] = function ($container) {
+    return new Fileshare\Auth\FileAuth($container);
+};

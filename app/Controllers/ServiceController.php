@@ -15,4 +15,14 @@ class ServiceController extends AbstractController
     {
         return $response->withJson(["status" => "success"], 200);
     }
+
+    public function unauthorized(Request $request, Response $response)
+    {
+        $this->viewData['page'] = '401';
+        return $this->container->view->render(
+            $response,
+            "index.twig",
+            $this->viewData
+        );
+    }
 }

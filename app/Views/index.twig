@@ -32,6 +32,8 @@
         {% include '404.html' %}
     {% elseif page == 'user_error' %}
         {% include 'user_error.twig' %}
+    {% elseif page == '401' %}
+        {%  include'401.twig' %}
     {% endif %}
 </main>
     {% if page == 'main_page' %}

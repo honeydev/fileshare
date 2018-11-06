@@ -10,17 +10,18 @@ use \Fileshare\Models\UserInfo;
 
 class UserFactory
 {
+    const PASSWORD = 'password';
+
     private static $faker;
 
     public static function createRegularUser($container): User
     {
         self::$faker = \Faker\Factory::create();
         $email = self::$faker->email;
-        $password = "password";
         $cryptoService = $container->get("CryptoService");
         $user = User::create([
             "email" => $email,
-            "password" => password_hash($password, PASSWORD_DEFAULT)
+            "password" => password_hash(self::PASSWORD, PASSWORD_DEFAULT)
         ]);
 
         $jwt = $cryptoService->generateJwtToken(
@@ -34,7 +35,7 @@ class UserFactory
         $user->save();
         self::addUserInfo($user);
         self::addUserSettings($user);
-        $user->nCryptedPassword = $password;
+        $user->nCryptedPassword = self::PASSWORD;
         return $user;
     }
 

@@ -20,4 +20,16 @@ trait CreateFilesTrait
         }
         return $files;
     }
+
+    protected function createFilesByUser(User $user, int $filesCount, $sleep = 0): array
+    {
+        $files = [];
+
+        for ($i = 0; $i < $filesCount; $i++) {
+            sleep($sleep);
+            $file = FileFactory::createFile($user);
+            $files[] = $file;
+        }
+        return $files;
+    }
 }

@@ -19,7 +19,8 @@ class ACL
             'write_self_notes' => new Set([1, 2]),
             'edit_self_profile' => new Set([1, 2]),
             'edit_all_profile' => new Set([2]),
-            'edit_all_notes' => new Set([2])
+            'edit_self_notes' => new Set([1, 2]),
+            'edit_all_notes' => new Set([2]),
         ];
     }
 

@@ -26,9 +26,13 @@ return array(
     'secretKey' => '',
     'appFolder' => dirname(__DIR__),
     /*
-     * Max allow uploaded file size in bytes
+     * Max allow uploaded file size in mbytes
      */
-    'maxFileSize' => 104857600,
+    'maxFileSize' => 100,
+    /*
+     * Max allow avatar size
+     */
+    'maxAvatarSize' => 5,
     /*
      * file live cycle in hours
      */

@@ -19,9 +19,14 @@ class FileFactory
         $separator = DIRECTORY_SEPARATOR;
         $sourceDir = "{$appFolder}{$separator}tests{$separator}_data{$separator}images";
         $targetDir = "storage{$separator}uploads/{$owner->email}";
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir);
+        }
         $uri = FileProvider::file($sourceDir, $targetDir, true);
+        $name = md5((String) mt_rand()) . "_" . FileNameHelper::getFileNameByUri($uri);
+        copy($uri, "{$targetDir}/{$name}");
         $file = File::create([
-            'name' => md5((String) mt_rand()) . "_" . FileNameHelper::getFileNameByUri($uri),
+            'name' => $name,
             'uri' => $uri,
             'mime' => mime_content_type($uri),
             'size' => filesize($uri),
