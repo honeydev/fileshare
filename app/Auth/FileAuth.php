@@ -28,11 +28,12 @@ class FileAuth extends AbstractAuth
             if ($this->acl->userHasPermission($user, 'edit_self_notes')) {
                 return true;
             }
-
-            if ($this->acl->userHasPermission($user, 'edit_all_notes')) {
-                return true;
-            }
         }
+
+        if ($this->acl->userHasPermission($user, 'edit_all_notes')) {
+            return true;
+        }
+        
         throw new AuthException("User with id {$user->id} didn\\'t have permission edit file {$file->name}");
     }
 }
