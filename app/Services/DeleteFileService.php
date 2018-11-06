@@ -7,6 +7,7 @@ namespace Fileshare\Services;
 use \Fileshare\Models\File;
 use \Fileshare\Exceptions\IOException;
 use \Codeception\Util\Debug as debug;
+use Fileshare\Models\FileInterface;
 
 class DeleteFileService
 {
@@ -20,10 +21,10 @@ class DeleteFileService
         $this->appFolder = $container->get('settings')['appFolder'];
     }
     /**
-     * @param {mixed} User|File
+     * @param FileInterface
      * @throws IOException
      */
-    public function delete($file)
+    public function delete(FileInterface $file)
     {
         $fileUri = "{$this->appFolder}/{$file->uri}";
         if (!unlink($fileUri)) {

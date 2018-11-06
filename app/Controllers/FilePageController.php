@@ -19,10 +19,14 @@ class FilePageController extends AbstractController
      */
     private $fileAvatarService;
 
+    private $deleteFileService;
+
+
     public function __construct($container)
     {
         parent::__construct($container);
         $this->fileAvatarService = $container->get("FileAvatarService");
+        $this->deleteFileService = $container->get('DeleteFileService');
     }
 
     public function filePage(Request $request, Response $response, array $args)
@@ -52,5 +56,13 @@ class FilePageController extends AbstractController
        return $response->withBody($newStream)
             ->withHeader('Content-Type', 'application/download')
             ->withHeader('Content-Length', $newStream->getSize());
+    }
+
+    public function deleteFile(Request $request, Response $response, array $args)
+    {
+        $fileName = $args['fileName'];
+        $file = File::getFileByName($fileName);
+        $file->delete();
+        $this->deleteFileService->delete($file);
     }
 }

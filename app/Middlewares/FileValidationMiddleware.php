@@ -11,6 +11,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use Fileshare\Exceptions\{FileTypeException, ValidateException};
 use Fileshare\Helpers\StringFormatHelper;
 use Fileshare\Validators\FileValidator;
+use Fileshare\Helpers\FileSizeFormatHelper;
 use \Codeception\Util\Debug as debug;
 
 class FileValidationMiddleware extends AbstractMiddleware
@@ -20,7 +21,7 @@ class FileValidationMiddleware extends AbstractMiddleware
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->maxFileSize = $container->get("settings")["maxFileSize"];
+        $this->maxFileSize = FileSizeFormatHelper::mbytesToBytes($container->get("settings")["maxFileSize"]);
     }
     
     public function __invoke(Request $request, Response $response, $next)

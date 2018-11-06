@@ -60,7 +60,6 @@ class UpdateUserService
                 $user->save();
             }
         }
-//        debug::debug($user);
     }
 
     private function modelNameIsRelationModel(User $user, string $modelName): bool

@@ -9,6 +9,7 @@ namespace Fileshare\Validators;
 use \Codeception\Util\Debug as debug;
 use Fileshare\Exceptions\{ValidateException, FileTypeException};
 use \Slim\Http\UploadedFile;
+use Fileshare\Helpers\FileSizeFormatHelper;
 
 abstract class FileValidator extends AbstractValidator
 {
@@ -76,7 +77,6 @@ abstract class FileValidator extends AbstractValidator
         if (empty($maxSize)) {
             $maxSize = $this->maxFileSize;
         }
-
         $fileSize = $file->getSize();
         if ($fileSize === null) {
             throw new ValidateException("Invalid uploaded file");

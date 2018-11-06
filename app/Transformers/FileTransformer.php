@@ -25,7 +25,7 @@ class FileTransformer implements TransformerInterface
         $fileAvatarService = $container->get("FileAvatarService");
         $fileArray = [];
         if (!empty($file->size)) {
-            $fileArray['size'] = FileSizeFormatHelper::bytesToMbytes((int) $file->size);
+            $fileArray['size'] = (string) FileSizeFormatHelper::bytesToMbytes((int) $file->size);
         }
 
         if (!empty($file->name)) {
